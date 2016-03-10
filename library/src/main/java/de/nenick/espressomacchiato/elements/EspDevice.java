@@ -1,14 +1,24 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.ViewAssertion;
+import android.view.View;
+
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationLandscape;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationPortrait;
+import static org.hamcrest.core.AnyOf.anyOf;
 
 public class EspDevice {
 
@@ -24,5 +34,31 @@ public class EspDevice {
         } else {
             onView(isRoot()).perform(orientationPortrait());
         }
+    }
+
+    public void checkOrientationIsPortrait() {
+        onView(isRoot()).check(orientation(Configuration.ORIENTATION_PORTRAIT, "expected portrait"));
+    }
+
+    public void checkOrientationIsLandscape() {
+        onView(isRoot()).check(orientation(Configuration.ORIENTATION_LANDSCAPE, "expected landscape"));
+    }
+
+    @NonNull
+    private static ViewAssertion orientation(final int expectedOrientation, final String errorMessage) {
+        return new ViewAssertion() {
+            @Override
+            public void check(View view, NoMatchingViewException noViewFoundException) {
+                if(noViewFoundException != null) {
+                    throw noViewFoundException;
+                }
+
+                final Activity activity = (Activity) view.getContext();
+
+                if (activity.getResources().getConfiguration().orientation != expectedOrientation) {
+                    throw new AssertionError(errorMessage);
+                }
+            }
+        };
     }
 }

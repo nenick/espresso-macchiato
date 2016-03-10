@@ -1,31 +1,20 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.content.res.Configuration;
-import android.support.test.rule.ActivityTestRule;
-import android.support.v7.app.AppCompatActivity;
-
-import org.junit.Rule;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import de.nenick.espressomacchiato.EspressoTestCase;
 
-public class EspDeviceTest {
-
-    @Rule
-    ActivityTestRule<AppCompatActivity> activityTestRule;
+public class EspDeviceTest extends EspressoTestCase {
 
     EspDevice espDevice = new EspDevice();
 
     @Test
     public void testRotate() {
-        assertThat(currentDeviceOrientation()).isEqualTo(Configuration.ORIENTATION_PORTRAIT);
+//        onView(withText("blub")).check(matches(isDisplayed()));
+        espDevice.checkOrientationIsPortrait();
         espDevice.rotate();
-        assertThat(currentDeviceOrientation()).isEqualTo(Configuration.ORIENTATION_LANDSCAPE);
+        espDevice.checkOrientationIsLandscape();
         espDevice.rotate();
-        assertThat(currentDeviceOrientation()).isEqualTo(Configuration.ORIENTATION_PORTRAIT);
-    }
-
-    private int currentDeviceOrientation() {
-        return activityTestRule.getActivity().getResources().getConfiguration().orientation;
+        espDevice.checkOrientationIsPortrait();
     }
 }
