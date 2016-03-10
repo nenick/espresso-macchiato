@@ -1,0 +1,24 @@
+dependencies:
+  pre:
+    # workaround for "failed to find Build Tools revision 23.0.2"
+    # https://discuss.circleci.com/t/android-build-tools-23-0-2-not-available/455/3
+    - echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
+    - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
+
+test:
+  pre:
+    - emulator -avd circleci-android21 -no-audio -no-window:
+        background: true
+
+  override:
+    - ./gradlew :library:assembleDebug
+    - ./gradlew :library:assembleDebugAndroidTest
+
+    # ensure that the emulator is ready to use
+    - circle-android wait-for-boot
+        # the necessary sleep duration may change with time and depends on the pre tasks length.
+        # When all pre tasks are run long enough then waiting will not be necessary anymore.
+        # This sleep should avoid the com.android.builder.testing.api.DeviceException: com.android.ddmlib.ShellCommandUnresponsiveException
+    - sleep 60
+
+    - ./gradlew :library:connectedCheck
