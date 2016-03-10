@@ -7,18 +7,28 @@ dependencies:
 
 test:
   pre:
+    # start emulator for instrumentation tests
     - emulator -avd circleci-android21 -no-audio -no-window:
         background: true
 
   override:
+
+    # pre build code to see how many time each task realy need
     - ./gradlew :library:assembleDebug
     - ./gradlew :library:assembleDebugAndroidTest
 
     # ensure that the emulator is ready to use
     - circle-android wait-for-boot
-        # the necessary sleep duration may change with time and depends on the pre tasks length.
-        # When all pre tasks are run long enough then waiting will not be necessary anymore.
-        # This sleep should avoid the com.android.builder.testing.api.DeviceException: com.android.ddmlib.ShellCommandUnresponsiveException
+
+    # the necessary sleep duration may change with time and depends on the pre tasks length.
+    # When all pre tasks are run long enough then waiting will not be necessary anymore.
+    # This sleep should avoid the com.android.builder.testing.api.DeviceException: com.android.ddmlib.ShellCommandUnresponsiveException
     - sleep 60
 
-    - ./gradlew :library:connectedCheck
+    # start instrumentation tests on emulator
+    - ./gradlew :library:connectedCheck -i
+
+  post:
+      # make tests results available for circle ci to analyze them
+      - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+      - find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
