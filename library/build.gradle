@@ -5,8 +5,10 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        minSdkVersion 15
+        // target lowest min sdk which is supported by espresso
+        minSdkVersion 8
         targetSdkVersion 23
+
         versionCode 1
         versionName "1.0"
 
@@ -16,6 +18,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // support code coverage for testing
+            testCoverageEnabled = true
         }
     }
 }
