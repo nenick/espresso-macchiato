@@ -6,6 +6,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.WindowManager;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -21,6 +22,11 @@ public abstract class EspressoTestCase {
     @Before
     public void setupEspresso() {
         avoidLockScreen();
+    }
+
+    @After
+    public void cleanupEspresso() throws Exception {
+        CloseAllActivitiesFunction.apply(InstrumentationRegistry.getInstrumentation());
     }
 
     private void avoidLockScreen() {
