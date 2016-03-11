@@ -36,11 +36,11 @@ public class EspDevice {
         }
     }
 
-    public void checkOrientationIsPortrait() {
+    public void assertOrientationIsPortrait() {
         onView(isRoot()).check(orientation(Configuration.ORIENTATION_PORTRAIT, "expected portrait"));
     }
 
-    public void checkOrientationIsLandscape() {
+    public void assertOrientationIsLandscape() {
         onView(isRoot()).check(orientation(Configuration.ORIENTATION_LANDSCAPE, "expected landscape"));
     }
 

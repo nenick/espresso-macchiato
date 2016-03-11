@@ -11,10 +11,10 @@ public class EspDeviceTest extends EspressoTestCase {
     @Test
     public void testRotate() {
 //        onView(withText("blub")).check(matches(isDisplayed()));
-        espDevice.checkOrientationIsPortrait();
+        espDevice.assertOrientationIsPortrait();
         espDevice.rotate();
-        espDevice.checkOrientationIsLandscape();
+        espDevice.assertOrientationIsLandscape();
         espDevice.rotate();
-        espDevice.checkOrientationIsPortrait();
+        espDevice.assertOrientationIsPortrait();
     }
 }
