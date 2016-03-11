@@ -48,5 +48,8 @@ test:
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests_xml/
     - find . -type f -regex ".*/build/outputs/androidTest-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/library_android_tests_xml/ \;
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+deployment:
+  coverage:
+    branch: [master]
+    commands:
+      - bash <(curl -s https://codecov.io/bash)
