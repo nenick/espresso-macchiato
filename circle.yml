@@ -1,3 +1,6 @@
+java:
+    version: openjdk8
+
 dependencies:
   pre:
     # workaround for "failed to find Build Tools revision 23.0.2"
