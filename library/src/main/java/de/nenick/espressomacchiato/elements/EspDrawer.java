@@ -9,22 +9,13 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.not;
 
-public class EspDrawer {
+public class EspDrawer extends EspView {
 
     protected final int drawerLayout;
-    protected final int drawerContent;
 
     public EspDrawer(int drawerLayout, int drawerContent) {
+        super(drawerContent);
         this.drawerLayout = drawerLayout;
-        this.drawerContent = drawerContent;
-    }
-
-    public void checkIsVisible() {
-        findDrawerContent().check(matches(isDisplayed()));
-    }
-
-    public void checkIsHidden() {
-        findDrawerContent().check(matches(not(isDisplayed())));
     }
 
     public void open() {
@@ -33,10 +24,6 @@ public class EspDrawer {
 
     public void close() {
         findDrawerLayout().perform(DrawerActions.close());
-    }
-
-    protected ViewInteraction findDrawerContent() {
-        return onView(withId(drawerContent));
     }
 
     protected ViewInteraction findDrawerLayout() {

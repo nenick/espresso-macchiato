@@ -35,40 +35,44 @@ Simple example for login
 espresso
 
     onView(withId(R.id.buttonConfirm)).check(isDisabled()));
-    onView(withId(R.id.textViewUsername)).perform(typeText("MyUserName"));
-    onView(withId(R.id.textViewPassword)).perform(typeText("*****"));
+    onView(withId(R.id.editTextUsername)).perform(typeText("MyUserName"));
+    onView(withId(R.id.editTextPassword)).perform(typeText("*****"));
     onView(withId(R.id.buttonConfirm)).perform(click()));
-    onView(withId(R.id.textViewError)).check(matches(withText("Username or password not correct.")));
+    onView(withId(R.id.textViewErrorMessage)).check(matches(withText("Username or password not correct.")));
 
 espresso-macchiato
 
     new EspButton(R.id.buttonConfirm).checkIsDisabled();
-    new EspTextView(R.id.textViewUsername).typeText("MyUserName");
-    new EspTextView(R.id.textViewPassword).typeText("*****");
+    new EspEditText(R.id.editTextUsername).typeText("MyUserName");
+    new EspEditText(R.id.editTextPassword).typeText("*****");
     new EspButton(R.id.buttonConfirm).click();
-    new EspTextView(R.id.textViewError).checkTextIs("Username or password not correct.");
+    new EspTextView(R.id.textViewErrorMessage).checkTextIs("Username or password not correct.");
 
 page object pattern
 
-    loginPage.confirm().checkIsDisabled();
-    loginPage.username().typeText("MyUserName")
-    loginPage.password().typeText("*****")
-    loginPage.confirm().click()
-    loginPage.errormessage().checkTextIs("Username or password not correct.")
+    loginPage.confirm().assertIsDisabled();
+    loginPage.username().replaceText("MyUserName");
+    loginPage.password().replaceText("*****");
+    loginPage.confirm().click();
+    loginPage.errorMessage().assertTextIs("Username or password not correct.");
 
 page implementation
 
     public class LoginPage {
+
         public EspButton confirn() {
             return new EspButton(R.id.buttonConfirm);
         }
-        public EspTextView username() {
+
+        public EspEditText username() {
             return new EspTextView(R.id.textViewUsername);
         }
-        public EspTextView password() {
+
+        public EspEditText password() {
             return new EspTextView(R.id.textViewPassword);
         }
-        public EspTextView errormessage() {
-            return new EspTextView(R.id.textViewError);
+
+        public EspTextView errorMessage() {
+            return new EspTextView(R.id.textViewErrorMessage);
         }
     }

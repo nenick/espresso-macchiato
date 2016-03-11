@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Espresso Macchiato</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="error_invalid_username_password">Username or password not correct.</string>
+</resources>
