@@ -43,14 +43,16 @@ test:
     - adb logcat -d > $CIRCLE_ARTIFACTS/logcat_emulator.txt
 
     # collect html test results and make them accessable
-    - mv library/build/reports/androidTests/connected $CIRCLE_TEST_REPORTS/library_android_tests
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests_html
+    - cp -r library/build/reports/androidTests/connected $CIRCLE_TEST_REPORTS/library_android_tests_html
 
     # collect test coverage results and make them accessable
-    - mv library/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/library_android_tests_coverage
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests_coverage
+    - cp -r library/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/library_android_tests_coverage
 
     # collect xml test results for circle ci to analyze them
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests_xml/
-    - find . -type f -regex ".*/build/outputs/androidTest-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/library_android_tests_xml/ \;
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests
+    - find . -type f -regex ".*/build/outputs/androidTest-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/library_android_tests/ \;
 
 deployment:
   coverage:
