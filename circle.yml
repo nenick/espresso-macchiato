@@ -36,7 +36,7 @@ test:
 
   post:
     # collect logs from emulator and make them accessable
-    - adb -d logcat > $CIRCLE_ARTIFACTS/logcat_emulator.txt
+    - adb logcat -d > $CIRCLE_ARTIFACTS/logcat_emulator.txt
 
     # collect html test results and make them accessable
     - mv library/build/reports/androidTests/connected $CIRCLE_TEST_REPORTS/library_android_tests
