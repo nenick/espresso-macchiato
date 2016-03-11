@@ -1,3 +1,7 @@
+[![Circle CI](https://circleci.com/gh/nenick/espresso-macchiato.svg?style=svg)](https://circleci.com/gh/nenick/espresso-macchiato)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/c6cc5e2303234780b4ae3118d93eb35f)](https://www.codacy.com/app/nico_kuechler/espresso-macchiato)
+[![codecov.io](https://codecov.io/github/nenick/espresso-macchiato/coverage.svg?branch=master)](https://codecov.io/github/nenick/espresso-macchiato?branch=master)
+
 # espresso-macchiato
 *A dollop of foamed milk with the texture of melted ice cream.*
 
