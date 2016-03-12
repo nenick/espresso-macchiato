@@ -3,6 +3,7 @@ package de.nenick.espressomacchiato.actions;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
@@ -63,8 +64,9 @@ public class OrientationChangeAction implements ViewAction {
             throw new IllegalStateException("No activities in state resumed. That could mean orientation change failed.");
         }
 
-        // wait until rotation is done, espresso checks and action don't wait
+        // wait until rotation is done, espresso checks and actions don't wait
         // sometimes activity is not rotated when next check or action is performed
+        int requestedOrientation = this.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE ? Configuration.ORIENTATION_LANDSCAPE : Configuration.ORIENTATION_PORTRAIT;
         while (InstrumentationRegistry.getContext().getResources().getConfiguration().orientation != requestedOrientation) {
             uiController.loopMainThreadForAtLeast(30);
         }
