@@ -1,4 +1,7 @@
 machine:
+  environment:
+    # more clean command line outputs
+    TERM: "dumb"
   java:
     version: oraclejdk8
 
@@ -12,7 +15,7 @@ dependencies:
 test:
   pre:
     # start emulator for instrumentation tests
-    - emulator -avd circleci-android23 -no-audio -no-window:
+    - emulator -avd circleci-android22 -no-audio -no-window:
         background: true
 
   override:
