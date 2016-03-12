@@ -62,23 +62,7 @@ public class EspDevice {
 
     @NonNull
     private ViewAssertion orientation(final int expectedOrientation) {
-        return new ViewAssertion() {
-            @Override
-            public void check(View view, NoMatchingViewException noViewFoundException) {
-                if (noViewFoundException != null) {
-                    throw noViewFoundException;
-                }
-
-                int requestedOrientation = ((Activity) view.getContext()).getRequestedOrientation();
-                if (currentOrientation() != expectedOrientation) {
-                    String errorMessage = "expected device orientation "
-                            + orientationAsString(expectedOrientation)
-                            + " but was " + orientationAsString(currentOrientation());
-                    errorMessage += " and requested orientation is " + requestedOrientation;
-                    throw new AssertionError(errorMessage);
-                }
-            }
-        };
+        return new OrientationAssertion(expectedOrientation);
     }
 
     private static String orientationAsString(int orientation) {
@@ -96,4 +80,27 @@ public class EspDevice {
         return InstrumentationRegistry.getContext().getResources().getConfiguration().orientation;
     }
 
+    private class OrientationAssertion implements ViewAssertion {
+        private final int expectedOrientation;
+
+        public OrientationAssertion(int expectedOrientation) {
+            this.expectedOrientation = expectedOrientation;
+        }
+
+        @Override
+        public void check(View view, NoMatchingViewException noViewFoundException) {
+            if (noViewFoundException != null) {
+                throw noViewFoundException;
+            }
+
+            int requestedOrientation = ((Activity) view.getContext()).getRequestedOrientation();
+            if (currentOrientation() != expectedOrientation) {
+                String errorMessage = "expected device orientation "
+                        + orientationAsString(expectedOrientation)
+                        + " but was " + orientationAsString(currentOrientation());
+                errorMessage += " and requested orientation is " + requestedOrientation;
+                throw new AssertionError(errorMessage);
+            }
+        }
+    }
 }
