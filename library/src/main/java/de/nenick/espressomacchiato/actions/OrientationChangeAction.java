@@ -58,29 +58,38 @@ public class OrientationChangeAction implements ViewAction {
         activity.setRequestedOrientation(orientation);
         Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
         if (resumedActivities.isEmpty()) {
-            throw new RuntimeException("Could not change orientation");
+            throw new IllegalStateException("No activities in state resumed. That could mean orientation change failed.");
         }
     }
 
     private boolean hasActivityFixedOrientation(Activity currentActivity) {
         ActivityInfo[] activities;
+        String packageName = currentActivity.getPackageName();
+
+        // collect AndroidManifest.xml activities properties
         try {
-             activities = currentActivity.getPackageManager().getPackageInfo(currentActivity.getPackageName(), PackageManager.GET_ACTIVITIES).activities;
+
+            activities = currentActivity.getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES).activities;
         } catch (PackageManager.NameNotFoundException e) {
-            throw new IllegalStateException("Activity " + currentActivity.getClass().getSimpleName() + " not found in AndroidManifest.xml", e);
+            throw new IllegalStateException("No activities found for " + packageName + " in AndroidManifest.xml", e);
         }
 
         for (ActivityInfo activity : activities) {
+
+            // skip if activity info is not for the current active activity
             if (!activity.name.equals(currentActivity.getClass().getName())) {
                 continue;
             }
-            if (activity.screenOrientation == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
-                continue;
+
+            // report if the activity orientation is fixed
+            if (activity.screenOrientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+                Log.d(OrientationChangeAction.class.getSimpleName(), "Ignore orientation change because orientation for this activity is fixed in AndroidManifest.xml.");
+                return true;
+            } else {
+                return false;
             }
-            Log.d(OrientationChangeAction.class.getSimpleName(), "Ignore orientation change because orientation for this activity is fixed in AndroidManifest.xml.");
-            return true;
         }
 
-        return false;
+        throw new IllegalStateException("Activity configuration for " + currentActivity.getClass().getSimpleName() + " not found in AndroidManifest.xml");
     }
 }

@@ -20,10 +20,12 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // toggle only after text changed
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            // toggle only after text changed
         }
 
         @Override
@@ -60,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
     private void toggleConfirmButton() {
         if (username.length() > 0 && password.length() > 0) {
             confirmButton.setEnabled(true);
+        } else {
+            confirmButton.setEnabled(false);
         }
     }
 }
