@@ -3,6 +3,7 @@ package de.nenick.espressomacchiato.actions;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
@@ -17,16 +18,16 @@ import java.util.Collection;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 
 /**
- * An Espresso ViewAction that changes the orientation of the screen
+ * An Espresso ViewAction that changes the requestedOrientation of the screen
  * <p/>
  * See original source at https://gist.github.com/nbarraille/03e8910dc1d415ed9740
  */
 public class OrientationChangeAction implements ViewAction {
 
-    private final int orientation;
+    private final int requestedOrientation;
 
     private OrientationChangeAction(int orientation) {
-        this.orientation = orientation;
+        this.requestedOrientation = orientation;
     }
 
     public static ViewAction orientationLandscape() {
@@ -44,7 +45,7 @@ public class OrientationChangeAction implements ViewAction {
 
     @Override
     public String getDescription() {
-        return "change orientation to " + orientation;
+        return "change orientation to " + requestedOrientation;
     }
 
     @Override
@@ -56,15 +57,17 @@ public class OrientationChangeAction implements ViewAction {
         }
         uiController.loopMainThreadUntilIdle();
 
-        activity.setRequestedOrientation(orientation);
+        activity.setRequestedOrientation(requestedOrientation);
         Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
         if (resumedActivities.isEmpty()) {
             throw new IllegalStateException("No activities in state resumed. That could mean orientation change failed.");
         }
 
-        // try to stabilise direct following actions after orientation change
+        // wait until rotation is done, espresso checks and action don't wait
         // sometimes activity is not rotated when next check or action is performed
-        uiController.loopMainThreadForAtLeast(100);
+        while (InstrumentationRegistry.getContext().getResources().getConfiguration().orientation != requestedOrientation) {
+            uiController.loopMainThreadForAtLeast(30);
+        }
     }
 
     private boolean hasActivityFixedOrientation(Activity currentActivity) {
@@ -86,9 +89,9 @@ public class OrientationChangeAction implements ViewAction {
                 continue;
             }
 
-            // report if the activity orientation is fixed
+            // report if the activity requestedOrientation is fixed
             if (activity.screenOrientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
-                Log.d(OrientationChangeAction.class.getSimpleName(), "Ignore orientation change because orientation for this activity is fixed in AndroidManifest.xml.");
+                Log.d(OrientationChangeAction.class.getSimpleName(), "Ignore requestedOrientation change because requestedOrientation for this activity is fixed in AndroidManifest.xml.");
                 return true;
             } else {
                 return false;
