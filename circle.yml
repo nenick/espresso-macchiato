@@ -74,4 +74,5 @@ deployment:
   coverage:
     branch: [master]
     commands:
+      # report code coverage to codecov
       - bash <(curl -s https://codecov.io/bash)
