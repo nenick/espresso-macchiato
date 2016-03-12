@@ -4,7 +4,7 @@ import org.junit.Test;
 
 public class LoginTest extends EspressoTestCase {
 
-    EspLoginPage loginPage = new EspLoginPage();
+    private EspLoginPage loginPage = new EspLoginPage();
 
     @Test
     public void testWrongLogin() {

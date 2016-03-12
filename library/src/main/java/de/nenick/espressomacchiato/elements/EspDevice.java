@@ -10,15 +10,10 @@ import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
 import android.view.View;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationLandscape;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationPortrait;
-import static org.hamcrest.core.AnyOf.anyOf;
 
 public class EspDevice {
 

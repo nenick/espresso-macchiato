@@ -6,11 +6,10 @@ import de.nenick.espressomacchiato.EspressoTestCase;
 
 public class EspDeviceTest extends EspressoTestCase {
 
-    EspDevice espDevice = new EspDevice();
+    private EspDevice espDevice = new EspDevice();
 
     @Test
     public void testRotate() {
-//        onView(withText("blub")).check(matches(isDisplayed()));
         espDevice.assertOrientationIsPortrait();
         espDevice.rotate();
         espDevice.assertOrientationIsLandscape();
