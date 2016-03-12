@@ -57,7 +57,7 @@ test:
     - cp -r library/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/library_android_tests_coverage
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests
-    - find . -type f -regex "library/build/outputs/androidTest-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/library_android_tests/ \;
+    - cp -r library/build/outputs/androidTest-results" $CIRCLE_TEST_REPORTS/library_android_tests
 
     # for sampleapp module
     # collect html test results and make them accessable
@@ -68,7 +68,7 @@ test:
     - cp -r sampleapp/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/sampleapp_android_tests_coverage
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests
-    - find . -type f -regex "sampleapp/build/outputs/androidTest-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/sampleapp_android_tests/ \;
+    - cp -r sampleapp/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS/sampleapp_android_tests
 
 deployment:
   coverage:
