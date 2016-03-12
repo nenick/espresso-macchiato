@@ -43,8 +43,8 @@ espresso
 espresso-macchiato
 
     new EspButton(R.id.buttonConfirm).checkIsDisabled();
-    new EspEditText(R.id.editTextUsername).typeText("MyUserName");
-    new EspEditText(R.id.editTextPassword).typeText("*****");
+    new EspEditText(R.id.editTextUsername).replaceText("MyUserName");
+    new EspEditText(R.id.editTextPassword).replaceText("*****");
     new EspButton(R.id.buttonConfirm).click();
     new EspTextView(R.id.textViewErrorMessage).checkTextIs("Username or password not correct.");
 
