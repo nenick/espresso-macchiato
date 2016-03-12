@@ -60,6 +60,10 @@ public class OrientationChangeAction implements ViewAction {
         if (resumedActivities.isEmpty()) {
             throw new IllegalStateException("No activities in state resumed. That could mean orientation change failed.");
         }
+
+        // try to stabilise direct following checks for orientation
+        // sometimes activity is not rotated
+        uiController.loopMainThreadUntilIdle();
     }
 
     private boolean hasActivityFixedOrientation(Activity currentActivity) {

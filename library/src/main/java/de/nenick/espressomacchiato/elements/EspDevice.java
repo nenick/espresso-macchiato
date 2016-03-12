@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
@@ -68,10 +69,12 @@ public class EspDevice {
                     throw noViewFoundException;
                 }
 
+                int requestedOrientation = ((Activity) InstrumentationRegistry.getContext()).getRequestedOrientation();
                 if (currentOrientation() != expectedOrientation) {
                     String errorMessage = "expected device orientation "
                             + orientationAsString(expectedOrientation)
                             + " but was " + orientationAsString(currentOrientation());
+                    errorMessage += " and requested orientation is " + requestedOrientation;
                     throw new AssertionError(errorMessage);
                 }
             }
