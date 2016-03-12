@@ -2,10 +2,12 @@ package de.nenick.espressomacchiato.actions;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
+import android.util.Log;
 import android.view.View;
 
 import org.hamcrest.Matcher;
@@ -22,8 +24,17 @@ import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 public class OrientationChangeAction implements ViewAction {
 
     private final int orientation;
+
     private OrientationChangeAction(int orientation) {
         this.orientation = orientation;
+    }
+
+    public static ViewAction orientationLandscape() {
+        return new OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+    }
+
+    public static ViewAction orientationPortrait() {
+        return new OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     @Override
@@ -38,21 +49,38 @@ public class OrientationChangeAction implements ViewAction {
 
     @Override
     public void perform(UiController uiController, View view) {
-        uiController.loopMainThreadUntilIdle();
         final Activity activity = (Activity) view.getContext();
-        activity.setRequestedOrientation(orientation);
+        if (hasActivityFixedOrientation(activity)) {
+            return;
+        }
+        uiController.loopMainThreadUntilIdle();
 
+        activity.setRequestedOrientation(orientation);
         Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
         if (resumedActivities.isEmpty()) {
             throw new RuntimeException("Could not change orientation");
         }
     }
 
-    public static ViewAction orientationLandscape() {
-        return new OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-    }
+    private boolean hasActivityFixedOrientation(Activity currentActivity) {
+        ActivityInfo[] activities;
+        try {
+             activities = currentActivity.getPackageManager().getPackageInfo(currentActivity.getPackageName(), PackageManager.GET_ACTIVITIES).activities;
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new IllegalStateException("Activity " + currentActivity.getClass().getSimpleName() + " not found in AndroidManifest.xml", e);
+        }
 
-    public static ViewAction orientationPortrait() {
-        return new OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        for (ActivityInfo activity : activities) {
+            if (!activity.name.equals(currentActivity.getClass().getName())) {
+                continue;
+            }
+            if (activity.screenOrientation == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
+                continue;
+            }
+            Log.d(OrientationChangeAction.class.getSimpleName(), "Ignore orientation change because orientation for this activity is fixed in AndroidManifest.xml.");
+            return true;
+        }
+
+        return false;
     }
 }

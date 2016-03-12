@@ -3,6 +3,9 @@
 
     <application android:theme="@style/Theme.AppCompat.Light">
         <activity android:name=".views.BaseActivity" />
+        <activity
+            android:name=".views.LandscapeFixedActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
