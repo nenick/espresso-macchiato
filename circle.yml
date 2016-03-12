@@ -19,8 +19,8 @@ test:
     # pre build code to see how many time each task realy need
     - ./gradlew :library:assembleDebug
     - ./gradlew :library:assembleDebugAndroidTest
-    - ./gradlew :sampleaapp:assembleDebug
-    - ./gradlew :sampleaapp:assembleDebugAndroidTest
+    - ./gradlew :sampleapp:assembleDebug
+    - ./gradlew :sampleapp:assembleDebugAndroidTest
 
     # ensure that the emulator is ready to use
     - circle-android wait-for-boot
