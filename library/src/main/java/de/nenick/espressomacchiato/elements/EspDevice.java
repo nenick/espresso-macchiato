@@ -69,7 +69,7 @@ public class EspDevice {
                     throw noViewFoundException;
                 }
 
-                int requestedOrientation = ((Activity) InstrumentationRegistry.getContext()).getRequestedOrientation();
+                int requestedOrientation = ((Activity) view.getContext()).getRequestedOrientation();
                 if (currentOrientation() != expectedOrientation) {
                     String errorMessage = "expected device orientation "
                             + orientationAsString(expectedOrientation)
