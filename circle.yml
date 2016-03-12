@@ -57,7 +57,7 @@ test:
     - cp -r library/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/library_android_tests_coverage
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests
-    - cp -r library/build/outputs/androidTest-results" $CIRCLE_TEST_REPORTS/library_android_tests
+    - cp -r library/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS/library_android_tests
 
     # for sampleapp module
     # collect html test results and make them accessable
