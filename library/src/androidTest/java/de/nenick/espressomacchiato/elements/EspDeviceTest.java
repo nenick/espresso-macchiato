@@ -4,7 +4,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import de.nenick.espressomacchiato.EspressoTestCase;
+import de.nenick.espressotools.EspressoTestCase;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 
 import static org.hamcrest.CoreMatchers.is;

@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.sampleapp.test;
+package de.nenick.espressotools;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -7,6 +7,7 @@ import android.support.test.espresso.core.deps.guava.collect.Sets;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitor;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
+
 
 import java.util.Collection;
 import java.util.Set;

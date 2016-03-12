@@ -32,4 +32,5 @@ dependencies {
     compile 'com.android.support:design:23.2.0'
 
     androidTestCompile project(':library')
+    androidTestCompile project(':espressotools')
 }

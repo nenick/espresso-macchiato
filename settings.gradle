@@ -1,1 +1,1 @@
-include ':sampleapp', ':library'
+include ':sampleapp', ':library', ':espressotools'

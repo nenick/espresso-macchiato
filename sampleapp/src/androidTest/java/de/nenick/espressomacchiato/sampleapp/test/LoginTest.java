@@ -2,7 +2,10 @@ package de.nenick.espressomacchiato.sampleapp.test;
 
 import org.junit.Test;
 
-public class LoginTest extends EspressoTestCase {
+import de.nenick.espressomacchiato.sampleapp.LoginActivity;
+import de.nenick.espressotools.EspressoTestCase;
+
+public class LoginTest extends EspressoTestCase<LoginActivity> {
 
     private EspLoginPage loginPage = new EspLoginPage();
 

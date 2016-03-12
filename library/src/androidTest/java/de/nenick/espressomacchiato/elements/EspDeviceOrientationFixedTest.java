@@ -2,7 +2,7 @@ package de.nenick.espressomacchiato.elements;
 
 import org.junit.Test;
 
-import de.nenick.espressomacchiato.EspressoTestCase;
+import de.nenick.espressotools.EspressoTestCase;
 import de.nenick.espressomacchiato.test.views.LandscapeFixedActivity;
 
 public class EspDeviceOrientationFixedTest extends EspressoTestCase<LandscapeFixedActivity> {

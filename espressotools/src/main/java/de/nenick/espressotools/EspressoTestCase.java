@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.sampleapp.test;
+package de.nenick.espressotools;
 
 import android.app.Activity;
 import android.support.test.InstrumentationRegistry;
@@ -11,13 +11,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
-import de.nenick.espressomacchiato.sampleapp.LoginActivity;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 @RunWith(AndroidJUnit4.class)
-public abstract class EspressoTestCase {
+public abstract class EspressoTestCase<A extends Activity> {
 
     @Rule
-    public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<A> activityTestRule = new ActivityTestRule<>((getGenericActivityClass()));
 
     @Before
     public void setupEspresso() {
@@ -45,5 +46,15 @@ public abstract class EspressoTestCase {
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         });
+    }
+
+    private Class<A> getGenericActivityClass() {
+        Type genericSuperclass = getClass().getGenericSuperclass();
+        if (genericSuperclass instanceof ParameterizedType) {
+            //noinspection unchecked
+            return ((Class) ((ParameterizedType) genericSuperclass).getActualTypeArguments()[0]);
+        } else {
+            throw new IllegalArgumentException("Please provide generic start activity for " + getClass().getSimpleName() + " (e.g. extends EspressoTestCase<MyStartActivity>)");
+        }
     }
 }
