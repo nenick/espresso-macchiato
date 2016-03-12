@@ -50,6 +50,7 @@ public class OrientationChangeAction implements ViewAction {
     @Override
     public void perform(UiController uiController, View view) {
         final Activity activity = (Activity) view.getContext();
+        // change rotation programmatically ignores android manifest configurations
         if (hasActivityFixedOrientation(activity)) {
             return;
         }
@@ -61,9 +62,9 @@ public class OrientationChangeAction implements ViewAction {
             throw new IllegalStateException("No activities in state resumed. That could mean orientation change failed.");
         }
 
-        // try to stabilise direct following checks for orientation
-        // sometimes activity is not rotated
-        uiController.loopMainThreadUntilIdle();
+        // try to stabilise direct following actions after orientation change
+        // sometimes activity is not rotated when next check or action is performed
+        uiController.loopMainThreadForAtLeast(100);
     }
 
     private boolean hasActivityFixedOrientation(Activity currentActivity) {
