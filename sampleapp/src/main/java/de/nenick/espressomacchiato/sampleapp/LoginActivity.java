@@ -53,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         password.addTextChangedListener(textWatcher);
 
         confirmButton.setOnClickListener(clickListener);
+
+        toggleConfirmButton();
     }
 
     private void toggleConfirmButton() {
