@@ -1,6 +1,7 @@
 [![Circle CI](https://circleci.com/gh/nenick/espresso-macchiato.svg?style=shield)](https://circleci.com/gh/nenick/espresso-macchiato)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/c6cc5e2303234780b4ae3118d93eb35f)](https://www.codacy.com/app/nico_kuechler/espresso-macchiato)
 [![codecov.io](https://codecov.io/github/nenick/espresso-macchiato/coverage.svg?branch=master)](https://codecov.io/github/nenick/espresso-macchiato?branch=master)
+[![Download](https://api.bintray.com/packages/nenick/maven/espresso-macchiato/images/download.svg)](https://bintray.com/nenick/maven/espresso-macchiato/_latestVersion)
 
 # espresso-macchiato
 *A dollop of foamed milk with the texture of melted ice cream.*
@@ -91,7 +92,7 @@ This command will do and trigger:
 2. do: create new release tag with given release.version
 3. do: push release tag to github
 4. trigger: circle ci to build and test the release tag
-5. trigger: circle ci to push the release artifacts to bintray
 5. trigger: circle ci to push the release artifacts to github
+6. trigger: circle ci to push the release artifacts to bintray
 
 With the last step the release is ready and can be used.
