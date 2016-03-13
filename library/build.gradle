@@ -1,4 +1,9 @@
+plugins {
+    id 'pl.allegro.tech.build.axion-release' version '1.3.4'
+}
+
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 23
@@ -23,6 +28,21 @@ android {
             // support code coverage for testing
             testCoverageEnabled = true
         }
+    }
+}
+
+publish {
+    groupId = 'de.nenick'
+    artifactId = 'espresso-macchiato'
+    publishVersion = '0.1.0'
+    desc = 'Oh hi, this is a nice description for a project, right?'
+    website = 'https://github.com/nenick/espresso-macchiato'
+    autoPublish = false // just a try
+}
+
+scmVersion {
+    tag {
+        prefix = 'espresso-macchiato'
     }
 }
 
