@@ -21,7 +21,7 @@ allprojects {
 
     // improve build server performance by disabling incremental on circleci
     tasks.withType(JavaCompile) {
-        options.incremental = project.ext.preDexLibs
+        options.incremental = rootProject.ext.preDexLibs
     }
 }
 
