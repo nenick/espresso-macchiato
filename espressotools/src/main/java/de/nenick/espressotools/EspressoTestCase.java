@@ -37,8 +37,8 @@ public abstract class EspressoTestCase<A extends Activity> {
         CloseAllActivitiesFunction.apply(InstrumentationRegistry.getInstrumentation());
     }
 
-    public void addViewToActivity(final View view, @IdRes final int targetLayoutId) {
-        perform(new Runnable() {
+    protected void addViewToActivity(final View view, @IdRes final int targetLayoutId) {
+        performOnUiThread(new Runnable() {
             @Override
             public void run() {
                 ViewGroup layout = (ViewGroup) activityTestRule.getActivity().findViewById(targetLayoutId);
@@ -47,7 +47,7 @@ public abstract class EspressoTestCase<A extends Activity> {
         });
     }
 
-    public void perform(Runnable runnable) {
+    protected void performOnUiThread(Runnable runnable) {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(runnable);
     }
 

@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.action.ViewActions;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -18,22 +19,26 @@ public class EspView {
     }
 
     public void assertIsVisible() {
-        onView(withId(contentResource)).check(matches(isDisplayed()));
+        findView().check(matches(isDisplayed()));
     }
 
     public void assertIsHidden() {
-        onView(withId(contentResource)).check(matches(not(isDisplayed())));
+        findView().check(matches(not(isDisplayed())));
     }
 
     public void assertIsEnabled() {
-        onView(withId(contentResource)).check(matches(isDisplayed()));
+        findView().check(matches(isDisplayed()));
     }
 
     public void assertIsDisabled() {
-        onView(withId(contentResource)).check(matches(not(isEnabled())));
+        findView().check(matches(not(isEnabled())));
     }
 
     public void click() {
-        onView(withId(contentResource)).perform(ViewActions.click());
+        findView().perform(ViewActions.click());
+    }
+
+    protected ViewInteraction findView() {
+        return onView(withId(contentResource));
     }
 }

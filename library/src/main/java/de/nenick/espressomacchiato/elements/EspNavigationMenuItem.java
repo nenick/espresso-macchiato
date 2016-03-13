@@ -2,7 +2,6 @@ package de.nenick.espressomacchiato.elements;
 
 import android.support.design.internal.NavigationMenuItemView;
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.action.ViewActions;
 import android.view.View;
 
 import org.hamcrest.Matcher;
@@ -19,32 +18,29 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
-public class EspNavigationMenuItem {
+public class EspNavigationMenuItem extends EspView {
 
     private String itemText;
 
     public EspNavigationMenuItem(String itemText) {
+        super(0);
         this.itemText = itemText;
     }
 
-    public void click() {
-        findView().perform(ViewActions.click());
-    }
-
-    public void checkIsSelected() {
+    public void assertIsSelected() {
         findView().check(matches(withChild(isChecked())));
     }
 
-    public void checkIsNotSelected() {
+    public void assertIsNotSelected() {
         findView().check(matches(withChild(isNotChecked())));
-    }
-
-    private ViewInteraction findView() {
-        return onView(allOf(instanceOf(NavigationMenuItemView.class), withChildGroups(withText(itemText)), isDisplayed()));
     }
 
     private static Matcher<View> withChildGroups(final Matcher<View> childMatcher) {
         return new ChildRecursiveMatcher(childMatcher);
     }
 
+    @Override
+    protected ViewInteraction findView() {
+        return onView(allOf(instanceOf(NavigationMenuItemView.class), withChildGroups(withText(itemText)), isDisplayed()));
+    }
 }

@@ -19,7 +19,7 @@ public class EspTextViewTest extends EspressoTestCase<BaseActivity> {
         TextView textView = new TextView(activityTestRule.getActivity());
         textView.setId(textViewId);
         textView.setText(textViewText);
-        addViewToActivity(textView, BaseActivity.linearLayout);
+        addViewToActivity(textView, BaseActivity.rootLayout);
     }
 
     @Test

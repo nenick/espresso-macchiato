@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.support.test.espresso.PerformException;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,11 +27,18 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     public void setup() {
         view = new Button(activityTestRule.getActivity());
         view.setId(viewId);
-        addViewToActivity(view, BaseActivity.linearLayout);
+        addViewToActivity(view, BaseActivity.rootLayout);
 
         messageView = new TextView(activityTestRule.getActivity());
         messageView.setId(messageViewId);
-        addViewToActivity(messageView, BaseActivity.linearLayout);
+        addViewToActivity(messageView, BaseActivity.rootLayout);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                messageView.setText(VIEW_WAS_CLICKED_MESSAGE);
+            }
+        });
     }
 
     @Test
@@ -47,18 +55,21 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testClick() {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messageView.setText(VIEW_WAS_CLICKED_MESSAGE);
-            }
-        });
         espView.click();
         espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
     }
 
+    @Test
+    public void testClickFailureWhenNotVisible() {
+        exception.expect(PerformException.class);
+        exception.expectMessage("Error performing 'single click' on view 'with id: android:id/edit'.");
+
+        view.setVisibility(View.INVISIBLE);
+        espView.click();
+    }
+
     private void givenViewIsHidden() {
-        perform(new Runnable() {
+        performOnUiThread(new Runnable() {
             @Override
             public void run() {
                 view.setVisibility(View.INVISIBLE);
@@ -67,7 +78,7 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     }
 
     private void givenViewIsDisabled() {
-        perform(new Runnable() {
+        performOnUiThread(new Runnable() {
             @Override
             public void run() {
                 view.setEnabled(false);

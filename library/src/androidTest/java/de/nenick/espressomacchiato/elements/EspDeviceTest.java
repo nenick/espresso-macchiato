@@ -67,7 +67,7 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
         Button button = new Button(activityTestRule.getActivity());
         button.setText(nextPageButtonText);
         button.setId(nextPageButtonId);
-        addViewToActivity(button, BaseActivity.linearLayout);
+        addViewToActivity(button, BaseActivity.rootLayout);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

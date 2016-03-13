@@ -8,9 +8,9 @@ import de.nenick.espressomacchiato.test.R;
 
 public class NavigationDrawerActivity extends AppCompatActivity {
 
-    //public static int rootLayout = R.id.layout_activity_drawer;
+    public static int rootLayout = R.id.layout_activity_navigation_drawer;
     public static int drawerLayout = R.id.drawer_layout;
-    public static int drawerContentLayout = R.id.drawer_content;
+    public static int drawerNavigationView = R.id.drawer_content;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

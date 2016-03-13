@@ -9,7 +9,6 @@ import de.nenick.espressomacchiato.test.R;
 public class BaseActivity extends AppCompatActivity {
 
     public static int rootLayout = R.id.layout_activity_base;
-    public static int linearLayout = R.id.layout_activity_base;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
