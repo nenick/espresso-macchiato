@@ -15,7 +15,7 @@ dependencies:
 test:
   pre:
     # start emulator for instrumentation tests
-    - emulator -avd circleci-android22 -no-audio -no-window -gpu on -memory 2048:
+    - emulator -avd circleci-android22 -no-audio -no-window -memory 2048:
         background: true
 
   override:
