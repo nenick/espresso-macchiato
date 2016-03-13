@@ -8,6 +8,7 @@ import de.nenick.espressomacchiato.test.R;
 public class BaseActivity extends AppCompatActivity {
 
     public static int linearLayout = R.id.mainLinearLayout;
+    public static int rootLayout = R.id.mainLinearLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
