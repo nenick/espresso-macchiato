@@ -38,13 +38,17 @@ public abstract class EspressoTestCase<A extends Activity> {
     }
 
     public void addViewToActivity(final View view, @IdRes final int targetLayoutId) {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+        perform(new Runnable() {
             @Override
             public void run() {
                 ViewGroup layout = (ViewGroup) activityTestRule.getActivity().findViewById(targetLayoutId);
                 layout.addView(view);
             }
         });
+    }
+
+    public void perform(Runnable runnable) {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(runnable);
     }
 
     private void avoidLockScreen() {
