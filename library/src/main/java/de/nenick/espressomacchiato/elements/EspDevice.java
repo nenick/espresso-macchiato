@@ -1,17 +1,13 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.content.res.Configuration;
-import android.support.annotation.NonNull;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.ViewAssertion;
-import android.view.View;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationLandscape;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationPortrait;
+import static de.nenick.espressomacchiato.assertions.OrientationAssertion.isOrientationLandscape;
+import static de.nenick.espressomacchiato.assertions.OrientationAssertion.isOrientationPotrait;
 
 /**
  * Actions you can do with android devices.
@@ -49,55 +45,13 @@ public class EspDevice {
      * Check if activity orientation is portrait.
      */
     public void assertOrientationIsPortrait() {
-        onView(isRoot()).check(orientation(Configuration.ORIENTATION_PORTRAIT));
+        onView(isRoot()).check(isOrientationPotrait());
     }
 
     /**
      * Check if activity orientation is landscape.
      */
     public void assertOrientationIsLandscape() {
-        onView(isRoot()).check(orientation(Configuration.ORIENTATION_LANDSCAPE));
-    }
-
-    @NonNull
-    private ViewAssertion orientation(final int expectedOrientation) {
-        return new OrientationAssertion(expectedOrientation);
-    }
-
-    private static String orientationAsString(int orientation) {
-        switch (orientation) {
-            case Configuration.ORIENTATION_PORTRAIT:
-                return "PORTRAIT";
-            case Configuration.ORIENTATION_LANDSCAPE:
-                return "LANDSCAPE";
-            default:
-                return "UNDEFINED";
-        }
-    }
-
-    private int currentOrientation() {
-        return InstrumentationRegistry.getContext().getResources().getConfiguration().orientation;
-    }
-
-    private class OrientationAssertion implements ViewAssertion {
-        private final int expectedOrientation;
-
-        public OrientationAssertion(int expectedOrientation) {
-            this.expectedOrientation = expectedOrientation;
-        }
-
-        @Override
-        public void check(View view, NoMatchingViewException noViewFoundException) {
-            if (noViewFoundException != null) {
-                throw noViewFoundException;
-            }
-
-            if (currentOrientation() != expectedOrientation) {
-                String errorMessage = "expected device orientation "
-                        + orientationAsString(expectedOrientation)
-                        + " but was " + orientationAsString(currentOrientation());
-                throw new AssertionError(errorMessage);
-            }
-        }
+        onView(isRoot()).check(isOrientationLandscape());
     }
 }
