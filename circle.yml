@@ -49,7 +49,7 @@ test:
     # start instrumentation tests on emulator
     # -i is used to see current test execution progress
     - ./gradlew :library:connectedCheck -i:
-      timeout: 7200
+        timeout: 7200
     - ./gradlew :sampleapp:connectedCheck -i
 
   post:
@@ -57,13 +57,11 @@ test:
     - adb logcat -d > $CIRCLE_ARTIFACTS/logcat_emulator.txt
 
     # for espressotools module
-    - mkdir -p $CIRCLE_TEST_REPORTS/espressotools_android_tests
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
-    - cp -r espressotools/build/outputs/lint-results-debug_files/lint* $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
+    - cp -r espressotools/build/outputs/lint* $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
 
     # for library module
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml
     - cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml
@@ -75,10 +73,9 @@ test:
     - cp -r library/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/library_android_tests/coverage
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/lint
-    - cp -r library/build/outputs/lint-results-debug_files/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
+    - cp -r library/build/outputs/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
 
     # for sampleapp module
-    - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
     - cp -r sampleapp/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
@@ -90,7 +87,7 @@ test:
     - cp -r sampleapp/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/coverage
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
-    - cp -r sampleapp/build/outputs/lint-results-debug_files/lint* $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
+    - cp -r sampleapp/build/outputs/lint* $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
 
 deployment:
   coverage:
