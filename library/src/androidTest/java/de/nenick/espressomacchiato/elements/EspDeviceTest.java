@@ -1,20 +1,15 @@
 package de.nenick.espressomacchiato.elements;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import de.nenick.espressotools.EspressoTestCase;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
+import de.nenick.espressotools.EspressoTestCase;
 
 import static org.hamcrest.CoreMatchers.is;
 
 public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
 
     private EspDevice espDevice = new EspDevice();
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void testRotate() {

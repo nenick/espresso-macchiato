@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import java.lang.reflect.ParameterizedType;
@@ -19,6 +20,9 @@ public abstract class EspressoTestCase<A extends Activity> {
 
     @Rule
     public ActivityTestRule<A> activityTestRule = new ActivityTestRule<>((getGenericActivityClass()));
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setupEspresso() {
