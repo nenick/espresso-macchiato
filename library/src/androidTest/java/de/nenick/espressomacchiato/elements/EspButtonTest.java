@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.support.test.InstrumentationRegistry;
 import android.widget.Button;
 
 import org.junit.Before;
@@ -16,10 +17,16 @@ public class EspButtonTest extends EspressoTestCase<BaseActivity> {
 
     @Before
     public void setup() {
-        Button button = new Button(activityTestRule.getActivity());
+        final Button button = new Button(activityTestRule.getActivity());
         button.setId(buttonId);
         button.setText(buttonText);
-        activityTestRule.getActivity().addContentView(button, null);
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                activityTestRule.getActivity().addContentView(button, null);
+            }
+        });
     }
 
     @Test
