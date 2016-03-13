@@ -81,16 +81,17 @@ page implementation
 
 ### create release
 
-For a release just run following command from your PC:
+Finish RELEASE_NOTES.md and run following command from your PC (change version!):
 
-    ./gradlew :library:release
+    ./gradlew :library:release -Prelease.version=1.2.0
 
 This command will do and trigger:
 
-1. check current git status for not synchronized changes
-2. create new release tag
-3. push release tag to github
-4. circle ci build and test the release tag
-5. circle ci push the release artifacts to bintray.
+1. do: check current git status for not synchronized changes
+2. do: create new release tag with given release.version
+3. do: push release tag to github
+4. trigger: circle ci to build and test the release tag
+5. trigger: circle ci to push the release artifacts to bintray
+5. trigger: circle ci to push the release artifacts to github
 
 With the last step the release is ready and can be used.

@@ -1,5 +1,6 @@
 plugins {
     id 'pl.allegro.tech.build.axion-release' version '1.3.4'
+    id "co.riiid.gradle" version "0.4.2"
 }
 
 apply plugin: 'com.android.library'
@@ -13,9 +14,6 @@ android {
         // target lowest min sdk which is supported by espresso
         minSdkVersion 8
         targetSdkVersion 23
-
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -31,21 +29,6 @@ android {
     }
 }
 
-publish {
-    groupId = 'de.nenick'
-    artifactId = 'espresso-macchiato'
-    publishVersion = '0.1.0'
-    desc = 'Oh hi, this is a nice description for a project, right?'
-    website = 'https://github.com/nenick/espresso-macchiato'
-    autoPublish = false // just a try
-}
-
-scmVersion {
-    tag {
-        prefix = 'release'
-    }
-}
-
 dependencies {
     compile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
         exclude module: 'junit' // because of lint error
@@ -55,4 +38,44 @@ dependencies {
     androidTestCompile 'junit:junit:4.12'
     androidTestCompile 'com.squareup.assertj:assertj-android:1.1.1'
     androidTestCompile project(':espressotools')
+}
+
+// Original see: http://ryanharter.com/blog/2013/07/30/automatic-versioning-with-git-and-gradle/
+def currentReleaseTag = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags', '--match', 'release*'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+// plugin configuration to publish release artifacts to bintray
+publish {
+    groupId = 'de.nenick'
+    artifactId = 'espresso-macchiato'
+    publishVersion = currentReleaseTag().replace("release-", "")
+    desc = 'Oh hi, this is a nice description for a project, right?'
+    website = 'https://github.com/nenick/espresso-macchiato'
+    autoPublish = false // just a try
+}
+
+// plugin configuration to create release tag and push to github
+scmVersion {
+    tag {
+        prefix = 'release'
+    }
+}
+
+// plugin configuration to publish release artifacts to github
+github {
+    //noinspection GroovyAssignabilityCheck
+    owner = 'nenick'
+    repo = 'espresso-macchiato'
+    token = 'XXXXXXXXXXXXXXXXXXXXX'
+    tagName = currentReleaseTag()
+    targetCommitish = 'master'
+    name = currentReleaseTag()
+    body = new File('../RELEASE_NOTES.md').text
+    assets = ['library/build/outputs/aar/library-release.aar']
 }
