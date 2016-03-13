@@ -15,7 +15,7 @@ dependencies:
 test:
   pre:
     # start emulator for instrumentation tests
-    - emulator -avd circleci-android22 -no-audio -no-window:
+    - emulator -avd circleci-android22 -no-audio -no-window -gpu on -memory 2048:
         background: true
 
   override:
@@ -38,7 +38,7 @@ test:
     # the necessary sleep duration may change with time and depends on the pre tasks length.
     # When all pre tasks are run long enough then waiting will not be necessary anymore.
     # This sleep should avoid the com.android.builder.testing.api.DeviceException: com.android.ddmlib.ShellCommandUnresponsiveException
-    - sleep 60
+    # - sleep 60
 
     # remove the look screen
     - adb shell input keyevent 82
@@ -48,7 +48,8 @@ test:
 
     # start instrumentation tests on emulator
     # -i is used to see current test execution progress
-    - ./gradlew :library:connectedCheck -i
+    - ./gradlew :library:connectedCheck -i:
+      timeout: 7200
     - ./gradlew :sampleapp:connectedCheck -i
 
   post:
