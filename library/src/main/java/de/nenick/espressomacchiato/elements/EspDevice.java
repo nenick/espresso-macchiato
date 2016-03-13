@@ -16,7 +16,7 @@ public class EspDevice {
 
     /**
      * Click androids back button.
-     * <p/>
+     * <p>
      * This is not the up button from an ActionBar.
      */
     public void clickBackButton() {
@@ -25,7 +25,7 @@ public class EspDevice {
 
     /**
      * Rotate screen to portrait.
-     * <p/>
+     * <p>
      * Orientation is only changed if activity does not specify android:screenOrientation.
      */
     public void rotateToPortrait() {
@@ -34,7 +34,7 @@ public class EspDevice {
 
     /**
      * Rotate screen to landscape.
-     * <p/>
+     * <p>
      * Orientation is only changed if activity does not specify android:screenOrientation.
      */
     public void rotateToLandscape() {
