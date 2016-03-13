@@ -42,7 +42,7 @@ publish {
 
 scmVersion {
     tag {
-        prefix = 'espresso-macchiato'
+        prefix = 'release'
     }
 }
 

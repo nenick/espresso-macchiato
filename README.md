@@ -76,3 +76,21 @@ page implementation
             return new EspTextView(R.id.textViewErrorMessage);
         }
     }
+
+## Contribute
+
+### create release
+
+For a release just run following command from your PC:
+
+    ./gradlew :library:release
+
+This command will do and trigger:
+
+1. check current git status for not synchronized changes
+2. create new release tag
+3. push release tag to github
+4. circle ci build and test the release tag
+5. circle ci push the release artifacts to bintray.
+
+With the last step the release is ready and can be used.
