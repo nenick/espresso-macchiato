@@ -8,7 +8,6 @@ import android.support.test.runner.lifecycle.ActivityLifecycleMonitor;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
 
-
 import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -74,7 +73,9 @@ public class CloseAllActivitiesFunction {
                 activities.removeAll(getActivitiesInStages(Stage.DESTROYED));
                 if (activities.size() > 0) {
                     final Activity activity = activities.iterator().next();
-                    activity.finish();
+                    if(!activity.isFinishing()) {
+                        activity.finish();
+                    }
                     return true;
                 } else {
                     return false;
