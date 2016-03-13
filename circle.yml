@@ -20,10 +20,17 @@ test:
 
   override:
     # pre build code to see how many time each task realy need
+    - ./gradlew :espressotools:assembleRelease
+    - ./gradlew :library:assembleRelease
     - ./gradlew :library:assembleDebug
     - ./gradlew :library:assembleDebugAndroidTest
     - ./gradlew :sampleapp:assembleDebug
     - ./gradlew :sampleapp:assembleDebugAndroidTest
+
+    # check lint for error reporting
+    - ./gradlew :espressotools:lintDebug
+    - ./gradlew :library:lintDebug
+    - ./gradlew :sampleapp:lintDebug
 
     # ensure that the emulator is ready to use
     - circle-android wait-for-boot
@@ -48,27 +55,41 @@ test:
     # collect logs from emulator and make them accessable
     - adb logcat -d > $CIRCLE_ARTIFACTS/logcat_emulator.txt
 
+    # for espressotools module
+    - mkdir -p $CIRCLE_TEST_REPORTS/espressotools_android_tests
+    # collect lint report
+    - mkdir -p $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
+    - cp -r espressotools/build/outputs/lint-results-debug_files/lint* $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
+
     # for library module
-    # collect html test results and make them accessable
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests_html
-    - cp -r library/build/reports/androidTests/connected $CIRCLE_TEST_REPORTS/library_android_tests_html
-    # collect test coverage results and make them accessable
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests_coverage
-    - cp -r library/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/library_android_tests_coverage
-    # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests
-    - cp -r library/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS/library_android_tests
+    # collect xml test results for circle ci to analyze them
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml
+    - cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml
+    # collect html test results and make them accessable
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html
+    - cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html
+    # collect test coverage results and make them accessable
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage
+    - cp -r library/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/library_android_tests/coverage
+    # collect lint report
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/lint
+    - cp -r library/build/outputs/lint-results-debug_files/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
 
     # for sampleapp module
-    # collect html test results and make them accessable
-    - mkdir -p $CIRCLE_TEST_REPORTS/samplapp_android_tests_html
-    - cp -r sampleapp/build/reports/androidTests/connected $CIRCLE_TEST_REPORTS/sampleapp_android_tests_html
-    # collect test coverage results and make them accessable
-    - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests_coverage
-    - cp -r sampleapp/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/sampleapp_android_tests_coverage
-    # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests
-    - cp -r sampleapp/build/outputs/androidTest-results $CIRCLE_TEST_REPORTS/sampleapp_android_tests
+    # collect xml test results for circle ci to analyze them
+    - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
+    - cp -r sampleapp/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
+    # collect html test results and make them accessable
+    - mkdir -p $CIRCLE_TEST_REPORTS/samplapp_android_tests/html
+    - cp -r sampleapp/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/html
+    # collect test coverage results and make them accessable
+    - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/coverage
+    - cp -r sampleapp/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/coverage
+    # collect lint report
+    - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
+    - cp -r sampleapp/build/outputs/lint-results-debug_files/lint* $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
 
 deployment:
   coverage:

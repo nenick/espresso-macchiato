@@ -25,12 +25,18 @@ android {
             testCoverageEnabled = true
         }
     }
+    android {
+        lintOptions {
+            disable 'GoogleAppIndexingWarning' // ignore GoogleAppIndexingWarning, this app will never be released
+        }
+    }
 }
 
 dependencies {
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
 
+    androidTestCompile 'junit:junit:4.12'
     androidTestCompile project(':library')
     androidTestCompile project(':espressotools')
 }

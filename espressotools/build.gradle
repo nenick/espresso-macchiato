@@ -19,5 +19,5 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    provided 'com.android.support.test.espresso:espresso-core:2.2.1'
 }
