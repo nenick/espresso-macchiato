@@ -52,17 +52,13 @@ public class OrientationChangeAction implements ViewAction {
     @Override
     public void perform(UiController uiController, View view) {
         final Activity activity = (Activity) view.getContext();
+
         // change rotation programmatically ignores android manifest configurations
         if (hasActivityFixedOrientation(activity)) {
             return;
         }
-        uiController.loopMainThreadUntilIdle();
 
         activity.setRequestedOrientation(requestedOrientation);
-        Collection<Activity> resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-        if (resumedActivities.isEmpty()) {
-            throw new IllegalStateException("No activities in state resumed. That could mean orientation change failed.");
-        }
 
         // wait until rotation is done, espresso checks and actions don't wait
         // sometimes activity is not rotated when next check or action is performed
@@ -78,7 +74,6 @@ public class OrientationChangeAction implements ViewAction {
 
         // collect AndroidManifest.xml activities properties
         try {
-
             activities = currentActivity.getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES).activities;
         } catch (PackageManager.NameNotFoundException e) {
             throw new IllegalStateException("No activities found for " + packageName + " in AndroidManifest.xml", e);
@@ -93,7 +88,7 @@ public class OrientationChangeAction implements ViewAction {
 
             // report if the activity requestedOrientation is fixed
             if (activity.screenOrientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
-                Log.d(OrientationChangeAction.class.getSimpleName(), "Ignore requestedOrientation change because requestedOrientation for this activity is fixed in AndroidManifest.xml.");
+                Log.d(OrientationChangeAction.class.getSimpleName(), "Ignore orientation change because orientation for this activity is fixed in AndroidManifest.xml.");
                 return true;
             } else {
                 return false;
