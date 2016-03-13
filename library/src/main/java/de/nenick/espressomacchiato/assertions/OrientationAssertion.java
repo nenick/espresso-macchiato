@@ -1,7 +1,6 @@
 package de.nenick.espressomacchiato.assertions;
 
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
