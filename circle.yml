@@ -104,4 +104,7 @@ deployment:
     tag: /release-.*/
     owner: nenick
     commands:
-      - ./gradlew :library:bintrayUpload -PdryRun=false
+      # push release artifacts to github
+      - ./gradlew :library:githubRelease -PgithubUser=$GITHUB_USERNAME -PgithubKey=$GITHUB_WRITE_PUBLIC_REPOS_TOKEN
+      # push release artifacts to bintray
+      - ./gradlew -PbintrayUser=$BINTRAY_USERNAME -PbintrayKey=$BINTRAY_KEY -PdryRun=false

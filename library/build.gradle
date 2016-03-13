@@ -70,12 +70,12 @@ scmVersion {
 // plugin configuration to publish release artifacts to github
 github {
     //noinspection GroovyAssignabilityCheck
-    owner = 'nenick'
+    owner = project.hasProperty("githubUser") ? project.property("githubUser") : "undefined"
     repo = 'espresso-macchiato'
-    token = 'XXXXXXXXXXXXXXXXXXXXX'
+    token = project.hasProperty("githubKey") ? project.property("githubKey") : "undefined"
     tagName = currentReleaseTag()
     targetCommitish = 'master'
     name = currentReleaseTag()
-    body = new File('../RELEASE_NOTES.md').text
+    body = new File('RELEASE_NOTES.md').text
     assets = ['library/build/outputs/aar/library-release.aar']
 }
