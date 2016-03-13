@@ -1,9 +1,12 @@
 package de.nenick.espressotools;
 
 import android.app.Activity;
+import android.support.annotation.IdRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import org.junit.After;
@@ -32,6 +35,16 @@ public abstract class EspressoTestCase<A extends Activity> {
     @After
     public void cleanupEspresso() throws Exception {
         CloseAllActivitiesFunction.apply(InstrumentationRegistry.getInstrumentation());
+    }
+
+    public void addViewToActivity(final View view, @IdRes final int targetLayoutId) {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                ViewGroup layout = (ViewGroup) activityTestRule.getActivity().findViewById(targetLayoutId);
+                layout.addView(view);
+            }
+        });
     }
 
     private void avoidLockScreen() {
