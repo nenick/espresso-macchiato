@@ -15,7 +15,7 @@ dependencies:
 test:
   pre:
     # start emulator for instrumentation tests
-    - emulator -avd circleci-android22 -no-audio -no-window -memory 2048:
+    - emulator -avd circleci-android22 -no-audio -no-window -memory 3072:
         background: true
 
   override:
@@ -48,8 +48,7 @@ test:
 
     # start instrumentation tests on emulator
     # -i is used to see current test execution progress
-    - ./gradlew :library:connectedCheck -i:
-        timeout: 7200
+    - ./gradlew :library:connectedCheck -i
     - ./gradlew :sampleapp:connectedCheck -i
 
   post:
