@@ -1,7 +1,8 @@
-[![Circle CI](https://circleci.com/gh/nenick/espresso-macchiato.svg?style=shield)](https://circleci.com/gh/nenick/espresso-macchiato)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/c6cc5e2303234780b4ae3118d93eb35f)](https://www.codacy.com/app/nico_kuechler/espresso-macchiato)
-[![codecov.io](https://codecov.io/github/nenick/espresso-macchiato/coverage.svg?branch=master)](https://codecov.io/github/nenick/espresso-macchiato?branch=master)
-[![Download](https://api.bintray.com/packages/nenick/maven/espresso-macchiato/images/download.svg)](https://bintray.com/nenick/maven/espresso-macchiato/_latestVersion)
+[![Circle CI](https://img.shields.io/circleci/project/nenick/espresso-macchiato/master.svg)](https://circleci.com/gh/nenick/espresso-macchiato)
+[![Codacy Badge](https://img.shields.io/codacy/c6cc5e2303234780b4ae3118d93eb35f/master.svg)](https://www.codacy.com/app/nico_kuechler/espresso-macchiato)
+[![codecov.io](https://img.shields.io/codecov/c/github/nenick/espresso-macchiato/master.svg)](https://codecov.io/github/nenick/espresso-macchiato?branch=master)
+[![Download](https://img.shields.io/bintray/v/nenick/maven/espresso-macchiato.svg)](https://bintray.com/nenick/maven/espresso-macchiato/_latestVersion)
+
 
 # espresso-macchiato
 *A dollop of foamed milk with the texture of melted ice cream.*
