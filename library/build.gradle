@@ -59,7 +59,8 @@ publish {
     publishVersion = currentReleaseTag().replace("release-", "")
     desc = 'Oh hi, this is a nice description for a project, right?'
     website = 'https://github.com/nenick/espresso-macchiato'
-    autoPublish = false // just a try
+    licences = ['AML'] // AML = MIT license http://spdx.org/licenses/
+    autoPublish = true
 }
 
 // plugin configuration to create release tag and push to github
