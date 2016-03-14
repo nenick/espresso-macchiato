@@ -46,8 +46,10 @@ def currentReleaseTag = { ->
     exec {
         commandLine 'git', 'describe', '--tags', '--match', 'release*'
         standardOutput = stdout
+        ignoreExitValue = true
     }
-    return stdout.toString().trim()
+    def releaseTag = stdout.toString().trim()
+    return releaseTag ? releaseTag : "release-0.0.0"
 }
 
 // plugin configuration to publish release artifacts to bintray

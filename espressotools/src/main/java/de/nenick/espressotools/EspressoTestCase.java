@@ -1,14 +1,19 @@
 package de.nenick.espressotools;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.FailureHandler;
+import android.support.test.espresso.base.DefaultFailureHandler;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,6 +34,7 @@ public abstract class EspressoTestCase<A extends Activity> {
 
     @Before
     public void setupEspresso() {
+        Espresso.setFailureHandler(new CustomFailureHandler(activityTestRule.getActivity()));
         avoidLockScreen();
     }
 
@@ -78,4 +84,19 @@ public abstract class EspressoTestCase<A extends Activity> {
             throw new IllegalArgumentException("Please provide generic start activity for " + getClass().getSimpleName() + " (e.g. extends EspressoTestCase<MyStartActivity>)");
         }
     }
+
+    private class CustomFailureHandler implements FailureHandler {
+        private final FailureHandler delegate;
+
+        public CustomFailureHandler(Context targetContext) {
+            delegate = new DefaultFailureHandler(targetContext);
+        }
+
+        @Override
+        public void handle(Throwable error, Matcher<View> viewMatcher) {
+            //ScreenShot.take();
+            delegate.handle(error, viewMatcher);
+        }
+    }
+
 }
