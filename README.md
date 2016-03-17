@@ -12,6 +12,15 @@ We use original bintray badged until issue is fixed https://github.com/badges/sh
 # espresso-macchiato
 *A dollop of foamed milk with the texture of melted ice cream.*
 
+repository
+
+    maven { url = "https://dl.bintray.com/nenick/maven/" }
+
+dependency
+
+    androidTestCompile ('de.nenick:espresso-macchiato:0.1.1@aar')
+
+
 ## Espresso extension
 
 Target is to hide most of the hamcrest style checks and actions.
