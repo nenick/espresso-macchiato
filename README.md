@@ -58,11 +58,11 @@ espresso
 
 espresso-macchiato
 
-    new EspButton(R.id.buttonConfirm).checkIsDisabled();
-    new EspEditText(R.id.editTextUsername).replaceText("MyUserName");
-    new EspEditText(R.id.editTextPassword).replaceText("*****");
-    new EspButton(R.id.buttonConfirm).click();
-    new EspTextView(R.id.textViewErrorMessage).checkTextIs("Username or password not correct.");
+    EspButton.byId(R.id.buttonConfirm).checkIsDisabled();
+    EspEditText.byId(R.id.editTextUsername).replaceText("MyUserName");
+    EspEditText.byId(R.id.editTextPassword).replaceText("*****");
+    EspButton.byId(R.id.buttonConfirm).click();
+    EspTextView.byId(R.id.textViewErrorMessage).checkTextIs("Username or password not correct.");
 
 page object pattern
 
@@ -77,19 +77,19 @@ page implementation
     public class LoginPage {
 
         public EspButton confirn() {
-            return new EspButton(R.id.buttonConfirm);
+            return EspButton.byId(R.id.buttonConfirm);
         }
 
         public EspEditText username() {
-            return new EspTextView(R.id.textViewUsername);
+            return EspTextView.byId(R.id.textViewUsername);
         }
 
         public EspEditText password() {
-            return new EspTextView(R.id.textViewPassword);
+            return EspTextView.byId(R.id.textViewPassword);
         }
 
         public EspTextView errorMessage() {
-            return new EspTextView(R.id.textViewErrorMessage);
+            return EspTextView.byId(R.id.textViewErrorMessage);
         }
     }
 
