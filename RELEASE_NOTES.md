@@ -11,12 +11,12 @@ planed
 * All - static factory methods to hide view resolution details
 * All - view resolution by default only if visible
 * All - easy way to extend view resolution
-* Dependencies - don't exclude junit, just ignore lint error
-* Dependencies - bump espresso tools to 2.2.2
 
 done
 
 * EspDevice - close soft keyboard and do assertions for it
+* Dependencies - don't exclude junit, just ignore lint error
+* Dependencies - update espresso 2.2.1 to 2.2.2
 
 #### New in release 0.1.1
 
