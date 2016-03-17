@@ -12,7 +12,7 @@ public class EspTextViewTest extends EspressoTestCase<BaseActivity> {
 
     private String textViewText = "my text";
     private int textViewId = android.R.id.text1;
-    private EspTextView espTextView = new EspTextView(textViewId);
+    private EspTextView espTextView = EspTextView.byId(textViewId);
 
     @Before
     public void setup() {

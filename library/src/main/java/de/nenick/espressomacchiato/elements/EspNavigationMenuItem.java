@@ -22,6 +22,10 @@ public class EspNavigationMenuItem extends EspView {
 
     private String itemText;
 
+    public static EspNavigationMenuItem byText(String text) {
+        return new EspNavigationMenuItem(text);
+    }
+
     public EspNavigationMenuItem(String itemText) {
         super(0);
         this.itemText = itemText;

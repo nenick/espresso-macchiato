@@ -7,7 +7,7 @@ import de.nenick.espressotools.EspressoTestCase;
 
 public class EspDrawerTest extends EspressoTestCase<NavigationDrawerActivity> {
 
-    private EspDrawer espDrawer = new EspDrawer(NavigationDrawerActivity.drawerLayout, NavigationDrawerActivity.drawerNavigationView);
+    private EspDrawer espDrawer = EspDrawer.byId(NavigationDrawerActivity.drawerLayout, NavigationDrawerActivity.drawerNavigationView);
 
     @Test
     public void testDrawer() {

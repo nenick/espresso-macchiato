@@ -7,8 +7,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class EspEditText extends EspView {
 
-    public EspEditText(int contentResource) {
-        super(contentResource);
+    public static EspEditText byId(int resourceId) {
+        return new EspEditText(resourceId);
+    }
+
+    public EspEditText(int resourceId) {
+        super(resourceId);
     }
 
     public void replaceText(String newText) {

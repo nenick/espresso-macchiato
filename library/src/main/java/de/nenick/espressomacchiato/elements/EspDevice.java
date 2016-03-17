@@ -21,6 +21,10 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class EspDevice {
 
+    public static EspDevice root() {
+        return new EspDevice();
+    }
+
     /**
      * Click androids back button.
      * <p>

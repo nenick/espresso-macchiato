@@ -7,7 +7,7 @@ import de.nenick.espressotools.EspressoTestCase;
 
 public class EspPageTest extends EspressoTestCase<BaseActivity> {
 
-    private EspPage espPage = new EspPage(BaseActivity.rootLayout);
+    private EspPage espPage = EspPage.byId(BaseActivity.rootLayout);
 
     @Test
     public void testPage() {

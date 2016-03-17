@@ -11,7 +11,7 @@ import de.nenick.espressotools.EspressoTestCase;
 public class EspEditTextTest extends EspressoTestCase<BaseActivity> {
 
     private int editTextId = android.R.id.edit;
-    private EspEditText espEditText = new EspEditText(editTextId);
+    private EspEditText espEditText = EspEditText.byId(editTextId);
 
     @Before
     public void setup() {

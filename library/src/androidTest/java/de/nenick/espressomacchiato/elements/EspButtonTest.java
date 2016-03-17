@@ -12,7 +12,7 @@ public class EspButtonTest extends EspressoTestCase<BaseActivity> {
 
     private String buttonText = "my button";
     private int buttonId = android.R.id.button1;
-    private EspButton espButton = new EspButton(buttonId);
+    private EspButton espButton = EspButton.byId(buttonId);
 
     @Before
     public void setup() {

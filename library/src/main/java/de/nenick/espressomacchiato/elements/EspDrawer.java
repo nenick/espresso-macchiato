@@ -10,6 +10,16 @@ public class EspDrawer extends EspView {
 
     protected final int drawerLayout;
 
+    public static EspDrawer byId(int drawerLayout, int drawerContent) {
+        return new EspDrawer(drawerLayout, drawerContent);
+    }
+
+    /** hide {@link EspView#byId(int)} */
+    @Deprecated
+    public static EspView byId(int resourceId) {
+        throw new UnsupportedOperationException();
+    }
+
     public EspDrawer(int drawerLayout, int drawerContent) {
         super(drawerContent);
         this.drawerLayout = drawerLayout;

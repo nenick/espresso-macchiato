@@ -8,13 +8,13 @@ planed
 * EspSimpleTwoButtonsDialog
 * EspSimpleThreeButtonsDialog
 * EspSimpleButtonListDialog
-* All - static factory methods to hide view resolution details
 * All - view resolution by default only if visible
 * All - easy way to extend view resolution
 
 done
 
 * EspDevice - close soft keyboard and do assertions for it
+* All - static factory methods to hide view resolution details
 * Dependencies - don't exclude junit, just ignore lint error
 * Dependencies - update espresso 2.2.1 to 2.2.2
 

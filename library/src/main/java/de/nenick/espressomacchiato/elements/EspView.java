@@ -12,10 +12,14 @@ import static org.hamcrest.CoreMatchers.not;
 
 public class EspView {
 
-    protected final int contentResource;
+    protected final int resourceId;
 
-    public EspView(int contentResource) {
-        this.contentResource = contentResource;
+    public static EspView byId(int resourceId) {
+        return new EspView(resourceId);
+    }
+
+    public EspView(int resourceId) {
+        this.resourceId = resourceId;
     }
 
     public void assertIsVisible() {
@@ -39,6 +43,6 @@ public class EspView {
     }
 
     protected ViewInteraction findView() {
-        return onView(withId(contentResource));
+        return onView(withId(resourceId));
     }
 }

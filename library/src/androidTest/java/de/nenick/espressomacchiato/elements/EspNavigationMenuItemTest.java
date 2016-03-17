@@ -23,10 +23,10 @@ public class EspNavigationMenuItemTest extends EspressoTestCase<NavigationDrawer
     private static final int GROUP_ID_CUSTOM_ACTION_VIEW = 20;
     private static final int textViewClickFeedbackId = android.R.id.text2;
 
-    private EspTextView espTextViewClickFeedback = new EspTextView(textViewClickFeedbackId);
-    private EspDrawer espDrawer = new EspDrawer(NavigationDrawerActivity.drawerLayout, NavigationDrawerActivity.drawerNavigationView);
-    private EspNavigationMenuItem espNavigationMenuItemStandard = new EspNavigationMenuItem(navigationItemTitleStandard);
-    private EspNavigationMenuItem espNavigationMenuItemCustomActionView = new EspNavigationMenuItem(navigationItemTitleCustomActionView);
+    private EspTextView espTextViewClickFeedback = EspTextView.byId(textViewClickFeedbackId);
+    private EspDrawer espDrawer = EspDrawer.byId(NavigationDrawerActivity.drawerLayout, NavigationDrawerActivity.drawerNavigationView);
+    private EspNavigationMenuItem espNavigationMenuItemStandard = EspNavigationMenuItem.byText(navigationItemTitleStandard);
+    private EspNavigationMenuItem espNavigationMenuItemCustomActionView = EspNavigationMenuItem.byText(navigationItemTitleCustomActionView);
 
     @Before
     public void setup() {

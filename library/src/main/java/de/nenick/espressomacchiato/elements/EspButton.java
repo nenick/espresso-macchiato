@@ -5,8 +5,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class EspButton extends EspView {
 
-    public EspButton(int contentResource) {
-        super(contentResource);
+    public static EspButton byId(int resourceId) {
+        return new EspButton(resourceId);
+    }
+
+    public EspButton(int resourceId) {
+        super(resourceId);
     }
 
     public void assertTextIs(String expectedText) {

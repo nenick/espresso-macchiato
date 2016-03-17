@@ -2,7 +2,11 @@ package de.nenick.espressomacchiato.elements;
 
 public class EspPage extends EspView {
 
-    public EspPage(int contentResource) {
-        super(contentResource);
+    public static EspPage byId(int resourceId) {
+        return new EspPage(resourceId);
+    }
+
+    public EspPage(int resourceId) {
+        super(resourceId);
     }
 }

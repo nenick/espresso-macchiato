@@ -16,29 +16,16 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     private static final String VIEW_WAS_CLICKED_MESSAGE = "view was clicked";
 
     private int viewId = android.R.id.edit;
-    private EspView espView = new EspView(viewId);
+    private EspView espView = EspView.byId(viewId);
     private Button view;
 
     private int messageViewId = android.R.id.text1;
     private TextView messageView;
-    private EspTextView espTextView = new EspTextView(messageViewId);
+    private EspTextView espTextView = EspTextView.byId(messageViewId);
 
     @Before
     public void setup() {
-        view = new Button(activityTestRule.getActivity());
-        view.setId(viewId);
-        addViewToActivity(view, BaseActivity.rootLayout);
-
-        messageView = new TextView(activityTestRule.getActivity());
-        messageView.setId(messageViewId);
-        addViewToActivity(messageView, BaseActivity.rootLayout);
-
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messageView.setText(VIEW_WAS_CLICKED_MESSAGE);
-            }
-        });
+        givenTestViewAndClickFeedbackTextView();
     }
 
     @Test
@@ -82,6 +69,23 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
             @Override
             public void run() {
                 view.setEnabled(false);
+            }
+        });
+    }
+
+    private void givenTestViewAndClickFeedbackTextView() {
+        view = new Button(activityTestRule.getActivity());
+        view.setId(viewId);
+        addViewToActivity(view, BaseActivity.rootLayout);
+
+        messageView = new TextView(activityTestRule.getActivity());
+        messageView.setId(messageViewId);
+        addViewToActivity(messageView, BaseActivity.rootLayout);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                messageView.setText(VIEW_WAS_CLICKED_MESSAGE);
             }
         });
     }

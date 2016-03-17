@@ -23,10 +23,10 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
     private final static int nextPageButtonId = android.R.id.button1;
     private final static int editTextId = android.R.id.edit;
 
-    private EspButton espButton = new EspButton(nextPageButtonId);
-    private EspEditText espEditText = new EspEditText(editTextId);
-    private EspPage startPage = new EspPage(BaseActivity.rootLayout);
-    private EspPage nextPage = new EspPage(LandscapeFixedActivity.rootLayout);
+    private EspButton espButton = EspButton.byId(nextPageButtonId);
+    private EspEditText espEditText = EspEditText.byId(editTextId);
+    private EspPage startPage = EspPage.byId(BaseActivity.rootLayout);
+    private EspPage nextPage = EspPage.byId(LandscapeFixedActivity.rootLayout);
 
     @After
     public void reset() {
