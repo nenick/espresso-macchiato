@@ -75,6 +75,8 @@ public class EspDevice {
 
     /**
      * Check soft keyboard is open.
+     * <p>
+     * For emulator disable the hardware keyboard support (hw.keyboard=no) or soft keyboard will never be shown.
      */
     public void assertSoftKeyboardIsOpen() {
         assertSoftKeyboardIsOpen(true);
