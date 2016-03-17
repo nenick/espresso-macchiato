@@ -16,6 +16,7 @@ test:
   pre:
     # activate soft keybord because some tests do checks on it
     - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
+    - cat ~/.android/avd/circleci-android22.avd/config.ini
     # start emulator for instrumentation tests
     - emulator -avd circleci-android22 -no-audio -no-window:
         background: true
