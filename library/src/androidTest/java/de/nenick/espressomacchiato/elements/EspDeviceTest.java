@@ -93,7 +93,6 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
         exception.expectMessage(containsString("Expected: is <true>"));
         exception.expectMessage(containsString("Got: <false>"));
 
-        givenEditTextToOpenSoftKeyboard();
         espDevice.assertSoftKeyboardIsOpen();
     }
 
@@ -105,6 +104,9 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
         exception.expectMessage(containsString("Got: <false>"));
 
         givenEditTextToOpenSoftKeyboard();
+        // other test works and difference is this extra check for initial closed.
+        espDevice.assertSoftKeyboardIsClosed();
+
         espEditText.click();
         espDevice.assertSoftKeyboardIsClosed();
     }
