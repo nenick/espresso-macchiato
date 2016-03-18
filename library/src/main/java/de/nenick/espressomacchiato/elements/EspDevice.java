@@ -94,7 +94,8 @@ public class EspDevice {
         // didn't found another way to sync with keyboard actions
         try {
             // wait below 300ms was to less, keyboard actions may consume more time on emulator
-            Thread.sleep(500);
+            // wait below 1000ms was to less, keyboard actions may consume more time on emulator at circle ci
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
