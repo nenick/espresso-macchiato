@@ -27,9 +27,9 @@ public class EspDevice {
     public static final int DELAY_FOR_FAST_DEVICE = 300;
 
     /**
-     * wait below 1000ms was to less for emulator instance on circle ci
+     * wait below 2000ms was to less for emulator instance on circle ci
      */
-    public static final int DELAY_FOR_SLOW_DEVICE = 1000;
+    public static final int DELAY_FOR_SLOW_DEVICE = 2000;
 
     private int keyboardCheckDelay = DELAY_FOR_SLOW_DEVICE;
 
