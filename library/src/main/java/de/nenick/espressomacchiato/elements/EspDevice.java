@@ -95,8 +95,8 @@ public class EspDevice {
         // didn't found another way to sync with keyboard actions
         try {
             // wait below 300ms was to less, keyboard actions may consume more time on local emulator
-            // wait below 1000ms was to less, keyboard actions may consume more time on emulator at circle ci
-            Thread.sleep(1500);
+            // wait below 1500ms was to less, keyboard actions may consume more time on emulator at circle ci
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -122,7 +122,7 @@ public class EspDevice {
 
                 // 0.15 ratio is perhaps enough to determine keypad height
                 double keypadMinHeight = screenHeight * 0.15;
-                Log.v(getClass().getSimpleName(), "expected min keyboard height " + keypadMinHeight + ", calculated keypadHeight is " + keypadHeight);
+                Log.v(EspDevice.class.getSimpleName(), "expected min keyboard height " + keypadMinHeight + ", calculated keypadHeight is " + keypadHeight);
                 return keypadHeight > keypadMinHeight;
             }
         });
