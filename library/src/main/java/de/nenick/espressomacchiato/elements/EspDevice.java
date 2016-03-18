@@ -5,6 +5,7 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.action.ViewActions;
+import android.util.Log;
 import android.view.View;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -121,6 +122,7 @@ public class EspDevice {
 
                 // 0.15 ratio is perhaps enough to determine keypad height
                 double keypadMinHeight = screenHeight * 0.15;
+                Log.v(getClass().getSimpleName(), "expected min keyboard height " + keypadMinHeight + ", calculated keypadHeight is " + keypadHeight);
                 return keypadHeight > keypadMinHeight;
             }
         });
