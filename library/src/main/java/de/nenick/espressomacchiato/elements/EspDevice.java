@@ -1,21 +1,16 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.graphics.Rect;
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.action.ViewActions;
-import android.util.Log;
-import android.view.View;
+
+import de.nenick.espressomacchiato.assertions.KeyboardAssertion;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationLandscape;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationPortrait;
 import static de.nenick.espressomacchiato.assertions.OrientationAssertion.isOrientationLandscape;
 import static de.nenick.espressomacchiato.assertions.OrientationAssertion.isOrientationPotrait;
-import static org.hamcrest.CoreMatchers.is;
 
 /**
  * Actions you can do with android devices.
@@ -24,6 +19,22 @@ public class EspDevice {
 
     public static EspDevice root() {
         return new EspDevice();
+    }
+
+    /**
+     * wait below 300ms was to less for common emulator instance
+     */
+    public static final int DELAY_FOR_FAST_DEVICE = 300;
+
+    /**
+     * wait below 1000ms was to less for emulator instance on circle ci
+     */
+    public static final int DELAY_FOR_SLOW_DEVICE = 1000;
+
+    private int keyboardCheckDelay = DELAY_FOR_SLOW_DEVICE;
+
+    public void setKeyboardCheckDelay(int keyboardCheckDelay) {
+        this.keyboardCheckDelay = keyboardCheckDelay;
     }
 
     /**
@@ -90,43 +101,18 @@ public class EspDevice {
         assertSoftKeyboardIsOpen(false);
     }
 
-    protected void assertSoftKeyboardIsOpen(final boolean expectIsShown) {
+    private void assertSoftKeyboardIsOpen(final boolean expectIsShown) {
         // give keyboard some initial time for hide/show actions on emulator
         // didn't found another way to sync with keyboard actions
         try {
             // sleep time depends on the target device
             // real and powerful needs only few milliseconds but slow emulator need hugh time
-            // wait below 300ms was to less for common emulator instance
-            // wait below 1000ms was to less for emulator instance on circle ci
-            Thread.sleep(2000);
+            Thread.sleep(keyboardCheckDelay);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        // original solution http://stackoverflow.com/a/26964010/3619179
-        onView(isRoot()).check(new ViewAssertion() {
-            @Override
-            public void check(View view, NoMatchingViewException noViewFoundException) {
-                boolean isShown = calculateIsKeyboardShown(view);
-                if (isShown) {
-                    assertThat("Keyboard should be closed.", expectIsShown, is(true));
-                }
-                else {
-                    assertThat("Keyboard should be open.", !expectIsShown, is(true));
-                }
-            }
-
-            protected boolean calculateIsKeyboardShown(View view) {
-                Rect visibleFrameSpace = new Rect();
-                view.getWindowVisibleDisplayFrame(visibleFrameSpace);
-                int screenHeight = view.getHeight();
-                int keypadHeight = screenHeight - visibleFrameSpace.bottom;
-
-                // 0.15 ratio is perhaps enough to determine keypad height
-                double keypadMinHeight = screenHeight * 0.15;
-                Log.v(EspDevice.class.getSimpleName(), "expected min keyboard height " + keypadMinHeight + ", calculated keypadHeight is " + keypadHeight);
-                return keypadHeight > keypadMinHeight;
-            }
-        });
+        onView(isRoot()).check(new KeyboardAssertion(expectIsShown));
     }
+
 }
