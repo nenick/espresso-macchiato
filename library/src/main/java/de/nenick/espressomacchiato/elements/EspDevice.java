@@ -98,7 +98,7 @@ public class EspDevice {
             // real and powerful needs only few milliseconds but slow emulator need hugh time
             // wait below 300ms was to less for common emulator instance
             // wait below 1000ms was to less for emulator instance on circle ci
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
