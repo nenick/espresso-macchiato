@@ -94,9 +94,10 @@ public class EspDevice {
         // give keyboard some initial time for hide/show actions on emulator
         // didn't found another way to sync with keyboard actions
         try {
-            // wait below 300ms was to less, keyboard actions may consume more time on local emulator
-            // wait below 1500ms was to less, keyboard actions may consume more time on emulator at circle ci
-            Thread.sleep(2000);
+            // sleep time depends on the target device
+            // real and powerful needs only few milliseconds but slow emulator need hugh time
+            // wait below 300ms was to less for common emulator instance
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
