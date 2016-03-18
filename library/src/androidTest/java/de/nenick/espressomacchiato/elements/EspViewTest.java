@@ -1,11 +1,10 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.support.test.espresso.PerformException;
+import android.support.test.espresso.NoMatchingViewException;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
@@ -15,7 +14,7 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
     private static final String VIEW_WAS_CLICKED_MESSAGE = "view was clicked";
 
-    private int viewId = android.R.id.edit;
+    private int viewId = android.R.id.button1;
     private EspView espView = EspView.byId(viewId);
     private Button view;
 
@@ -23,13 +22,10 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     private TextView messageView;
     private EspTextView espTextView = EspTextView.byId(messageViewId);
 
-    @Before
-    public void setup() {
-        givenTestViewAndClickFeedbackTextView();
-    }
-
     @Test
     public void testAssertions() {
+        givenClickableView();
+
         espView.assertIsVisible();
         espView.assertIsEnabled();
 
@@ -42,17 +38,32 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testClick() {
+        givenClickableView();
+        givenClickFeedbackTextView();
+
         espView.click();
         espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
     }
 
     @Test
     public void testClickFailureWhenNotVisible() {
-        exception.expect(PerformException.class);
-        exception.expectMessage("Error performing 'single click' on view 'with id: android:id/edit'.");
+        exception.expect(NoMatchingViewException.class);
+        exception.expectMessage("No views in hierarchy found matching: (with id: android:id/button1 and is displayed on the screen to the user)");
 
+        givenClickableView();
         view.setVisibility(View.INVISIBLE);
         espView.click();
+    }
+
+    @Test
+    public void testClickSelectsOnlyVisibleView() {
+        givenClickableView();
+        view.setVisibility(View.INVISIBLE);
+        givenClickableView();
+        givenClickFeedbackTextView();
+
+        espView.click();
+        espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
     }
 
     private void givenViewIsHidden() {
@@ -73,14 +84,10 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         });
     }
 
-    private void givenTestViewAndClickFeedbackTextView() {
+    private void givenClickableView() {
         view = new Button(activityTestRule.getActivity());
         view.setId(viewId);
         addViewToActivity(view, BaseActivity.rootLayout);
-
-        messageView = new TextView(activityTestRule.getActivity());
-        messageView.setId(messageViewId);
-        addViewToActivity(messageView, BaseActivity.rootLayout);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,5 +95,11 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
                 messageView.setText(VIEW_WAS_CLICKED_MESSAGE);
             }
         });
+    }
+
+    private void givenClickFeedbackTextView() {
+        messageView = new TextView(activityTestRule.getActivity());
+        messageView.setId(messageViewId);
+        addViewToActivity(messageView, BaseActivity.rootLayout);
     }
 }

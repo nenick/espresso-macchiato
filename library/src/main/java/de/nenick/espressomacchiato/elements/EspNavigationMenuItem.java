@@ -27,7 +27,7 @@ public class EspNavigationMenuItem extends EspView {
     }
 
     public EspNavigationMenuItem(String itemText) {
-        super(0);
+        super(allOf(instanceOf(NavigationMenuItemView.class), withChildGroups(withText(itemText))));
         this.itemText = itemText;
     }
 
@@ -43,7 +43,7 @@ public class EspNavigationMenuItem extends EspView {
         return new ChildRecursiveMatcher(childMatcher);
     }
 
-    @Override
+    //@Override
     protected ViewInteraction findView() {
         return onView(allOf(instanceOf(NavigationMenuItemView.class), withChildGroups(withText(itemText)), isDisplayed()));
     }
