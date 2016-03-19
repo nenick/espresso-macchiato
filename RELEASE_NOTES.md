@@ -8,20 +8,12 @@ planed
 * EspSimpleTwoButtonsDialog
 * EspSimpleThreeButtonsDialog
 * EspSimpleButtonListDialog
-* All - view resolution by default only if visible
-* All - easy way to extend view resolution
 
 done
 
+* All - extend find view strategy
+* All - static factory methods to hide implementation details for changes
+* EspView - click only visible views
 * EspDevice - close soft keyboard and do assertions for it
-* All - static factory methods to hide view resolution details
 * Dependencies - don't exclude junit, just ignore lint error
 * Dependencies - update espresso 2.2.1 to 2.2.2
-
-#### New in release 0.1.1
-
-Correct license information.
-
-#### New in release 0.1.0
-
-First basic functionality to test an android application.

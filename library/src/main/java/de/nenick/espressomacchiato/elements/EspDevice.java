@@ -17,10 +17,6 @@ import static de.nenick.espressomacchiato.assertions.OrientationAssertion.isOrie
  */
 public class EspDevice {
 
-    public static EspDevice root() {
-        return new EspDevice();
-    }
-
     /**
      * wait below 300ms was to less for common emulator instance
      */
@@ -32,6 +28,10 @@ public class EspDevice {
     public static final int DELAY_FOR_SLOW_DEVICE = 2000;
 
     private int keyboardCheckDelay = DELAY_FOR_SLOW_DEVICE;
+
+    public static EspDevice root() {
+        return new EspDevice();
+    }
 
     public void setKeyboardCheckDelay(int keyboardCheckDelay) {
         this.keyboardCheckDelay = keyboardCheckDelay;
@@ -109,7 +109,7 @@ public class EspDevice {
             // real and powerful needs only few milliseconds but slow emulator need hugh time
             Thread.sleep(keyboardCheckDelay);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
 
         onView(isRoot()).check(new KeyboardAssertion(expectIsShown));
