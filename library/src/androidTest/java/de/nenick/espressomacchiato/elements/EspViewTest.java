@@ -24,6 +24,8 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testAssertions() {
+        espTextView.assertNotExist();
+
         givenClickableView();
 
         espView.assertIsVisible();

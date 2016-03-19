@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
@@ -39,6 +40,10 @@ public class EspView {
 
     public void assertIsHidden() {
         findView().check(matches(not(isDisplayed())));
+    }
+
+    public void assertNotExist() {
+        findView().check(doesNotExist());
     }
 
     public void assertIsEnabled() {
