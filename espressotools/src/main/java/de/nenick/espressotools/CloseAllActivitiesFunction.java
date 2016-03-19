@@ -1,5 +1,6 @@
 package de.nenick.espressotools;
 
+import android.util.Log;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.test.espresso.core.deps.guava.base.Throwables;
@@ -74,6 +75,7 @@ public class CloseAllActivitiesFunction {
                 if (activities.size() > 0) {
                     final Activity activity = activities.iterator().next();
                     if(!activity.isFinishing()) {
+                        Log.i("espressotools","activity not finished " + activity);
                         activity.finish();
                     }
                     return true;
