@@ -95,6 +95,8 @@ page implementation
 
 ## Contribute
 
+Always write some tests to prove the functionality and stability for new elements.
+
 ### create release
 
 Finish RELEASE_NOTES.md and run following command from your PC (change version!):
