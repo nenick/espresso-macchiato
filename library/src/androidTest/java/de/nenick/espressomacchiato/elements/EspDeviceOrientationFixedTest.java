@@ -17,6 +17,7 @@ public class EspDeviceOrientationFixedTest extends EspressoTestCase<LandscapeFix
     @After
     public void reset() {
         activityTestRule.getActivity().startActivity(new Intent(InstrumentationRegistry.getTargetContext(), BaseActivity.class));
+        activityTestRule.getActivity().finish();
         espDevice.rotateToPortrait();
     }
 

@@ -1,6 +1,5 @@
 package de.nenick.espressotools;
 
-import android.util.Log;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.test.espresso.core.deps.guava.base.Throwables;
@@ -8,6 +7,7 @@ import android.support.test.espresso.core.deps.guava.collect.Sets;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitor;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
+import android.util.Log;
 
 import java.util.Collection;
 import java.util.Set;
@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Avoid the "Could not launch intent Intent within 45 seconds" error.
- * <p/>
+ * <p>
  * source: https://code.google.com/p/android-test-kit/issues/detail?id=66
  */
 public class CloseAllActivitiesFunction {
@@ -74,9 +74,11 @@ public class CloseAllActivitiesFunction {
                 activities.removeAll(getActivitiesInStages(Stage.DESTROYED));
                 if (activities.size() > 0) {
                     final Activity activity = activities.iterator().next();
-                    if(!activity.isFinishing()) {
-                        Log.i("espressotools","activity not finished " + activity);
+                    if (!activity.isFinishing()) {
+                        Log.i("espressotools", "activity not finished " + activity);
                         activity.finish();
+                    } else {
+                        Log.i("espressotools", "activity in finishing state " + activity);
                     }
                     return true;
                 } else {
