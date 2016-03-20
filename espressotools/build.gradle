@@ -18,4 +18,5 @@ android {
 
 dependencies {
     provided 'com.android.support.test.espresso:espresso-core:2.2.1'
+    provided 'com.android.support.test.espresso:espresso-intents:2.2.2'
 }

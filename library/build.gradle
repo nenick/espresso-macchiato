@@ -34,7 +34,8 @@ android {
 }
 
 dependencies {
-    compile('com.android.support.test.espresso:espresso-contrib:2.2.2')
+    compile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
+    compile 'com.android.support.test.espresso:espresso-intents:2.2.2'
     androidTestCompile project(':espressotools')
 }
 

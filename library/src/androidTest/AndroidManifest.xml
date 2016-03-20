@@ -7,6 +7,7 @@
             android:name=".views.LandscapeFixedActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".views.NavigationDrawerActivity" />
+        <activity android:name=".views.OnActivityResultActivity" />
     </application>
 
 </manifest>
