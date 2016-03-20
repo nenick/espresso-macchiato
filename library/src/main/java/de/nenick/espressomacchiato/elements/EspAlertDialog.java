@@ -1,5 +1,8 @@
 package de.nenick.espressomacchiato.elements;
 
+/**
+ * Pre configured {@link EspDialog} for general {@link android.support.v7.app.AlertDialog}.
+ */
 public class EspAlertDialog extends EspDialog {
 
     /** hide {@link EspDialog#spec()} */
