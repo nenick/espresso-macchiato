@@ -36,7 +36,11 @@ android {
 dependencies {
     compile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
     compile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    // real uiautomator is not available inside Android Studio
+    provided project(':uiautomator')
+
     androidTestCompile project(':espressotools')
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 }
 
 // Original see: http://ryanharter.com/blog/2013/07/30/automatic-versioning-with-git-and-gradle/
