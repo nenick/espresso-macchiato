@@ -7,6 +7,7 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.test.InstrumentationRegistry;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +22,7 @@ public class EspCameraMock {
 
     public void givenMockedCameraResult(String assetFile, String targetFile) {
         File cameraPhoto = new File(InstrumentationRegistry.getTargetContext().getExternalCacheDir(), targetFile);
+        Log.v("EspCameraMockFile", cameraPhoto.getAbsolutePath());
         givenMockedCameraResult(assetFile, cameraPhoto);
     }
 
