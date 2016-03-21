@@ -13,7 +13,7 @@ import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.OnActivityResultActivity;
 import de.nenick.espressotools.EspressoIntentTestCase;
 
-public class ContactPickerMockTest extends EspressoIntentTestCase<OnActivityResultActivity> {
+public class EspContactPickerMockTest extends EspressoIntentTestCase<OnActivityResultActivity> {
 
     private final static int REQUEST_CODE = 123;
     private EspTextView requestCodeTextView = EspTextView.byId(OnActivityResultActivity.requestCodeResource);
@@ -21,7 +21,7 @@ public class ContactPickerMockTest extends EspressoIntentTestCase<OnActivityResu
     private EspTextView dataTextView = EspTextView.byId(OnActivityResultActivity.dataResource);
     private OnActivityResultActivity activity;
 
-    private ContactPickerMock contactPickerMock = new ContactPickerMock();
+    private EspContactPickerMock espContactPickerMock = new EspContactPickerMock();
 
     @Before
     public void setup() {
@@ -37,7 +37,7 @@ public class ContactPickerMockTest extends EspressoIntentTestCase<OnActivityResu
     @Test
     public void testContactPickerMock() {
         Uri dummyContactDataUri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, 42);
-        contactPickerMock.registerMockWithData(dummyContactDataUri);
+        espContactPickerMock.registerMockWithData(dummyContactDataUri);
 
         activity.startForResult(createContactPickerIntent(), REQUEST_CODE);
 

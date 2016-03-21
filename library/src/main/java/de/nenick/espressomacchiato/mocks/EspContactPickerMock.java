@@ -11,7 +11,7 @@ import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static org.hamcrest.CoreMatchers.allOf;
 
-public class ContactPickerMock {
+public class EspContactPickerMock {
 
     public void registerMockWithData(Uri uri) {
         Intent contactData = new Intent();
