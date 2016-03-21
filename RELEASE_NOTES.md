@@ -13,6 +13,7 @@ elements
 
 mocks
 
+* EspCameraMock - avoid real camera handling
 * EspContactPickerMock - avoid real contact picker handling
 
 tools
