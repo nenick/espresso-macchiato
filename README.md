@@ -15,6 +15,9 @@ dependency
 
     androidTestCompile ('de.nenick:espresso-macchiato:0.1.1@aar')
 
+for permission handling add uiautomator
+
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 
 ## Espresso extension
 

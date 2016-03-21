@@ -11,8 +11,8 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        // target lowest min sdk which is supported by espresso
-        minSdkVersion 8
+        // v8 ist lowest min sdk which supported by espresso
+        minSdkVersion 18
         targetSdkVersion 23
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -36,7 +36,7 @@ android {
 dependencies {
     compile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
     compile 'com.android.support.test.espresso:espresso-intents:2.2.2'
-    // real uiautomator is not available inside Android Studio
+    // real uiautomator is not available inside Android Studio when used as compile dependency
     provided project(':uiautomator')
 
     androidTestCompile project(':espressotools')

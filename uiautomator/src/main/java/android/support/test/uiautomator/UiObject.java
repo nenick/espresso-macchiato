@@ -5,7 +5,7 @@ public class UiObject {
         return false;
     }
 
-    public void click() throws UiObjectNotFoundException {
-
+    public boolean click() throws UiObjectNotFoundException {
+        return false;
     }
 }
