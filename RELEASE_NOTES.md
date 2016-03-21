@@ -26,7 +26,3 @@ dependencies
 * espresso - update 2.2.1 to 2.2.2
 * espresso-intents - support for intent mocks
 * uiautomator - support to access non app content
-
-#### planed
-
-* EspCameraMock - provide camera picture

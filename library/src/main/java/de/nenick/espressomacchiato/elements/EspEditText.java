@@ -1,6 +1,9 @@
 package de.nenick.espressomacchiato.elements;
 
 import android.support.test.espresso.action.ViewActions;
+import android.view.View;
+
+import org.hamcrest.Matcher;
 
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -13,6 +16,10 @@ public class EspEditText extends EspView {
 
     public EspEditText(int resourceId) {
         super(resourceId);
+    }
+
+    public EspEditText(Matcher<View> baseMatcher) {
+        super(baseMatcher);
     }
 
     public void replaceText(String newText) {

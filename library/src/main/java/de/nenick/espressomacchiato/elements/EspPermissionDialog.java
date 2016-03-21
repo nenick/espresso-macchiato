@@ -13,8 +13,15 @@ public class EspPermissionDialog {
         return new EspPermissionDialog();
     }
 
-    @Deprecated
-    public void allowPermissionsIfNeeded() {
+    public void allow() {
+        click("Allow");
+    }
+
+    public void deny() {
+        click("Deny");
+    }
+
+    protected void click(String target) {
         if (Build.VERSION.SDK_INT >= 23) {
             try {
                 Thread.sleep(1000);
@@ -22,10 +29,10 @@ public class EspPermissionDialog {
                 throw new RuntimeException(e);
             }
             UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-            UiObject allowPermissions = device.findObject(new UiSelector().text("Allow"));
-            if (allowPermissions.exists()) {
+            UiObject button = device.findObject(new UiSelector().text(target));
+            if (button.exists()) {
                 try {
-                    allowPermissions.click();
+                    button.click();
                 } catch (UiObjectNotFoundException e) {
                     throw new IllegalStateException(e);
                 }

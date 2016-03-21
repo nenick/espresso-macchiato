@@ -32,7 +32,7 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
     @Before
     public void setup() {
         ActivityCompat.requestPermissions(activityTestRule.getActivity(), new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 42);
-        EspPermissionDialog.build().allowPermissionsIfNeeded();
+        EspPermissionDialog.build().allow();
         initialContactCount = queryContactCount();
     }
 
