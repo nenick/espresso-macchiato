@@ -5,13 +5,11 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.test.InstrumentationRegistry;
-import android.support.v4.app.ActivityCompat;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.nenick.espressomacchiato.elements.EspPermissionDialog;
 import de.nenick.espressomacchiato.test.views.OnActivityResultActivity;
 import de.nenick.espressotools.EspressoTestCase;
 
@@ -31,8 +29,7 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
 
     @Before
     public void setup() {
-        ActivityCompat.requestPermissions(activityTestRule.getActivity(), new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 42);
-        EspPermissionDialog.build().allow();
+        EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS);
         initialContactCount = queryContactCount();
     }
 

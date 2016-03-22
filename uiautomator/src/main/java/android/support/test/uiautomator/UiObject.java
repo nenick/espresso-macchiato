@@ -8,4 +8,8 @@ public class UiObject {
     public boolean click() throws UiObjectNotFoundException {
         return false;
     }
+
+    public boolean waitForExists (long timeout) {
+        return false;
+    }
 }
