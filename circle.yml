@@ -14,7 +14,9 @@ dependencies:
 
 test:
   pre:
+    # create android v23 emulator
     - echo no | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2)
+
     # activate soft keybord because some tests do checks on it
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
     - ls ~/.android/avd/
@@ -22,6 +24,10 @@ test:
 
     # provide external space because some tests will write files there
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
+
+    # start emulator for instrumentation tests
+    - emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
+        background: true
 
   override:
     # pre build code to see how many time each task realy need
@@ -37,10 +43,6 @@ test:
     - ./gradlew :espressotools:lintDebug
     - ./gradlew :library:lintDebug
     - ./gradlew :sampleapp:lintDebug
-
-    # start emulator for instrumentation tests
-    - emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
-        background: true
 
     # ensure that the emulator is ready to use
     - circle-android wait-for-boot
