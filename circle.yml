@@ -14,7 +14,7 @@ dependencies:
 
 test:
   pre:
-    - echo y | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2)
+    - echo no | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2)
     # activate soft keybord because some tests do checks on it
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
     - ls ~/.android/avd/
