@@ -14,10 +14,11 @@ dependencies:
 
 test:
   pre:
+    - android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2)
     # activate soft keybord because some tests do checks on it
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
     - ls ~/.android/avd/
-    - echo "hw.keyboard=no" >> ~/.android/avd/circleci-android23.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
 
     # provide external space because some tests will write files there
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
@@ -38,7 +39,7 @@ test:
     - ./gradlew :sampleapp:lintDebug
 
     # start emulator for instrumentation tests
-    - emulator -avd circleci-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
+    - emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
         background: true
 
     # ensure that the emulator is ready to use
