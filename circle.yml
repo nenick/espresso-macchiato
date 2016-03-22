@@ -16,14 +16,11 @@ test:
   pre:
     # activate soft keybord because some tests do checks on it
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
+    - ls ~/.android/avd/
     - echo "hw.keyboard=no" >> ~/.android/avd/circleci-android23.avd/config.ini
 
     # provide external space because some tests will write files there
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
-
-    # start emulator for instrumentation tests
-    - emulator -avd circleci-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
-        background: true
 
   override:
     # pre build code to see how many time each task realy need
@@ -39,6 +36,10 @@ test:
     - ./gradlew :espressotools:lintDebug
     - ./gradlew :library:lintDebug
     - ./gradlew :sampleapp:lintDebug
+
+    # start emulator for instrumentation tests
+    - emulator -avd circleci-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
+        background: true
 
     # ensure that the emulator is ready to use
     - circle-android wait-for-boot
