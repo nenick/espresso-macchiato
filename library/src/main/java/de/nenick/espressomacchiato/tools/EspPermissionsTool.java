@@ -13,7 +13,7 @@ public class EspPermissionsTool {
     /**
      * wait below 1000ms was sometimes not enough for reset all permissions
      */
-    public static int DELAY_FOR_COMMAND_EXECUTION = 1000;
+    public static int DELAY_FOR_COMMAND_EXECUTION = 2000;
 
     /**
      * Safe way to remove granted permission to you app without app restart.
