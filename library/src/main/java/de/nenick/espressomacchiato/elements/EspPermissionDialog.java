@@ -14,6 +14,11 @@ import de.nenick.espressomacchiato.tools.EspPermissionsTool;
 
 public class EspPermissionDialog {
 
+    /**
+     * wait below 2000ms was sometimes not enough for reset all permissions on circle ci emulator
+     */
+    public static final int DELAY_FOR_UPDATE_PERMISSION_STATE = 2000;
+
     public static EspPermissionDialog build() {
         return new EspPermissionDialog();
     }
@@ -65,7 +70,7 @@ public class EspPermissionDialog {
     private void waitUntilPermissionIsChanged() {
         try {
             // need to wait some time until permission is changed
-            Thread.sleep(1000);
+            Thread.sleep(DELAY_FOR_UPDATE_PERMISSION_STATE);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

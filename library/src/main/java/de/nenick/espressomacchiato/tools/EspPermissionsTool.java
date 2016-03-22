@@ -11,7 +11,7 @@ import de.nenick.espressomacchiato.elements.EspPermissionDialog;
 public class EspPermissionsTool {
 
     /**
-     * wait below 1000ms was sometimes not enough for reset all permissions
+     * wait below 2000ms was sometimes not enough for reset all permissions on circle ci emulator
      */
     public static int DELAY_FOR_COMMAND_EXECUTION = 2000;
 
