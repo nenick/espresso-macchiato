@@ -5,8 +5,7 @@ package de.nenick.espressomacchiato.elements;
  */
 public class EspAlertDialog extends EspDialog {
 
-    /** hide {@link EspDialog#spec()} */
-    @Deprecated
+    @Deprecated // mark parent static method as not usable for this class
     public static Spec spec() {
         throw new UnsupportedOperationException();
     }

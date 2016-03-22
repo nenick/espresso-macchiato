@@ -14,8 +14,7 @@ public class EspDrawer extends EspView {
         return new EspDrawer(drawerLayout, drawerContent);
     }
 
-    /** hide {@link EspView#byId(int)} */
-    @Deprecated
+    @Deprecated // mark parent static method as not usable for this class
     public static EspView byId(int resourceId) {
         throw new UnsupportedOperationException();
     }

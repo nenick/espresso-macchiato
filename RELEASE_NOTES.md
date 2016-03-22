@@ -19,6 +19,7 @@ mocks
 tools
 
 * EspContactTool - create / find / delete contacts
+* EspPermissionsTool - check / force permissions state
 
 dependencies
 

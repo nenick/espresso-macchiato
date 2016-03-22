@@ -4,8 +4,7 @@ public class EspDialog extends EspView {
 
     protected Spec spec;
 
-    /** hide {@link EspView#byId(int)} */
-    @Deprecated
+    @Deprecated // mark parent static method as not usable for this class
     public static EspView byId(int rootResource) {
         throw new UnsupportedOperationException();
     }

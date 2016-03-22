@@ -16,13 +16,13 @@ test:
   pre:
     # activate soft keybord because some tests do checks on it
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
-    - echo "hw.keyboard=no" >> ~/.android/avd/circleci-android22.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/circleci-android23.avd/config.ini
 
     # provide external space because some tests will write files there
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
 
     # start emulator for instrumentation tests
-    - emulator -avd circleci-android22 -no-audio -no-window -sdcard AndroidSDCard.img:
+    - emulator -avd circleci-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
         background: true
 
   override:

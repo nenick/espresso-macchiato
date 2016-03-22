@@ -25,12 +25,12 @@ public class EspPermissionDialog {
 
     /**
      * Warning: revoke an already granted permission would force your app to restart (test fail).
-     * <p/>
+     * <p>
      * Deny tests should be the first executed tests.
      * Before test run ensure that all permission are revoked.
-     * <p/>
+     * <p>
      * 1. Option: ordered test execution to force deny test first @FixMethodOrder(MethodSorters.NAME_ASCENDING) to avoid revoke
-     * <p/>
+     * <p>
      * 2. Option: reset all permissions {@link EspPermissionsTool#resetAllPermission()}
      */
     public void deny() {
