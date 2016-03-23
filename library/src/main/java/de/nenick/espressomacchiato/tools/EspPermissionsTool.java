@@ -26,11 +26,7 @@ public class EspPermissionsTool {
 
         InstrumentationRegistry.getInstrumentation().getUiAutomation().executeShellCommand("pm reset-permissions");
 
-        try {
-            Thread.sleep(DELAY_FOR_COMMAND_EXECUTION);
-        } catch (InterruptedException e) {
-            throw new IllegalStateException(e);
-        }
+        EspWait.forDelay(DELAY_FOR_COMMAND_EXECUTION);
     }
 
     public static boolean isPermissionGranted(String permission) {

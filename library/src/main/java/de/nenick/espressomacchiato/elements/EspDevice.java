@@ -4,6 +4,7 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 
 import de.nenick.espressomacchiato.assertions.KeyboardAssertion;
+import de.nenick.espressomacchiato.tools.EspWait;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
@@ -93,13 +94,8 @@ public class EspDevice {
 
     private void assertSoftKeyboardIsOpen(final boolean expectIsShown) {
         // give keyboard some initial time for hide/show actions on emulator
-        try {
-            Thread.sleep(DELAY_TO_CHANGE_KEYBOARD_STATE);
-        } catch (InterruptedException e) {
-            throw new IllegalStateException(e);
-        }
+        EspWait.forDelay(DELAY_TO_CHANGE_KEYBOARD_STATE);
 
         onView(isRoot()).check(new KeyboardAssertion(expectIsShown));
     }
-
 }

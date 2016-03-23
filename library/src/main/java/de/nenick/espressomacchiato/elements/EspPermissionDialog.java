@@ -11,6 +11,7 @@ import android.support.test.uiautomator.UiSelector;
 import android.support.v4.app.ActivityCompat;
 
 import de.nenick.espressomacchiato.tools.EspPermissionsTool;
+import de.nenick.espressomacchiato.tools.EspWait;
 
 public class EspPermissionDialog {
 
@@ -73,11 +74,7 @@ public class EspPermissionDialog {
     }
 
     private void waitUntilPermissionIsChanged() {
-        try {
-            // need to wait some time until permission is changed
-            Thread.sleep(DELAY_FOR_UPDATE_PERMISSION_STATE);
-        } catch (InterruptedException e) {
-            throw new IllegalStateException(e);
-        }
+        // need to wait some time until permission is changed
+        EspWait.forDelay(DELAY_FOR_UPDATE_PERMISSION_STATE);
     }
 }
