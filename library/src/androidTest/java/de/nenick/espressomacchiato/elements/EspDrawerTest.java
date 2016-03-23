@@ -19,4 +19,11 @@ public class EspDrawerTest extends EspressoTestCase<NavigationDrawerActivity> {
         espDrawer.close();
         espDrawer.assertIsHidden();
     }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    public void testByIdObsolete() {
+        exception.expect(UnsupportedOperationException.class);
+        EspDrawer.byId(0);
+    }
 }

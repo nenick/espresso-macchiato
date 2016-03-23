@@ -84,6 +84,13 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_NEUTRAL);
     }
 
+    @Test
+    @SuppressWarnings("deprecation")
+    public void testSpecObsolete() {
+        exception.expect(UnsupportedOperationException.class);
+        EspAlertDialog.spec();
+    }
+
     protected void addDialog(final AlertDialog.Builder dialog) {
         performOnUiThread(new Runnable() {
             @Override
