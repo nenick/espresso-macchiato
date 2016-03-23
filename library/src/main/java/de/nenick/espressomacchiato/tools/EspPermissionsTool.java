@@ -29,7 +29,7 @@ public class EspPermissionsTool {
         try {
             Thread.sleep(DELAY_FOR_COMMAND_EXECUTION);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 

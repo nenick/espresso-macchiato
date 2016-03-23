@@ -33,7 +33,7 @@ public class EspCameraMock {
             FileOutputStream outputStream = new FileOutputStream(targetFile);
             copyFile(inputStream, outputStream);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
 
         Intent resultData = new Intent();

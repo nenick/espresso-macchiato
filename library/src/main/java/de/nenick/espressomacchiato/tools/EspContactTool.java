@@ -10,6 +10,8 @@ import android.support.test.InstrumentationRegistry;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertNotNull;
+
 public class EspContactTool {
 
     public static ContactSpec spec() {
@@ -76,12 +78,41 @@ public class EspContactTool {
 
         ArrayList<ContentProviderOperation> ops = new ArrayList<>();
 
-        ops.add(ContentProviderOperation.newInsert(
-                ContactsContract.RawContacts.CONTENT_URI)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
-                .build());
+        addContactBase(ops);
+        addContactDisplayName(spec, ops);
+        addContactAddress(spec, ops);
 
+        try {
+            InstrumentationRegistry.getTargetContext().getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+        } catch (RemoteException | OperationApplicationException e) {
+            throw new IllegalStateException("Could not add contact", e);
+        }
+    }
+
+    public static void delete(Uri contactUri) {
+        Cursor contactData = InstrumentationRegistry.getTargetContext().getContentResolver().query(contactUri, null, null, null, null);
+        assertNotNull(contactData);
+        contactData.moveToFirst();
+        long rawContactId = contactData.getLong(contactData.getColumnIndex(ContactsContract.Data.RAW_CONTACT_ID));
+
+        InstrumentationRegistry.getTargetContext().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts._ID + " = ?", new String[]{String.valueOf(rawContactId)});
+        InstrumentationRegistry.getTargetContext().getContentResolver().delete(contactUri, null, null);
+    }
+
+    private static void addContactAddress(ContactSpec spec, ArrayList<ContentProviderOperation> ops) {
+        if (spec.address != null) {
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.STREET, spec.address.street)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE, spec.address.postcode)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.CITY, spec.address.city)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY, spec.address.country)
+                    .build());
+        }
+    }
+
+    private static void addContactDisplayName(ContactSpec spec, ArrayList<ContentProviderOperation> ops) {
         //------------------------------------------------------ Names
         if (spec.displayName != null) {
             ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
@@ -90,7 +121,34 @@ public class EspContactTool {
                     .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, spec.displayName)
                     .build());
         }
-/*
+    }
+
+    private static void addContactBase(ArrayList<ContentProviderOperation> ops) {
+        ops.add(ContentProviderOperation.newInsert(
+                ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build());
+    }
+
+    public static Uri uriByName(String contactName) {
+        Cursor cursor = InstrumentationRegistry.getTargetContext().getContentResolver().query(ContactsContract.Data.CONTENT_URI, null, null, null, null);
+        assertNotNull(cursor);
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName._ID));
+                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME));
+                if (contactName.equals(name)) {
+                    cursor.close();
+                    return Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, id);
+                }
+            }
+        }
+        cursor.close();
+        throw new IllegalStateException("Contact data not found for " + contactName);
+    }
+
+    /*
         //------------------------------------------------------ Mobile Number
         if (spec.mobileNumber != null) {
             ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
@@ -143,48 +201,4 @@ public class EspContactTool {
                     .build());
         }
 */
-        //------------------------------------------------------ Address
-        if (spec.address != null) {
-            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                    .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.STREET, spec.address.street)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE, spec.address.postcode)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.CITY, spec.address.city)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY, spec.address.country)
-                    .build());
-        }
-
-        try {
-            InstrumentationRegistry.getTargetContext().getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
-        } catch (RemoteException | OperationApplicationException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Uri uriByName(String contactName) {
-        Cursor cursor = InstrumentationRegistry.getTargetContext().getContentResolver().query(ContactsContract.Data.CONTENT_URI, null, null, null, null);
-
-        if (cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName._ID));
-                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME));
-                if (contactName.equals(name)) {
-                    cursor.close();
-                    return Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, id);
-                }
-            }
-        }
-        cursor.close();
-        throw new IllegalStateException("Contact data not found for " + contactName);
-    }
-
-    public static void delete(Uri contactUri) {
-        Cursor contactData = InstrumentationRegistry.getTargetContext().getContentResolver().query(contactUri, null, null, null, null);
-        contactData.moveToFirst();
-        long rawContactId = contactData.getLong(contactData.getColumnIndex(ContactsContract.Data.RAW_CONTACT_ID));
-
-        InstrumentationRegistry.getTargetContext().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts._ID + " = ?", new String[] {String.valueOf(rawContactId)});
-        InstrumentationRegistry.getTargetContext().getContentResolver().delete(contactUri, null, null);
-    }
 }

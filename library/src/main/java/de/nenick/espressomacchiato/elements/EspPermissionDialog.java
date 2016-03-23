@@ -72,7 +72,7 @@ public class EspPermissionDialog {
             // need to wait some time until permission is changed
             Thread.sleep(DELAY_FOR_UPDATE_PERMISSION_STATE);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 }
