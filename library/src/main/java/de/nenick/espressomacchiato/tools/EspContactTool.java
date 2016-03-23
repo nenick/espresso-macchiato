@@ -99,38 +99,14 @@ public class EspContactTool {
         InstrumentationRegistry.getTargetContext().getContentResolver().delete(contactUri, null, null);
     }
 
-    private static void addContactAddress(ContactSpec spec, ArrayList<ContentProviderOperation> ops) {
-        if (spec.address != null) {
-            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                    .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.STREET, spec.address.street)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE, spec.address.postcode)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.CITY, spec.address.city)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY, spec.address.country)
-                    .build());
-        }
-    }
-
-    private static void addContactDisplayName(ContactSpec spec, ArrayList<ContentProviderOperation> ops) {
-        //------------------------------------------------------ Names
-        if (spec.displayName != null) {
-            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                    .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
-                    .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, spec.displayName)
-                    .build());
-        }
-    }
-
-    private static void addContactBase(ArrayList<ContentProviderOperation> ops) {
-        ops.add(ContentProviderOperation.newInsert(
-                ContactsContract.RawContacts.CONTENT_URI)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
-                .build());
-    }
-
+    /**
+     * Find data uri for contact.
+     *
+     * @param contactName display name
+     * @return uri to contact data
+     * @deprecated May return uri to unpredicted data set. Use instead a specific data uri search method
+     */
+    @Deprecated
     public static Uri uriByName(String contactName) {
         Cursor cursor = InstrumentationRegistry.getTargetContext().getContentResolver().query(ContactsContract.Data.CONTENT_URI, null, null, null, null);
         assertNotNull(cursor);
@@ -146,6 +122,62 @@ public class EspContactTool {
         }
         cursor.close();
         throw new IllegalStateException("Contact data not found for " + contactName);
+    }
+
+    public static Uri addressUriByDisplayName(String contactName) {
+        Cursor cursor = InstrumentationRegistry.getTargetContext().getContentResolver().query(
+                ContactsContract.Data.CONTENT_URI,
+                null,
+                ContactsContract.Data.MIMETYPE + " = ? ",
+                new String[]{ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE},
+                null);
+
+        assertNotNull(cursor);
+        if (cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal._ID));
+                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.DISPLAY_NAME));
+                if (contactName.equals(name)) {
+                    cursor.close();
+                    return Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, id);
+                }
+            }
+        }
+        cursor.close();
+        throw new IllegalStateException("Contact data not found for " + contactName);
+    }
+
+
+
+    private static void addContactAddress(ContactSpec spec, ArrayList<ContentProviderOperation> ops) {
+        if (spec.address != null) {
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.STREET, spec.address.street)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE, spec.address.postcode)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.CITY, spec.address.city)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY, spec.address.country)
+                    .build());
+        }
+    }
+
+    private static void addContactDisplayName(ContactSpec spec, ArrayList<ContentProviderOperation> ops) {
+        if (spec.displayName != null) {
+            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                    .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, spec.displayName)
+                    .build());
+        }
+    }
+
+    private static void addContactBase(ArrayList<ContentProviderOperation> ops) {
+        ops.add(ContentProviderOperation.newInsert(
+                ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build());
     }
 
     /*
