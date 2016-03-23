@@ -13,7 +13,7 @@ repository
 
 dependency
 
-    androidTestCompile ('de.nenick:espresso-macchiato:0.1.1@aar')
+    androidTestCompile ('de.nenick:espresso-macchiato:0.2.0')
 
 for permission handling add uiautomator
 
@@ -111,3 +111,4 @@ This command will do and trigger:
 6. trigger: circle ci to push the release artifacts to bintray
 
 With the last step the release is ready and can be used.
+Now its time to update this README file.
