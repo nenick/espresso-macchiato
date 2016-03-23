@@ -20,6 +20,7 @@ test:
     # activate soft keybord because some tests do checks on it
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
     - ls ~/.android/avd/
+    - cat ~/.android/avd/circleci-android22.avd/config.ini
     - cat ~/.android/avd/my-android23.avd/config.ini
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
 
