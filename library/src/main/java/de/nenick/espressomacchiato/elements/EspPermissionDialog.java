@@ -24,6 +24,11 @@ public class EspPermissionDialog {
     }
 
     public void allow() {
+        // permissions handling only available since android marshmallow
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+
         click("Allow");
         waitUntilPermissionIsChanged();
     }
@@ -39,17 +44,17 @@ public class EspPermissionDialog {
      * 2. Option: reset all permissions {@link EspPermissionsTool#resetAllPermission()}
      */
     public void deny() {
+        // permissions handling only available since android marshmallow
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+
         avoidAppCrashWhenDenyGrantedPermission();
         click("Deny");
         waitUntilPermissionIsChanged();
     }
 
     protected void click(String target) {
-        // permissions dialog is only be available since
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return;
-        }
-
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject button = device.findObject(new UiSelector().text(target));
 

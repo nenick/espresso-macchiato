@@ -11,15 +11,15 @@ import de.nenick.espressomacchiato.elements.EspPermissionDialog;
 public class EspPermissionsTool {
 
     /**
-     * wait below 3000ms was sometimes not enough for reset all permissions on circle ci emulator
+     * wait below 5000ms was sometimes not enough for reset all permissions on circle ci emulator
      */
-    public static int DELAY_FOR_COMMAND_EXECUTION = 3000;
+    public static int DELAY_FOR_COMMAND_EXECUTION = 5000;
 
     /**
      * Safe way to remove granted permission to you app without app restart.
      */
     public static void resetAllPermission() {
-        // permissions dialog is only be available since
+        // permissions handling only available since android marshmallow
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }

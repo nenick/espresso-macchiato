@@ -19,22 +19,12 @@ public class EspDevice {
 
     /**
      * wait below 300ms was to less for common emulator instance
-     */
-    public static final int DELAY_FOR_FAST_DEVICE = 300;
-
-    /**
      * wait below 2000ms was to less for emulator instance on circle ci
      */
-    public static final int DELAY_FOR_SLOW_DEVICE = 2500;
-
-    private int keyboardCheckDelay = DELAY_FOR_SLOW_DEVICE;
+    public static int DELAY_TO_CHANGE_KEYBOARD_STATE = 2500;
 
     public static EspDevice root() {
         return new EspDevice();
-    }
-
-    public void setKeyboardCheckDelay(int keyboardCheckDelay) {
-        this.keyboardCheckDelay = keyboardCheckDelay;
     }
 
     /**
@@ -103,11 +93,8 @@ public class EspDevice {
 
     private void assertSoftKeyboardIsOpen(final boolean expectIsShown) {
         // give keyboard some initial time for hide/show actions on emulator
-        // didn't found another way to sync with keyboard actions
         try {
-            // sleep time depends on the target device
-            // real and powerful needs only few milliseconds but slow emulator need hugh time
-            Thread.sleep(keyboardCheckDelay);
+            Thread.sleep(DELAY_TO_CHANGE_KEYBOARD_STATE);
         } catch (InterruptedException e) {
             throw new IllegalStateException(e);
         }
