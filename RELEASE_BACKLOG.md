@@ -5,3 +5,4 @@
 * Package "internal" - Actions / Assertions / Matcher (not intended for public usage)
 * EspList - click / count / assert list items
 * EspDialog - dialog with button list
+* EspWeb - basic elements for web view tests with espresso
