@@ -13,6 +13,10 @@ public class EspTextView extends EspView {
         return new EspTextView(resourceId);
     }
 
+    public static EspTextView byText(String text) {
+        return new EspTextView(withText(text));
+    }
+
     public EspTextView(int resourceId) {
         super(resourceId);
     }

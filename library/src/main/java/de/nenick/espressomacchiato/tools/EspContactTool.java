@@ -1,6 +1,8 @@
 package de.nenick.espressomacchiato.tools;
 
 import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
+import android.content.ContentUris;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
@@ -69,9 +71,13 @@ public class EspContactTool {
             this.address = address;
             return this;
         }
+
+        public Uri addContact() {
+            return add(this);
+        }
     }
 
-    public static void add(ContactSpec spec) {
+    public static Uri add(ContactSpec spec) {
 
         // original code http://stackoverflow.com/questions/4744187/how-to-add-new-contacts-in-android
         // good blog http://androiddevelopement.blogspot.de/2011/07/insert-update-delete-view-contacts-in.html
@@ -83,20 +89,26 @@ public class EspContactTool {
         addContactAddress(spec, ops);
 
         try {
-            InstrumentationRegistry.getTargetContext().getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+            ContentProviderResult[] results = InstrumentationRegistry.getTargetContext().getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+            return results[0].uri;
         } catch (RemoteException | OperationApplicationException e) {
             throw new IllegalStateException("Could not add contact", e);
         }
     }
 
     public static void delete(Uri contactUri) {
-        Cursor contactData = InstrumentationRegistry.getTargetContext().getContentResolver().query(contactUri, null, null, null, null);
-        assertNotNull(contactData);
-        contactData.moveToFirst();
-        long rawContactId = contactData.getLong(contactData.getColumnIndex(ContactsContract.Data.RAW_CONTACT_ID));
+        long rawContactId;
+        if(ContactsContract.RawContacts.CONTENT_URI.toString().contains(ContactsContract.RawContacts.CONTENT_URI.toString())) {
+            rawContactId = ContentUris.parseId(contactUri);
+        } else {
+            Cursor contactData = InstrumentationRegistry.getTargetContext().getContentResolver().query(contactUri, null, null, null, null);
+            assertNotNull(contactData);
+            contactData.moveToFirst();
+            rawContactId = contactData.getLong(contactData.getColumnIndex(ContactsContract.Data.RAW_CONTACT_ID));
+        }
 
         InstrumentationRegistry.getTargetContext().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts._ID + " = ?", new String[]{String.valueOf(rawContactId)});
-        InstrumentationRegistry.getTargetContext().getContentResolver().delete(contactUri, null, null);
+        //InstrumentationRegistry.getTargetContext().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, null, null);
     }
 
     /**

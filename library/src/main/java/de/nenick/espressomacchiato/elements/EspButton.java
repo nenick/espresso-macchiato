@@ -13,6 +13,10 @@ public class EspButton extends EspView {
         return new EspButton(resourceId);
     }
 
+    public static EspButton byText(String text) {
+        return new EspButton(withText(text));
+    }
+
     public EspButton(int resourceId) {
         super(resourceId);
     }

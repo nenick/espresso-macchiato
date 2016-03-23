@@ -63,4 +63,10 @@ public class EspCameraMockTest extends EspressoIntentTestCase<OnActivityResultAc
         inputStream.close();
         assertTrue(targetFile.delete());
     }
+
+    @Test
+    public void testCameraMockFileNotFound() throws IOException {
+        exception.expect(IllegalStateException.class);
+        espCameraMock.givenMockedCameraResult("some file", new File("another file"));
+    }
 }

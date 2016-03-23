@@ -26,4 +26,10 @@ public class EspButtonTest extends EspressoTestCase<BaseActivity> {
     public void testAssertTextIs() {
         espButton.assertTextIs(buttonText);
     }
+
+    @Test
+    public void testByText() {
+        espButton = EspButton.byText(buttonText);
+        espButton.assertIsVisible();
+    }
 }

@@ -50,7 +50,7 @@ public class OnActivityResultActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         requestCodeView.setText(String.valueOf(requestCode));
         resultCodeView.setText(String.valueOf(resultCode));
-        dataView.setText(data.toString());
+        dataView.setText(String.valueOf(data));
         if (listener != null) {
             listener.onActivityResult(requestCode, resultCode, data);
         }

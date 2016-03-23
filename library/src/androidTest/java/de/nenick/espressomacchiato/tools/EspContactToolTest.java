@@ -35,7 +35,9 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
 
     @After
     public void reset() {
-        EspContactTool.delete(contactUri);
+        if (contactUri != null) {
+            EspContactTool.delete(contactUri);
+        }
         assertEquals(initialContactCount, queryContactCount());
     }
 
@@ -63,7 +65,7 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
 
         // check address data
         long rawContactId = contactData.getLong(contactData.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.RAW_CONTACT_ID));
-        Cursor contactAddress = InstrumentationRegistry.getTargetContext().getContentResolver().query(ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI, null, ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID + " = ?", new String[] {String.valueOf(rawContactId)}, null);
+        Cursor contactAddress = InstrumentationRegistry.getTargetContext().getContentResolver().query(ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI, null, ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID + " = ?", new String[]{String.valueOf(rawContactId)}, null);
         assertNotNull(contactAddress);
         assertTrue(contactAddress.moveToFirst());
 
@@ -74,6 +76,51 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
 
         contactData.close();
         contactAddress.close();
+    }
+
+    @Test
+    public void testUriByNameFailure() {
+        exception.expect(IllegalStateException.class);
+        contactUri = EspContactTool.uriByName(TEST_CONTACT_NAME);
+    }
+
+    @Test
+    public void testAddressUriByDisplayName() {
+        EspContactTool.spec()
+                .withDisplayName(TEST_CONTACT_NAME)
+                .withAddress(EspContactTool.address()
+                        .withStreet(TEST_STREET)
+                        .withPostcode(TEST_POSTCODE)
+                        .withCity(TEST_CITY)
+                        .withCountry(TEST_COUNTRY))
+                .addContact();
+
+        contactUri = EspContactTool.addressUriByDisplayName(TEST_CONTACT_NAME);
+        assertNotNull(contactUri);
+
+        Cursor contactAddress = InstrumentationRegistry.getTargetContext().getContentResolver().query(contactUri, null, null, null, null);
+        assertNotNull(contactAddress);
+        assertTrue(contactAddress.moveToFirst());
+
+        assertEquals(TEST_CONTACT_NAME, contactAddress.getString(contactAddress.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.DISPLAY_NAME)));
+        assertEquals(TEST_STREET, contactAddress.getString(contactAddress.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET)));
+        assertEquals(TEST_POSTCODE, contactAddress.getString(contactAddress.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE)));
+        assertEquals(TEST_CITY, contactAddress.getString(contactAddress.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CITY)));
+        assertEquals(TEST_COUNTRY, contactAddress.getString(contactAddress.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY)));
+
+        contactAddress.close();
+    }
+
+    @Test
+    public void testAddressUriByDisplayNameFailure() {
+        exception.expect(IllegalStateException.class);
+        contactUri = EspContactTool.addressUriByDisplayName(TEST_CONTACT_NAME);
+    }
+
+    @Test
+    public void testSpecOptionalProperties() {
+        contactUri = EspContactTool.spec().addContact();
+        assertNotNull(contactUri);
     }
 
     protected int queryContactCount() {

@@ -7,6 +7,7 @@ import android.support.test.espresso.ViewAssertion;
 import android.view.View;
 
 public class OrientationAssertion implements ViewAssertion {
+
     private final int expectedOrientation;
 
     public static ViewAssertion isOrientationPotrait() {
@@ -40,7 +41,7 @@ public class OrientationAssertion implements ViewAssertion {
         return InstrumentationRegistry.getContext().getResources().getConfiguration().orientation;
     }
 
-    private String orientationAsString(int orientation) {
+    public static String orientationAsString(int orientation) {
         switch (orientation) {
             case Configuration.ORIENTATION_PORTRAIT:
                 return "PORTRAIT";

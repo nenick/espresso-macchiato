@@ -26,4 +26,9 @@ public class EspTextViewTest extends EspressoTestCase<BaseActivity> {
     public void testReplaceText() {
         espTextView.assertTextIs(textViewText);
     }
+
+    @Test
+    public void testByText() {
+        espTextView = EspTextView.byText(textViewText);
+    }
 }
