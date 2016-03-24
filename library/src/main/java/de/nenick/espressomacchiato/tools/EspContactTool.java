@@ -97,18 +97,20 @@ public class EspContactTool {
     }
 
     public static void delete(Uri contactUri) {
-        long rawContactId;
-        if(ContactsContract.RawContacts.CONTENT_URI.toString().contains(ContactsContract.RawContacts.CONTENT_URI.toString())) {
-            rawContactId = ContentUris.parseId(contactUri);
+        Uri rawContactUri;
+        if(contactUri.toString().contains(ContactsContract.RawContacts.CONTENT_URI.toString())) {
+            rawContactUri = contactUri;
         } else {
             Cursor contactData = InstrumentationRegistry.getTargetContext().getContentResolver().query(contactUri, null, null, null, null);
             assertNotNull(contactData);
             contactData.moveToFirst();
-            rawContactId = contactData.getLong(contactData.getColumnIndex(ContactsContract.Data.RAW_CONTACT_ID));
+            long rawContactId = contactData.getLong(contactData.getColumnIndex(ContactsContract.Data.RAW_CONTACT_ID));
+            contactData.close();
+            rawContactUri = ContentUris.withAppendedId(ContactsContract.RawContacts.CONTENT_URI, rawContactId);
         }
 
-        InstrumentationRegistry.getTargetContext().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts._ID + " = ?", new String[]{String.valueOf(rawContactId)});
-        //InstrumentationRegistry.getTargetContext().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, null, null);
+        InstrumentationRegistry.getTargetContext().getContentResolver().delete(rawContactUri, null, null);
+//        assertTrue(InstrumentationRegistry.getTargetContext().getContentResolver().delete(ContactsContract.Data.CONTENT_URI, ContactsContract.Data.RAW_CONTACT_ID + " = ?", new String[]{String.valueOf(rawContactId)}) > 0);
     }
 
     /**
