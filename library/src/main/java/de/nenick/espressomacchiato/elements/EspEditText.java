@@ -6,6 +6,7 @@ import android.view.View;
 import org.hamcrest.Matcher;
 
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class EspEditText extends EspView {
@@ -28,5 +29,9 @@ public class EspEditText extends EspView {
 
     public void assertTextIs(String expectedText) {
         findView().check(matches(withText(expectedText)));
+    }
+
+    public void assertHintTextIs(String expectedText) {
+        findView().check(matches(withHint(expectedText)));
     }
 }

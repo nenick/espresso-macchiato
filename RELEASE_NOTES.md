@@ -1,3 +1,7 @@
+#### New in release x.x.x
+
+* EspEditText - assertion for hint
+
 #### New in release 0.2.0
 
 elements

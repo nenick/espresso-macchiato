@@ -12,8 +12,10 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 public class EspEditTextTest extends EspressoTestCase<BaseActivity> {
 
-    public static final String INTIAL_TEXT = "My Text";
+    public static final String INITIAL_TEXT = "My Text";
     public static final String CHANGED_TEXt = "Another text";
+    public static final String HINT_TEXT = "just for testing";
+
     private int editTextId = android.R.id.edit;
     private EspEditText espEditText = EspEditText.byId(editTextId);
 
@@ -21,6 +23,7 @@ public class EspEditTextTest extends EspressoTestCase<BaseActivity> {
     public void setup() {
         EditText editText = new EditText(activityTestRule.getActivity());
         editText.setId(editTextId);
+        editText.setHint(HINT_TEXT);
         addViewToActivity(editText, BaseActivity.rootLayout);
     }
 
@@ -28,17 +31,22 @@ public class EspEditTextTest extends EspressoTestCase<BaseActivity> {
     public void testReplaceText() {
         espEditText.assertTextIs("");
 
-        espEditText.replaceText(INTIAL_TEXT);
-        espEditText.assertTextIs(INTIAL_TEXT);
+        espEditText.replaceText(INITIAL_TEXT);
+        espEditText.assertTextIs(INITIAL_TEXT);
 
         espEditText.replaceText(CHANGED_TEXt);
         espEditText.assertTextIs(CHANGED_TEXt);
     }
 
     @Test
+    public void testHint() {
+        espEditText.assertHintTextIs(HINT_TEXT);
+    }
+
+    @Test
     public void testCustomBaseMatcher() {
-        espEditText.replaceText(INTIAL_TEXT);
-        espEditText = new EspEditText(withText(INTIAL_TEXT));
+        espEditText.replaceText(INITIAL_TEXT);
+        espEditText = new EspEditText(withText(INITIAL_TEXT));
         espEditText.assertIsVisible();
     }
 }
