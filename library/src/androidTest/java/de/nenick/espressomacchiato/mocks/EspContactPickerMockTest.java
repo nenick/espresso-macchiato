@@ -65,7 +65,7 @@ public class EspContactPickerMockTest extends EspressoIntentTestCase<OnActivityR
     }
 
     @Test
-    @Ignore("result is delivered after all checks are done (tear down)")
+    @Ignore("result will be delivered in tear down, after all checks are done")
     public void testContactPickerMockWhenNotMatching() {
         activity.setListener(new OnActivityResultActivity.OnActivityResultListener() {
             @Override

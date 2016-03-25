@@ -14,6 +14,8 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.NavigationDrawerActivity;
 import de.nenick.espressotools.EspressoTestCase;
 
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+
 public class EspNavigationMenuItemTest extends EspressoTestCase<NavigationDrawerActivity> {
 
     private static final String navigationItemTitleStandard = "standard navigation item";
@@ -61,6 +63,12 @@ public class EspNavigationMenuItemTest extends EspressoTestCase<NavigationDrawer
         exception.expectMessage("No views in hierarchy found matching: ((an instance of android.support.design.internal.NavigationMenuItemView and has child: with text: is \"standard navigation item\" and is displayed on the screen to the user) and is displayed on the screen to the user)");
 
         espNavigationMenuItemStandard.click();
+    }
+
+    @Test
+    public void testCustomBaseMatcher() {
+        espNavigationMenuItemStandard = new EspNavigationMenuItem(withText(navigationItemTitleStandard));
+        espNavigationMenuItemStandard.assertIsHidden();
     }
 
     protected void givenSomeNavigationItems() {

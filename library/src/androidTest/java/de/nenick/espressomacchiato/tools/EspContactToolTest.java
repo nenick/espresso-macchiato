@@ -31,10 +31,14 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
     public void setup() {
         EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS);
         initialContactCount = queryContactCount();
+
+        // just for coverage
+        new EspContactTool();
     }
 
     @After
     public void reset() {
+        EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS);
         if (contactUri != null) {
             EspContactTool.delete(contactUri);
         }
@@ -43,15 +47,14 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
 
     @Test
     public void testContactHandling() {
-        EspContactTool.ContactSpec contactSpec = EspContactTool.spec()
+        EspContactTool.spec()
                 .withDisplayName(TEST_CONTACT_NAME)
                 .withAddress(EspContactTool.address()
                         .withStreet(TEST_STREET)
                         .withPostcode(TEST_POSTCODE)
                         .withCity(TEST_CITY)
-                        .withCountry(TEST_COUNTRY));
-
-        EspContactTool.add(contactSpec);
+                        .withCountry(TEST_COUNTRY))
+                .addContact();
 
         contactUri = EspContactTool.uriByName(TEST_CONTACT_NAME);
         assertNotNull(contactUri);
@@ -81,7 +84,23 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
     @Test
     public void testUriByNameFailure() {
         exception.expect(IllegalStateException.class);
-        contactUri = EspContactTool.uriByName(TEST_CONTACT_NAME);
+        exception.expectMessage("Contact data not found for " + TEST_CONTACT_NAME);
+        contactUri = EspContactTool.spec()
+                .withDisplayName(TEST_CONTACT_NAME + " other guy")
+                .withAddress(EspContactTool.address()
+                        .withStreet(TEST_STREET)
+                        .withPostcode(TEST_POSTCODE)
+                        .withCity(TEST_CITY)
+                        .withCountry(TEST_COUNTRY))
+                .addContact();
+        EspContactTool.uriByName(TEST_CONTACT_NAME);
+    }
+
+    @Test
+    public void testUriByNameFailureNoContacts() {
+        exception.expect(IllegalStateException.class);
+        exception.expectMessage("Contact data not found for " + TEST_CONTACT_NAME);
+        EspContactTool.uriByName(TEST_CONTACT_NAME);
     }
 
     @Test
@@ -114,13 +133,35 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
     @Test
     public void testAddressUriByDisplayNameFailure() {
         exception.expect(IllegalStateException.class);
-        contactUri = EspContactTool.addressUriByDisplayName(TEST_CONTACT_NAME);
+        contactUri = EspContactTool.spec()
+                .withDisplayName(TEST_CONTACT_NAME + " other guy")
+                .withAddress(EspContactTool.address()
+                        .withStreet(TEST_STREET)
+                        .withPostcode(TEST_POSTCODE)
+                        .withCity(TEST_CITY)
+                        .withCountry(TEST_COUNTRY))
+                .addContact();
+
+        EspContactTool.addressUriByDisplayName(TEST_CONTACT_NAME);
+    }
+
+    @Test
+    public void testAddressUriByDisplayNameFailureNoContacts() {
+        exception.expect(IllegalStateException.class);
+        EspContactTool.addressUriByDisplayName(TEST_CONTACT_NAME);
     }
 
     @Test
     public void testSpecOptionalProperties() {
         contactUri = EspContactTool.spec().addContact();
         assertNotNull(contactUri);
+    }
+
+    @Test
+    public void testAddContactFailureForMissingPermission() {
+        exception.expect(SecurityException.class);
+        EspPermissionsTool.resetAllPermission();
+        EspContactTool.spec().addContact();
     }
 
     protected int queryContactCount() {

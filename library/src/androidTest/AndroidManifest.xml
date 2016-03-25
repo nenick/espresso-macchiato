@@ -12,6 +12,7 @@
             android:screenOrientation="landscape" />
         <activity android:name=".views.NavigationDrawerActivity" />
         <activity android:name=".views.OnActivityResultActivity" />
+        <activity android:name=".views.LongListActivity" />
     </application>
 
 </manifest>

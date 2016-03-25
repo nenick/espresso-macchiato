@@ -45,6 +45,12 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    public void testClickFailure() throws Throwable {
+        exception.expect(IllegalStateException.class);
+        espPermissionDialog.deny();
+    }
+
+    @Test
     public void testDenyWhenAllowed() throws Throwable {
         exception.expect(IllegalStateException.class);
         exception.expectMessage("Deny would revoke permission and restart app. This would let all following tests fail. See documentation for details.");

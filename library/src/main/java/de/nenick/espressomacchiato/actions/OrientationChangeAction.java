@@ -27,11 +27,11 @@ public class OrientationChangeAction implements ViewAction {
         this.requestedOrientation = orientation;
     }
 
-    public static ViewAction orientationLandscape() {
+    public static OrientationChangeAction orientationLandscape() {
         return new OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
-    public static ViewAction orientationPortrait() {
+    public static OrientationChangeAction orientationPortrait() {
         return new OrientationChangeAction(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
@@ -64,15 +64,15 @@ public class OrientationChangeAction implements ViewAction {
         }
     }
 
-    private boolean hasActivityFixedOrientation(Activity currentActivity) {
+    protected boolean hasActivityFixedOrientation(Activity currentActivity) {
         ActivityInfo[] activities;
         String packageName = currentActivity.getPackageName();
 
         // collect AndroidManifest.xml activities properties
         try {
-            activities = currentActivity.getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES).activities;
+            activities = InstrumentationRegistry.getTargetContext().getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES).activities;
         } catch (PackageManager.NameNotFoundException e) {
-            throw new IllegalStateException("No activities found for " + packageName + " in AndroidManifest.xml", e);
+            throw new IllegalStateException(e);
         }
 
         for (ActivityInfo activity : activities) {
@@ -86,11 +86,9 @@ public class OrientationChangeAction implements ViewAction {
             if (activity.screenOrientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
                 Log.d(OrientationChangeAction.class.getSimpleName(), "Ignore orientation change because orientation for this activity is fixed in AndroidManifest.xml.");
                 return true;
-            } else {
-                return false;
             }
         }
 
-        throw new IllegalStateException("Activity configuration for " + currentActivity.getClass().getSimpleName() + " not found in AndroidManifest.xml");
+        return false;
     }
 }

@@ -11,7 +11,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationLandscape;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationPortrait;
 import static de.nenick.espressomacchiato.assertions.OrientationAssertion.isOrientationLandscape;
-import static de.nenick.espressomacchiato.assertions.OrientationAssertion.isOrientationPotrait;
+import static de.nenick.espressomacchiato.assertions.OrientationAssertion.isOrientationPortrait;
 
 /**
  * Actions you can do with android devices.
@@ -59,7 +59,7 @@ public class EspDevice {
      * Check if activity orientation is portrait.
      */
     public void assertOrientationIsPortrait() {
-        onView(isRoot()).check(isOrientationPotrait());
+        onView(isRoot()).check(isOrientationPortrait());
     }
 
     /**

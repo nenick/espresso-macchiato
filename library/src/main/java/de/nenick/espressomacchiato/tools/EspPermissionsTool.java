@@ -38,7 +38,21 @@ public class EspPermissionsTool {
     }
 
     public static void ensurePermissions(Activity activity, String ... permissions) {
+        if (allPermissionsGranted(permissions)) {
+            return;
+        }
+
         EspPermissionsTool.requestPermissions(activity, 42, permissions);
         EspPermissionDialog.build().allow();
+    }
+
+    private static boolean allPermissionsGranted(String[] permissions) {
+        boolean allPermissionsGranted = true;
+        for (String permission : permissions) {
+            if(!isPermissionGranted(permission)) {
+                allPermissionsGranted = false;
+            }
+        }
+        return allPermissionsGranted;
     }
 }

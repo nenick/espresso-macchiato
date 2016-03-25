@@ -10,7 +10,7 @@ public class OrientationAssertion implements ViewAssertion {
 
     private final int expectedOrientation;
 
-    public static ViewAssertion isOrientationPotrait() {
+    public static ViewAssertion isOrientationPortrait() {
         return new OrientationAssertion(Configuration.ORIENTATION_PORTRAIT);
     }
 

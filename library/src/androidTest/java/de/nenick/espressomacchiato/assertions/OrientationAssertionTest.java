@@ -15,9 +15,9 @@ import static org.junit.Assert.assertEquals;
 public class OrientationAssertionTest extends EspressoTestCase<BaseActivity> {
 
     @Test
-    public void testCheck() throws Exception {
+    public void testCheckFailure() throws Exception {
         exception.expect(NoMatchingViewException.class);
-        onView(withId(android.R.id.text1)).check(OrientationAssertion.isOrientationPotrait());
+        onView(withId(android.R.id.text1)).check(OrientationAssertion.isOrientationPortrait());
     }
 
     @Test
