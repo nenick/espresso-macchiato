@@ -77,11 +77,14 @@ public class LongListActivity extends Activity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             // Inflate list items.
+            View view;
             if (null == convertView) {
-                convertView = layoutInflater.inflate(R.layout.list_item, null);
+                view = layoutInflater.inflate(R.layout.list_item, null);
+            } else {
+                view = convertView;
             }
 
-            convertView.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ((TextView) findViewById(R.id.selection_row_value)).setText(
