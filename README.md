@@ -110,7 +110,7 @@ Always write some tests to prove the functionality and stability for new element
 
 Run basic tests to have a high chance that automatic build and test will not fail.
 
-    ./test-rpoject.sh
+    ./test-project.sh
 
 #### Create release
 
@@ -128,4 +128,3 @@ This command will do and trigger:
 6. trigger: circle ci to push the release artifacts to bintray
 
 With the last step the release is ready and can be used.
-Now its time to update this README file.
