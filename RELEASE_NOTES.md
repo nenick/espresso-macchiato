@@ -2,6 +2,7 @@
 
 elements
 
+* EspView - assertions for displayed on screen / state is visible, hidden, gone
 * EspEditText - assertion for hint text
 * EspAdapterView - click / count / assert list items
 * EspListView - click / count / assert list items

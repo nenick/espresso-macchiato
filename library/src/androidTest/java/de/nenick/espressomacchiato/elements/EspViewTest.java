@@ -30,12 +30,25 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
         espView.assertIsVisible();
         espView.assertIsEnabled();
+        espView.assertIsDisplayedOnScreen();
 
         givenViewIsDisabled();
         espView.assertIsDisabled();
 
-        givenViewIsHidden();
+        givenViewIsInvisible();
         espView.assertIsHidden();
+
+        givenViewIsGone();
+        espView.assertIsHidden();
+    }
+
+    @Test
+    public void testAssertIsDisplayedOnScreenFailure() {
+        givenViewOutsideOfScreen(android.R.id.text2);
+        EspView.byId(android.R.id.text2).assertIsVisible();
+
+        exception.expect(AssertionError.class);
+        EspView.byId(android.R.id.text2).assertIsDisplayedOnScreen();
     }
 
     @Test
@@ -68,11 +81,20 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
     }
 
-    private void givenViewIsHidden() {
+    private void givenViewIsInvisible() {
         performOnUiThread(new Runnable() {
             @Override
             public void run() {
                 view.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+
+    private void givenViewIsGone() {
+        performOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                view.setVisibility(View.GONE);
             }
         });
     }
@@ -103,5 +125,15 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         messageView = new TextView(activityTestRule.getActivity());
         messageView.setId(messageViewId);
         addViewToActivity(messageView, BaseActivity.rootLayout);
+    }
+
+    private void givenViewOutsideOfScreen(int id) {
+        TextView textView = new TextView(getActivity());
+        textView.setHeight(5000);
+        addViewToActivity(textView, BaseActivity.rootLayout);
+
+        textView = new TextView(getActivity());
+        textView.setId(id);
+        addViewToActivity(textView, BaseActivity.rootLayout);
     }
 }

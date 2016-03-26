@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.elements;
 
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 
 import org.hamcrest.Matcher;
@@ -12,10 +13,13 @@ import java.util.Arrays;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.not;
 
 public class EspView {
@@ -34,12 +38,18 @@ public class EspView {
         this.baseMatcher = baseMatcher;
     }
 
+    public void assertIsDisplayedOnScreen() {
+        findView().check(matches(isCompletelyDisplayed()));
+    }
+
     public void assertIsVisible() {
-        findView().check(matches(isDisplayed()));
+        findView().check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     public void assertIsHidden() {
-        findView().check(matches(not(isDisplayed())));
+        findView().check(matches(anyOf(
+                withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE),
+                withEffectiveVisibility(ViewMatchers.Visibility.GONE))));
     }
 
     public void assertNotExist() {
