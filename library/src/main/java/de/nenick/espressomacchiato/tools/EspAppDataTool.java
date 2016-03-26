@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
  * Best situation is to clear all data is when activity is not started.
  * <p>
  * You can delay activity start with:<br>
- * new ActivityTestRule<>(Activity.class, false, false)<br>
+ * new ActivityTestRule(Activity.class, false, false)<br>
  * clearApplicationData()<br>
  * ActivityTestRule.lunchActivity()
  */
