@@ -1,9 +1,9 @@
 # Espresso Macchiato
 
-Write easy and fast tests with Android Espresso.
+Write quickly and easily tests with Android Espresso.
 
 Contains a collection of android like view elements which provides actions and checks in a fluent style.
-Also provides prepared mocks for intents and and some useful tools to prepare test data on your device.
+Also provides tools for mocking and preparing test data.
 
 #### [Documentation](https://github.com/nenick/espresso-macchiato/wiki)
 
