@@ -24,7 +24,7 @@ import static org.hamcrest.CoreMatchers.not;
 
 public class EspView {
 
-    protected final Matcher<View> baseMatcher;
+    private final Matcher<View> baseMatcher;
 
     public static EspView byId(int resourceId) {
         return new EspView(resourceId);
@@ -34,8 +34,8 @@ public class EspView {
         this.baseMatcher = withId(resourceId);
     }
 
-    public EspView(Matcher<View> baseMatcher) {
-        this.baseMatcher = baseMatcher;
+    public EspView(Matcher<View> base) {
+        this.baseMatcher = base;
     }
 
     public void assertIsDisplayedOnScreen() {
@@ -69,10 +69,10 @@ public class EspView {
     }
 
     @SafeVarargs
-    protected final ViewInteraction findView(Matcher<View>... additionalMatcher) {
+    protected final ViewInteraction findView(Matcher<View>... additional) {
         ArrayList<Matcher<? super View>> allMatcher = new ArrayList<>();
         allMatcher.add(baseMatcher);
-        allMatcher.addAll(Arrays.asList(additionalMatcher));
+        allMatcher.addAll(Arrays.asList(additional));
         return onView(allOf(allMatcher));
     }
 }

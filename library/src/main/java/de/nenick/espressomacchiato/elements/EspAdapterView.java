@@ -16,8 +16,8 @@ public class EspAdapterView extends EspView {
         super(resourceId);
     }
 
-    public EspAdapterView(Matcher<View> baseMatcher) {
-        super(baseMatcher);
+    public EspAdapterView(Matcher<View> base) {
+        super(base);
     }
 
     public void assertItemCountIs(final int expectedCount) {

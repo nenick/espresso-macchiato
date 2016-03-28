@@ -19,8 +19,8 @@ public class EspEditText extends EspView {
         super(resourceId);
     }
 
-    public EspEditText(Matcher<View> baseMatcher) {
-        super(baseMatcher);
+    public EspEditText(Matcher<View> base) {
+        super(base);
     }
 
     public void replaceText(String newText) {

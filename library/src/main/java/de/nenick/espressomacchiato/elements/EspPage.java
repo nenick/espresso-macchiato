@@ -14,7 +14,7 @@ public class EspPage extends EspView {
         super(resourceId);
     }
 
-    public EspPage(Matcher<View> baseMatcher) {
-        super(baseMatcher);
+    public EspPage(Matcher<View> base) {
+        super(base);
     }
 }

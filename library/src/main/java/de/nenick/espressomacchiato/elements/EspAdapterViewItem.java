@@ -27,8 +27,8 @@ public class EspAdapterViewItem extends EspView {
         return new EspAdapterViewItem(text, dataSourceField);
     }
 
-    public EspAdapterViewItem(Matcher<View> baseMatcher) {
-        super(baseMatcher);
+    public EspAdapterViewItem(Matcher<View> base) {
+        super(base);
     }
 
     public EspAdapterViewItem(String itemText, String dataSourceField) {

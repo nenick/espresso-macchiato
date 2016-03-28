@@ -14,7 +14,7 @@ public class EspListView extends EspAdapterView {
         super(resourceId);
     }
 
-    public EspListView(Matcher<View> baseMatcher) {
-        super(baseMatcher);
+    public EspListView(Matcher<View> base) {
+        super(base);
     }
 }

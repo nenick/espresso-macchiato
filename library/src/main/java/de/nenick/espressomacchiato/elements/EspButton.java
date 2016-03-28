@@ -21,11 +21,11 @@ public class EspButton extends EspView {
         super(resourceId);
     }
 
-    public EspButton(Matcher<View> baseMatcher) {
-        super(baseMatcher);
+    public EspButton(Matcher<View> base) {
+        super(base);
     }
 
-    public void assertTextIs(String expectedText) {
-        findView().check(matches(withText(expectedText)));
+    public void assertTextIs(String expected) {
+        findView().check(matches(withText(expected)));
     }
 }

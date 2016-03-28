@@ -26,8 +26,8 @@ public class EspNavigationMenuItem extends EspView {
         super(allOf(instanceOf(NavigationMenuItemView.class), withChildGroups(withText(itemText)), isDisplayed()));
     }
 
-    public EspNavigationMenuItem(Matcher<View> baseMatcher) {
-        super(baseMatcher);
+    public EspNavigationMenuItem(Matcher<View> base) {
+        super(base);
     }
 
     public void assertIsSelected() {
