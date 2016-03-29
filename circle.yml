@@ -52,11 +52,13 @@ test:
     - ./gradlew :library:lintDebug
     - ./gradlew :sampleapp:lintDebug
 
-    # ensure that the emulator is ready to use
-    - circle-android wait-for-boot
-
     # create javadoc to ensure release can be build and published without issues
     - ./gradlew :library:mavenAndroidJavadocs
+
+    # ensure that the emulator is ready to use
+    - case $CIRCLE_NODE_INDEX in 0) circle-android wait-for-boot ;; 1) circle-android wait-for-boot ;; esac:
+        parallel: true
+    #- circle-android wait-for-boot
 
     # remove the look screen
     - adb shell input keyevent 82
@@ -67,7 +69,7 @@ test:
     # start instrumentation tests on emulator
     # -i is used to see current test execution progress
     - case $CIRCLE_NODE_INDEX in 0) ./gradlew :library:connectedCheck -i ;; 1) ./gradlew :library:connectedCheck -i ;; esac:
-                parallel: true
+        parallel: true
     #- ./gradlew :library:connectedCheck -i
     - ./gradlew :sampleapp:connectedCheck -i
 
