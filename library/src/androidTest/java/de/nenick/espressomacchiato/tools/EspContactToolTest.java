@@ -3,10 +3,12 @@ package de.nenick.espressomacchiato.tools;
 import android.Manifest;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.ContactsContract;
 import android.support.test.InstrumentationRegistry;
 
 import org.junit.After;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -159,6 +161,11 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
 
     @Test
     public void testAddContactFailureForMissingPermission() {
+        // permissions handling only available since android marshmallow
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+
         exception.expect(SecurityException.class);
         EspPermissionsTool.resetAllPermission();
         EspContactTool.spec().addContact();

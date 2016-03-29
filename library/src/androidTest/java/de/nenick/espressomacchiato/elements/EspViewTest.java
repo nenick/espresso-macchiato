@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import junit.framework.AssertionFailedError;
+
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
@@ -47,7 +49,7 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         givenViewOutsideOfScreen(android.R.id.text2);
         EspView.byId(android.R.id.text2).assertIsVisible();
 
-        exception.expect(AssertionError.class);
+        exception.expect(AssertionFailedError.class);
         EspView.byId(android.R.id.text2).assertIsDisplayedOnScreen();
     }
 

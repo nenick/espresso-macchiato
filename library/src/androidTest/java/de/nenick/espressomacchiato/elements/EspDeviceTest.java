@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import junit.framework.AssertionFailedError;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -28,6 +30,13 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
     private EspPage startPage = EspPage.byId(BaseActivity.rootLayout);
     private EspPage nextPage = EspPage.byId(LandscapeFixedActivity.rootLayout);
 
+    @Test
+    public void setup() {
+        // emulator with older android version (e.g. v8) has initial landscape mode
+        // but we expect orientation is portrait mode
+        espDevice.rotateToPortrait();
+    }
+
     @After
     public void reset() {
         espDevice.rotateToPortrait();
@@ -47,7 +56,7 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testAssertOrientationIsPortraitFailure() {
-        exception.expect(AssertionError.class);
+        exception.expect(AssertionFailedError.class);
         exception.expectMessage(is("expected device orientation PORTRAIT but was LANDSCAPE"));
 
         espDevice.rotateToLandscape();
@@ -56,7 +65,7 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testAssertOrientationIsLandscapeFailure() {
-        exception.expect(AssertionError.class);
+        exception.expect(AssertionFailedError.class);
         exception.expectMessage(is("expected device orientation LANDSCAPE but was PORTRAIT"));
 
         espDevice.rotateToPortrait();
@@ -88,7 +97,7 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testAssertSoftKeyboardIsOpenFailure() {
-        exception.expect(AssertionError.class);
+        exception.expect(AssertionFailedError.class);
         exception.expectMessage(containsString("Keyboard should be open."));
         exception.expectMessage(containsString("Expected: is <true>"));
         exception.expectMessage(containsString("Got: <false>"));
@@ -98,7 +107,7 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testAssertSoftKeyboardIsClosedFailure() {
-        exception.expect(AssertionError.class);
+        exception.expect(AssertionFailedError.class);
         exception.expectMessage(containsString("Keyboard should be closed."));
         exception.expectMessage(containsString("Expected: is <true>"));
         exception.expectMessage(containsString("Got: <false>"));
