@@ -70,7 +70,9 @@ public class CloseAllActivitiesFunction {
             @Override
             public Boolean call() throws Exception {
                 final Set<Activity> activities = getActivitiesInStages(Stage.RESUMED,
-                        Stage.STARTED, Stage.PAUSED, Stage.STOPPED, Stage.CREATED);
+                        Stage.STARTED, Stage.PAUSED,
+                        /* Activities in android v8 never reach destroyed after calling finish Stage.STOPPED ,*/
+                        Stage.CREATED);
                 activities.removeAll(getActivitiesInStages(Stage.DESTROYED));
                 if (activities.size() > 0) {
                     final Activity activity = activities.iterator().next();
