@@ -36,7 +36,7 @@ test:
     #- emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
     #    background: true
     # start both emulator for instrumentation tests
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img ;; 1) emulator -avd my-android8 -no-audio -no-window -sdcard AndroidSDCard.img ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img ;; 1) emulator -avd my-android8 -no-audio -no-window -c 500M ;; esac:
         parallel: true
         background: true
 
@@ -59,23 +59,26 @@ test:
     - ./gradlew :library:mavenAndroidJavadocs
 
     # ensure that the emulator is ready to use
-    - case $CIRCLE_NODE_INDEX in 0) circle-android wait-for-boot ;; 1) circle-android wait-for-boot ;; esac:
+    - circle-android wait-for-boot:
         parallel: true
-    #- circle-android wait-for-boot
+
+    # hack to enable sdcard for android v8 emulator
+    - case $CIRCLE_NODE_INDEX in 0) ;; 1) mount -o rw,remount rootfs / ;; esac:
+        parallel: true
+    - case $CIRCLE_NODE_INDEX in 0) ;; 1) chmod 777 / ;; esac:
+        parallel: true
 
     # remove the look screen
-    - case $CIRCLE_NODE_INDEX in 0) adb shell input keyevent 82 ;; 1) adb shell input keyevent 82 ;; esac:
+    - adb shell input keyevent 82:
         parallel: true
-    #- adb shell input keyevent 82
 
     # clear logs from emulator
     - adb logcat -c
 
     # start instrumentation tests on emulator
     # -i is used to see current test execution progress
-    - case $CIRCLE_NODE_INDEX in 0) ./gradlew :library:connectedCheck -i ;; 1) ./gradlew :library:connectedCheck -i ;; esac:
+    - ./gradlew :library:connectedCheck -i:
         parallel: true
-    #- ./gradlew :library:connectedCheck -i
     - ./gradlew :sampleapp:connectedCheck -i
 
   post:
@@ -90,19 +93,15 @@ test:
 
     # for library module
     # collect xml test results for circle ci to analyze them
-    - case $CIRCLE_NODE_INDEX in 0) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml ;; 1) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml ;; esac:
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml:
         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml ;; 1) cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml ;; esac:
+    - cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml:
         parallel: true
-
     # collect html test results and make them accessable
-    - case $CIRCLE_NODE_INDEX in 0) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html ;; 1) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html ;; esac:
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html:
         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html ;; 1) cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html ;; esac:
+    - cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html:
         parallel: true
-    #- mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html
-    #- cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html
-
     # collect test coverage results and make them accessable
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage
     - cp -r library/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/library_android_tests/coverage
