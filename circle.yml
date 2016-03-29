@@ -63,7 +63,7 @@ test:
     #- circle-android wait-for-boot
 
     # remove the look screen
-    - case $CIRCLE_NODE_INDEX in 0) adb shell input keyevent 82 ;; 1) cadb shell input keyevent 82 ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) adb shell input keyevent 82 ;; 1) adb shell input keyevent 82 ;; esac:
         parallel: true
     #- adb shell input keyevent 82
 
