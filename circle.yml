@@ -11,17 +11,18 @@ dependencies:
     # https://discuss.circleci.com/t/android-build-tools-23-0-2-not-available/455/3
     - echo y | android update sdk --no-ui --all --filter tool #,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
     - echo y | android update sdk --no-ui --all --filter build-tools-23.0.3
+    - echo y | android update sdk --no-ui --all --filter android-8
 
 test:
   pre:
-    # create android v23 emulator
+    # create android v23 emulator as latest supported android version
     - echo no | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2)
+
+    # create android v8 emulator as earliest supported android version
+    - echo no | android create avd -n my-android8 -t $(android list targets | grep android-8 | cut -d" " -f2)
 
     # activate soft keybord because some tests do checks on it
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
-    - ls ~/.android/avd/
-    - cat ~/.android/avd/circleci-android22.avd/config.ini
-    - cat ~/.android/avd/my-android23.avd/config.ini
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
 
     # provide external space because some tests will write files there
@@ -29,6 +30,11 @@ test:
 
     # start emulator for instrumentation tests
     - emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
+        background: true
+
+    # start both emulator for instrumentation tests
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img ;; 1) emulator -avd my-android8 -no-audio -no-window -sdcard AndroidSDCard.img ;; esac:
+        parallel: true
         background: true
 
   override:
