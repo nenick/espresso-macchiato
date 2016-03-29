@@ -20,13 +20,13 @@ dependencies:
     # create android v8 emulator as earliest supported android version
     - echo no | android create avd -n my-android8 -t $(android list targets | grep android-8 | cut -d" " -f2)
 
-test:
-  pre:
-
     # activate soft keybord because some tests do checks on it
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/my-android8.avd/config.ini
 
+test:
+  pre:
     # provide external space because some tests will write files there
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
 
