@@ -8,7 +8,7 @@ machine:
 dependencies:
   pre:
     # workaround for "failed to find Build Tools revision ..."
-    # https://discuss.circleci.com/t/android-build-tools-23-0-2-not-available/455/3
+    # android list sdk --all --extended
     - echo y | android update sdk --no-ui --all --filter tool #,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
     - echo y | android update sdk --no-ui --all --filter build-tools-23.0.3
     - echo y | android update sdk --no-ui --all --filter android-8
@@ -66,7 +66,9 @@ test:
 
     # start instrumentation tests on emulator
     # -i is used to see current test execution progress
-    - ./gradlew :library:connectedCheck -i
+    - case $CIRCLE_NODE_INDEX in 0) ./gradlew :library:connectedCheck -i ;; 1) ./gradlew :library:connectedCheck -i ;; esac:
+                parallel: true
+    #- ./gradlew :library:connectedCheck -i
     - ./gradlew :sampleapp:connectedCheck -i
 
   post:
