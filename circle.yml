@@ -13,13 +13,15 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter build-tools-23.0.3
     - echo y | android update sdk --no-ui --all --filter android-8
 
-test:
-  pre:
+
     # create android v23 emulator as latest supported android version
     - echo no | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2)
 
     # create android v8 emulator as earliest supported android version
     - echo no | android create avd -n my-android8 -t $(android list targets | grep android-8 | cut -d" " -f2)
+
+test:
+  pre:
 
     # activate soft keybord because some tests do checks on it
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
