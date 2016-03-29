@@ -28,15 +28,13 @@ dependencies:
     # provide external space because some tests will write files there
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
 
+    # logcat output which is realy necessary
     - LOGCAT_FILTER='grep -v GpsLocationProvider | grep -v MediaProvider | grep -v MetadataRetrieverClient | grep -v BackupManagerService | grep -v ARMAssembler | grep -v Choreographer | grep -v IInputConnectionWrapper | grep -v "I/art" | grep -v ConnectivityService | grep -v "D/PhoneInterfaceManager" | grep -v "I/Email" | grep -v "I/Exchange" | grep -v "E/libEGL" | grep -v "D/gralloc" | grep -v "E/installd" | grep -v "D/ConnectivityManager" | grep -v "D/WIFI" | grep -v "V/Mms'
 
 test:
   pre:
-    # start emulator for instrumentation tests
-    #- emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
-    #    background: true
-    # start both emulator for instrumentation tests
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img ;; 1) emulator -avd my-android8 -no-audio -no-window -c 500M ;; esac:
+    # start emulator for instrumentation tests (lowest and latest supported android version)
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img ;; 1) emulator -avd my-android8 -no-audio -no-window -sdcard AndroidSDCard.img ;; esac:
         parallel: true
         background: true
 
@@ -85,13 +83,17 @@ test:
     # collect logs from emulator and make them accessable
     - adb logcat -d | $LOGCAT_FILTER > $CIRCLE_ARTIFACTS/logcat_emulator.txt:
         parallel: true
-       
+
+    #
     # for espressotools module
+    #
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
     - cp -r espressotools/build/outputs/lint* $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
 
+    #
     # for library module
+    #
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml:
         parallel: true
@@ -109,7 +111,9 @@ test:
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/lint
     - cp -r library/build/outputs/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
 
+    #
     # for sampleapp module
+    #
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
     - cp -r sampleapp/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
