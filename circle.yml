@@ -29,8 +29,8 @@ test:
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
 
     # start emulator for instrumentation tests
-    - emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
-        background: true
+    #- emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
+    #    background: true
 
     # start both emulator for instrumentation tests
     - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img ;; 1) emulator -avd my-android8 -no-audio -no-window -sdcard AndroidSDCard.img ;; esac:
