@@ -63,7 +63,9 @@ test:
     #- circle-android wait-for-boot
 
     # remove the look screen
-    - adb shell input keyevent 82
+    - case $CIRCLE_NODE_INDEX in 0) adb shell input keyevent 82 ;; 1) cadb shell input keyevent 82 ;; esac:
+        parallel: true
+    #- adb shell input keyevent 82
 
     # clear logs from emulator
     - adb logcat -c
@@ -89,8 +91,13 @@ test:
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml
     - cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml
     # collect html test results and make them accessable
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html
-    - cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html
+    - case $CIRCLE_NODE_INDEX in 0) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html ;; 1) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html ;; esac:
+        parallel: true
+    - case $CIRCLE_NODE_INDEX in 0) cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html ;; 1) cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html ;; esac:
+        parallel: true
+    #- mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html
+    #- cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html
+
     # collect test coverage results and make them accessable
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage
     - cp -r library/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/library_android_tests/coverage
