@@ -1,9 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
 import android.support.test.espresso.DataInteraction;
-import android.view.View;
-
-import org.hamcrest.Matcher;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -15,7 +12,7 @@ import static org.hamcrest.Matchers.is;
 
 public class EspAdapterViewItem extends EspView {
 
-    private String dataSourceField;
+    private String property;
     private String itemText;
 
     @Deprecated
@@ -23,25 +20,21 @@ public class EspAdapterViewItem extends EspView {
         throw new UnsupportedOperationException();
     }
 
-    public static EspAdapterViewItem byText(String text, String dataSourceField) {
-        return new EspAdapterViewItem(text, dataSourceField);
-    }
-
-    public EspAdapterViewItem(Matcher<View> base) {
-        super(base);
+    public static EspAdapterViewItem byText(String text, String property) {
+        return new EspAdapterViewItem(text, property);
     }
 
     public EspAdapterViewItem(String itemText, String dataSourceField) {
-        this(withText(itemText));
+        super(withText(itemText));
         this.itemText = itemText;
-        this.dataSourceField = dataSourceField;
+        this.property = dataSourceField;
     }
 
     public void scrollTo() {
-        onRow(itemText, dataSourceField).check(matches(isCompletelyDisplayed()));
+        onRow(itemText, property).check(matches(isCompletelyDisplayed()));
     }
 
-    private static DataInteraction onRow(String text, String dataSourceField) {
-        return onData(hasEntry(equalTo(dataSourceField), is(text)));
+    protected DataInteraction onRow(Object value, String property) {
+        return onData(hasEntry(equalTo(property), is(value)));
     }
 }

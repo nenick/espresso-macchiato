@@ -20,8 +20,8 @@ public class EspAdapterView extends EspView {
         super(base);
     }
 
-    public void assertItemCountIs(final int expectedCount) {
-        findView().check(new AdapterViewItemCountAssertion(expectedCount));
+    public void assertItemCountIs(int expected) {
+        findView().check(new AdapterViewItemCountAssertion(expected));
     }
 
 }
