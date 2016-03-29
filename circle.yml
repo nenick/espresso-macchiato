@@ -25,15 +25,14 @@ dependencies:
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android8.avd/config.ini
 
-test:
-  pre:
     # provide external space because some tests will write files there
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
 
+test:
+  pre:
     # start emulator for instrumentation tests
     #- emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img:
     #    background: true
-
     # start both emulator for instrumentation tests
     - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img ;; 1) emulator -avd my-android8 -no-audio -no-window -sdcard AndroidSDCard.img ;; esac:
         parallel: true
@@ -88,8 +87,11 @@ test:
 
     # for library module
     # collect xml test results for circle ci to analyze them
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml
-    - cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml
+    - case $CIRCLE_NODE_INDEX in 0) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml ;; 1) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml ;; esac:
+        parallel: true
+    - case $CIRCLE_NODE_INDEX in 0) cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml ;; 1) cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml ;; esac:
+        parallel: true
+
     # collect html test results and make them accessable
     - case $CIRCLE_NODE_INDEX in 0) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html ;; 1) mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html ;; esac:
         parallel: true
