@@ -1,10 +1,23 @@
 ### Planed for future releases
 
+Common stuff
+
 * manage shared dependencies version central in root gradle
-* Permission Module - only for android 23 necessary and uiautomator force min version 18
-* Documentation - Elements / Mocks / Tools
+* Permission Module - only for android 23 necessary
+* JavaDoc - Elements / Mocks / Tools
 * Package "internal" - Actions / Assertions / Matcher (not intended for public usage)
-* EspDialog - dialog with button list
-* EspWeb - basic elements for web view tests with espresso
-* EspMocks - intent assertions with intended()
+* Circle ci - emulator test also with lowest supported android version (parallelism)
+
+New or extend elements
+
+* All Elements - ensure for mostly all a actions and checks, that the view is currently shown on screen
+* EspListDialog - dialog with button list
+* EspDateTimePicker - select date time
+* EspWebView - basic elements for web view tests with espresso
 * EspTextView - autocomplete checks and actions
+* EspActionBar - click memu items / overflow menu / action mode / search
+* EspToolbar - mostly same like actionbar
+* EspRecyclerView - same like list
+* EspSpinner - choose option / assertions
+* EspViewPager - switch page / assertions visible fragment
+* EspPermission - avoid all execution when below android 23
