@@ -122,8 +122,8 @@ test:
         parallel: true
 
     - mkdir library-node1
-    - scp node1:$(ssh node1 "echo $CIRCLE_TEST_REPORTS")/library_android_tests/coverage/report.xml library-node1/
-    - scp node1:$(ssh node1 "echo $CIRCLE_TEST_REPORTS")/library_android_tests/coverage/coverage.ec library-node1/
+    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/report.xml library-node1/
+    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
 
     #
     # for sampleapp module
