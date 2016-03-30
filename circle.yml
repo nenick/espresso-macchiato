@@ -116,7 +116,10 @@ test:
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/lint
     - cp -r library/build/outputs/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
-
+    - echo $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+        parallel: true
+    - ls $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+        parallel: true
 
     - mkdir library-node1
     - scp node1:$(ssh node1 "echo $CIRCLE_TEST_REPORTS")/library_android_tests/coverage/report.xml library-node1/
