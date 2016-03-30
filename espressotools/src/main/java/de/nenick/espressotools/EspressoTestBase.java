@@ -2,6 +2,7 @@ package de.nenick.espressotools;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
@@ -13,7 +14,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.junit.After;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
@@ -99,5 +102,9 @@ abstract class EspressoTestBase<A extends Activity> {
             //ScreenShot.take();
             delegate.handle(error, viewMatcher);
         }
+    }
+
+    public void skipTestIfBewloAndroidMarshmellow() {
+        Assume.assumeThat(Build.VERSION.SDK_INT,Matchers.greaterThanOrEqualTo(Build.VERSION_CODES.M));
     }
 }

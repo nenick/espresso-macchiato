@@ -3,8 +3,6 @@ package de.nenick.espressomacchiato.elements;
 import android.Manifest;
 import android.os.Build;
 
-import org.hamcrest.Matchers;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,11 +21,12 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
 
     @Before
     public void setup() {
-        // permission only available since android marshmallow
-        Assume.assumeThat(Build.VERSION.SDK_INT, Matchers.greaterThanOrEqualTo(Build.VERSION_CODES.M));
-
         EspPermissionsTool.resetAllPermission();
-        assertTestPermissionIsDenied();
+
+        // deny permissions handling only available since android marshmallow
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            assertTestPermissionIsDenied();
+        }
     }
 
     @Test
@@ -41,17 +40,27 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
     public void testDeny() throws Throwable {
         whenRequestTestPermission();
         espPermissionDialog.deny();
-        assertTestPermissionIsDenied();
+
+        // deny permissions handling only available since android marshmallow
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            assertTestPermissionIsDenied();
+        }
     }
 
     @Test
     public void testClickFailure() throws Throwable {
+        // deny permission only available since android marshmallow
+        skipTestIfBewloAndroidMarshmellow();
+
         exception.expect(IllegalStateException.class);
         espPermissionDialog.deny();
     }
 
     @Test
-    public void testDenyWhenAllowed() throws Throwable {
+    public void testDenyWhenAllowedFailure() throws Throwable {
+        // deny permission only available since android marshmallow
+        skipTestIfBewloAndroidMarshmellow();
+
         exception.expect(IllegalStateException.class);
         exception.expectMessage("Deny would revoke permission and restart app. This would let all following tests fail. See documentation for details.");
 
@@ -61,7 +70,6 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
         assertTestPermissionIsGranted();
         espPermissionDialog.deny();
     }
-
 
     private void whenRequestTestPermission() {
         EspPermissionsTool.requestPermissions(getActivity(), REQUEST_CODE, testPermission);
@@ -74,5 +82,4 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
     private void assertTestPermissionIsDenied() {
         assertThat(EspPermissionsTool.isPermissionGranted(testPermission), is(false));
     }
-
 }
