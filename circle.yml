@@ -117,6 +117,11 @@ test:
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/lint
     - cp -r library/build/outputs/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
 
+
+    - mkdir library-node1
+    - scp node1:$CIRCLE_TEST_REPORTS/library_android_tests/coverage/report.xml library-node1/
+    - scp node1:$CIRCLE_TEST_REPORTS/library_android_tests/coverage/coverage.ec library-node1/
+
     #
     # for sampleapp module
     #
@@ -139,9 +144,6 @@ deployment:
     branch: [master]
     commands:
       # report code coverage to codecov
-      - mkdir library-node1
-      - scp node1:$CIRCLE_TEST_REPORTS/library_android_tests/coverage/report.xml library-node1/
-      - scp node1:$CIRCLE_TEST_REPORTS/library_android_tests/coverage/coverage.ec library-node1/
       - bash <(curl -s https://codecov.io/bash)
 
   release:
