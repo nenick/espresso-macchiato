@@ -9,9 +9,8 @@ dependencies:
   pre:
     # workaround for "failed to find Build Tools revision ..."
     # android list sdk --all --extended
-    - echo y | android update sdk --no-ui --all --filter tool #,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
+    - echo y | android update sdk --no-ui --all --filter tool,android-8 #,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
     - echo y | android update sdk --no-ui --all --filter build-tools-23.0.3
-    - echo y | android update sdk --no-ui --all --filter android-8
 
 
     # create android v23 emulator as latest supported android version
@@ -74,7 +73,6 @@ test:
     - adb logcat -c
 
     # start instrumentation tests on emulator
-    # -i is used to see current test execution progress
     - ./gradlew :library:connectedCheck -i | ./connected-check-filter.sh:
         parallel: true
     - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
@@ -116,10 +114,6 @@ test:
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/lint
     - cp -r library/build/outputs/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
-    - echo $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
-        parallel: true
-    - ls $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
-        parallel: true
 
     - mkdir library-node1
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/report.xml library-node1/
