@@ -75,9 +75,9 @@ test:
 
     # start instrumentation tests on emulator
     # -i is used to see current test execution progress
-    - ./gradlew :library:connectedCheck -i:
+    - ./gradlew :library:connectedCheck -i | ./connected-check-filter.sh:
         parallel: true
-    - ./gradlew :sampleapp:connectedCheck -i
+    - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
 
   post:
     # collect logs from emulator and make them accessable
@@ -119,8 +119,8 @@ test:
 
 
     - mkdir library-node1
-    - scp node1:$CIRCLE_TEST_REPORTS/library_android_tests/coverage/report.xml library-node1/
-    - scp node1:$CIRCLE_TEST_REPORTS/library_android_tests/coverage/coverage.ec library-node1/
+    - scp node1:$(ssh node1 "echo $CIRCLE_TEST_REPORTS")/library_android_tests/coverage/report.xml library-node1/
+    - scp node1:$(ssh node1 "echo $CIRCLE_TEST_REPORTS")/library_android_tests/coverage/coverage.ec library-node1/
 
     #
     # for sampleapp module
