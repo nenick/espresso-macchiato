@@ -61,9 +61,9 @@ test:
         parallel: true
 
     # hack to enable sdcard for android v8 emulator
-    - case $CIRCLE_NODE_INDEX in 0) ;; 1) mount -o rw,remount rootfs / ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) ;; 1) adb shell mount -o rw,remount rootfs / ;; esac:
         parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) ;; 1) chmod 777 / ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) ;; 1) adb shell chmod 777 / ;; esac:
         parallel: true
 
     # remove the look screen
@@ -87,6 +87,7 @@ test:
     #
     # for espressotools module
     #
+
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
     - cp -r espressotools/build/outputs/lint* $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
@@ -94,6 +95,7 @@ test:
     #
     # for library module
     #
+
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml:
         parallel: true
@@ -105,8 +107,12 @@ test:
     - cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html:
         parallel: true
     # collect test coverage results and make them accessable
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage
-    - cp -r library/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/library_android_tests/coverage
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+        parallel: true
+    - cp -r library/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+        parallel: true
+    - cp library/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+        parallel: true
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/lint
     - cp -r library/build/outputs/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
@@ -114,6 +120,7 @@ test:
     #
     # for sampleapp module
     #
+
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
     - cp -r sampleapp/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
@@ -132,6 +139,9 @@ deployment:
     branch: [master]
     commands:
       # report code coverage to codecov
+      - mkdir library-node1
+      - scp node1:$CIRCLE_TEST_REPORTS/library_android_tests/coverage/report.xml library-node1/
+      - scp node1:$CIRCLE_TEST_REPORTS/library_android_tests/coverage/coverage.ec library-node1/
       - bash <(curl -s https://codecov.io/bash)
 
   release:
