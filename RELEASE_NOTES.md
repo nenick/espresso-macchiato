@@ -1,12 +1,10 @@
-#### New in release 0.3.0
+#### New in release 0.4.0
 
 elements
 
-* EspView - assertions for displayed on screen / state is visible, hidden, gone
-* EspEditText - assertion for hint text
-* EspAdapterView - click / count / assert list items
-* EspListView - click / count / assert list items
+* (planed) EspDialog - dismiss dialog but only if dialog config allow it
+* EspPermissionDialog - stabilize for pre marshmallow
 
 tools
 
-* EspAppDataTool - clear preferences / database / file cache / file storage
+* EspPermissionsTool - stabilize for pre marshmallow

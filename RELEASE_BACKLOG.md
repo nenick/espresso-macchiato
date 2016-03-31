@@ -20,4 +20,12 @@ New or extend elements
 * EspRecyclerView - same like list
 * EspSpinner - choose option / assertions
 * EspViewPager - switch page / assertions visible fragment
-* EspPermission - avoid all execution when below android 23
+* EspPermissionDialog - localisation english/german/...
+
+New or extend tools
+
+* EspContactTool - find uri without exception or new method to check existence of contact spec
+
+New or extend tools
+
+* Mocks with static methods
