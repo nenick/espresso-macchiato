@@ -17,7 +17,7 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
 
     private static final int REQUEST_CODE = 42;
     private String testPermission = Manifest.permission.WRITE_CONTACTS;
-    private EspPermissionDialog espPermissionDialog = EspPermissionDialog.build();
+    private EspPermissionDialog espPermissionDialog = EspPermissionDialog.build(testPermission);
 
     @Before
     public void setup() {

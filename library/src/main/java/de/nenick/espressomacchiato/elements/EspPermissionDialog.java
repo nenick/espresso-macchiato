@@ -1,14 +1,11 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
-import android.support.v4.app.ActivityCompat;
 
 import de.nenick.espressomacchiato.tools.EspPermissionsTool;
 import de.nenick.espressomacchiato.tools.EspWait;
@@ -19,9 +16,17 @@ public class EspPermissionDialog {
      * wait below 1000ms was sometimes not enough for permissions update on circle ci emulator
      */
     public static int DELAY_FOR_UPDATE_PERMISSION_STATE = 1000;
+    private String[] permissions;
 
-    public static EspPermissionDialog build() {
-        return new EspPermissionDialog();
+    public static EspPermissionDialog build(String ... permissions) {
+        return new EspPermissionDialog(permissions);
+    }
+
+    public EspPermissionDialog(String[] permissions) {
+        if(permissions.length < 1) {
+            throw new IllegalStateException("No expected permissions specified. This could lead to curious test failures.");
+        }
+        this.permissions = permissions;
     }
 
     public void allow() {
@@ -66,7 +71,7 @@ public class EspPermissionDialog {
     }
 
     private void avoidAppCrashWhenDenyGrantedPermission() {
-        if (ActivityCompat.checkSelfPermission(InstrumentationRegistry.getTargetContext(), Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_DENIED) {
+        if (EspPermissionsTool.anyPermissionsGranted(permissions)) {
             throw new IllegalStateException("Deny would revoke permission and restart app. This would let all following tests fail. See documentation for details.");
         }
     }
