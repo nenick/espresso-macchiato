@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.NavigationDrawerActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 

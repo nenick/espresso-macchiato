@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.test.views.LandscapeFixedActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;

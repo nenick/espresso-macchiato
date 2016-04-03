@@ -1,4 +1,4 @@
-package de.nenick.espressotools;
+package de.nenick.espressomacchiato.testbase;
 
 import android.app.Activity;
 import android.content.Context;

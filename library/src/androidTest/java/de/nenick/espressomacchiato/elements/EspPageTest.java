@@ -3,7 +3,7 @@ package de.nenick.espressomacchiato.elements;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;

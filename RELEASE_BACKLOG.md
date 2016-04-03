@@ -7,6 +7,7 @@ Common stuff
 * JavaDoc - Elements / Mocks / Tools
 * Package "internal" - Actions / Assertions / Matcher (not intended for public usage)
 * Circle ci - emulator test also with lowest supported android version (parallelism)
+* wiki base package - list/documentation for test case base classes
 
 New or extend elements
 

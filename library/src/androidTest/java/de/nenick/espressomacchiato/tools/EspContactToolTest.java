@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.OnActivityResultActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

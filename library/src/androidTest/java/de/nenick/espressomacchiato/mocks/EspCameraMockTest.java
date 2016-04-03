@@ -14,7 +14,7 @@ import java.io.InputStream;
 
 import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.OnActivityResultActivity;
-import de.nenick.espressotools.EspressoIntentTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoIntentTestCase;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;

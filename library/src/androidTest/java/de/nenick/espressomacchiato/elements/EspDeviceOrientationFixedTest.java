@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.test.views.LandscapeFixedActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 public class EspDeviceOrientationFixedTest extends EspressoTestCase<LandscapeFixedActivity> {
 

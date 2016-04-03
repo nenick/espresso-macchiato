@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
 

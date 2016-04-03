@@ -3,7 +3,7 @@ package de.nenick.espressomacchiato.elements;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.NavigationDrawerActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 public class EspDrawerTest extends EspressoTestCase<NavigationDrawerActivity> {
 

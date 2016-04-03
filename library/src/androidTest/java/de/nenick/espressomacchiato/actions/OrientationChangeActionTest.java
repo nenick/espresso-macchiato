@@ -6,7 +6,7 @@ import android.support.test.InstrumentationRegistry;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 public class OrientationChangeActionTest extends EspressoTestCase<BaseActivity> {
 

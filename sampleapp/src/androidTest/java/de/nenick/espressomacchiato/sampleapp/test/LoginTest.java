@@ -3,7 +3,7 @@ package de.nenick.espressomacchiato.sampleapp.test;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.sampleapp.LoginActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 public class LoginTest extends EspressoTestCase<LoginActivity> {
 

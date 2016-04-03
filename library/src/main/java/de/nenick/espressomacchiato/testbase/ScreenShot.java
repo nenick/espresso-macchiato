@@ -1,4 +1,4 @@
-package de.nenick.espressotools;
+package de.nenick.espressomacchiato.testbase;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -12,8 +12,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
+ *
  * https://mobile.awsblog.com/post/TxP90JPTTBPE17/Getting-started-with-Android-testing-on-AWS-Device-Farm-using-Espresso-Part-2-Se
+ *
+ * @deprecated This class is not ready yet.
  */
+@Deprecated
 public class ScreenShot {
 
     private static final String TAG = "SCREENSHOT_TAG";

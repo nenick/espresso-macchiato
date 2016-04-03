@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.OnActivityResultActivity;
-import de.nenick.espressotools.EspressoIntentTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoIntentTestCase;
 
 public class EspContactPickerMockTest extends EspressoIntentTestCase<OnActivityResultActivity> {
 

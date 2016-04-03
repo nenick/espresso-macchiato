@@ -21,7 +21,7 @@ import java.io.InputStream;
 import de.nenick.espressomacchiato.test.database.PersonContract;
 import de.nenick.espressomacchiato.test.database.PersonDbHelper;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
-import de.nenick.espressotools.EspressoTestCase;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
