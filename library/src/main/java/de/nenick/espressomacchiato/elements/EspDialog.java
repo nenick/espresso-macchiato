@@ -1,5 +1,7 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.support.test.espresso.Espresso;
+
 public class EspDialog extends EspView {
 
     protected Spec spec;
@@ -80,5 +82,9 @@ public class EspDialog extends EspView {
 
     public EspButton cancelButton() {
         return EspButton.byId(spec.cancelButtonResource);
+    }
+
+    public void dismiss() {
+        Espresso.pressBack();
     }
 }

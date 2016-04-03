@@ -20,6 +20,7 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
     public static final String DENY = "Deny";
     public static final String CLICKED_BUTTON = "clicked button: ";
     public static final String CANCEL = "Cancel";
+    public static final String DISMISSED = "dismissed";
     private TextView messageView;
     private int messageViewId = android.R.id.text1;
     private DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
@@ -27,6 +28,13 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             messageView.setText("clicked button: " + which);
+        }
+    };
+    private DialogInterface.OnDismissListener dismissListener = new DialogInterface.OnDismissListener() {
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+
+            messageView.setText(DISMISSED);
         }
     };
 
@@ -82,6 +90,33 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
 
         espAlertDialog.assertNotExist();
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_NEUTRAL);
+    }
+
+    @Test
+    public void testDialogDismiss() {
+        addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
+                .setTitle(TITLE)
+                .setMessage(MESSAGE)
+                .setPositiveButton(OK, clickListener)
+                .setOnDismissListener(dismissListener));
+
+        espAlertDialog.dismiss();
+
+        espAlertDialog.assertNotExist();
+        espTextView.assertTextIs(DISMISSED);
+    }
+
+    @Test
+    public void testDialogDismissNonCancelable() {
+        addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
+                .setTitle(TITLE)
+                .setMessage(MESSAGE)
+                .setPositiveButton(OK, clickListener)
+                .setOnDismissListener(dismissListener)
+                .setCancelable(false));
+
+        espAlertDialog.dismiss();
+        espAlertDialog.assertIsVisible();
     }
 
     @Test
