@@ -39,7 +39,6 @@ test:
 
   override:
     # pre build code to see how many time each task realy need
-    - ./gradlew :espressotools:assembleRelease
     - ./gradlew :library:assembleRelease
     - ./gradlew :library:assembleDebug
     - ./gradlew :library:assembleDebugAndroidTest
@@ -48,7 +47,6 @@ test:
 
     # check lint for error reporting
     # ensure release can be build and published without issues
-    - ./gradlew :espressotools:lintDebug
     - ./gradlew :library:lintDebug
     - ./gradlew :sampleapp:lintDebug
 
@@ -81,14 +79,6 @@ test:
     # collect logs from emulator and make them accessable
     - adb logcat -d | $LOGCAT_FILTER > $CIRCLE_ARTIFACTS/logcat_emulator.txt:
         parallel: true
-
-    #
-    # for espressotools module
-    #
-
-    # collect lint report
-    - mkdir -p $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
-    - cp -r espressotools/build/outputs/lint* $CIRCLE_TEST_REPORTS/espressotools_android_tests/lint
 
     #
     # for library module
