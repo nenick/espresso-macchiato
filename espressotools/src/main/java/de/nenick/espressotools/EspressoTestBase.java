@@ -104,7 +104,7 @@ abstract class EspressoTestBase<A extends Activity> {
         }
     }
 
-    public void skipTestIfBewloAndroidMarshmellow() {
+    public void skipTestIfBelowAndroidMarshmallow() {
         Assume.assumeThat(Build.VERSION.SDK_INT,Matchers.greaterThanOrEqualTo(Build.VERSION_CODES.M));
     }
 }

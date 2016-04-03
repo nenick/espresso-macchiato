@@ -160,7 +160,7 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
     @Test
     public void testAddContactFailureForMissingPermission() {
         // deny permission only available since android marshmallow
-        skipTestIfBewloAndroidMarshmellow();
+        skipTestIfBelowAndroidMarshmallow();
 
         exception.expect(SecurityException.class);
         EspPermissionsTool.resetAllPermission();

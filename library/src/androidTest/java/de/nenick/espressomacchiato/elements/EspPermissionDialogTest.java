@@ -50,7 +50,7 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
     @Test
     public void testClickFailure() throws Throwable {
         // deny permission only available since android marshmallow
-        skipTestIfBewloAndroidMarshmellow();
+        skipTestIfBelowAndroidMarshmallow();
 
         exception.expect(IllegalStateException.class);
         espPermissionDialog.deny();
@@ -59,7 +59,7 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
     @Test
     public void testDenyWhenAllowedFailure() throws Throwable {
         // deny permission only available since android marshmallow
-        skipTestIfBewloAndroidMarshmellow();
+        skipTestIfBelowAndroidMarshmallow();
 
         exception.expect(IllegalStateException.class);
         exception.expectMessage("Deny would revoke permission and restart app. This would let all following tests fail. See documentation for details.");
