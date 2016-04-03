@@ -2,8 +2,9 @@
 
 elements
 
-* (planed) EspDialog - dismiss dialog but only if dialog config allow it
+* EspDialog - dismiss dialog but only if dialog config allow it
 * EspPermissionDialog - stabilize for pre marshmallow
+* EspPermissionDialog - use current localisation for button text
 
 tools
 

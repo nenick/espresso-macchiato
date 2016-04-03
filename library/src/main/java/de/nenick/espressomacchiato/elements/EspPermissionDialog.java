@@ -34,7 +34,7 @@ public class EspPermissionDialog {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }
-        click("Allow");
+        click(getStringResourceByName("allow"));
         waitUntilPermissionIsChanged();
     }
 
@@ -54,7 +54,7 @@ public class EspPermissionDialog {
             return;
         }
         avoidAppCrashWhenDenyGrantedPermission();
-        click("Deny");
+        click(getStringResourceByName("deny"));
         waitUntilPermissionIsChanged();
     }
 
@@ -79,5 +79,10 @@ public class EspPermissionDialog {
     private void waitUntilPermissionIsChanged() {
         // need to wait some time until permission is changed
         EspWait.forDelay(DELAY_FOR_UPDATE_PERMISSION_STATE);
+    }
+
+    private String getStringResourceByName(String name) {
+        int resId = InstrumentationRegistry.getContext().getResources().getIdentifier(name, "string", "android");
+        return InstrumentationRegistry.getContext().getString(resId);
     }
 }

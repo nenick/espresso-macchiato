@@ -6,7 +6,6 @@ Common stuff
 * Permission Module - only for android 23 necessary
 * JavaDoc - Elements / Mocks / Tools
 * Package "internal" - Actions / Assertions / Matcher (not intended for public usage)
-* Circle ci - emulator test also with lowest supported android version (parallelism)
 * wiki base package - list/documentation for test case base classes
 * wiki get started - inclde base test package usage
 
@@ -22,7 +21,6 @@ New or extend elements
 * EspRecyclerView - same like list
 * EspSpinner - choose option / assertions
 * EspViewPager - switch page / assertions visible fragment
-* EspPermissionDialog - localisation english/german/...
 
 New or extend tools
 
