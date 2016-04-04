@@ -12,7 +12,7 @@ public class EspScreenshotTool {
         if (!sddir.exists()) {
             throw new IllegalStateException("screenshot folder does not exist: " + sddir.getAbsolutePath());
         }
-        String screenshotName = name + ".jpg";
+        String screenshotName = name + ".png";
         File screenShotFile = new File(obtainScreenshotDirectory(), screenshotName);
 
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
