@@ -9,4 +9,11 @@
     <!-- permission necessary for contact picker tests -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+
+    <application>
+        <activity
+            android:name=".testbase.EspDummyLauncherActivity"
+            android:label="Dummy Launcher" />
+    </application>
+
 </manifest>
