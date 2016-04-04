@@ -9,6 +9,8 @@ import android.support.test.espresso.Espresso;
 import android.support.test.espresso.FailureHandler;
 import android.support.test.espresso.base.DefaultFailureHandler;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
+import android.support.test.runner.lifecycle.Stage;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -24,14 +26,31 @@ import org.junit.runner.RunWith;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 
 @RunWith(AndroidJUnit4.class)
 abstract class EspressoTestBase<A extends Activity> {
+
+    private Activity currentActivity = null;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     public abstract A getActivity();
+
+    public Activity getCurrentActivity() {
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            public void run() {
+                Collection resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
+                if (resumedActivities.iterator().hasNext()){
+                    currentActivity = (Activity) resumedActivities.iterator().next();
+                }
+            }
+        });
+
+        return currentActivity;
+    }
 
     @Before
     public void setupEspresso() {
@@ -99,7 +118,16 @@ abstract class EspressoTestBase<A extends Activity> {
 
         @Override
         public void handle(Throwable error, Matcher<View> viewMatcher) {
-            //ScreenShot.take();
+            //try {
+                StackTraceElement testClass = FindTestClassFunction.apply(Thread.currentThread().getStackTrace());
+                String className = testClass.getClassName().substring(testClass.getClassName().lastIndexOf(".") + 1);
+                String methodName = testClass.getMethodName();
+
+                ScreenShot.take(getCurrentActivity(), "Failed-" + className + "." + methodName);
+            //} catch (Exception e) {
+            //    Log.e("EspressoMacchiato", "Could not create an image of the current screen.", e);
+            //}
+
             delegate.handle(error, viewMatcher);
         }
     }

@@ -2,7 +2,7 @@ package de.nenick.espressomacchiato.testbase;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.os.Environment;
+import android.support.test.InstrumentationRegistry;
 import android.util.Log;
 import android.view.View;
 
@@ -11,22 +11,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/**
- *
- * https://mobile.awsblog.com/post/TxP90JPTTBPE17/Getting-started-with-Android-testing-on-AWS-Device-Farm-using-Espresso-Part-2-Se
- *
- * @deprecated This class is not ready yet.
- */
-@Deprecated
 public class ScreenShot {
 
     private static final String TAG = "SCREENSHOT_TAG";
 
     public static void take(Activity activity, String name) {
-        final String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test-screenshots/";
-        final String path = dir + name;
 
-        File filePath = new File(dir);     // Create directory if not present
+        File externalCacheDir = InstrumentationRegistry.getTargetContext().getExternalCacheDir();
+        if(externalCacheDir == null) {
+            Log.e(TAG, "could not find external cache dir to store screenshot");
+            return;
+        }
+        final String dir = externalCacheDir.getAbsolutePath() + "/test-screenshots/";
+        final String path = dir + name + ".jpg";
+
+        // Create directory if not present
+        File filePath = new File(dir);
         if (!filePath.isDirectory()) {
             Log.i(TAG, "Creating directory " + filePath);
             if(!filePath.mkdirs()) {
@@ -35,6 +35,7 @@ public class ScreenShot {
         }
 
         Log.i(TAG, "Saving to path: " +  path);
+
 
         View phoneView = activity.getWindow().getDecorView().getRootView();
         phoneView.setDrawingCacheEnabled(true);

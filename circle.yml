@@ -80,6 +80,10 @@ test:
     - adb logcat -d | $LOGCAT_FILTER > $CIRCLE_ARTIFACTS/logcat_emulator.txt:
         parallel: true
 
+    # collect screen shots of failure situations
+    - adb pull /storage/emulated/0/Android/data/de.nenick.espressomacchiato.test/cache/test-screenshots .
+    - mv test-screenshots $CIRCLE_TEST_REPORTS/
+
     #
     # for library module
     #
