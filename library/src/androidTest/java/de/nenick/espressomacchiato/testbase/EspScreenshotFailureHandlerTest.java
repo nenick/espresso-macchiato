@@ -15,7 +15,7 @@ import static org.junit.Assert.fail;
 
 public class EspScreenshotFailureHandlerTest extends EspressoTestCase<BaseActivity> {
 
-    EspScreenshotFailureHandler espScreenshotFailureHandler = new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext());
+    private EspScreenshotFailureHandler espScreenshotFailureHandler = new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext());
 
     @Test
     public void testScreenshot() {

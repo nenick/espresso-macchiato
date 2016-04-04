@@ -7,12 +7,12 @@ import android.os.Build;
  */
 public class EspFindTestClassFunction {
 
-    static final String TEST_CASE_CLASS_JUNIT_3 = "android.test.InstrumentationTestCase";
-    static final String TEST_CASE_METHOD_JUNIT_3 = "runMethod";
-    static final String TEST_CASE_CLASS_JUNIT_4 = "org.junit.runners.model.FrameworkMethod$1";
-    static final String TEST_CASE_METHOD_JUNIT_4 = "runReflectiveCall";
-    static final String TEST_CASE_CLASS_CUCUMBER_JVM = "cucumber.runtime.model.CucumberFeature";
-    static final String TEST_CASE_METHOD_CUCUMBER_JVM = "run";
+    private static final String TEST_CASE_CLASS_JUNIT_3 = "android.test.InstrumentationTestCase";
+    private static final String TEST_CASE_METHOD_JUNIT_3 = "runMethod";
+    private static final String TEST_CASE_CLASS_JUNIT_4 = "org.junit.runners.model.FrameworkMethod$1";
+    private static final String TEST_CASE_METHOD_JUNIT_4 = "runReflectiveCall";
+    private static final String TEST_CASE_CLASS_CUCUMBER_JVM = "cucumber.runtime.model.CucumberFeature";
+    private static final String TEST_CASE_METHOD_CUCUMBER_JVM = "run";
 
     /** Returns the test class element by looking at the method InstrumentationTestCase invokes. */
     public static StackTraceElement apply(StackTraceElement[] trace) {
