@@ -27,9 +27,6 @@ dependencies:
     # provide external space because some tests will write files there
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
 
-    # logcat output which is realy necessary
-    - LOGCAT_FILTER='grep -v GpsLocationProvider | grep -v MediaProvider | grep -v MetadataRetrieverClient | grep -v BackupManagerService | grep -v ARMAssembler | grep -v Choreographer | grep -v IInputConnectionWrapper | grep -v "I/art" | grep -v ConnectivityService | grep -v "D/PhoneInterfaceManager" | grep -v "I/Email" | grep -v "I/Exchange" | grep -v "E/libEGL" | grep -v "D/gralloc" | grep -v "E/installd" | grep -v "D/ConnectivityManager" | grep -v "D/WIFI" | grep -v "V/Mms"'
-
 test:
   pre:
     # start emulator for instrumentation tests (lowest and latest supported android version)
@@ -71,7 +68,7 @@ test:
 
   post:
     # collect logs from emulator and make them accessable
-    - adb logcat -d | $LOGCAT_FILTER > $CIRCLE_ARTIFACTS/logcat_emulator.txt:
+    - adb logcat -d | grep -v GpsLocationProvider | grep -v MediaProvider | grep -v MetadataRetrieverClient | grep -v BackupManagerService | grep -v ARMAssembler | grep -v Choreographer | grep -v IInputConnectionWrapper | grep -v "I/art" | grep -v ConnectivityService | grep -v "D/PhoneInterfaceManager" | grep -v "I/Email" | grep -v "I/Exchange" | grep -v "E/libEGL" | grep -v "D/gralloc" | grep -v "E/installd" | grep -v "D/ConnectivityManager" | grep -v "D/WIFI" | grep -v "V/Mms" > $CIRCLE_ARTIFACTS/logcat_emulator.txt:
         parallel: true
 
     # collect screen shots of failure situations
