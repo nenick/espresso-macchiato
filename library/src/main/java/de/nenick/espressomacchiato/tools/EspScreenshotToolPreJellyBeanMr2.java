@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.CountDownLatch;
 
-public class EspScreenshotPreJellyBeanMr2 {
+class EspScreenshotToolPreJellyBeanMr2 {
 
     public void takeScreenShot(File screenshot) throws Exception {
         long start = System.currentTimeMillis();
