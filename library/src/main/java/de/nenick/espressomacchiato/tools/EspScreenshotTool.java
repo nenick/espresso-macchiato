@@ -26,9 +26,6 @@ public class EspScreenshotTool {
 
     private static File obtainScreenshotDirectory() {
         File externalCacheDir = InstrumentationRegistry.getTargetContext().getExternalCacheDir();
-        if (externalCacheDir == null) {
-            throw new IllegalStateException("could not find external cache dir to store screenshot");
-        }
-        return new File(externalCacheDir.getAbsolutePath(), "test-screenshots");
+        return new File(externalCacheDir, "test-screenshots");
     }
 }
