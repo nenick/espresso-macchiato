@@ -57,12 +57,6 @@ test:
     - circle-android wait-for-boot:
         parallel: true
 
-    # hack to enable sdcard for android v8 emulator
-    - case $CIRCLE_NODE_INDEX in 0) ;; 1) adb shell mount -o rw,remount rootfs / ;; esac:
-        parallel: true
-    - case $CIRCLE_NODE_INDEX in 0) ;; 1) adb shell chmod 777 / ;; esac:
-        parallel: true
-
     # remove the look screen
     - adb shell input keyevent 82:
         parallel: true

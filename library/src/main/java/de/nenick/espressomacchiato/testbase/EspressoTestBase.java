@@ -6,8 +6,6 @@ import android.support.annotation.IdRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import android.support.test.runner.lifecycle.Stage;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -22,19 +20,18 @@ import org.junit.runner.RunWith;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Collection;
 
 @RunWith(AndroidJUnit4.class)
 abstract class EspressoTestBase<A extends Activity> {
-
-    private Activity currentActivity = null;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     public abstract A getActivity();
 
-    public Activity getCurrentActivity() {
+    /*
+    private Activity currentActivity = null;
+    public static Activity getCurrentActivity() {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             public void run() {
                 Collection resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
@@ -46,6 +43,7 @@ abstract class EspressoTestBase<A extends Activity> {
 
         return currentActivity;
     }
+    */
 
     @Before
     public void setupEspresso() {
