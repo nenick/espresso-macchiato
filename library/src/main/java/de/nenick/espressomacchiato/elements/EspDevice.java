@@ -20,9 +20,9 @@ public class EspDevice {
 
     /**
      * wait below 300ms was to less for common emulator instance
-     * wait below 3000ms was to less for emulator instance on circle ci
+     * wait below 400ms was to less for emulator instance on circle ci
      */
-    public static int DELAY_TO_CHANGE_KEYBOARD_STATE = 3000;
+    public static int DELAY_TO_CHANGE_KEYBOARD_STATE = 4000;
 
     public static EspDevice root() {
         return new EspDevice();
