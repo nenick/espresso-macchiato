@@ -7,7 +7,7 @@ import java.io.File;
 
 public class EspScreenshotTool {
 
-    public static void takeWithName(String name) throws Exception {
+    public static void takeWithName(String name) {
         File sddir = new File(obtainScreenshotDirectory());
         if (!sddir.exists()) {
             throw new IllegalStateException("screenshot folder does not exist: " + sddir.getAbsolutePath());
@@ -16,7 +16,7 @@ public class EspScreenshotTool {
         File screenShotFile = new File(obtainScreenshotDirectory(), screenshotName);
 
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        if (device.takeScreenshot(screenShotFile)) {
+        if (!device.takeScreenshot(screenShotFile)) {
             throw new IllegalStateException("take picture failed");
         }
     }
