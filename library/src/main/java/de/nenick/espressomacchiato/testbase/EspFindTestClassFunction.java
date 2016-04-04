@@ -5,7 +5,7 @@ import android.os.Build;
 /**
  * Original code comes from https://github.com/square/spoon/blob/master/spoon-client/src/main/java/com/squareup/spoon/Spoon.java
  */
-public class FindTestClassFunction {
+public class EspFindTestClassFunction {
 
     static final String TEST_CASE_CLASS_JUNIT_3 = "android.test.InstrumentationTestCase";
     static final String TEST_CASE_METHOD_JUNIT_3 = "runMethod";

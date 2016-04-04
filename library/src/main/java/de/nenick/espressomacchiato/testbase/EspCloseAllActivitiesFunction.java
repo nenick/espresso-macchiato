@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * <p>
  * source: https://code.google.com/p/android-test-kit/issues/detail?id=66
  */
-public class CloseAllActivitiesFunction {
+public class EspCloseAllActivitiesFunction {
 
     public static void apply(Instrumentation instrumentation) throws Exception {
         final int NUMBER_OF_RETRIES = 100;

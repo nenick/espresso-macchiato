@@ -83,6 +83,7 @@ test:
     # collect screen shots of failure situations
     - adb pull /storage/emulated/0/Android/data/de.nenick.espressomacchiato.test/cache/test-screenshots .
     - mv test-screenshots $CIRCLE_TEST_REPORTS/
+    #- adb shell rm /storage/emulated/0/Android/data/de.nenick.espressomacchiato.test/cache/test-screenshots/*
 
     #
     # for library module

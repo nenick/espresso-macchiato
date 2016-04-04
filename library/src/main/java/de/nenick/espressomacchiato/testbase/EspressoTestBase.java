@@ -1,13 +1,10 @@
 package de.nenick.espressomacchiato.testbase;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
-import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.base.DefaultFailureHandler;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
@@ -15,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assume;
@@ -39,11 +35,10 @@ abstract class EspressoTestBase<A extends Activity> {
     public abstract A getActivity();
 
     public Activity getCurrentActivity() {
-
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             public void run() {
                 Collection resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-                if (resumedActivities.iterator().hasNext()){
+                if (resumedActivities.iterator().hasNext()) {
                     currentActivity = (Activity) resumedActivities.iterator().next();
                 }
             }
@@ -54,7 +49,7 @@ abstract class EspressoTestBase<A extends Activity> {
 
     @Before
     public void setupEspresso() {
-        Espresso.setFailureHandler(new CustomFailureHandler(getActivity()));
+        Espresso.setFailureHandler(new EspScreenshotFailureHandler(getActivity()));
         avoidLockScreen();
 
         // "java.lang.RuntimeException: Waited for the root of the view hierarchy to have window focus and not be requesting layout for over 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Otherwise, something is seriously wrong. Selected Root:
@@ -64,7 +59,7 @@ abstract class EspressoTestBase<A extends Activity> {
 
     @After
     public void cleanupEspresso() throws Exception {
-        CloseAllActivitiesFunction.apply(InstrumentationRegistry.getInstrumentation());
+        EspCloseAllActivitiesFunction.apply(InstrumentationRegistry.getInstrumentation());
     }
 
     protected void addViewToActivity(final View view, @IdRes final int targetLayoutId) {
@@ -109,30 +104,7 @@ abstract class EspressoTestBase<A extends Activity> {
         }
     }
 
-    private class CustomFailureHandler implements FailureHandler {
-        private final FailureHandler delegate;
-
-        public CustomFailureHandler(Context targetContext) {
-            delegate = new DefaultFailureHandler(targetContext);
-        }
-
-        @Override
-        public void handle(Throwable error, Matcher<View> viewMatcher) {
-            //try {
-                StackTraceElement testClass = FindTestClassFunction.apply(Thread.currentThread().getStackTrace());
-                String className = testClass.getClassName().substring(testClass.getClassName().lastIndexOf(".") + 1);
-                String methodName = testClass.getMethodName();
-
-                ScreenShot.take(getCurrentActivity(), "Failed-" + className + "." + methodName);
-            //} catch (Exception e) {
-            //    Log.e("EspressoMacchiato", "Could not create an image of the current screen.", e);
-            //}
-
-            delegate.handle(error, viewMatcher);
-        }
-    }
-
     public void skipTestIfBelowAndroidMarshmallow() {
-        Assume.assumeThat(Build.VERSION.SDK_INT,Matchers.greaterThanOrEqualTo(Build.VERSION_CODES.M));
+        Assume.assumeThat(Build.VERSION.SDK_INT, Matchers.greaterThanOrEqualTo(Build.VERSION_CODES.M));
     }
 }

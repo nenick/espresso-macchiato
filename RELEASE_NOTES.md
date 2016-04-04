@@ -9,11 +9,14 @@ elements
 tools
 
 * EspPermissionsTool - stabilize for pre marshmallow
+* EspScreenshotTool - take screenshots
 
 test base
 
 * EspressoTestBase - base for all test cases
 * EspressoTestCase - base for default espresso tests
 * EspressoIntentTestCase - base test case when for mocking intents
-* CloseAllActivitiesFunction - use it to ensure that all started activities are finished
+* EspCloseAllActivitiesFunction - use it to ensure that all started activities are finished
 * EspDummyLauncherActivity - support back press at start activity
+* EspScreenshotFailureHandler - take screenshot when test fails
+* EspFindTestClassFunction - get the current test class and method name
