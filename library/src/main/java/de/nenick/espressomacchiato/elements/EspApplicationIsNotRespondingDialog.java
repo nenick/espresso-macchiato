@@ -1,6 +1,8 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.os.Build;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.intent.BuildConfig;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
@@ -13,7 +15,11 @@ public class EspApplicationIsNotRespondingDialog {
     }
 
     public void dismissIfShown() {
-        click(getStringResourceByName("wait"));
+        // uiautomator is only available since android v18
+        // early android version emulator rarely show ANR dialog
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            click(getStringResourceByName("wait"));
+        }
     }
 
     protected void click(String target) {
