@@ -20,7 +20,15 @@ public class EspScreenshotTool {
         File screenshotFile = new File(obtainScreenshotDirectory(), screenshotName);
         Log.v("EspressoMacchiato", "take picture at " + screenshotFile.getAbsolutePath());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+        boolean isUiAutomatorIncluded;
+        try {
+            Class.forName("android.support.test.uiautomator.UiDevice");
+            isUiAutomatorIncluded = true;
+        } catch (ClassNotFoundException e) {
+            isUiAutomatorIncluded = false;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 && isUiAutomatorIncluded) {
             UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
             if (!device.takeScreenshot(screenshotFile)) {
                 throw new IllegalStateException("take picture failed");
@@ -29,7 +37,7 @@ public class EspScreenshotTool {
             try {
                 new EspScreenshotToolPreJellyBeanMr2().takeScreenShot(screenshotFile);
             } catch (Exception e) {
-                throw new IllegalStateException(e);
+                throw new IllegalStateException("take picture failed", e);
             }
         }
     }
