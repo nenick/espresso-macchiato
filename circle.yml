@@ -74,7 +74,9 @@ test:
 
     # collect screen shots of failure situations
     - TEST_SCREEN_PATH=$(adb shell ls -R / | grep Android/data/de.nenick.espressomacchiato.test/cache/test-screenshots | sed 's/://g')
-    - adb pull $TEST_SCREEN_PATH .
+    - adb shell ls -R /storage | grep Android/data/de.nenick.espressomacchiato.test/cache/test-screenshots | sed 's/://g'
+    - echo $TEST_SCREEN_PATH
+    #- adb pull $TEST_SCREEN_PATH .
     - mv test-screenshots $CIRCLE_TEST_REPORTS/
     #- adb pull /storage/emulated/0/Android/data/de.nenick.espressomacchiato.test/cache/test-screenshots .
     #- adb shell rm $TEST_SCREEN_PATH/*
