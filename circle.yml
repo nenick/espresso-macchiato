@@ -73,11 +73,8 @@ test:
         parallel: true
 
     # collect screen shots of failure situations
-    - mount AndroidSDCard.img /mnt/sdcard
-    - ls -R /mnt/sdcard | grep espressomacchiato
+    - adb shell ls -R /storage
 
-    - adb shell ls -R / | grep espressomacchiato | sed 's/://g'
-    - adb shell ls -R / | grep Android/data/de.nenick.espressomacchiato/cache/test-screenshots | sed 's/://g'
     - TEST_SCREEN_PATH=$(adb shell ls -R / | grep Android/data/de.nenick.espressomacchiato/cache/test-screenshots | sed 's/://g')
     - echo $TEST_SCREEN_PATH
     #- adb pull $TEST_SCREEN_PATH .
