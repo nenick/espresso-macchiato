@@ -23,6 +23,7 @@ dependencies:
     # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android8.avd/config.ini
+    - cat ~/.android/avd/my-android23.avd/config.ini
 
     # provide external space because some tests will write files there
     - $ANDROID_HOME/tools/mksdcard -l androidSDCard 64M AndroidSDCard.img
