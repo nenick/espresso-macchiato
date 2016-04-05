@@ -23,7 +23,9 @@ class EspScreenshotToolPreJellyBeanMr2 {
         long start = System.currentTimeMillis();
         View recentDecorView;
         while ((recentDecorView = getRecentDecorView(getWindowDecorViews())) == null) {
-            if (System.currentTimeMillis() - start < 30000) break;
+            if (System.currentTimeMillis() - start < 30000) {
+                break;
+            }
             Thread.sleep(100);
         }
 
@@ -51,7 +53,7 @@ class EspScreenshotToolPreJellyBeanMr2 {
             }
             return viewArrayList;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -66,7 +68,7 @@ class EspScreenshotToolPreJellyBeanMr2 {
             return Class.forName(windowManagerClassName);
 
         } catch (ClassNotFoundException | SecurityException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
@@ -85,7 +87,7 @@ class EspScreenshotToolPreJellyBeanMr2 {
 
     public static View getRecentDecorView(ArrayList<View> views) {
         if (views == null || views.isEmpty()) {
-            throw new RuntimeException("Error in getRecentDecorView: 0 views passed in.");
+            throw new IllegalStateException("Error in getRecentDecorView: 0 views passed in.");
             //LOG.error("Error in getRecentDecorView: 0 views passed in.");
             //return null;
         }
@@ -146,7 +148,7 @@ class EspScreenshotToolPreJellyBeanMr2 {
             try {
                 latch.await();
             } catch (InterruptedException e) {
-                throw new RuntimeException("Unable to get screenshot", e);
+                throw new IllegalStateException("Unable to get screenshot", e);
             }
         }
 
@@ -168,21 +170,24 @@ class EspScreenshotToolPreJellyBeanMr2 {
     }
 
     static class BitmapResult {
-        Bitmap bitmap;
+        public Bitmap bitmap;
     }
 
-    private static Activity currentActivity = null;
+    static class ActivityResult {
+        public Activity activity;
+    }
 
-    public static Activity getCurrentActivity() {
+    private static Activity getCurrentActivity() {
+        final ActivityResult activityResult = new ActivityResult();
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             public void run() {
                 Collection resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
                 if (resumedActivities.iterator().hasNext()) {
-                    currentActivity = (Activity) resumedActivities.iterator().next();
+                    activityResult.activity = (Activity) resumedActivities.iterator().next();
                 }
             }
         });
 
-        return currentActivity;
+        return activityResult.activity;
     }
 }
