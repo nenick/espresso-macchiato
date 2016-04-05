@@ -21,6 +21,8 @@ import org.junit.runner.RunWith;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import de.nenick.espressomacchiato.elements.EspApplicationIsNotRespondingDialog;
+
 @RunWith(AndroidJUnit4.class)
 abstract class EspressoTestBase<A extends Activity> {
 
@@ -47,6 +49,7 @@ abstract class EspressoTestBase<A extends Activity> {
 
     @Before
     public void setupEspresso() {
+        EspApplicationIsNotRespondingDialog.build().dismissIfShown();
         Espresso.setFailureHandler(new EspScreenshotFailureHandler(getActivity()));
         avoidLockScreen();
 
