@@ -74,7 +74,7 @@ test:
 
     # collect screen shots of failure situations
     - sudo mount AndroidSDCard.img -o loop /mnt/sdcard
-    - ls -R / | grep /mnt/sdcard
+    - ls -R /mnt/sdcard | grep espressomacchiato
 
     - adb shell ls -R / | grep espressomacchiato | sed 's/://g'
     - adb shell ls -R / | grep Android/data/de.nenick.espressomacchiato/cache/test-screenshots | sed 's/://g'
