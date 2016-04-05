@@ -19,6 +19,7 @@ public class EspApplicationIsNotRespondingDialog {
         // early android version emulator rarely show ANR dialog
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
             click(getStringResourceByName("wait"));
+            click(getStringResourceByName("ok"));
         }
     }
 
