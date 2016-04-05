@@ -31,7 +31,7 @@ dependencies:
 test:
   pre:
     # start emulator for instrumentation tests (lowest and latest supported android version)
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window -sdcard AndroidSDCard.img ;; 1) emulator -avd my-android8 -no-audio -no-window -sdcard AndroidSDCard.img ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window -c 512M ;; 1) emulator -avd my-android8 -no-audio -no-window -c 512M ;; esac:
         parallel: true
         background: true
 
