@@ -24,7 +24,7 @@ public class EspCloseAllActivitiesFunction {
     public static void apply(Instrumentation instrumentation) throws Exception {
         final int NUMBER_OF_RETRIES = 100;
         int i = 0;
-        while (closeActivity(instrumentation)) {
+        while (closeActivities(instrumentation)) {
             if (i++ > NUMBER_OF_RETRIES) {
                 throw new AssertionError("Limit of retries excesses");
             }
@@ -32,8 +32,8 @@ public class EspCloseAllActivitiesFunction {
         }
     }
 
-    private static <X> X callOnMainSync(Instrumentation instrumentation, final Callable<X> callable) throws Exception {
-        final AtomicReference<X> retAtomic = new AtomicReference<>();
+    private static boolean callOnMainSync(Instrumentation instrumentation, final Callable<Boolean> callable) throws Exception {
+        final AtomicReference<Boolean> retAtomic = new AtomicReference<>();
         final AtomicReference<Throwable> exceptionAtomic = new AtomicReference<>();
         instrumentation.runOnMainSync(new Runnable() {
             @Override
@@ -65,22 +65,22 @@ public class EspCloseAllActivitiesFunction {
         return activities;
     }
 
-    private static boolean closeActivity(Instrumentation instrumentation) throws Exception {
-        final Boolean activityClosed = callOnMainSync(instrumentation, new Callable<Boolean>() {
+    private static boolean closeActivities(Instrumentation instrumentation) throws Exception {
+        final boolean activityClosed = callOnMainSync(instrumentation, new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                final Set<Activity> activities = getActivitiesInStages(Stage.RESUMED,
-                        Stage.STARTED, Stage.PAUSED,
-                        /* Activities in android v8 never reach destroyed after calling finish Stage.STOPPED ,*/
-                        Stage.CREATED);
+                /* Activities in android v8 never get destroyed, only stay in Stage.STOPPED ,*/
+                final Set<Activity> activities = getActivitiesInStages(Stage.RESUMED, Stage.STARTED, Stage.PAUSED, Stage.CREATED);
                 activities.removeAll(getActivitiesInStages(Stage.DESTROYED));
+
                 if (activities.size() > 0) {
-                    final Activity activity = activities.iterator().next();
-                    if (!activity.isFinishing()) {
-                        Log.i("espressotools", "activity not finished " + activity);
-                        activity.finish();
-                    } else {
-                        Log.i("espressotools", "activity in finishing state " + activity);
+                    for (Activity activity : activities) {
+                        if (activity.isFinishing()) {
+                            Log.i("espressotools", "activity in finishing state " + activity);
+                        } else {
+                            Log.i("espressotools", "activity not finished " + activity);
+                            activity.finish();
+                        }
                     }
                     return true;
                 } else {
@@ -88,6 +88,7 @@ public class EspCloseAllActivitiesFunction {
                 }
             }
         });
+
         if (activityClosed) {
             instrumentation.waitForIdleSync();
         }
