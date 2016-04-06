@@ -53,7 +53,7 @@ public class EspCloseAllActivitiesFunction {
         return retAtomic.get();
     }
 
-    private static Set<Activity> getActivitiesInStages(Stage... stages) {
+    public static Set<Activity> getActivitiesInStages(Stage... stages) {
         final Set<Activity> activities = Sets.newHashSet();
         final ActivityLifecycleMonitor instance = ActivityLifecycleMonitorRegistry.getInstance();
         for (Stage stage : stages) {

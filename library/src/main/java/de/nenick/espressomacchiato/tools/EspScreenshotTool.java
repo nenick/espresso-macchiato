@@ -1,6 +1,8 @@
 package de.nenick.espressomacchiato.tools;
 
+import android.Manifest;
 import android.os.Build;
+import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
@@ -10,11 +12,14 @@ import java.io.File;
 public class EspScreenshotTool {
 
     public static void takeWithName(String name) {
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        if(!EspPermissionsTool.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            Log.i("EspressoMacchiato", "Store pictures only available with WRITE_EXTERNAL_STORAGE permission.");
+            return;
+        }
 
-        File sddir = new File(obtainScreenshotDirectory());
-        if (!sddir.exists() && !sddir.mkdir()) {
-            throw new IllegalStateException("screenshot folder does not exist: " + sddir.getAbsolutePath());
+        File screenshotDirectory = new File(obtainScreenshotDirectory());
+        if (!screenshotDirectory.exists() && !screenshotDirectory.mkdirs()) {
+            throw new IllegalStateException("screenshot directory could not be created: " + screenshotDirectory.getAbsolutePath());
         }
         String screenshotName = name + ".png";
         File screenshotFile = new File(obtainScreenshotDirectory(), screenshotName);
@@ -43,10 +48,10 @@ public class EspScreenshotTool {
     }
 
     private static String obtainScreenshotDirectory() {
-        File externalCacheDir = InstrumentationRegistry.getTargetContext().getExternalCacheDir();
+        File externalCacheDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         if (externalCacheDir == null) {
             throw new IllegalStateException("could not find external cache dir to store screenshot");
         }
-        return externalCacheDir.getAbsolutePath() + "/test-screenshots/";
+        return externalCacheDir.getAbsolutePath() + "/test-screenshots";
     }
 }

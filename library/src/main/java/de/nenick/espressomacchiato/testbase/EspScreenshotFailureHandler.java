@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.testbase;
 
+import android.Manifest;
 import android.content.Context;
 import android.support.test.espresso.FailureHandler;
 import android.support.test.espresso.base.DefaultFailureHandler;
@@ -8,6 +9,7 @@ import android.view.View;
 
 import org.hamcrest.Matcher;
 
+import de.nenick.espressomacchiato.tools.EspPermissionsTool;
 import de.nenick.espressomacchiato.tools.EspScreenshotTool;
 
 public class EspScreenshotFailureHandler implements FailureHandler {
@@ -20,13 +22,15 @@ public class EspScreenshotFailureHandler implements FailureHandler {
     @Override
     public void handle(Throwable error, Matcher<View> viewMatcher) {
         try {
+            EspPermissionsTool.ensurePermissions(EspressoTestBase.currentActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
             StackTraceElement testClass = EspFindTestClassFunction.apply(Thread.currentThread().getStackTrace());
             String className = testClass.getClassName().substring(testClass.getClassName().lastIndexOf(".") + 1);
             String methodName = testClass.getMethodName();
 
             EspScreenshotTool.takeWithName("Failed-" + className + "." + methodName);
         } catch (Exception e) {
-            Log.e("EspressoMacchiato", "Could not create an image of the current screen.", e);
+            Log.e("EspressoMacchiato", "Could not create picture of the current screen.", e);
         }
 
         delegate.handle(error, viewMatcher);

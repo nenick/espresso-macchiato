@@ -27,7 +27,6 @@ public class EspApplicationIsNotRespondingDialog {
             }
 
             click(getStringResourceByName("wait"));
-            click(getStringResourceByName("ok"));
         }
     }
 

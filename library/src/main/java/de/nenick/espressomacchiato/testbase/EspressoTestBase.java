@@ -6,6 +6,7 @@ import android.support.annotation.IdRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.runner.lifecycle.Stage;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -20,6 +21,7 @@ import org.junit.runner.RunWith;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Set;
 
 import de.nenick.espressomacchiato.elements.EspApplicationIsNotRespondingDialog;
 
@@ -33,21 +35,21 @@ abstract class EspressoTestBase<A extends Activity> {
 
     public abstract A getActivity();
 
-    /*
-    private Activity currentActivity = null;
-    public static Activity getCurrentActivity() {
+    public static Activity currentActivity() {
+        class Holder {
+            Activity activity;
+        }
+        final Holder holder = new Holder();
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             public void run() {
-                Collection resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-                if (resumedActivities.iterator().hasNext()) {
-                    currentActivity = (Activity) resumedActivities.iterator().next();
+                Set<Activity> activitiesInStages = EspCloseAllActivitiesFunction.getActivitiesInStages(Stage.RESUMED, Stage.PAUSED, Stage.STOPPED);
+                if (activitiesInStages.iterator().hasNext()) {
+                    holder.activity = activitiesInStages.iterator().next();
                 }
             }
         });
-
-        return currentActivity;
+        return holder.activity;
     }
-    */
 
     @Before
     public void setupEspresso() {
