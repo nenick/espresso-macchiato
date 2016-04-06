@@ -73,11 +73,13 @@ test:
         parallel: true
 
     # collect screen shots of failure situations
-    - adb shell ls -R /
+    - adb shell ls -R /storage
+    - adb root
+    - adb shell ls -R /storage
 
-    #- TEST_SCREEN_PATH=$(adb shell ls -R / | grep Android/data/de.nenick.espressomacchiato/cache/test-screenshots | sed 's/://g')
+    - TEST_SCREEN_PATH=$(adb shell ls -R /storage | grep Android/data | sed 's/://g')
     - echo $TEST_SCREEN_PATH
-    - adb pull /mnt/sdcard/Android/data/de.nenick.espressomacchiato.test/cache/test-screenshots .
+    - adb pull $TEST_SCREEN_PATH/de.nenick.espressomacchiato/cache/test-screenshots .
     - mv test-screenshots $CIRCLE_TEST_REPORTS/
     #- adb pull /storage/emulated/0/Android/data/de.nenick.espressomacchiato.test/cache/test-screenshots .
     #- adb shell rm $TEST_SCREEN_PATH/*
