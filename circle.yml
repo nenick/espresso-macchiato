@@ -74,7 +74,7 @@ test:
 
     # collect screen shots of failure situations
     - adb shell ls -R /storage
-    - adb root
+    - adb root && adb shell ls -R /storage
     - adb shell ls -R /storage
 
     - TEST_SCREEN_PATH=$(adb shell ls -R /storage | grep Android/data | sed 's/://g')
