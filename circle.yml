@@ -62,10 +62,11 @@ test:
     # clear logs from emulator
     - adb logcat -c
 
-    # start instrumentation tests on emulator
+    # start instrumentation tests on emulator (library as last to collect screenshots at end)
+    - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
     - ./gradlew :library:connectedCheckScreenshot:
         parallel: true
-    - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
+
 
   post:
     # collect logs from emulator and make them accessable
@@ -73,10 +74,6 @@ test:
         parallel: true
 
     # collect screen shots of failure situations
-    - adb shell ls -R /storage
-    - adb root && adb shell ls -R /storage
-    - adb shell ls -R /storage
-
     - TEST_SCREEN_PATH=$(adb shell ls -R /data | grep test-screenshots | sed 's/://g')
     - echo $TEST_SCREEN_PATH
     - adb pull $TEST_SCREEN_PATH/de.nenick.espressomacchiato/cache/test-screenshots .

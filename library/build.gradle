@@ -100,6 +100,8 @@ import com.android.ddmlib.IShellOutputReceiver
 import com.android.ddmlib.testrunner.RemoteAndroidTestRunner
 import com.android.utils.ILogger
 
+import java.util.concurrent.TimeUnit
+
 task connectedCheckRunTests << {
     def applicationId = "de.nenick.espressomacchiato.test"
 
@@ -183,34 +185,18 @@ task connectedCheckRunTests << {
         runner.run(runListener)
 
         // finish and pull coverage data from device
-        device.executeShellCommand("am broadcast -a ${applicationId}.END_EMMA", new IShellOutputReceiver() {
-            @Override
-            void addOutput(byte[] bytes, int i, int i1) {
 
-            }
-
-            @Override
-            void flush() {
-
-            }
-
-            @Override
-            boolean isCancelled() {
-                return false
-            }
-        })
         exec {
             commandLine android.getAdbExe().absolutePath
             args = ["pull", coverageFileOnDevice, coverageOutputDirectory.absolutePath + "/coverage.ec"]
         }
 
-    } catch (Exception e) {
-        TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultXmlOutputDirectory)
+    } finally {
+        TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultHtmlOutputDirectory)
         report.generateReport()
-        throw e;
     }
 
-    //device.uninstallPackage(applicationId)
+    // don't device.uninstallPackage(applicationId)
 }
 afterEvaluate {
     tasks.connectedCheckRunTests.dependsOn tasks.assembleDebugAndroidTest
@@ -247,6 +233,5 @@ task jacocoTestReportAndroid(type: JacocoReport) {
     executionData = files('build/outputs/code-coverage/connected/coverage.ec')
 }
 
-task connectedCheckScreenshot {
-    dependsOn tasks.connectedCheckRunTests, tasks.jacocoTestReportAndroid
-}
+task connectedCheckScreenshot(dependsOn: [tasks.connectedCheckRunTests, tasks.jacocoTestReportAndroid])
+tasks.jacocoTestReportAndroid.mustRunAfter tasks.connectedCheckRunTests
