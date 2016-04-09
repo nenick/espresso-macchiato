@@ -207,7 +207,7 @@ task connectedCheckRunTests << {
     TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultXmlOutputDirectory)
     report.generateReport()
 
-    device.uninstallPackage(applicationId)
+    //device.uninstallPackage(applicationId)
 }
 afterEvaluate {
     tasks.connectedCheckRunTests.dependsOn tasks.assembleDebugAndroidTest
