@@ -2,7 +2,6 @@ package de.nenick.espressomacchiato.tools;
 
 import android.Manifest;
 import android.os.Build;
-import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
@@ -48,10 +47,10 @@ public class EspScreenshotTool {
     }
 
     private static String obtainScreenshotDirectory() {
-        File externalCacheDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        if (externalCacheDir == null) {
-            throw new IllegalStateException("could not find external cache dir to store screenshot");
+        File appStorage = InstrumentationRegistry.getTargetContext().getFilesDir();
+        if (appStorage == null) {
+            throw new IllegalStateException("could not find directory to store screenshot");
         }
-        return externalCacheDir.getAbsolutePath() + "/test-screenshots";
+        return appStorage.getAbsolutePath() + "/test-screenshots";
     }
 }

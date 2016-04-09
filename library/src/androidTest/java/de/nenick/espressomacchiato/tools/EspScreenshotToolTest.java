@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.tools;
 
 import android.Manifest;
-import android.os.Environment;
+import android.support.test.InstrumentationRegistry;
 
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
     public void testScreenshot() {
         EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         EspScreenshotTool.takeWithName("test screen");
-        File screenshot = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "test-screenshots/test screen.png");
+        File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots/test screen.png");
         assertThat(screenshot.exists(), is(true));
 
         //noinspection ResultOfMethodCallIgnored

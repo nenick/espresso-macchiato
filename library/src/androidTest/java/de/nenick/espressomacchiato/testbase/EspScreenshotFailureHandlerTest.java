@@ -1,6 +1,5 @@
 package de.nenick.espressomacchiato.testbase;
 
-import android.os.Environment;
 import android.support.test.InstrumentationRegistry;
 
 import org.junit.Test;
@@ -24,7 +23,7 @@ public class EspScreenshotFailureHandlerTest extends EspressoTestCase<BaseActivi
             espScreenshotFailureHandler.handle(new TestException(), isRoot());
             fail("should throw given exception by delegating it to default failure handler");
         } catch (TestException e) {
-            File screenshot = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "test-screenshots/Failed-EspScreenshotFailureHandlerTest.testScreenshot.png");
+            File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots/Failed-EspScreenshotFailureHandlerTest.testScreenshot.png");
             assertThat(screenshot.exists(), is(true));
 
             //noinspection ResultOfMethodCallIgnored

@@ -77,7 +77,7 @@ test:
     - adb root && adb shell ls -R /storage
     - adb shell ls -R /storage
 
-    - TEST_SCREEN_PATH=$(adb shell ls -R /storage | grep Pictures/test-screenshots | sed 's/://g')
+    - TEST_SCREEN_PATH=$(adb shell ls -R /data | grep test-screenshots | sed 's/://g')
     - echo $TEST_SCREEN_PATH
     - adb pull $TEST_SCREEN_PATH/de.nenick.espressomacchiato/cache/test-screenshots .
     - mv test-screenshots $CIRCLE_TEST_REPORTS/

@@ -85,10 +85,11 @@ github {
 }
 
 // Custom connectedCheck task without uninstall
-// https://android.googlesource.com/platform/tools/build/+/3c6ba532ac7618701123629906a854c157ae59c0/gradle/src/main/groovy/com/android/build/gradle/internal/tasks/DeviceProviderInstrumentTestTask.groovy
-// https://android.googlesource.com/platform/tools/base/+/8d969614b7beca74e4d17f2d1c5956e75053f7ce/build-system/builder/src/main/java/com/android/builder/internal/testing/SimpleTestCallable.java
+// AndroidTestTask https://android.googlesource.com/platform/tools/build/+/3c6ba532ac7618701123629906a854c157ae59c0/gradle/src/main/groovy/com/android/build/gradle/internal/tasks/DeviceProviderInstrumentTestTask.groovy
+// use SimpleTestRunner https://android.googlesource.com/platform/tools/base/+/8d969614b7beca74e4d17f2d1c5956e75053f7ce/build-system/builder/src/main/java/com/android/builder/internal/testing/SimpleTestCallable.java
+// use SimpleTestCallable https://android.googlesource.com/platform/tools/base/+/8d969614b7beca74e4d17f2d1c5956e75053f7ce/build-system/builder/src/main/java/com/android/builder/internal/testing/SimpleTestCallable.java
+// use RemoteAndroidTestRunner https://android.googlesource.com/platform/tools/base/+/tools_r22/ddmlib/src/main/java/com/android/ddmlib/testrunner/RemoteAndroidTestRunner.java
 // http://grepcode.com/file/repo1.maven.org/maven2/com.google.android.tools/ddmlib/r10/com/android/ddmlib/AndroidDebugBridge.java
-// https://android.googlesource.com/platform/tools/base/+/tools_r22/ddmlib/src/main/java/com/android/ddmlib/testrunner/RemoteAndroidTestRunner.java
 
 import com.android.build.gradle.internal.test.report.ReportType
 import com.android.build.gradle.internal.test.report.TestReport
@@ -149,13 +150,7 @@ task connectedCheckRunTests << {
     def device = AndroidDebugBridge.createBridge().devices[0]
     String deviceName = device.getName();
 
-    def runner = new RemoteAndroidTestRunner(applicationId, "android.support.test.runner.AndroidJUnitRunner", AndroidDebugBridge.createBridge().devices[0])
-    runner.addInstrumentationArg("coverage", "true");
-    runner.addInstrumentationArg("coverageFile", coverageFileOnDevice);
-    runner.setRunName(deviceName);
-
-
-    def listener = new CustomTestRunListener(deviceName, "myProject", "myflavor", new ILogger() {
+    def runListener = new CustomTestRunListener(deviceName, "myProject", "myflavor", new ILogger() {
         @Override
         void error(Throwable throwable, String s, Object... objects) {
             logger.error(String.format(s, objects), throwable)
@@ -176,36 +171,44 @@ task connectedCheckRunTests << {
             logger.lifecycle(String.format(s, objects))
         }
     })
+    runListener.setReportDir(testResultXmlOutputDirectory)
 
-    listener.setReportDir(testResultXmlOutputDirectory)
+    try {
+        def runner = new RemoteAndroidTestRunner(applicationId, "android.support.test.runner.AndroidJUnitRunner", AndroidDebugBridge.createBridge().devices[0])
+        runner.addInstrumentationArg("coverage", "true");
+        runner.addInstrumentationArg("coverageFile", coverageFileOnDevice);
+        runner.setRunName(deviceName);
 
-    device.installPackage(testApk, true /* reinstall */)
-    runner.run(listener)
+        device.installPackage(testApk, true /* reinstall */)
+        runner.run(runListener)
 
-    // finish and pull coverage data from device
-    device.executeShellCommand("am broadcast -a ${applicationId}.END_EMMA", new IShellOutputReceiver() {
-        @Override
-        void addOutput(byte[] bytes, int i, int i1) {
+        // finish and pull coverage data from device
+        device.executeShellCommand("am broadcast -a ${applicationId}.END_EMMA", new IShellOutputReceiver() {
+            @Override
+            void addOutput(byte[] bytes, int i, int i1) {
 
+            }
+
+            @Override
+            void flush() {
+
+            }
+
+            @Override
+            boolean isCancelled() {
+                return false
+            }
+        })
+        exec {
+            commandLine android.getAdbExe().absolutePath
+            args = ["pull", coverageFileOnDevice, coverageOutputDirectory.absolutePath + "/coverage.ec"]
         }
 
-        @Override
-        void flush() {
-
-        }
-
-        @Override
-        boolean isCancelled() {
-            return false
-        }
-    })
-    exec {
-        commandLine android.getAdbExe().absolutePath
-        args = ["pull", coverageFileOnDevice, coverageOutputDirectory.absolutePath + "/coverage.ec"]
+    } catch (Exception e) {
+        TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultXmlOutputDirectory)
+        report.generateReport()
+        throw e;
     }
-
-    TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultXmlOutputDirectory)
-    report.generateReport()
 
     //device.uninstallPackage(applicationId)
 }
