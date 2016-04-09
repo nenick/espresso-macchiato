@@ -23,6 +23,6 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
         assertThat(screenshot.exists(), is(true));
 
         //noinspection ResultOfMethodCallIgnored
-        screenshot.delete();
+        //screenshot.delete();
     }
 }
