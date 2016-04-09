@@ -63,7 +63,7 @@ test:
     - adb logcat -c
 
     # start instrumentation tests on emulator
-    - ./gradlew :library:connectedCheck -i | ./connected-check-filter.sh:
+    - ./gradlew :library:connectedCheckScreenshot:
         parallel: true
     - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
 
