@@ -103,7 +103,7 @@ task connectedCheckRunTests << {
     def applicationId = "de.nenick.espressomacchiato.test"
 
     String adbCommand = android.getAdbExe().absolutePath
-    String coverageFileOnDevice = "${applicationId}/coverage.ec";
+    String coverageFileOnDevice = "/data/data/${applicationId}/coverage.ec";
     String testApk = "library/build/outputs/apk/library-debug-androidTest-unaligned.apk"
 
     // define all output directories
