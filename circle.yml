@@ -64,15 +64,26 @@ test:
     # start instrumentation tests on emulator (library as last to collect screenshots at end)
     - ./gradlew :library:connectedCheckCustomized:
         parallel: true
-    - ls library/build/reports/coverage/debug
+
+    # since connectedCheckCustomized coverage data is deleted after execute sample app tests ...
+    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+        parallel: true
+    - cp -r library/build/reports/coverage/debug/ $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+        parallel: true
+    - cp library/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+        parallel: true
+    # collect code coverage reports from parallel executed tests
+    - mkdir library-node1
+    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/report.xml library-node1/
+    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
+
     - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
-    - ls library/build/reports/coverage/debug
 
   post:
     # collect logs from emulator and make them accessable
     - adb logcat -d | grep -v GpsLocationProvider | grep -v MediaProvider | grep -v MetadataRetrieverClient | grep -v BackupManagerService | grep -v ARMAssembler | grep -v Choreographer | grep -v IInputConnectionWrapper | grep -v "I/art" | grep -v ConnectivityService | grep -v "D/PhoneInterfaceManager" | grep -v "I/Email" | grep -v "I/Exchange" | grep -v "E/libEGL" | grep -v "D/gralloc" | grep -v "E/installd" | grep -v "D/ConnectivityManager" | grep -v "D/WIFI" | grep -v "V/Mms" > $CIRCLE_ARTIFACTS/logcat_emulator.txt:
         parallel: true
-    - ls library/build/reports/coverage/debug
+
     #
     # for library module
     #
@@ -87,21 +98,20 @@ test:
         parallel: true
     - cp -r library/build/reports/androidTests/connected/ $CIRCLE_TEST_REPORTS/library_android_tests/html:
         parallel: true
-    # collect test coverage results and make them accessable
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
-        parallel: true
-    - ls library/build/reports/coverage/debug
-    - cp -r library/build/reports/coverage/debug/ $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
-        parallel: true
-    - cp library/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
-        parallel: true
+    # collect test coverage results and make them accessible
+    #- mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    #    parallel: true
+    #- cp -r library/build/reports/coverage/debug/ $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    #    parallel: true
+    #- cp library/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    #    parallel: true
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/lint
     - cp -r library/build/outputs/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
     # collect code coverage reports from parallel executed tests
-    - mkdir library-node1
-    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/report.xml library-node1/
-    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
+    #- mkdir library-node1
+    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/report.xml library-node1/
+    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
     # collect screen shots of failure situations
     - mv library/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
         parallel: true
