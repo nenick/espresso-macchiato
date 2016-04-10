@@ -63,23 +63,14 @@ test:
     - adb logcat -c
 
     # start instrumentation tests on emulator (library as last to collect screenshots at end)
-    - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
-    - ./gradlew :library:connectedCheckScreenshot:
+    - ./gradlew :library:connectedCheckCustomized:
         parallel: true
-
+    - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
 
   post:
     # collect logs from emulator and make them accessable
     - adb logcat -d | grep -v GpsLocationProvider | grep -v MediaProvider | grep -v MetadataRetrieverClient | grep -v BackupManagerService | grep -v ARMAssembler | grep -v Choreographer | grep -v IInputConnectionWrapper | grep -v "I/art" | grep -v ConnectivityService | grep -v "D/PhoneInterfaceManager" | grep -v "I/Email" | grep -v "I/Exchange" | grep -v "E/libEGL" | grep -v "D/gralloc" | grep -v "E/installd" | grep -v "D/ConnectivityManager" | grep -v "D/WIFI" | grep -v "V/Mms" > $CIRCLE_ARTIFACTS/logcat_emulator.txt:
         parallel: true
-
-    # collect screen shots of failure situations
-    #- TEST_SCREEN_PATH=$(adb shell ls -R /data | grep test-screenshots | sed 's/://g')
-    #- echo $TEST_SCREEN_PATH
-    - adb pull /data/user/0/de.nenick.espressomacchiato.test/files/test-screenshots .
-    - mv test-screenshots $CIRCLE_TEST_REPORTS/
-    #- adb pull /storage/emulated/0/Android/data/de.nenick.espressomacchiato.test/cache/test-screenshots .
-    #- adb shell rm $TEST_SCREEN_PATH/*
 
     #
     # for library module
@@ -109,6 +100,8 @@ test:
     - mkdir library-node1
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/report.xml library-node1/
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
+    # collect screen shots of failure situations
+    - mv build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/
 
     #
     # for sampleapp module
