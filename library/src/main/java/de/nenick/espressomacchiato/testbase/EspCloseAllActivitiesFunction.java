@@ -26,7 +26,7 @@ public class EspCloseAllActivitiesFunction {
         int i = 0;
         while (closeActivities(instrumentation)) {
             if (i++ > NUMBER_OF_RETRIES) {
-                throw new AssertionError("Limit of retries excesses");
+                Log.w("EspressoMacchiato", "Not all activities are finished.");
             }
             Thread.sleep(200);
         }
