@@ -34,10 +34,13 @@ public class EspApplicationIsNotRespondingDialog {
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject button = device.findObject(new UiSelector().text(target));
 
-        try {
-            button.click();
-        } catch (UiObjectNotFoundException e) {
-            // just ignore when anr dialog is not shown
+        if(button.exists()) {
+            try {
+                button.click();
+            } catch (UiObjectNotFoundException e) {
+                // already previously checked for exist
+                throw new IllegalStateException(e);
+            }
         }
     }
 

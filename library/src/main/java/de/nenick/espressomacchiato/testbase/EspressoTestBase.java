@@ -55,7 +55,7 @@ abstract class EspressoTestBase<A extends Activity> {
     public void setupEspresso() {
         if(!initialAnrDialogClosed) {
             EspApplicationIsNotRespondingDialog.build().dismissIfShown();
-            initialAnrDialogClosed = true;
+            //initialAnrDialogClosed = true;
         }
         Espresso.setFailureHandler(new EspScreenshotFailureHandler(getActivity()));
         avoidLockScreen();
