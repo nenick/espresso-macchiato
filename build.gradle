@@ -13,7 +13,8 @@ buildscript {
     }
 }
 
-project.ext.preDexLibs = ! "true".equals(System.getenv("CIRCLECI"))
+// speed up compilation when build on circle ci
+project.ext.onCircleCi = "true".equals(System.getenv("CIRCLECI"))
 
 allprojects {
     repositories {
@@ -22,23 +23,23 @@ allprojects {
 
     // improve build server performance by disabling incremental on circleci
     tasks.withType(JavaCompile) {
-        options.incremental = rootProject.ext.preDexLibs
+        options.incremental = !rootProject.ext.onCircleCi
     }
 }
 
-// improve build server performance by disabling preDex on circleci
+// improve build server performance by disabling preDex on circle ci
 // http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.
 subprojects {
     project.plugins.whenPluginAdded { plugin ->
         if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
-            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+            project.android.dexOptions.preDexLibraries = !rootProject.ext.onCircleCi
         } else if ("com.android.build.gradle.LibraryPlugin".equals(plugin.class.name)) {
-            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+            project.android.dexOptions.preDexLibraries = !rootProject.ext.onCircleCi
         }
     }
 }
 
-// also clean root build folder on clan command
+// also clean root build folder on clean command
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
