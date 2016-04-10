@@ -65,11 +65,6 @@ test:
     # start instrumentation tests on emulator (library as last to collect screenshots at end)
     - ./gradlew :library:connectedCheckCustomized:
         parallel: true
-    - ls library/
-    - ls library/build/
-    - ls library/build/reports/
-    - ls library/build/reports/coverage
-    - ls library/build/reports/coverage/debug
     - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
 
   post:
@@ -84,17 +79,17 @@ test:
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml:
         parallel: true
-    - cp -r library/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/xml:
+    - cp -r library/build/outputs/androidTest-results/connected/ $CIRCLE_TEST_REPORTS/library_android_tests/xml:
         parallel: true
     # collect html test results and make them accessable
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html:
         parallel: true
-    - cp -r library/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/library_android_tests/html:
+    - cp -r library/build/reports/androidTests/connected/ $CIRCLE_TEST_REPORTS/library_android_tests/html:
         parallel: true
     # collect test coverage results and make them accessable
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
         parallel: true
-    - cp -r library/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    - cp -r library/build/reports/coverage/debug/ $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
         parallel: true
     - cp library/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
         parallel: true
@@ -115,13 +110,13 @@ test:
 
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
-    - cp -r sampleapp/build/outputs/androidTest-results/connected/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
+    - cp -r sampleapp/build/outputs/androidTest-results/connected/ $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
     # collect html test results and make them accessable
     - mkdir -p $CIRCLE_TEST_REPORTS/samplapp_android_tests/html
-    - cp -r sampleapp/build/reports/androidTests/connected/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/html
+    - cp -r sampleapp/build/reports/androidTests/connected/ $CIRCLE_TEST_REPORTS/sampleapp_android_tests/html
     # collect test coverage results and make them accessable
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/coverage
-    - cp -r sampleapp/build/reports/coverage/debug/. $CIRCLE_TEST_REPORTS/sampleapp_android_tests/coverage
+    - cp -r sampleapp/build/reports/coverage/debug/ $CIRCLE_TEST_REPORTS/sampleapp_android_tests/coverage
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
     - cp -r sampleapp/build/outputs/lint* $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
