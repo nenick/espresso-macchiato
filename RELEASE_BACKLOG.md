@@ -8,6 +8,7 @@ Common stuff
 * Package "internal" - Actions / Assertions / Matcher (not intended for public usage)
 * wiki base package - list/documentation for testbase classes
 * wiki get started - include testbase package usage
+* error handler - for default assertions (current failure handler only called when using onView checks)
 
 New or extend elements
 
@@ -21,11 +22,12 @@ New or extend elements
 * EspRecyclerView - same like list
 * EspSpinner - choose option / assertions
 * EspViewPager - switch page / assertions visible fragment
+* EspPermissionsTool - ensure permissions for multiple permissions group (more than one dialog)
 
 New or extend tools
 
 * EspContactTool - find uri without exception or new method to check existence of contact spec
 
-New or extend tools
+New or extend mocks
 
 * Mocks with static methods

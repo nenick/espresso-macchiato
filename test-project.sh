@@ -1,2 +1,2 @@
 
-./gradlew lintDebug :library:mavenAndroidJavadocs :library:connectedCheck
+./gradlew lintDebug :library:mavenAndroidJavadocs :library:connectedCheckCustomized
