@@ -64,13 +64,15 @@ test:
     # start instrumentation tests on emulator (library as last to collect screenshots at end)
     - ./gradlew :library:connectedCheckCustomized:
         parallel: true
+    - ls library/build/reports/coverage/debug
     - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
+    - ls library/build/reports/coverage/debug
 
   post:
     # collect logs from emulator and make them accessable
     - adb logcat -d | grep -v GpsLocationProvider | grep -v MediaProvider | grep -v MetadataRetrieverClient | grep -v BackupManagerService | grep -v ARMAssembler | grep -v Choreographer | grep -v IInputConnectionWrapper | grep -v "I/art" | grep -v ConnectivityService | grep -v "D/PhoneInterfaceManager" | grep -v "I/Email" | grep -v "I/Exchange" | grep -v "E/libEGL" | grep -v "D/gralloc" | grep -v "E/installd" | grep -v "D/ConnectivityManager" | grep -v "D/WIFI" | grep -v "V/Mms" > $CIRCLE_ARTIFACTS/logcat_emulator.txt:
         parallel: true
-
+    - ls library/build/reports/coverage/debug
     #
     # for library module
     #
@@ -88,6 +90,7 @@ test:
     # collect test coverage results and make them accessable
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
         parallel: true
+    - ls library/build/reports/coverage/debug
     - cp -r library/build/reports/coverage/debug/ $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
         parallel: true
     - cp library/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
