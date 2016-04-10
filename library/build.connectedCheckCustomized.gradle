@@ -144,7 +144,7 @@ task jacocoTestReportAndroid(type: JacocoReport) {
     description = "Generates Jacoco coverage reports"
     reports {
         xml.enabled = true
-        xml.destination = "${buildDir}/reports/jacoco/jacoco.xml"
+        xml.destination = "${buildDir}/reports/coverage/debug/report.xml"
         html.enabled = true
         html.destination = "${buildDir}/reports/coverage/debug"
     }
