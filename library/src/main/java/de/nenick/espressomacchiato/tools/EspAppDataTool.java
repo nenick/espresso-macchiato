@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
 import java.io.File;
+import java.util.Arrays;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -21,10 +22,10 @@ import static org.junit.Assert.assertThat;
 public class EspAppDataTool {
 
     /**
-     * Execute all existing clear operations.
+     * Clear all application data except screenshots taken with {@link EspScreenshotTool}.
      */
     public static void clearApplicationData() {
-        clearStorage();
+        clearStorageExceptScreenshots();
         clearCache();
         clearDatabase();
         clearSharedPreferences();
@@ -56,16 +57,28 @@ public class EspAppDataTool {
         assertThat(deleteRecursive(cacheDir), is(true));
     }
 
-    public static void clearStorage() {
+    public static void clearStorage(String ... excludes) {
         File filesDir = InstrumentationRegistry.getTargetContext().getFilesDir();
-        assertThat(deleteRecursive(filesDir), is(true));
+        String[] directoryContent = filesDir.list();
+        for (String content : directoryContent) {
+            assertThat(deleteRecursive(new File(filesDir, content), excludes), is(true));
+        }
+
     }
 
-    private static boolean deleteRecursive(File directory) {
+    public static void clearStorageExceptScreenshots() {
+        clearStorage(EspScreenshotTool.screenshotFolderName);
+    }
+
+    private static boolean deleteRecursive(File directory, String ... excludes) {
+        if(excludes.length > 0 && Arrays.asList(excludes).contains(directory.getName())) {
+            return true;
+        }
+
         if (directory.isDirectory()) {
             String[] directoryContent = directory.list();
             for (String content : directoryContent) {
-                assertThat(deleteRecursive(new File(directory, content)), is(true));
+                assertThat(deleteRecursive(new File(directory, content), excludes), is(true));
             }
         }
         return directory.delete();
