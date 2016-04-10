@@ -10,6 +10,8 @@ import java.io.File;
 
 public class EspScreenshotTool {
 
+    public static String screenshotFolderName = "test-screenshots";
+
     public static void takeWithName(String name) {
         if(!EspPermissionsTool.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             Log.i("EspressoMacchiato", "Store pictures only available with WRITE_EXTERNAL_STORAGE permission.");
@@ -51,6 +53,6 @@ public class EspScreenshotTool {
         if (appStorage == null) {
             throw new IllegalStateException("could not find directory to store screenshot");
         }
-        return appStorage.getAbsolutePath() + "/test-screenshots";
+        return appStorage.getAbsolutePath() + "/" + screenshotFolderName;
     }
 }
