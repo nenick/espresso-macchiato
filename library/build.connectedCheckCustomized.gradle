@@ -11,7 +11,7 @@ buildscript {
 // Custom connectedCheck task to pull extra application data after test run finished
 
 // AndroidTestTask https://android.googlesource.com/platform/tools/build/+/3c6ba532ac7618701123629906a854c157ae59c0/gradle/src/main/groovy/com/android/build/gradle/internal/tasks/DeviceProviderInstrumentTestTask.groovy
-// use SimpleTestRunner https://android.googlesource.com/platform/tools/base/+/8d969614b7beca74e4d17f2d1c5956e75053f7ce/build-system/builder/src/main/java/com/android/builder/internal/testing/SimpleTestCallable.java
+// use SimpleTestRunner https://android.googlesource.com/platform/tools/build/+/6d7fd0d2eff092abf1aaf44d03756b24570b390c/builder/src/main/java/com/android/builder/testing/SimpleTestRunner.java
 // use SimpleTestCallable https://android.googlesource.com/platform/tools/base/+/8d969614b7beca74e4d17f2d1c5956e75053f7ce/build-system/builder/src/main/java/com/android/builder/internal/testing/SimpleTestCallable.java
 // use RemoteAndroidTestRunner https://android.googlesource.com/platform/tools/base/+/tools_r22/ddmlib/src/main/java/com/android/ddmlib/testrunner/RemoteAndroidTestRunner.java
 // http://grepcode.com/file/repo1.maven.org/maven2/com.google.android.tools/ddmlib/r10/com/android/ddmlib/AndroidDebugBridge.java
@@ -23,6 +23,7 @@ import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.testrunner.RemoteAndroidTestRunner
 import com.android.utils.ILogger
+import com.android.ddmlib.testrunner.TestRunResult
 
 task connectedCheckRunTests << {
     def applicationId = "de.nenick.espressomacchiato.test"
@@ -109,6 +110,11 @@ task connectedCheckRunTests << {
 
         device.installPackage(testApk, true /* reinstall */)
         runner.run(runListener)
+
+        TestRunResult testRunResult = runListener.getRunResult();
+        if(testRunResult.hasFailedTests()) {
+            throw new GradleException("There were failing tests.")
+        }
     } finally {
         TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultHtmlOutputDirectory)
         report.generateReport()
