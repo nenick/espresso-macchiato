@@ -29,7 +29,7 @@ task connectedCheckRunTests << {
 
     String adbCommand = android.getAdbExe().absolutePath
     String coverageFileOnDevice = "/data/data/${applicationId}/coverage.ec"
-    String screenshotsOnDevice = "/data/user/0/${applicationId}/files/test-screenshots"
+    String screenshotsOnDevice = "/data/data/${applicationId}/files/test-screenshots"
     String testApk = "library/build/outputs/apk/library-debug-androidTest-unaligned.apk"
 
     // define all output directories
