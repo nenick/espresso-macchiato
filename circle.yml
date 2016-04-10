@@ -65,6 +65,11 @@ test:
     # start instrumentation tests on emulator (library as last to collect screenshots at end)
     - ./gradlew :library:connectedCheckCustomized:
         parallel: true
+    - ls library/
+    - ls library/build/
+    - ls library/build/reports/
+    - ls library/build/reports/coverage
+    - ls library/build/reports/coverage/debug
     - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
 
   post:
