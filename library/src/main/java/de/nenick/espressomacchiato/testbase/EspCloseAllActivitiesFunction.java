@@ -27,6 +27,7 @@ public class EspCloseAllActivitiesFunction {
         while (closeActivities(instrumentation)) {
             if (i++ > NUMBER_OF_RETRIES) {
                 Log.w("EspressoMacchiato", "Not all activities are finished.");
+                break;
             }
             Thread.sleep(200);
         }
