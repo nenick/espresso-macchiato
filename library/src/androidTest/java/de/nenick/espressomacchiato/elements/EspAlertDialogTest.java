@@ -126,15 +126,6 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
         EspAlertDialog.spec();
     }
 
-    protected void addDialog(final AlertDialog.Builder dialog) {
-        performOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                dialog.show();
-            }
-        });
-    }
-
     private void givenClickFeedbackTextView() {
         messageView = new TextView(activityTestRule.getActivity());
         messageView.setId(messageViewId);

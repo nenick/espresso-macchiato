@@ -7,6 +7,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.runner.lifecycle.Stage;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -76,6 +77,15 @@ abstract class EspressoTestBase<A extends Activity> {
             public void run() {
                 ViewGroup layout = (ViewGroup) getActivity().findViewById(targetLayoutId);
                 layout.addView(view);
+            }
+        });
+    }
+
+    protected void addDialog(final AlertDialog.Builder dialog) {
+        performOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dialog.show();
             }
         });
     }
