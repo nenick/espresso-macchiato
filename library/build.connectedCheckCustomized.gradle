@@ -1,0 +1,167 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.0.0-rc1'
+    }
+}
+
+
+// Custom connectedCheck task to pull extra application data after test run finished
+
+// AndroidTestTask https://android.googlesource.com/platform/tools/build/+/3c6ba532ac7618701123629906a854c157ae59c0/gradle/src/main/groovy/com/android/build/gradle/internal/tasks/DeviceProviderInstrumentTestTask.groovy
+// use SimpleTestRunner https://android.googlesource.com/platform/tools/base/+/8d969614b7beca74e4d17f2d1c5956e75053f7ce/build-system/builder/src/main/java/com/android/builder/internal/testing/SimpleTestCallable.java
+// use SimpleTestCallable https://android.googlesource.com/platform/tools/base/+/8d969614b7beca74e4d17f2d1c5956e75053f7ce/build-system/builder/src/main/java/com/android/builder/internal/testing/SimpleTestCallable.java
+// use RemoteAndroidTestRunner https://android.googlesource.com/platform/tools/base/+/tools_r22/ddmlib/src/main/java/com/android/ddmlib/testrunner/RemoteAndroidTestRunner.java
+// http://grepcode.com/file/repo1.maven.org/maven2/com.google.android.tools/ddmlib/r10/com/android/ddmlib/AndroidDebugBridge.java
+
+import com.android.build.gradle.internal.test.report.ReportType
+import com.android.build.gradle.internal.test.report.TestReport
+import com.android.builder.internal.testing.CustomTestRunListener
+import com.android.ddmlib.AndroidDebugBridge
+import com.android.ddmlib.IDevice
+import com.android.ddmlib.testrunner.RemoteAndroidTestRunner
+import com.android.utils.ILogger
+
+task connectedCheckRunTests << {
+    def applicationId = "de.nenick.espressomacchiato.test"
+
+    String adbCommand = android.getAdbExe().absolutePath
+    String coverageFileOnDevice = "/data/data/${applicationId}/coverage.ec"
+    String screenshotsOnDevice = "/data/user/0/${applicationId}/files/test-screenshots"
+    String testApk = "library/build/outputs/apk/library-debug-androidTest-unaligned.apk"
+
+    // define all output directories
+    def testResultXmlOutputDirectory = file("build/outputs/androidTest-results/connected")
+    def testResultHtmlOutputDirectory = file("build/reports/androidTests/connected")
+    def coverageOutputDirectory = file("build/outputs/code-coverage/connected")
+    def screenshotOutputDirectory = file("build/outputs/test-screenshots/connected")
+
+    // initial clear all output directories (force failures if one step failed unexpectedly)
+    testResultXmlOutputDirectory.deleteDir()
+    testResultHtmlOutputDirectory.deleteDir()
+    coverageOutputDirectory.deleteDir()
+    screenshotOutputDirectory.deleteDir()
+
+    // create some expected output directories (some steps would fail without them)
+    testResultXmlOutputDirectory.mkdirs()
+    coverageOutputDirectory.mkdirs()
+    screenshotOutputDirectory.mkdirs()
+
+    // without started adb we can not find any devices
+    exec {
+        commandLine adbCommand
+        args = ["start-server"]
+    }
+
+    // prepare connection for all connected devices and emulators
+    AndroidDebugBridge.initIfNeeded(false /*clientSupport*/)
+    AndroidDebugBridge bridge = AndroidDebugBridge.createBridge(adbCommand, false /*forceNewBridge*/)
+
+    // wait until all connected devices are collected, original from https://android.googlesource.com/platform/tools/build/+/master/builder/src/main/java/com/android/builder/testing/ConnectedDeviceProvider.java
+    long timeOut = 30000 // 30 sec
+    int sleepTime = 1000
+    while (!bridge.hasInitialDeviceList() && timeOut > 0) {
+        sleep(sleepTime)
+        timeOut -= sleepTime
+    }
+    if (timeOut <= 0 && !bridge.hasInitialDeviceList()) {
+        throw new RuntimeException("Timeout getting device list.", null)
+    }
+    IDevice[] devices = bridge.devices
+    if (devices.length == 0) {
+        throw new RuntimeException("No connected devices!", null)
+    }
+
+    // current it is enough to just take the first device (loop to support more devices)
+    def device = AndroidDebugBridge.createBridge().devices[0]
+    String deviceName = device.getName();
+
+    def runListener = new CustomTestRunListener(deviceName, "myProject", "myflavor", new ILogger() {
+        @Override
+        void error(Throwable throwable, String s, Object... objects) {
+            logger.error(String.format(s, objects), throwable)
+        }
+
+        @Override
+        void warning(String s, Object... objects) {
+            logger.warn(String.format(s, objects))
+        }
+
+        @Override
+        void info(String s, Object... objects) {
+            logger.lifecycle(String.format(s, objects))
+        }
+
+        @Override
+        void verbose(String s, Object... objects) {
+            logger.lifecycle(String.format(s, objects))
+        }
+    })
+    runListener.setReportDir(testResultXmlOutputDirectory)
+
+    try {
+        def runner = new RemoteAndroidTestRunner(applicationId, "android.support.test.runner.AndroidJUnitRunner", AndroidDebugBridge.createBridge().devices[0])
+        runner.addInstrumentationArg("coverage", "true");
+        runner.addInstrumentationArg("coverageFile", coverageFileOnDevice);
+        runner.setRunName(deviceName);
+
+        device.installPackage(testApk, true /* reinstall */)
+        runner.run(runListener)
+    } finally {
+        TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultHtmlOutputDirectory)
+        report.generateReport()
+
+        // pull coverage data from device
+        exec {
+            commandLine android.getAdbExe().absolutePath
+            args = ["pull", coverageFileOnDevice, coverageOutputDirectory.absolutePath + "/coverage.ec"]
+        }
+
+        // pull screenshots from device
+        exec {
+            commandLine android.getAdbExe().absolutePath
+            args = ["pull", screenshotsOnDevice, screenshotOutputDirectory.absolutePath]
+        }
+    }
+
+    // don't device.uninstallPackage(applicationId)
+}
+afterEvaluate {
+    tasks.connectedCheckRunTests.dependsOn tasks.assembleDebugAndroidTest
+}
+
+
+apply plugin: "jacoco"
+
+// https://github.com/srideviaishwariya/Automation-Tools-for-Android/tree/master/Sample1
+task jacocoTestReportAndroid(type: JacocoReport) {
+    def coverageSourceDirs = [
+            'src/main/java'
+    ]
+    group = "Reporting"
+    description = "Generates Jacoco coverage reports"
+    reports {
+        xml.enabled = true
+        xml.destination = "${buildDir}/reports/jacoco/jacoco.xml"
+        html.enabled = true
+        html.destination = "${buildDir}/reports/coverage/debug"
+    }
+    file(reports.xml.destination).deleteDir()
+    file(reports.html.destination).deleteDir()
+
+    classDirectories = fileTree(
+            dir: 'build/intermediates/classes',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.*'
+            ]
+    )
+    sourceDirectories = files(coverageSourceDirs)
+    additionalSourceDirs = files(coverageSourceDirs)
+    executionData = files('build/outputs/code-coverage/connected/coverage.ec')
+}
+
+task connectedCheckCustomized(dependsOn: [tasks.connectedCheckRunTests, tasks.jacocoTestReportAndroid])
+tasks.jacocoTestReportAndroid.mustRunAfter tasks.connectedCheckRunTests
