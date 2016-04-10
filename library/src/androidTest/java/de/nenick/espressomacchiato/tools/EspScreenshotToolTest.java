@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.tools;
 
 import android.Manifest;
 import android.support.test.InstrumentationRegistry;
+import android.widget.TextView;
 
 import org.junit.Test;
 
@@ -15,14 +16,19 @@ import static org.hamcrest.Matchers.is;
 
 public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
 
+    public static final String PICTURE_TEST_SCREEN = "Picture Test Screen";
+
     @Test
     public void testScreenshot() {
-        EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        EspScreenshotTool.takeWithName("test screen");
-        File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots/test screen.png");
-        assertThat(screenshot.exists(), is(true));
+        TextView textView = new TextView(getActivity());
+        textView.setText(PICTURE_TEST_SCREEN);
+        addViewToActivity(textView, BaseActivity.rootLayout);
 
-        //noinspection ResultOfMethodCallIgnored
-        //screenshot.delete();
+        EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        EspWait.forIdle();
+        EspScreenshotTool.takeWithName("test screenshot");
+        File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots/test screenshot.png");
+        assertThat(screenshot.exists(), is(true));
     }
 }
