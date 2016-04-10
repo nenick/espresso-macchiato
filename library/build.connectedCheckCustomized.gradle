@@ -34,6 +34,7 @@ task connectedCheckRunTests << {
     String testApk = "library/build/outputs/apk/library-debug-androidTest-unaligned.apk"
 
     // define all output directories
+    println "EXECUTION UNEXPECTED??"
     def testResultXmlOutputDirectory = file("build/outputs/androidTest-results/connected")
     def testResultHtmlOutputDirectory = file("build/reports/androidTests/connected")
     def coverageOutputDirectory = file("build/outputs/code-coverage/connected")
