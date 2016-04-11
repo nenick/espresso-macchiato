@@ -76,10 +76,11 @@ task connectedCheckRunTests << {
     }
 
     // current it is enough to just take the first device (loop to support more devices)
-    def device = AndroidDebugBridge.createBridge().devices[0]
+    def device = bridge.devices[0]
     String deviceName = device.getName();
+    logger.lifecycle("Found " + bridge.devices.length + " devices, use first of them " + deviceName)
 
-    def runListener = new CustomTestRunListener(deviceName, "myProject", "myflavor", new ILogger() {
+    def runListener = new CustomTestRunListener(deviceName, project.name, null, new ILogger() {
         @Override
         void error(Throwable throwable, String s, Object... objects) {
             logger.error(String.format(s, objects), throwable)
@@ -108,7 +109,10 @@ task connectedCheckRunTests << {
         runner.addInstrumentationArg("coverageFile", coverageFileOnDevice);
         runner.setRunName(deviceName);
 
-        device.installPackage(testApk, true /* reinstall */)
+        logger.lifecycle("install test apk")
+        device.installPackage(testApk, true /* force reinstall */)
+
+        logger.lifecycle("start test run")
         runner.run(runListener)
 
         TestRunResult testRunResult = runListener.getRunResult();
