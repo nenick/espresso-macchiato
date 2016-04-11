@@ -32,8 +32,6 @@ abstract class EspressoTestBase<A extends Activity> {
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
-    private static boolean initialAnrDialogClosed = false;
-
     public abstract A getActivity();
 
     public static Activity currentActivity() {
@@ -54,10 +52,7 @@ abstract class EspressoTestBase<A extends Activity> {
 
     @Before
     public void setupEspresso() {
-        if(!initialAnrDialogClosed) {
-            EspApplicationIsNotRespondingDialog.build().dismissIfShown();
-            //initialAnrDialogClosed = true;
-        }
+        EspApplicationIsNotRespondingDialog.build().dismissIfShown();
         Espresso.setFailureHandler(new EspScreenshotFailureHandler(getActivity()));
         avoidLockScreen();
 

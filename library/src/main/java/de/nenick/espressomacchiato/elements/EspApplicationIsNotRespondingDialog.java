@@ -26,28 +26,37 @@ public class EspApplicationIsNotRespondingDialog {
                 return;
             }
 
-            //fix: Process system is't responding.
-            click(getStringResourceByName("wait"));
-            //TODO clicks must be more safe (first check dialog message exist) click(getStringResourceByName("ok")); // sometimes a system process does crash on emulator and this must be confirmed
+            if (dialogIsShownWith(getStringResourceByName("anr_process", ".*").replace("?", "\\?"))) {
+                click(getStringResourceByName("wait")); // sometimes a system process isn't responding on emulator and this must be confirmed
+            }
+
+            if(dialogIsShownWith(getStringResourceByName("aerr_application", ".*"))) {
+                click(getStringResourceByName("ok")); // sometimes a system process does crash on emulator and this must be confirmed
+            }
         }
+    }
+
+    private boolean dialogIsShownWith(String expectedMessage) {
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        UiObject dialog = device.findObject(new UiSelector().textMatches(expectedMessage));
+        return dialog.exists();
     }
 
     protected void click(String target) {
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject button = device.findObject(new UiSelector().text(target));
 
-        if(button.exists()) {
-            try {
-                button.click();
-            } catch (UiObjectNotFoundException e) {
-                // already previously checked for exist
-                throw new IllegalStateException(e);
-            }
+        try {
+            button.click();
+        } catch (UiObjectNotFoundException e) {
+            // already previously checked for exist
+            throw new IllegalStateException(e);
         }
     }
 
-    private String getStringResourceByName(String name) {
+    private String getStringResourceByName(String name, String ... formatArgs) {
+        // for all available strings see Android/sdk/platforms/android-23/data/res/values/strings.xml
         int resId = InstrumentationRegistry.getContext().getResources().getIdentifier(name, "string", "android");
-        return InstrumentationRegistry.getContext().getString(resId);
+        return InstrumentationRegistry.getContext().getString(resId, formatArgs);
     }
 }
