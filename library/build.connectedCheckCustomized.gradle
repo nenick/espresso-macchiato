@@ -162,10 +162,10 @@ task jacocoTestReportAndroid(type: JacocoReport) {
     file(reports.html.destination).deleteDir()
 
     classDirectories = fileTree(
-            dir: 'build/intermediates/classes',
+            dir: 'build/intermediates/classes/debug',
             excludes: ['**/R.class',
                        '**/R$*.class',
-                       '**/BuildConfig.*'
+                       '**/BuildConfig.class'
             ]
     )
     sourceDirectories = files(coverageSourceDirs)
