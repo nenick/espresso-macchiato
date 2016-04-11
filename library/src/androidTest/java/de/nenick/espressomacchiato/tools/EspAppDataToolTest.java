@@ -73,7 +73,7 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
         assertNotNull(inputStream);
         inputStream.close();
 
-        EspAppDataTool.clearStorage();
+        EspAppDataTool.clearStorageExceptScreenshots();
 
         exception.expect(FileNotFoundException.class);
         InstrumentationRegistry.getTargetContext().getContentResolver().openInputStream(uri);
