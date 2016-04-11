@@ -27,6 +27,7 @@ public class EspApplicationIsNotRespondingDialog {
             }
 
             click(getStringResourceByName("wait"));
+            click(getStringResourceByName("ok")); // sometimes a system process does crash on emulator and this must be confirmed
         }
     }
 
