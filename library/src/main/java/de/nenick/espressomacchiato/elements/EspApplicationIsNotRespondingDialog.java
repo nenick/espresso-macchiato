@@ -26,8 +26,9 @@ public class EspApplicationIsNotRespondingDialog {
                 return;
             }
 
+            //fix: Process system is't responding.
             click(getStringResourceByName("wait"));
-            click(getStringResourceByName("ok")); // sometimes a system process does crash on emulator and this must be confirmed
+            //TODO clicks must be more safe (first check dialog message exist) click(getStringResourceByName("ok")); // sometimes a system process does crash on emulator and this must be confirmed
         }
     }
 
