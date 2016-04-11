@@ -11,9 +11,9 @@ import de.nenick.espressomacchiato.elements.EspPermissionDialog;
 public class EspPermissionsTool {
 
     /**
-     * wait below 6500ms was sometimes not enough for reset all permissions on circle ci emulator
+     * wait below 8000ms was sometimes not enough for reset all permissions on circle ci emulator
      */
-    public static int DELAY_FOR_COMMAND_EXECUTION = 6500;
+    public static int DELAY_FOR_COMMAND_EXECUTION = 8000;
 
     /**
      * Safe way to remove granted permission to you app without app restart.

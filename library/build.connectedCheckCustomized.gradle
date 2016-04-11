@@ -146,7 +146,7 @@ afterEvaluate {
 apply plugin: "jacoco"
 
 // https://github.com/srideviaishwariya/Automation-Tools-for-Android/tree/master/Sample1
-task jacocoAndroidTestReport(type: JacocoReport) {
+task jacocoTestReportAndroid(type: JacocoReport) {
     def coverageSourceDirs = [
             'src/main/java'
     ]
@@ -173,5 +173,5 @@ task jacocoAndroidTestReport(type: JacocoReport) {
     executionData = files('build/outputs/code-coverage/connected/coverage.ec')
 }
 
-task connectedCheckCustomized(dependsOn: [tasks.connectedCheckRunTests, tasks.jacocoAndroidTestReport])
-tasks.jacocoAndroidTestReport.mustRunAfter tasks.connectedCheckRunTests
+task connectedCheckCustomized(dependsOn: [tasks.connectedCheckRunTests, tasks.jacocoTestReportAndroid])
+tasks.jacocoTestReportAndroid.mustRunAfter tasks.connectedCheckRunTests
