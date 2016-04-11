@@ -80,7 +80,7 @@ task connectedCheckRunTests << {
     String deviceName = device.getName();
     logger.lifecycle("Found " + bridge.devices.length + " devices, use first of them " + deviceName)
 
-    def runListener = new CustomTestRunListener(deviceName, project.name, null, new ILogger() {
+    def runListener = new CustomTestRunListener(deviceName, project.name, "debug", new ILogger() {
         @Override
         void error(Throwable throwable, String s, Object... objects) {
             logger.error(String.format(s, objects), throwable)
