@@ -62,6 +62,8 @@ test:
     - adb logcat -c
 
     # start instrumentation tests on emulator (library as last to collect screenshots at end)
+    - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
+
     - ./gradlew :library:connectedCheckCustomized:
         parallel: true
 
@@ -76,8 +78,6 @@ test:
     - mkdir library-node1
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/report.xml library-node1/
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
-
-    - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
 
   post:
     # collect logs from emulator and make them accessable
