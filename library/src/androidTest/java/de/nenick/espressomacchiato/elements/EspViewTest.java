@@ -68,14 +68,14 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         exception.expectMessage("No views in hierarchy found matching: (with id: android:id/button1 and is displayed on the screen to the user)");
 
         givenClickableView();
-        view.setVisibility(View.INVISIBLE);
+        givenViewIsInvisible();
         espView.click();
     }
 
     @Test
     public void testClickSelectsOnlyVisibleView() {
         givenClickableView();
-        view.setVisibility(View.INVISIBLE);
+        givenViewIsInvisible();
         givenClickableView();
         givenClickFeedbackTextView();
 
