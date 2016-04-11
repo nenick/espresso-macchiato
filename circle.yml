@@ -124,7 +124,7 @@ test:
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
     - cp -r sampleapp/build/outputs/androidTest-results/connected/* $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
     # collect html test results and make them accessible
-    - mkdir -p $CIRCLE_TEST_REPORTS/samplapp_android_tests/html
+    - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/html
     - cp -r sampleapp/build/reports/androidTests/connected/* $CIRCLE_TEST_REPORTS/sampleapp_android_tests/html
     # collect test coverage results and make them accessible
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/coverage
