@@ -36,7 +36,7 @@ abstract class EspressoTestBase<A extends Activity> {
 
     public static Activity currentActivity() {
         class Holder {
-            Activity activity;
+            private Activity activity;
         }
         final Holder holder = new Holder();
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
