@@ -83,7 +83,7 @@ test:
     # try merged coverage
     - mv library/build/reports/coverage/debug library/build/reports/coverage/debug1
     - mv library/build/outputs/code-coverage/connected library/build/outputs/code-coverage/connected1
-    - ./gradlew library:jacocoTestReportAndroid2 -d
+    - ./gradlew library:jacocoTestReportAndroid2 -i
 
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
     - cp -r library/build/reports/coverage2/debug/* $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
