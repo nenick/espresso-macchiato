@@ -175,3 +175,30 @@ task jacocoTestReportAndroid(type: JacocoReport) {
 
 task connectedCheckCustomized(dependsOn: [tasks.connectedCheckRunTests, tasks.jacocoTestReportAndroid])
 tasks.jacocoTestReportAndroid.mustRunAfter tasks.connectedCheckRunTests
+
+task jacocoTestReportAndroid2(type: JacocoReport) {
+    def coverageSourceDirs = [
+            'src/main/java'
+    ]
+    group = "Reporting"
+    description = "Generates Jacoco coverage reports"
+    reports {
+        xml.enabled = true
+        xml.destination = "${buildDir}/reports/coverage2/debug/report.xml"
+        html.enabled = true
+        html.destination = "${buildDir}/reports/coverage2/debug"
+    }
+    file(reports.xml.destination).deleteDir()
+    file(reports.html.destination).deleteDir()
+
+    classDirectories = fileTree(
+            dir: 'build/intermediates/classes/debug',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.class'
+            ]
+    )
+    sourceDirectories = files(coverageSourceDirs)
+    additionalSourceDirs = files(coverageSourceDirs)
+    executionData = files('build/outputs/code-coverage/connected/coverage.ec', '../library-node1/coverage2.ec')
+}
