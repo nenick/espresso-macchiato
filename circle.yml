@@ -87,7 +87,6 @@ test:
 
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
     - cp -r library/build/reports/coverage2/debug/* $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
-    - cp library/build/outputs/code-coverage/connected2/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
 
   post:
     # collect logs from emulator and make them accessable
