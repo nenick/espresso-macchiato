@@ -78,12 +78,16 @@ test:
     - mkdir library-node1
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/report.xml library-node1/
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
+
+
+    # try merged coverage
+    - mv library/build/reports/coverage/debug library/build/reports/coverage/debug1
+    - mv library/build/outputs/code-coverage/connected library/build/outputs/code-coverage/connected1
+    - ./gradlew library:jacocoTestReportAndroid2 -d
+
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
     - cp -r library/build/reports/coverage2/debug/* $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
     - cp library/build/outputs/code-coverage/connected2/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
-
-    # try merged coverage
-    - ./gradlew library:jacocoTestReportAndroid2
 
   post:
     # collect logs from emulator and make them accessable

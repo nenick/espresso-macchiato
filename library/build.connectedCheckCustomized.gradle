@@ -200,5 +200,5 @@ task jacocoTestReportAndroid2(type: JacocoReport) {
     )
     sourceDirectories = files(coverageSourceDirs)
     additionalSourceDirs = files(coverageSourceDirs)
-    executionData = files('build/outputs/code-coverage/connected/coverage.ec', '../library-node1/coverage2.ec')
+    executionData = files('build/outputs/code-coverage/connected1/coverage.ec', '../library-node1/coverage2.ec')
 }
