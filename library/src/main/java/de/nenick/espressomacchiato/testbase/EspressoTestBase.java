@@ -52,13 +52,9 @@ abstract class EspressoTestBase<A extends Activity> {
 
     @Before
     public void setupEspresso() {
+        Espresso.setFailureHandler(new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext()));
+        //avoidLockScreen();
         EspApplicationIsNotRespondingDialog.build().dismissIfShown();
-        Espresso.setFailureHandler(new EspScreenshotFailureHandler(getActivity()));
-        avoidLockScreen();
-
-        // "java.lang.RuntimeException: Waited for the root of the view hierarchy to have window focus and not be requesting layout for over 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Otherwise, something is seriously wrong. Selected Root:
-        // Root{application-window-token=android.view.ViewRootImpl$W@b2047918, window-token=android.view.ViewRootImpl$W@b2047918, has-window-focus=false, layout-params-type=1, layout-params-string=WM.LayoutParams{(0,0)(fillxfill) sim=#100 ty=1 fl=#1810100 pfl=0x8 wanim=0x10302a1}, decor-view-string=DecorView{id=-1, visibility=VISIBLE, width=480, height=800, has-focus=true, has-focusable=true, has-window-focus=false, is-clickable=false, is-enabled=true, is-focused=false, is-focusable=false, is-layout-requested=false, is-selected=false, root-is-layout-requested=false, has-input-connection=false, x=0.0, y=0.0, child-count=1}}"
-        // https://groups.google.com/forum/#!msg/android-test-kit-discuss/yIEwus_hjeY/xI1qpehDa7MJ -> looks like there's a dialog that says "Launcher isn't responding. Do you want to close it?" with options Wait and OK
     }
 
     @After
@@ -88,7 +84,7 @@ abstract class EspressoTestBase<A extends Activity> {
     protected void performOnUiThread(Runnable runnable) {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(runnable);
     }
-
+/*
     private void avoidLockScreen() {
         // sometimes tests failed on emulator because lock screen is shown
         // java.lang.RuntimeException: Waited for the root of the view hierarchy to have window focus and not be requesting layout for over 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Otherwise, something is seriously wrong"
@@ -106,7 +102,7 @@ abstract class EspressoTestBase<A extends Activity> {
             }
         });
     }
-
+*/
     protected Class<A> getGenericActivityClass() {
         Type genericSuperclass = getClass().getGenericSuperclass();
         if (genericSuperclass instanceof ParameterizedType) {

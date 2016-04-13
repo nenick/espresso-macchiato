@@ -23,7 +23,7 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
     public void setup() {
         EspPermissionsTool.resetAllPermission();
 
-        // deny permissions handling only available since android marshmallow
+        // deny permissions only available since android marshmallow
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             assertTestPermissionIsDenied();
         }
@@ -38,13 +38,12 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testDeny() throws Throwable {
+        // deny permission only available since android marshmallow
+        skipTestIfBelowAndroidMarshmallow();
+
         whenRequestTestPermission();
         espPermissionDialog.deny();
-
-        // deny permissions handling only available since android marshmallow
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            assertTestPermissionIsDenied();
-        }
+        assertTestPermissionIsDenied();
     }
 
     @Test
@@ -69,6 +68,13 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
 
         assertTestPermissionIsGranted();
         espPermissionDialog.deny();
+    }
+
+    @Test
+    public void testDialogNeedsRequestedPermission() {
+        exception.expect(IllegalStateException.class);
+        exception.expectMessage("No expected permissions specified. This could lead to curious test failures.");
+        EspPermissionDialog.build();
     }
 
     private void whenRequestTestPermission() {

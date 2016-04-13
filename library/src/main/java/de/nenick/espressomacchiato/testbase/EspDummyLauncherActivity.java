@@ -11,6 +11,7 @@ import de.nenick.espressomacchiato.R;
 public class EspDummyLauncherActivity extends Activity {
 
     public static int rootLayout = R.id.layout_activity_dummy_launcher;
+    public static int buttonId = R.id.btn_start_app;
 
     private Intent intent;
 
@@ -18,7 +19,7 @@ public class EspDummyLauncherActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dummy_launcher);
-        findViewById(R.id.btn_start_app).setOnClickListener(new View.OnClickListener() {
+        findViewById(buttonId).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 start();

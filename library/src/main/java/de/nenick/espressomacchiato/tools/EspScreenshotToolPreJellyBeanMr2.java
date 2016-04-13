@@ -134,22 +134,13 @@ class EspScreenshotToolPreJellyBeanMr2 {
             screen.bitmap = takeScreenShot(view);
         } else {
             // On a background thread, post to main.
-            final CountDownLatch latch = new CountDownLatch(1);
-            activity.runOnUiThread(new Runnable() {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
                 @Override
                 public void run() {
-                    try {
                         screen.bitmap = takeScreenShot(view);
-                    } finally {
-                        latch.countDown();
-                    }
+
                 }
             });
-            try {
-                latch.await();
-            } catch (InterruptedException e) {
-                throw new IllegalStateException("Unable to get screenshot", e);
-            }
         }
 
         FileOutputStream fos = new FileOutputStream(screenshot);

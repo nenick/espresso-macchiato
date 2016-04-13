@@ -31,8 +31,8 @@ public class EspScreenshotFailureHandler implements FailureHandler {
             EspScreenshotTool.takeWithName("Failed-" + className + "." + methodName);
         } catch (Exception e) {
             Log.e("EspressoMacchiato", "Could not take picture of the current screen.", e);
+        } finally {
+            delegate.handle(error, viewMatcher);
         }
-
-        delegate.handle(error, viewMatcher);
     }
 }
