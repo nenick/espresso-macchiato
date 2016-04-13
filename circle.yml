@@ -119,7 +119,7 @@ test:
     - cp -r library/build/outputs/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
     # collect code coverage reports from parallel executed tests
     #- mkdir library-node1
-    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/report.xml library-node1/
+    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/debug/report.xml library-node1/
     #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
     # collect screen shots of failure situations
     - mv library/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
