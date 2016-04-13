@@ -27,7 +27,7 @@ import java.util.Set;
 import de.nenick.espressomacchiato.elements.EspApplicationIsNotRespondingDialog;
 
 @RunWith(AndroidJUnit4.class)
-abstract class EspressoTestBase<A extends Activity> {
+public abstract class EspressoTestBase<A extends Activity> {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -41,7 +41,7 @@ abstract class EspressoTestBase<A extends Activity> {
         final Holder holder = new Holder();
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             public void run() {
-                Set<Activity> activitiesInStages = EspCloseAllActivitiesFunction.getActivitiesInStages(Stage.RESUMED, Stage.PAUSED, Stage.STOPPED);
+                Set<Activity> activitiesInStages = EspCloseAllActivitiesFunction.getActivitiesInStages(Stage.RESUMED, Stage.PAUSED);
                 if (activitiesInStages.iterator().hasNext()) {
                     holder.activity = activitiesInStages.iterator().next();
                 }
