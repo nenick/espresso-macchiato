@@ -53,7 +53,7 @@ public abstract class EspressoTestBase<A extends Activity> {
     @Before
     public void setupEspresso() {
         Espresso.setFailureHandler(new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext()));
-        //avoidLockScreen();
+        avoidLockScreen();
         EspApplicationIsNotRespondingDialog.build().dismissIfShown();
     }
 
@@ -84,7 +84,7 @@ public abstract class EspressoTestBase<A extends Activity> {
     protected void performOnUiThread(Runnable runnable) {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(runnable);
     }
-/*
+
     private void avoidLockScreen() {
         // sometimes tests failed on emulator because lock screen is shown
         // java.lang.RuntimeException: Waited for the root of the view hierarchy to have window focus and not be requesting layout for over 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Otherwise, something is seriously wrong"
@@ -95,6 +95,10 @@ public abstract class EspressoTestBase<A extends Activity> {
             @Override
             public void run() {
                 Activity activity = getActivity();
+                if(activity == null) {
+                    // happens if activity is not started @Before, rather somewhere inside test execution
+                    return;
+                }
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
                 activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
@@ -102,7 +106,7 @@ public abstract class EspressoTestBase<A extends Activity> {
             }
         });
     }
-*/
+
     protected Class<A> getGenericActivityClass() {
         Type genericSuperclass = getClass().getGenericSuperclass();
         if (genericSuperclass instanceof ParameterizedType) {
