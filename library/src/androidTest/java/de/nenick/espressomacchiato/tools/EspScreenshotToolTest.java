@@ -74,6 +74,8 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testMissingPermission() {
+        skipTestIfBelowAndroidMarshmallow();
+
         EspPermissionsTool.resetAllPermission();
         EspScreenshotTool.takeWithName("test screenshot missing permission");
         File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots/test screenshot missing permission.png");
