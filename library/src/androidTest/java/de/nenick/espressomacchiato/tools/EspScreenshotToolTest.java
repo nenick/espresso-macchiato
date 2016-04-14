@@ -77,6 +77,6 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
         EspPermissionsTool.resetAllPermission();
         EspScreenshotTool.takeWithName("test screenshot missing permission");
         File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots/test screenshot missing permission.png");
-        assertThat(screenshot.exists(), is(true));
+        assertThat(screenshot.exists(), is(false));
     }
 }
