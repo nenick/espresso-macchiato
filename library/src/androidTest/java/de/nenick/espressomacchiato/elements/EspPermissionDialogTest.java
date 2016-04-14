@@ -38,12 +38,13 @@ public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testDeny() throws Throwable {
-        // deny permission only available since android marshmallow
-        skipTestIfBelowAndroidMarshmallow();
-
         whenRequestTestPermission();
         espPermissionDialog.deny();
-        assertTestPermissionIsDenied();
+
+        // deny permissions only available since android marshmallow
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            assertTestPermissionIsDenied();
+        }
     }
 
     @Test

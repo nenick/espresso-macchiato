@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.testbase;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.core.deps.guava.base.Throwables;
 import android.support.test.espresso.core.deps.guava.collect.Sets;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitor;
@@ -33,43 +34,19 @@ public class EspCloseAllActivitiesFunction {
         }
     }
 
-    private static boolean callOnMainSync(Instrumentation instrumentation, final Callable<Boolean> callable) throws Exception {
-        final AtomicReference<Boolean> retAtomic = new AtomicReference<>();
-        final AtomicReference<Throwable> exceptionAtomic = new AtomicReference<>();
-        instrumentation.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    retAtomic.set(callable.call());
-                } catch (Throwable e) {
-                    exceptionAtomic.set(e);
-                }
-            }
-        });
-        final Throwable exception = exceptionAtomic.get();
-        if (exception != null) {
-            Throwables.propagateIfInstanceOf(exception, Exception.class);
-            throw Throwables.propagate(exception);
-        }
-        return retAtomic.get();
-    }
-
     public static Set<Activity> getActivitiesInStages(Stage... stages) {
         final Set<Activity> activities = Sets.newHashSet();
         final ActivityLifecycleMonitor instance = ActivityLifecycleMonitorRegistry.getInstance();
         for (Stage stage : stages) {
-            final Collection<Activity> activitiesInStage = instance.getActivitiesInStage(stage);
-            if (activitiesInStage != null) {
-                activities.addAll(activitiesInStage);
-            }
+            activities.addAll(instance.getActivitiesInStage(stage));
         }
         return activities;
     }
 
     private static boolean closeActivities(Instrumentation instrumentation) throws Exception {
-        final boolean activityClosed = callOnMainSync(instrumentation, new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
+        final AtomicReference<Boolean> activityClosed = new AtomicReference<>();
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            public void run() {
                 /* Activities in android v8 never get destroyed, only stay in Stage.STOPPED ,*/
                 final Set<Activity> activities = getActivitiesInStages(Stage.RESUMED, Stage.STARTED, Stage.PAUSED, Stage.CREATED);
                 activities.removeAll(getActivitiesInStages(Stage.DESTROYED));
@@ -83,16 +60,16 @@ public class EspCloseAllActivitiesFunction {
                             activity.finish();
                         }
                     }
-                    return true;
+                    activityClosed.set(true);
                 } else {
-                    return false;
+                    activityClosed.set(false);
                 }
             }
         });
 
-        if (activityClosed) {
+        if (activityClosed.get()) {
             instrumentation.waitForIdleSync();
         }
-        return activityClosed;
+        return activityClosed.get();
     }
 }

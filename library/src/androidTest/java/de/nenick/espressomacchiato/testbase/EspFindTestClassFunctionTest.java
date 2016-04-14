@@ -11,5 +11,8 @@ public class EspFindTestClassFunctionTest extends EspressoTestCase<BaseActivity>
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage("Could not find test class!");
         EspFindTestClassFunction.apply(new Thread().getStackTrace());
+
+        //just for coverage
+        new EspFindTestClassFunction();
     }
 }
