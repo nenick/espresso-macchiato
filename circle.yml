@@ -78,13 +78,14 @@ test:
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
 
 
-    # try merged coverage
+    # merged coverage to get real coverage report, codecov has issues with merging branch coverage
     - mv library/build/reports/coverage/debug library/build/reports/coverage/debug1
     - mv library/build/outputs/code-coverage/connected library/build/outputs/code-coverage/connected1
     - ./gradlew library:jacocoTestReportAndroid2 -i
 
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
     - cp -r library/build/reports/coverage2/debug $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
+    - mv library/build/reports/coverage2/debug library/build/reports/coverage2/debug1
 
     - ./gradlew :sampleapp:connectedCheck
 
