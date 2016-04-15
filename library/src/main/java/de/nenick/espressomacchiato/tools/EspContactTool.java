@@ -122,23 +122,27 @@ public class EspContactTool {
      */
     @Deprecated
     public static Uri uriByName(String contactName) {
+        Uri result = null;
         Cursor cursor = InstrumentationRegistry.getTargetContext().getContentResolver().query(ContactsContract.Data.CONTENT_URI, null, null, null, null);
+
         assertNotNull(cursor);
         if (cursor.getCount() > 0) {
             while (cursor.moveToNext()) {
                 String id = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName._ID));
                 String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME));
                 if (contactName.equals(name)) {
-                    cursor.close();
-                    return Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, id);
+                    result = Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, id);
+                    break;
                 }
             }
         }
+
         cursor.close();
-        throw new IllegalStateException("Contact data not found for " + contactName);
+        return result;
     }
 
     public static Uri addressUriByDisplayName(String contactName) {
+        Uri result = null;
         Cursor cursor = InstrumentationRegistry.getTargetContext().getContentResolver().query(
                 ContactsContract.Data.CONTENT_URI,
                 null,
@@ -152,13 +156,14 @@ public class EspContactTool {
                 String id = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal._ID));
                 String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.DISPLAY_NAME));
                 if (contactName.equals(name)) {
-                    cursor.close();
-                    return Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, id);
+                    result = Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, id);
+                    break;
                 }
             }
         }
+
         cursor.close();
-        throw new IllegalStateException("Contact data not found for " + contactName);
+        return result;
     }
 
 

@@ -14,7 +14,7 @@ tools
 * EspPermissionsTool - stabilize for pre marshmallow
 * (planed) EspPermissionsTool - check if permission is in manifest before we can request them
 * EspScreenshotTool - take screenshots
-* (planed) EspContactTool - find uri without exception or new method to check existence of contact spec
+* EspContactTool - find uri will just return null if nothing found instead of throwing an exception
 
 test base
 

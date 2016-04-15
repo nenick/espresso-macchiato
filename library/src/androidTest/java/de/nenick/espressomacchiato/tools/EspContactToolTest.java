@@ -15,6 +15,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivity> {
@@ -83,8 +84,6 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
 
     @Test
     public void testUriByNameFailure() {
-        exception.expect(IllegalStateException.class);
-        exception.expectMessage("Contact data not found for " + TEST_CONTACT_NAME);
         contactUri = EspContactTool.spec()
                 .withDisplayName(TEST_CONTACT_NAME + " other guy")
                 .withAddress(EspContactTool.address()
@@ -93,14 +92,15 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
                         .withCity(TEST_CITY)
                         .withCountry(TEST_COUNTRY))
                 .addContact();
-        EspContactTool.uriByName(TEST_CONTACT_NAME);
+
+        Uri result = EspContactTool.uriByName(TEST_CONTACT_NAME);
+        assertNull(result);
     }
 
     @Test
     public void testUriByNameFailureNoContacts() {
-        exception.expect(IllegalStateException.class);
-        exception.expectMessage("Contact data not found for " + TEST_CONTACT_NAME);
-        EspContactTool.uriByName(TEST_CONTACT_NAME);
+        Uri result = EspContactTool.uriByName(TEST_CONTACT_NAME);
+        assertNull(result);
     }
 
     @Test
@@ -132,7 +132,6 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
 
     @Test
     public void testAddressUriByDisplayNameFailure() {
-        exception.expect(IllegalStateException.class);
         contactUri = EspContactTool.spec()
                 .withDisplayName(TEST_CONTACT_NAME + " other guy")
                 .withAddress(EspContactTool.address()
@@ -142,13 +141,14 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
                         .withCountry(TEST_COUNTRY))
                 .addContact();
 
-        EspContactTool.addressUriByDisplayName(TEST_CONTACT_NAME);
+        Uri result = EspContactTool.addressUriByDisplayName(TEST_CONTACT_NAME);
+        assertNull(result);
     }
 
     @Test
     public void testAddressUriByDisplayNameFailureNoContacts() {
-        exception.expect(IllegalStateException.class);
-        EspContactTool.addressUriByDisplayName(TEST_CONTACT_NAME);
+        Uri result = EspContactTool.addressUriByDisplayName(TEST_CONTACT_NAME);
+        assertNull(result);
     }
 
     @Test
