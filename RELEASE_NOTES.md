@@ -6,8 +6,8 @@ elements
 * EspPermissionDialog - stabilize for pre marshmallow
 * EspPermissionDialog - use current localisation for button text
 * (rename planed because of aerr dialog)EspApplicationIsNotRespondingDialog - close anr / aerr dialog if shown
-* (planed) EspAlertDialog - change prepared ids for standard alert dialog
-* (planed) EspSupportAlertDialog - prepared ids for alert dialog from support package
+* EspAlertDialog - change prepared ids for standard alert dialog
+* EspSupportAlertDialog - prepared ids for alert dialog from support package
 
 tools
 

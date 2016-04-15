@@ -9,4 +9,9 @@ public class EspResourceTool {
         int resId = InstrumentationRegistry.getContext().getResources().getIdentifier(name, "string", "android");
         return InstrumentationRegistry.getContext().getString(resId, formatArgs);
     }
+
+    public static int idByName(String name) {
+        return InstrumentationRegistry.getContext().getResources().getIdentifier(name, "id", "android");
+
+    }
 }

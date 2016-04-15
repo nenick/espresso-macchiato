@@ -2,10 +2,8 @@ package de.nenick.espressomacchiato.elements;
 
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.DialogInterface;
-import android.app.AlertDialog;
-import android.os.Build;
+import android.support.v7.app.AlertDialog;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -14,7 +12,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
-public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
+public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
 
     public static final String TITLE = "My Title";
     public static final String MESSAGE = "My Message";
@@ -40,8 +38,8 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
         }
     };
 
-    private EspAlertDialog espAlertDialog = EspAlertDialog.build();
-    private EspTextView  espTextView = EspTextView.byId(messageViewId);
+    private EspSupportAlertDialog espSupportAlertDialog = EspSupportAlertDialog.build();
+    private EspTextView espTextView = EspTextView.byId(messageViewId);
 
     @Before
     public void setup() {
@@ -50,18 +48,18 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testDialogWithConfirm() {
-        espAlertDialog.assertNotExist();
+        espSupportAlertDialog.assertNotExist();
         addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
                 .setTitle(TITLE)
                 .setMessage(MESSAGE)
                 .setPositiveButton(OK, clickListener));
 
-        espAlertDialog.assertIsVisible();
-        espAlertDialog.title().assertTextIs(TITLE);
-        espAlertDialog.message().assertTextIs(MESSAGE);
-        espAlertDialog.confirmButton().click();
+        espSupportAlertDialog.assertIsVisible();
+        espSupportAlertDialog.title().assertTextIs(TITLE);
+        espSupportAlertDialog.message().assertTextIs(MESSAGE);
+        espSupportAlertDialog.confirmButton().click();
 
-        espAlertDialog.assertNotExist();
+        espSupportAlertDialog.assertNotExist();
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_POSITIVE);
     }
 
@@ -73,9 +71,9 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setPositiveButton(OK, clickListener)
                 .setNegativeButton(DENY, clickListener));
 
-        espAlertDialog.denyButton().click();
+        espSupportAlertDialog.denyButton().click();
 
-        espAlertDialog.assertNotExist();
+        espSupportAlertDialog.assertNotExist();
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_NEGATIVE);
     }
 
@@ -88,35 +86,28 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setNeutralButton(CANCEL, clickListener)
                 .setNegativeButton(DENY, clickListener));
 
-        espAlertDialog.cancelButton().click();
+        espSupportAlertDialog.cancelButton().click();
 
-        espAlertDialog.assertNotExist();
+        espSupportAlertDialog.assertNotExist();
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_NEUTRAL);
     }
 
-
     @Test
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void testDialogDismiss() {
-        skipTestIfBelowAndroidMarshmallow();
-
         addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
                 .setTitle(TITLE)
                 .setMessage(MESSAGE)
                 .setPositiveButton(OK, clickListener)
                 .setOnDismissListener(dismissListener));
 
-        espAlertDialog.dismiss();
+        espSupportAlertDialog.dismiss();
 
-        espAlertDialog.assertNotExist();
+        espSupportAlertDialog.assertNotExist();
         espTextView.assertTextIs(DISMISSED);
     }
 
     @Test
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void testDialogDismissNonCancelable() {
-        skipTestIfBelowAndroidMarshmallow();
-
         addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
                 .setTitle(TITLE)
                 .setMessage(MESSAGE)
@@ -124,15 +115,15 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setOnDismissListener(dismissListener)
                 .setCancelable(false));
 
-        espAlertDialog.dismiss();
-        espAlertDialog.assertIsVisible();
+        espSupportAlertDialog.dismiss();
+        espSupportAlertDialog.assertIsVisible();
     }
 
     @Test
     @SuppressWarnings("deprecation")
     public void testSpecObsolete() {
         exception.expect(UnsupportedOperationException.class);
-        EspAlertDialog.spec();
+        EspSupportAlertDialog.spec();
     }
 
     private void givenClickFeedbackTextView() {
