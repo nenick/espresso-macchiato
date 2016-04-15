@@ -1,6 +1,6 @@
-### Planed for future releases
+# Planed for future releases
 
-Common stuff
+## Common stuff
 
 * manage shared dependencies version central in root gradle
 * Permission Module - only for android 23 necessary
@@ -10,7 +10,7 @@ Common stuff
 * wiki get started - include testbase package usage
 * error handler - for default assertions (current failure handler only called when using onView checks)
 
-New or extend elements
+## New or extend elements
 
 * All Elements - ensure for mostly all actions and checks, that the view is currently shown on screen
 * EspListDialog - dialog with button list
@@ -22,12 +22,13 @@ New or extend elements
 * EspRecyclerView - same like list
 * EspSpinner - choose option / assertions
 * EspViewPager - switch page / assertions visible fragment
+
+
+## New or extend tools
+
 * EspPermissionsTool - ensure permissions for multiple permissions group (more than one dialog)
+* EspPermissionsTool - try getContext instead of getTargetContext (hope most permissions must only specified in test AndroidManifest.xml)
 
-New or extend tools
-
-* EspContactTool - find uri without exception or new method to check existence of contact spec
-
-New or extend mocks
+## New or extend mocks
 
 * Mocks with static methods

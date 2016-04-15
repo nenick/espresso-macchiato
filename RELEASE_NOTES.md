@@ -5,14 +5,16 @@ elements
 * EspDialog - dismiss dialog but only if dialog config allow it
 * EspPermissionDialog - stabilize for pre marshmallow
 * EspPermissionDialog - use current localisation for button text
-* EspApplicationIsNotRespondingDialog - close anr / aerr dialog if shown
+* (rename planed because of aerr dialog)EspApplicationIsNotRespondingDialog - close anr / aerr dialog if shown
 * (planed) EspAlertDialog - change prepared ids for standard alert dialog
 * (planed) EspSupportAlertDialog - prepared ids for alert dialog from support package
 
 tools
 
 * EspPermissionsTool - stabilize for pre marshmallow
+* (planed) EspPermissionsTool - check if permission is in manifest before we can request them
 * EspScreenshotTool - take screenshots
+* (planed) EspContactTool - find uri without exception or new method to check existence of contact spec
 
 test base
 
