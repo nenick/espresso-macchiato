@@ -10,11 +10,7 @@ import android.util.Log;
 
 import de.nenick.espressomacchiato.tools.EspResourceTool;
 
-public class EspApplicationIsNotRespondingDialog {
-
-    public static EspApplicationIsNotRespondingDialog build() {
-        return new EspApplicationIsNotRespondingDialog();
-    }
+public abstract class EspSystemDialog {
 
     public void dismissIfShown() {
         // uiautomator is only available since android v18
@@ -28,23 +24,19 @@ public class EspApplicationIsNotRespondingDialog {
                 return;
             }
 
-            if (dialogIsShownWith(EspResourceTool.stringResourceByName("anr_process", ".*").replace("?", "\\?"))) {
-                click(EspResourceTool.stringResourceByName("wait")); // sometimes a system process isn't responding on emulator and this must be confirmed
-            }
-
-            if(dialogIsShownWith(EspResourceTool.stringResourceByName("aerr_application", ".*"))) {
-                click(EspResourceTool.stringResourceByName("ok")); // sometimes a system process does crash on emulator and this must be confirmed
-            }
+            dismissIfShownInternal();
         }
     }
 
-    private boolean dialogIsShownWith(String expectedMessage) {
+    protected abstract void dismissIfShownInternal();
+
+    protected boolean dialogIsShownWith(String expectedMessage) {
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject dialog = device.findObject(new UiSelector().textMatches(expectedMessage));
         return dialog.exists();
     }
 
-    private void click(String target) {
+    protected void click(String target) {
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject button = device.findObject(new UiSelector().text(target));
 

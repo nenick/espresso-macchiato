@@ -7,7 +7,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.runner.lifecycle.Stage;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -24,7 +23,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Set;
 
-import de.nenick.espressomacchiato.elements.EspApplicationIsNotRespondingDialog;
+import de.nenick.espressomacchiato.elements.EspSystemAerrDialog;
+import de.nenick.espressomacchiato.elements.EspSystemAnrDialog;
 
 @RunWith(AndroidJUnit4.class)
 public abstract class EspressoTestBase<A extends Activity> {
@@ -54,7 +54,8 @@ public abstract class EspressoTestBase<A extends Activity> {
     public void setupEspresso() {
         Espresso.setFailureHandler(new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext()));
         avoidLockScreen();
-        EspApplicationIsNotRespondingDialog.build().dismissIfShown();
+        EspSystemAnrDialog.build().dismissIfShown();
+        EspSystemAerrDialog.build().dismissIfShown();
     }
 
     @After
@@ -72,7 +73,16 @@ public abstract class EspressoTestBase<A extends Activity> {
         });
     }
 
-    protected void addDialog(final AlertDialog.Builder dialog) {
+    protected void addDialog(final android.support.v7.app.AlertDialog.Builder dialog) {
+        performOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dialog.show();
+            }
+        });
+    }
+
+    protected void addDialog(final android.app.AlertDialog.Builder dialog) {
         performOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -95,7 +105,7 @@ public abstract class EspressoTestBase<A extends Activity> {
             @Override
             public void run() {
                 Activity activity = getActivity();
-                if(activity == null) {
+                if (activity == null) {
                     // happens if activity is not started @Before, rather somewhere inside test execution
                     return;
                 }
@@ -120,4 +130,13 @@ public abstract class EspressoTestBase<A extends Activity> {
     public void skipTestIfBelowAndroidMarshmallow() {
         Assume.assumeThat(Build.VERSION.SDK_INT, Matchers.greaterThanOrEqualTo(Build.VERSION_CODES.M));
     }
+
+    /*public <T> void assertThat(final T actual, final Matcher<? super T> expected) {
+        onView(isRoot()).check(new ViewAssertion() {
+            @Override
+            public void check(View view, NoMatchingViewException noViewFoundException) {
+                Assert.assertThat(actual, expected);
+            }
+        });
+    }*/
 }

@@ -5,7 +5,9 @@ elements
 * EspDialog - dismiss dialog but only if dialog config allow it
 * EspPermissionDialog - stabilize for pre marshmallow
 * EspPermissionDialog - use current localisation for button text
-* (rename planed because of aerr dialog)EspApplicationIsNotRespondingDialog - close anr / aerr dialog if shown
+* EspSystemDialog - bas for close dialogs with uiautomator if shown
+* EspSystemAnrDialog - close anr dialog if shown
+* EspSystemAerrDialog - close aerr dialog if shown
 * EspAlertDialog - change prepared ids for standard alert dialog
 * EspSupportAlertDialog - prepared ids for alert dialog from support package
 

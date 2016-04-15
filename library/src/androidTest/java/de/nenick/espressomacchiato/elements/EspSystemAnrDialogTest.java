@@ -9,7 +9,7 @@ import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 import de.nenick.espressomacchiato.tools.EspResourceTool;
 
-public class EspApplicationIsNotRespondingDialogTest extends EspressoTestCase<BaseActivity> {
+public class EspSystemAnrDialogTest extends EspressoTestCase<BaseActivity> {
 
     @Before
     public void setup() {
@@ -19,7 +19,7 @@ public class EspApplicationIsNotRespondingDialogTest extends EspressoTestCase<Ba
 
     @Test
     public void testWithoutDialogs() {
-        EspApplicationIsNotRespondingDialog.build().dismissIfShown();
+        EspSystemAnrDialog.build().dismissIfShown();
         // expected is that no error is thrown
     }
 
@@ -30,19 +30,7 @@ public class EspApplicationIsNotRespondingDialogTest extends EspressoTestCase<Ba
                 .setPositiveButton(EspResourceTool.stringResourceByName("wait"), null));
         EspAlertDialog.build().assertIsDisplayedOnScreen();
 
-        EspApplicationIsNotRespondingDialog.build().dismissIfShown();
-
-        EspAlertDialog.build().assertNotExist();
-    }
-
-    @Test
-    public void testAerr() {
-        addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
-                .setMessage(EspResourceTool.stringResourceByName("aerr_application", "TestAerr"))
-                .setPositiveButton(EspResourceTool.stringResourceByName("ok"), null));
-        EspAlertDialog.build().assertIsDisplayedOnScreen();
-
-        EspApplicationIsNotRespondingDialog.build().dismissIfShown();
+        EspSystemAnrDialog.build().dismissIfShown();
 
         EspAlertDialog.build().assertNotExist();
     }
