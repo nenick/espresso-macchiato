@@ -8,6 +8,8 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
 
+import de.nenick.espressomacchiato.tools.EspResourceTool;
+
 public class EspApplicationIsNotRespondingDialog {
 
     public static EspApplicationIsNotRespondingDialog build() {
@@ -26,12 +28,12 @@ public class EspApplicationIsNotRespondingDialog {
                 return;
             }
 
-            if (dialogIsShownWith(getStringResourceByName("anr_process", ".*").replace("?", "\\?"))) {
-                click(getStringResourceByName("wait")); // sometimes a system process isn't responding on emulator and this must be confirmed
+            if (dialogIsShownWith(EspResourceTool.stringResourceByName("anr_process", ".*").replace("?", "\\?"))) {
+                click(EspResourceTool.stringResourceByName("wait")); // sometimes a system process isn't responding on emulator and this must be confirmed
             }
 
-            if(dialogIsShownWith(getStringResourceByName("aerr_application", ".*"))) {
-                click(getStringResourceByName("ok")); // sometimes a system process does crash on emulator and this must be confirmed
+            if(dialogIsShownWith(EspResourceTool.stringResourceByName("aerr_application", ".*"))) {
+                click(EspResourceTool.stringResourceByName("ok")); // sometimes a system process does crash on emulator and this must be confirmed
             }
         }
     }
@@ -42,7 +44,7 @@ public class EspApplicationIsNotRespondingDialog {
         return dialog.exists();
     }
 
-    protected void click(String target) {
+    private void click(String target) {
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject button = device.findObject(new UiSelector().text(target));
 
@@ -52,11 +54,5 @@ public class EspApplicationIsNotRespondingDialog {
             // already previously checked for exist
             throw new IllegalStateException(e);
         }
-    }
-
-    private String getStringResourceByName(String name, String ... formatArgs) {
-        // for all available strings see Android/sdk/platforms/android-23/data/res/values/strings.xml
-        int resId = InstrumentationRegistry.getContext().getResources().getIdentifier(name, "string", "android");
-        return InstrumentationRegistry.getContext().getString(resId, formatArgs);
     }
 }
