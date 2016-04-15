@@ -2,8 +2,10 @@ package de.nenick.espressomacchiato.elements;
 
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
+import android.os.Build;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -93,7 +95,10 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void testDialogDismiss() {
+        skipTestIfBelowAndroidMarshmallow();
+
         addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
                 .setTitle(TITLE)
                 .setMessage(MESSAGE)
@@ -107,7 +112,10 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void testDialogDismissNonCancelable() {
+        skipTestIfBelowAndroidMarshmallow();
+
         addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
                 .setTitle(TITLE)
                 .setMessage(MESSAGE)
