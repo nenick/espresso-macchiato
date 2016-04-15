@@ -6,11 +6,6 @@
          so we still can support lower android versions -->
     <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18" />
 
-    <!-- permission necessary for contact picker tests -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-
     <application>
         <activity
             android:name=".testbase.EspDummyLauncherActivity"

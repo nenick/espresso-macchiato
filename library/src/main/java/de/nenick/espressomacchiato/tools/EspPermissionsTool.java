@@ -33,11 +33,29 @@ public class EspPermissionsTool {
         return ActivityCompat.checkSelfPermission(InstrumentationRegistry.getTargetContext(), permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    public static void requestPermissions(Activity activity, int requestCode, String ... permissions) {
+    public static void requestPermissions(Activity activity, int requestCode, String... permissions) {
+        int foundCount = 0;
+        try {
+            String[] manifestPermissions = InstrumentationRegistry.getTargetContext().getPackageManager().getPackageInfo(InstrumentationRegistry.getTargetContext().getPackageName(), PackageManager.GET_PERMISSIONS).requestedPermissions;
+            for (String manifestPermission : manifestPermissions) {
+                for (String permission : permissions) {
+                    if(manifestPermission.equals(permission)) {
+                        foundCount++;
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
+
+        if(foundCount != permissions.length) {
+            throw new IllegalStateException("Not all requested permissions are declared in your manifest files.");
+        }
+
         ActivityCompat.requestPermissions(activity, permissions, requestCode);
     }
 
-    public static void ensurePermissions(Activity activity, String ... permissions) {
+    public static void ensurePermissions(Activity activity, String... permissions) {
         if (allPermissionsGranted(permissions)) {
             return;
         }
@@ -49,7 +67,7 @@ public class EspPermissionsTool {
     public static boolean allPermissionsGranted(String[] permissions) {
         boolean allPermissionsGranted = true;
         for (String permission : permissions) {
-            if(!isPermissionGranted(permission)) {
+            if (!isPermissionGranted(permission)) {
                 allPermissionsGranted = false;
             }
         }
@@ -59,7 +77,7 @@ public class EspPermissionsTool {
     public static boolean anyPermissionsGranted(String[] permissions) {
         boolean anyPermissionsGranted = false;
         for (String permission : permissions) {
-            if(isPermissionGranted(permission)) {
+            if (isPermissionGranted(permission)) {
                 anyPermissionsGranted = true;
             }
         }

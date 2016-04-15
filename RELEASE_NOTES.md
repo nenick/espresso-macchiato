@@ -12,7 +12,7 @@ elements
 tools
 
 * EspPermissionsTool - stabilize for pre marshmallow
-* (planed) EspPermissionsTool - check if permission is in manifest before we can request them
+* EspPermissionsTool - report if permission is not requested in manifest
 * EspScreenshotTool - take screenshots
 * EspContactTool - find uri will just return null if nothing found instead of throwing an exception
 

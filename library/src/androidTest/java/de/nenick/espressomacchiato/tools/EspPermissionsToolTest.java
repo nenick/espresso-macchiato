@@ -1,12 +1,13 @@
 package de.nenick.espressomacchiato.tools;
 
-import android.app.Activity;
+import android.Manifest;
 
 import org.junit.Test;
 
-import de.nenick.espressomacchiato.testbase.EspressoTestBase;
+import de.nenick.espressomacchiato.test.views.BaseActivity;
+import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
-public class EspPermissionsToolTest extends EspressoTestBase {
+public class EspPermissionsToolTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testConstructor() {
@@ -14,9 +15,10 @@ public class EspPermissionsToolTest extends EspressoTestBase {
         new EspPermissionsTool();
     }
 
-    @Override
-    public Activity getActivity() {
-        // current we don't need any activity for given tests in this class
-        return null;
+    @Test
+    public void testReportWhenPermissionNotDeclaredInManifest() {
+        exception.expect(IllegalStateException.class);
+        exception.expectMessage("Not all requested permissions are declared in your manifest files.");
+        EspPermissionsTool.requestPermissions(getActivity(), 42, Manifest.permission.READ_SMS);
     }
 }
