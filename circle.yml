@@ -61,9 +61,7 @@ test:
     # clear logs from emulator
     - adb logcat -c
 
-    # start instrumentation tests on emulator (library as last to collect screenshots at end)
-    - ./gradlew :sampleapp:connectedCheck -i | ./connected-check-filter.sh
-
+    # start instrumentation tests on emulator
     - ./gradlew :library:connectedCheckCustomized:
         parallel: true
 
@@ -87,6 +85,8 @@ test:
 
     - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
     - cp -r library/build/reports/coverage2/debug $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
+
+    - ./gradlew :sampleapp:connectedCheck
 
   post:
     # collect logs from emulator and make them accessable
