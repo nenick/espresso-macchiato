@@ -126,7 +126,7 @@ test:
     - mv library/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
         parallel: true
 
-    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/library_android_tests $CIRCLE_TEST_REPORTS/library_android_tests_v23 ;; 1) $CIRCLE_TEST_REPORTS/library_android_tests $CIRCLE_TEST_REPORTS/library_android_tests_v8 ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/library_android_tests $CIRCLE_TEST_REPORTS/library_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/library_android_tests $CIRCLE_TEST_REPORTS/library_android_tests_v8 ;; esac:
         parallel: true
 
     #
