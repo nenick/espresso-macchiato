@@ -29,8 +29,9 @@ import de.nenick.espressomacchiato.elements.EspSystemAnrDialog;
 @RunWith(AndroidJUnit4.class)
 public abstract class EspressoTestBase<A extends Activity> {
 
-    @Rule
-    public EspDisableAnimationsRule espDisableAnimationsRule = new EspDisableAnimationsRule();
+    // looks like disable animations only work with x86 emulator
+    //@Rule
+    //public EspDisableAnimationsRule espDisableAnimationsRule = new EspDisableAnimationsRule();
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
