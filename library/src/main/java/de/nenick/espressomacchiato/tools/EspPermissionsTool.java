@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.tools;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -27,6 +28,19 @@ public class EspPermissionsTool {
         InstrumentationRegistry.getInstrumentation().getUiAutomation().executeShellCommand("pm reset-permissions");
 
         EspWait.forDelay(DELAY_FOR_COMMAND_EXECUTION);
+    }
+
+    public static void grantAnimationScalePermission() {
+        // permissions handling only available since android marshmallow
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return;
+        }
+
+        if(!isPermissionGranted(Manifest.permission.SET_ANIMATION_SCALE)) {
+            InstrumentationRegistry.getInstrumentation().getUiAutomation().executeShellCommand("pm grant " + InstrumentationRegistry.getContext().getPackageName() + " " + Manifest.permission.SET_ANIMATION_SCALE);
+
+            EspWait.forDelay(DELAY_FOR_COMMAND_EXECUTION);
+        }
     }
 
     public static boolean isPermissionGranted(String permission) {

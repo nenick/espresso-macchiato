@@ -30,6 +30,9 @@ import de.nenick.espressomacchiato.elements.EspSystemAnrDialog;
 public abstract class EspressoTestBase<A extends Activity> {
 
     @Rule
+    public EspDisableAnimationsRule espDisableAnimationsRule = new EspDisableAnimationsRule();
+
+    @Rule
     public ExpectedException exception = ExpectedException.none();
 
     public abstract A getActivity();
@@ -53,7 +56,7 @@ public abstract class EspressoTestBase<A extends Activity> {
     @Before
     public void setupEspresso() {
         Espresso.setFailureHandler(new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext()));
-        avoidLockScreen();
+        keepScreenUsable();
         EspSystemAnrDialog.build().dismissIfShown();
         EspSystemAerrDialog.build().dismissIfShown();
     }
@@ -95,8 +98,8 @@ public abstract class EspressoTestBase<A extends Activity> {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(runnable);
     }
 
-    private void avoidLockScreen() {
-        // sometimes tests failed on emulator because lock screen is shown
+    private void keepScreenUsable() {
+        // sometimes tests failed on emulator because lock screen is shown / screen turns of
         // java.lang.RuntimeException: Waited for the root of the view hierarchy to have window focus and not be requesting layout for over 10 seconds. If you specified a non default root matcher, it may be picking a root that never takes focus. Otherwise, something is seriously wrong"
         // http://stackoverflow.com/questions/26139070/testui-jenkins-using-espresso
         // http://stackoverflow.com/questions/22737476/false-positives-junit-framework-assertionfailederror-edittext-is-not-found
