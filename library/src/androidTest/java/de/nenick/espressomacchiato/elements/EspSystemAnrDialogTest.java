@@ -1,6 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
 
 import org.junit.Before;
 import org.junit.Test;
