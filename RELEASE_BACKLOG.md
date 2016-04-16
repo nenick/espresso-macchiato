@@ -3,11 +3,9 @@
 ## Common stuff
 
 * manage shared dependencies version central in root gradle
-* Permission Module - only for android 23 necessary
+* reduced libs - split uiauomator / support / appcompat / espresso intents in own modules/libs
 * JavaDoc - Elements / Mocks / Tools
 * Package "internal" - Actions / Assertions / Matcher (not intended for public usage)
-* wiki base package - list/documentation for testbase classes
-* wiki get started - include testbase package usage
 * error handler - for default assertions (current failure handler only called when using onView checks)
 
 ## New or extend elements
