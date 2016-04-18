@@ -28,6 +28,12 @@ public class EspEditTextTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    public void testByAll() {
+        espEditText = EspEditText.byAll().withId(editTextId).build();
+        espEditText.assertIsDisplayedOnScreen();
+    }
+
+    @Test
     public void testReplaceText() {
         espEditText.assertTextIs("");
 

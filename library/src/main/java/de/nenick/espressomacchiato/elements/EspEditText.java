@@ -5,6 +5,8 @@ import android.view.View;
 
 import org.hamcrest.Matcher;
 
+import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
+
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -13,6 +15,10 @@ public class EspEditText extends EspView {
 
     public static EspEditText byId(int resourceId) {
         return new EspEditText(resourceId);
+    }
+
+    public static EspAllOfBuilder<EspEditText> byAll() {
+        return new EspAllOfBuilder<EspEditText>() {};
     }
 
     public EspEditText(int resourceId) {

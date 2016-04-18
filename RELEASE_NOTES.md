@@ -10,6 +10,7 @@ elements
 * EspSystemAerrDialog - close aerr dialog if shown
 * EspAlertDialog - change prepared ids for standard alert dialog
 * EspSupportAlertDialog - prepared ids for alert dialog from support package
+* EspEditTextTest - with experimental all of builder
 
 tools
 
@@ -28,3 +29,7 @@ test base
 * EspDummyLauncherActivity - support back press at start activity
 * EspScreenshotFailureHandler - take screenshot when test fails
 * EspFindTestClassFunction - get the current test class and method name
+
+matcher
+
+* EspAllOfBuilder - experimental fluent builder for all of matcher
