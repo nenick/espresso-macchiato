@@ -30,19 +30,6 @@ public class EspPermissionsTool {
         EspWait.forDelay(DELAY_FOR_COMMAND_EXECUTION);
     }
 
-    public static void grantAnimationScalePermission() {
-        // permissions handling only available since android marshmallow
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return;
-        }
-
-        if(!isPermissionGranted(Manifest.permission.SET_ANIMATION_SCALE)) {
-            InstrumentationRegistry.getInstrumentation().getUiAutomation().executeShellCommand("pm grant " + InstrumentationRegistry.getContext().getPackageName() + " " + Manifest.permission.SET_ANIMATION_SCALE);
-
-            EspWait.forDelay(DELAY_FOR_COMMAND_EXECUTION);
-        }
-    }
-
     public static boolean isPermissionGranted(String permission) {
         return ActivityCompat.checkSelfPermission(InstrumentationRegistry.getTargetContext(), permission) == PackageManager.PERMISSION_GRANTED;
     }
