@@ -1,21 +1,16 @@
 package de.nenick.espressomacchiato.tools;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Looper;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.core.deps.guava.collect.Lists;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import android.support.test.runner.lifecycle.Stage;
 import android.view.View;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.CountDownLatch;
 
 class EspScreenshotToolPreJellyBeanMr2 {
 
@@ -29,7 +24,7 @@ class EspScreenshotToolPreJellyBeanMr2 {
             Thread.sleep(100);
         }
 
-        takeScreenShot(getCurrentActivity(), recentDecorView, screenshot);
+        takeScreenShot(recentDecorView, screenshot);
     }
 
     public static ArrayList<View> getWindowDecorViews() {
@@ -73,7 +68,6 @@ class EspScreenshotToolPreJellyBeanMr2 {
     }
 
     private static String getWindowManagerString() {
-
         if (android.os.Build.VERSION.SDK_INT >= 17) {
             return "sDefaultWindowManager";
 
@@ -88,8 +82,6 @@ class EspScreenshotToolPreJellyBeanMr2 {
     public static View getRecentDecorView(ArrayList<View> views) {
         if (views == null || views.isEmpty()) {
             throw new IllegalStateException("Error in getRecentDecorView: 0 views passed in.");
-            //LOG.error("Error in getRecentDecorView: 0 views passed in.");
-            //return null;
         }
 
         final View[] decorViews = new View[views.size()];
@@ -121,7 +113,7 @@ class EspScreenshotToolPreJellyBeanMr2 {
         return container;
     }
 
-    private static void takeScreenShot(Activity activity, final View view, File screenshot) throws Exception {
+    private static void takeScreenShot(final View view, File screenshot) throws Exception {
 
         if (view == null) {
             throw new IllegalStateException("takeScreenShot: view from getWindowDecorViews() is null.");
@@ -137,7 +129,7 @@ class EspScreenshotToolPreJellyBeanMr2 {
             InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
                 @Override
                 public void run() {
-                        screen.bitmap = takeScreenShot(view);
+                    screen.bitmap = takeScreenShot(view);
 
                 }
             });
@@ -162,23 +154,5 @@ class EspScreenshotToolPreJellyBeanMr2 {
 
     static class BitmapResult {
         public Bitmap bitmap;
-    }
-
-    static class ActivityResult {
-        public Activity activity;
-    }
-
-    private static Activity getCurrentActivity() {
-        final ActivityResult activityResult = new ActivityResult();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            public void run() {
-                Collection resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED);
-                if (resumedActivities.iterator().hasNext()) {
-                    activityResult.activity = (Activity) resumedActivities.iterator().next();
-                }
-            }
-        });
-
-        return activityResult.activity;
     }
 }

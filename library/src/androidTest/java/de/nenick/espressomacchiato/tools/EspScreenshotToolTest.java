@@ -24,6 +24,9 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
     @Before
     public void setup() {
         EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        // just for coverage
+        new EspScreenshotTool();
     }
 
     @Test
@@ -37,6 +40,25 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
 
         EspScreenshotTool.takeWithName("test screenshot");
         File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots/test screenshot.png");
+        assertThat(screenshot.exists(), is(true));
+    }
+
+    @Test
+    public void testScreenshotFromUiThread() {
+        TextView textView = new TextView(getActivity());
+        textView.setText(PICTURE_TEST_SCREEN);
+        addViewToActivity(textView, BaseActivity.rootLayout);
+
+        // wait until all expected content is displayed
+        EspWait.forIdle();
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                EspScreenshotTool.takeWithName("test screenshot ui thread");
+            }
+        });
+        File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots/test screenshot ui thread.png");
         assertThat(screenshot.exists(), is(true));
     }
 

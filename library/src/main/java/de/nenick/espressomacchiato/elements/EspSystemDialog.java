@@ -43,7 +43,6 @@ public abstract class EspSystemDialog {
         try {
             button.click();
         } catch (UiObjectNotFoundException e) {
-            // already previously checked for exist
             throw new IllegalStateException(e);
         }
     }

@@ -24,6 +24,16 @@ public class EspSystemAerrDialogTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    public void testWrongButtonText() {
+        addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
+                .setMessage(EspResourceTool.stringResourceByName("aerr_application", "TestAerr"))
+                .setPositiveButton("wrong", null));
+
+        exception.expect(IllegalStateException.class);
+        EspSystemAerrDialog.build().dismissIfShown();
+    }
+
+    @Test
     public void testAerr() {
         addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
                 .setMessage(EspResourceTool.stringResourceByName("aerr_application", "TestAerr"))
@@ -31,7 +41,6 @@ public class EspSystemAerrDialogTest extends EspressoTestCase<BaseActivity> {
         EspAlertDialog.build().assertIsDisplayedOnScreen();
 
         EspSystemAerrDialog.build().dismissIfShown();
-
         EspAlertDialog.build().assertNotExist();
     }
 }
