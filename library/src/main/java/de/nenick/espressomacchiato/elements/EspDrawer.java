@@ -1,7 +1,11 @@
 package de.nenick.espressomacchiato.elements;
 
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.contrib.DrawerActions;
+import android.support.test.espresso.action.GeneralLocation;
+import android.support.test.espresso.action.GeneralSwipeAction;
+import android.support.test.espresso.action.Press;
+import android.support.test.espresso.action.Swipe;
+import android.support.test.espresso.action.ViewActions;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -25,11 +29,11 @@ public class EspDrawer extends EspView {
     }
 
     public void open() {
-        findDrawerLayout().perform(DrawerActions.open());
+        findDrawerLayout().perform(ViewActions.actionWithAssertions(new GeneralSwipeAction(Swipe.FAST, GeneralLocation.CENTER_LEFT, GeneralLocation.CENTER_RIGHT, Press.FINGER)));
     }
 
     public void close() {
-        findDrawerLayout().perform(DrawerActions.close());
+        findDrawerLayout().perform(ViewActions.actionWithAssertions(new GeneralSwipeAction(Swipe.FAST, GeneralLocation.CENTER_RIGHT, GeneralLocation.CENTER_LEFT, Press.FINGER)));
     }
 
     protected ViewInteraction findDrawerLayout() {

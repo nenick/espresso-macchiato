@@ -11,6 +11,7 @@ elements
 * EspAlertDialog - change prepared ids for standard alert dialog
 * EspSupportAlertDialog - prepared ids for alert dialog from support package
 * EspEditTextTest - with experimental all of builder
+* EspDrawer - use real swipe actions instead of layout method calls
 
 tools
 

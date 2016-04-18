@@ -14,7 +14,7 @@ public class EspDrawerTest extends EspressoTestCase<NavigationDrawerActivity> {
         espDrawer.assertIsHidden();
 
         espDrawer.open();
-        espDrawer.assertIsVisible();
+        espDrawer.assertIsDisplayedOnScreen();
 
         espDrawer.close();
         espDrawer.assertIsHidden();
