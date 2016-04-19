@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.nenick.espressomacchiato.elements.EspDrawer;
 import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
@@ -69,5 +70,23 @@ public class EspAllOfBuilderTest extends EspressoTestCase<BaseActivity> {
         addViewToActivity(viewSameIdB, TEST_MID_ID + 1);
 
         builder.withId(TEST_ID).withParentInHierarchy(TEST_PARENT_ID).build().assertIsDisplayedOnScreen();
+    }
+
+    @Test
+    public void testBuildFailure() {
+        EspAllOfBuilder unknownBuilder = new EspAllOfBuilder() {};
+
+        exception.expect(IllegalStateException.class);
+        exception.expectMessage("java.lang.IllegalArgumentException: Please provide generic element");
+        unknownBuilder.build();
+    }
+
+    @Test
+    public void testBuildFailureNoMatchingConstructorFound() {
+        EspAllOfBuilder<EspDrawer> drawerBuilder = new EspAllOfBuilder<EspDrawer>() {};
+
+        exception.expect(IllegalStateException.class);
+        exception.expectMessage("java.lang.NoSuchMethodException: <init> [interface org.hamcrest.Matcher]");
+        drawerBuilder.build();
     }
 }
