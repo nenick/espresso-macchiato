@@ -14,6 +14,8 @@ import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+import static org.hamcrest.CoreMatchers.containsString;
+
 @SuppressWarnings("ResourceType")
 public class EspAllOfBuilderTest extends EspressoTestCase<BaseActivity> {
 
@@ -86,7 +88,7 @@ public class EspAllOfBuilderTest extends EspressoTestCase<BaseActivity> {
         EspAllOfBuilder<EspDrawer> drawerBuilder = new EspAllOfBuilder<EspDrawer>() {};
 
         exception.expect(IllegalStateException.class);
-        exception.expectMessage("java.lang.NoSuchMethodException: <init> [interface org.hamcrest.Matcher]");
+        exception.expectMessage(containsString("java.lang.NoSuchMethodException:"));
         drawerBuilder.build();
     }
 }
