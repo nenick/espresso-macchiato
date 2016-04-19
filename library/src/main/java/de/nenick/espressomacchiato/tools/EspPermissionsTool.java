@@ -1,6 +1,5 @@
 package de.nenick.espressomacchiato.tools;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;

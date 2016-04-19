@@ -8,8 +8,6 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
 
-import de.nenick.espressomacchiato.tools.EspResourceTool;
-
 public abstract class EspSystemDialog {
 
     public void dismissIfShown() {

@@ -13,21 +13,21 @@ import java.util.ArrayList;
 
 import de.nenick.espressomacchiato.elements.EspView;
 
-public abstract class EspAllOfBuilder<ELEMENT extends EspView> {
+public abstract class EspAllOfBuilder<ElementT extends EspView> {
 
     protected ArrayList<Matcher<? super View>> matcher = Lists.newArrayList();
 
-    public EspAllOfBuilder<ELEMENT> withId(int resourceId) {
+    public EspAllOfBuilder<ElementT> withId(int resourceId) {
         matcher.add(ViewMatchers.withId(resourceId));
         return this;
     }
 
-    public EspAllOfBuilder<ELEMENT> withParentInHierarchy(int resourceId) {
+    public EspAllOfBuilder<ElementT> withParentInHierarchy(int resourceId) {
         matcher.add(ViewMatchers.isDescendantOfA(ViewMatchers.withId(resourceId)));
         return this;
     }
 
-    public ELEMENT build() {
+    public ElementT build() {
         try {
             Matcher<View> allOfMatcher = Matchers.allOf(matcher);
             return getGenericClass().getConstructor(Matcher.class).newInstance(allOfMatcher);
@@ -36,7 +36,7 @@ public abstract class EspAllOfBuilder<ELEMENT extends EspView> {
         }
     }
 
-    protected Class<ELEMENT> getGenericClass() {
+    protected Class<ElementT> getGenericClass() {
         Type genericSuperclass = getClass().getGenericSuperclass();
         if (genericSuperclass instanceof ParameterizedType) {
             //noinspection unchecked
