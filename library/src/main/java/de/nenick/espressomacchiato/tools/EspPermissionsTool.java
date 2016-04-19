@@ -37,7 +37,7 @@ public class EspPermissionsTool {
     public static void requestPermissions(Activity activity, int requestCode, String... permissions) {
         int foundCount = 0;
         try {
-            String[] manifestPermissions = InstrumentationRegistry.getTargetContext().getPackageManager().getPackageInfo(InstrumentationRegistry.getTargetContext().getPackageName(), PackageManager.GET_PERMISSIONS).requestedPermissions;
+            String[] manifestPermissions = InstrumentationRegistry.getTargetContext().getPackageManager().getPackageInfo(activity.getPackageName(), PackageManager.GET_PERMISSIONS).requestedPermissions;
             for (String manifestPermission : manifestPermissions) {
                 for (String permission : permissions) {
                     if(manifestPermission.equals(permission)) {
