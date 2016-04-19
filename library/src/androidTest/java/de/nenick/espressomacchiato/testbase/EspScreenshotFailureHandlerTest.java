@@ -1,7 +1,10 @@
 package de.nenick.espressomacchiato.testbase;
 
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.FailureHandler;
+import android.view.View;
 
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 import java.io.File;
@@ -29,6 +32,23 @@ public class EspScreenshotFailureHandlerTest extends EspressoTestCase<BaseActivi
             //noinspection ResultOfMethodCallIgnored
             screenshot.delete();
         }
+    }
+
+    @Test
+    public void testForCoverage() {
+        espScreenshotFailureHandler.delegate = new FailureHandler() {
+            @Override
+            public void handle(Throwable error, Matcher<View> viewMatcher) {
+
+            }
+        };
+
+        espScreenshotFailureHandler.handle(new TestException(), isRoot());
+        File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots/Failed-EspScreenshotFailureHandlerTest.testForCoverage.png");
+        assertThat(screenshot.exists(), is(true));
+
+        //noinspection ResultOfMethodCallIgnored
+        screenshot.delete();
     }
 
     private static class TestException extends RuntimeException {

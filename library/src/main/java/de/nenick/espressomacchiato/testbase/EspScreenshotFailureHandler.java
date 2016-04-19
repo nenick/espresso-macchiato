@@ -13,7 +13,7 @@ import de.nenick.espressomacchiato.tools.EspPermissionsTool;
 import de.nenick.espressomacchiato.tools.EspScreenshotTool;
 
 public class EspScreenshotFailureHandler implements FailureHandler {
-    private final FailureHandler delegate;
+    protected FailureHandler delegate;
 
     public EspScreenshotFailureHandler(Context targetContext) {
         delegate = new DefaultFailureHandler(targetContext);
