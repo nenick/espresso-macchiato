@@ -75,7 +75,7 @@ public class EspNavigationMenuItemTest extends EspressoTestCase<NavigationDrawer
         final TextView textViewClickFeedback = new TextView(activityTestRule.getActivity());
         textViewClickFeedback.setId(textViewClickFeedbackId);
         textViewClickFeedback.setText(initialClickFeedbackText);
-        addViewToActivity(textViewClickFeedback, NavigationDrawerActivity.rootLayout);
+        addViewToLayout(textViewClickFeedback, NavigationDrawerActivity.rootLayout);
 
         performOnUiThread(new Runnable() {
             @Override

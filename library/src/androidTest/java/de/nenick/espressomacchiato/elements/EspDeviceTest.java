@@ -124,7 +124,7 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
         Button button = new Button(activityTestRule.getActivity());
         button.setText(nextPageButtonText);
         button.setId(nextPageButtonId);
-        addViewToActivity(button, BaseActivity.rootLayout);
+        addViewToLayout(button, BaseActivity.rootLayout);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,6 +137,6 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
     private void givenEditTextToOpenSoftKeyboard() {
         EditText editText = new EditText(activityTestRule.getActivity());
         editText.setId(editTextId);
-        addViewToActivity(editText, BaseActivity.rootLayout);
+        addViewToLayout(editText, BaseActivity.rootLayout);
     }
 }

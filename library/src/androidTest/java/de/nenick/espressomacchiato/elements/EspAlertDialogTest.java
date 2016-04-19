@@ -138,6 +138,6 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
     private void givenClickFeedbackTextView() {
         messageView = new TextView(activityTestRule.getActivity());
         messageView.setId(messageViewId);
-        addViewToActivity(messageView, BaseActivity.rootLayout);
+        addViewToLayout(messageView, BaseActivity.rootLayout);
     }
 }

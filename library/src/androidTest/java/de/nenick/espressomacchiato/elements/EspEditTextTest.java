@@ -24,7 +24,7 @@ public class EspEditTextTest extends EspressoTestCase<BaseActivity> {
         EditText editText = new EditText(activityTestRule.getActivity());
         editText.setId(editTextId);
         editText.setHint(HINT_TEXT);
-        addViewToActivity(editText, BaseActivity.rootLayout);
+        addViewToLayout(editText, BaseActivity.rootLayout);
     }
 
     @Test

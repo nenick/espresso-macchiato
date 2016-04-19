@@ -63,7 +63,7 @@ public abstract class EspressoTestBase<A extends Activity> {
         EspCloseAllActivitiesFunction.apply(InstrumentationRegistry.getInstrumentation());
     }
 
-    protected void addViewToActivity(final View view, @IdRes final int targetLayoutId) {
+    protected void addViewToLayout(final View view, @IdRes final int targetLayoutId) {
         performOnUiThread(new Runnable() {
             @Override
             public void run() {

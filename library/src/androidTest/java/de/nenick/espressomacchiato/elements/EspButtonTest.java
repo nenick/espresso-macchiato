@@ -19,7 +19,7 @@ public class EspButtonTest extends EspressoTestCase<BaseActivity> {
         Button button = new Button(activityTestRule.getActivity());
         button.setId(buttonId);
         button.setText(buttonText);
-        addViewToActivity(button, BaseActivity.rootLayout);
+        addViewToLayout(button, BaseActivity.rootLayout);
     }
 
     @Test

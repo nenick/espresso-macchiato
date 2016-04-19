@@ -113,7 +113,7 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     private void givenClickableView() {
         view = new Button(activityTestRule.getActivity());
         view.setId(viewId);
-        addViewToActivity(view, BaseActivity.rootLayout);
+        addViewToLayout(view, BaseActivity.rootLayout);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,16 +126,16 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     private void givenClickFeedbackTextView() {
         messageView = new TextView(activityTestRule.getActivity());
         messageView.setId(messageViewId);
-        addViewToActivity(messageView, BaseActivity.rootLayout);
+        addViewToLayout(messageView, BaseActivity.rootLayout);
     }
 
     private void givenViewOutsideOfScreen(int id) {
         TextView textView = new TextView(getActivity());
         textView.setHeight(5000);
-        addViewToActivity(textView, BaseActivity.rootLayout);
+        addViewToLayout(textView, BaseActivity.rootLayout);
 
         textView = new TextView(getActivity());
         textView.setId(id);
-        addViewToActivity(textView, BaseActivity.rootLayout);
+        addViewToLayout(textView, BaseActivity.rootLayout);
     }
 }

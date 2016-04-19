@@ -35,7 +35,7 @@ public class EspAllOfBuilderTest extends EspressoTestCase<BaseActivity> {
     public void testWithId() {
         View view = new View(context);
         view.setId(TEST_ID);
-        addViewToActivity(view, BaseActivity.rootLayout);
+        addViewToLayout(view, BaseActivity.rootLayout);
 
         builder.withId(TEST_ID);
         builder.build().assertIsDisplayedOnScreen();
@@ -46,20 +46,20 @@ public class EspAllOfBuilderTest extends EspressoTestCase<BaseActivity> {
         // hierarchy A
         ViewGroup viewGroupParentA = new LinearLayout(context);
         viewGroupParentA.setId(TEST_PARENT_ID);
-        addViewToActivity(viewGroupParentA, BaseActivity.rootLayout);
+        addViewToLayout(viewGroupParentA, BaseActivity.rootLayout);
 
         ViewGroup viewGroupMidA = new LinearLayout(context);
         viewGroupMidA.setId(TEST_MID_ID);
-        addViewToActivity(viewGroupMidA, TEST_PARENT_ID);
+        addViewToLayout(viewGroupMidA, TEST_PARENT_ID);
 
         // hierarchy B
         ViewGroup viewGroupParentB = new LinearLayout(context);
         viewGroupParentB.setId(TEST_PARENT_ID + 1);
-        addViewToActivity(viewGroupParentB, BaseActivity.rootLayout);
+        addViewToLayout(viewGroupParentB, BaseActivity.rootLayout);
 
         ViewGroup viewGroupMidB = new LinearLayout(context);
         viewGroupMidB.setId(TEST_MID_ID + 1);
-        addViewToActivity(viewGroupMidB, TEST_PARENT_ID + 1);
+        addViewToLayout(viewGroupMidB, TEST_PARENT_ID + 1);
 
         // view with same id on both hierarchies
         View viewSameIdA = new View(context);
@@ -68,8 +68,8 @@ public class EspAllOfBuilderTest extends EspressoTestCase<BaseActivity> {
         viewSameIdA.setId(TEST_ID);
         viewSameIdB.setId(TEST_ID);
 
-        addViewToActivity(viewSameIdA, TEST_MID_ID);
-        addViewToActivity(viewSameIdB, TEST_MID_ID + 1);
+        addViewToLayout(viewSameIdA, TEST_MID_ID);
+        addViewToLayout(viewSameIdB, TEST_MID_ID + 1);
 
         builder.withId(TEST_ID).withParentInHierarchy(TEST_PARENT_ID).build().assertIsDisplayedOnScreen();
     }

@@ -33,7 +33,7 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
     public void testScreenshot() {
         TextView textView = new TextView(getActivity());
         textView.setText(PICTURE_TEST_SCREEN);
-        addViewToActivity(textView, BaseActivity.rootLayout);
+        addViewToLayout(textView, BaseActivity.rootLayout);
 
         // wait until all expected content is displayed
         EspWait.forIdle();
@@ -47,7 +47,7 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
     public void testScreenshotFromUiThread() {
         TextView textView = new TextView(getActivity());
         textView.setText(PICTURE_TEST_SCREEN);
-        addViewToActivity(textView, BaseActivity.rootLayout);
+        addViewToLayout(textView, BaseActivity.rootLayout);
 
         // wait until all expected content is displayed
         EspWait.forIdle();
