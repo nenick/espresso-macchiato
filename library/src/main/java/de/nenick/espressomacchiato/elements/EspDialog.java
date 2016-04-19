@@ -15,7 +15,7 @@ public class EspDialog extends EspView {
         return new Spec();
     }
 
-    static class Spec {
+    protected static class Spec {
 
         private int rootResource;
         private int titleResource;

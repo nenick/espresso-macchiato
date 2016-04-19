@@ -1,4 +1,6 @@
-package de.nenick.espressomacchiato.elements;
+package de.nenick.espressomacchiato.elements.support;
+
+import de.nenick.espressomacchiato.elements.EspDialog;
 
 /**
  * Pre configured {@link EspDialog} for general {@link android.support.v7.app.AlertDialog}.

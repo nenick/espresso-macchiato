@@ -1,10 +1,11 @@
-package de.nenick.espressomacchiato.elements;
+package de.nenick.espressomacchiato.elements.support;
 
 import android.support.design.internal.NavigationMenuItemView;
 import android.view.View;
 
 import org.hamcrest.Matcher;
 
+import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.matchers.ChildRecursiveMatcher;
 
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
