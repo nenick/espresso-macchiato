@@ -36,7 +36,7 @@ dependencies {
     compile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
     compile 'com.android.support.test.espresso:espresso-intents:2.2.2'
     // real uiautomator is not available inside Android Studio when used as compile dependency
-    provided project(':uiautomator')
+    provided project(':uiautomator-noop')
 
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 }

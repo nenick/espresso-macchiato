@@ -1,1 +1,1 @@
-include ':sampleapp', ':espresso-macchiato', ':uiautomator'
+include ':sampleapp', ':espresso-macchiato', ':uiautomator-noop'
