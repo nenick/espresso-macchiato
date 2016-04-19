@@ -36,19 +36,19 @@ test:
 
   override:
     # pre build code to see how many time each task need
-    - ./gradlew :library:assembleRelease
-    - ./gradlew :library:assembleDebug
-    - ./gradlew :library:assembleDebugAndroidTest
+    - ./gradlew :espresso-macchiato:assembleRelease
+    - ./gradlew :espresso-macchiato:assembleDebug
+    - ./gradlew :espresso-macchiato:assembleDebugAndroidTest
     - ./gradlew :sampleapp:assembleDebug
     - ./gradlew :sampleapp:assembleDebugAndroidTest
 
     # check lint for error reporting
     # ensure release can be build and published without issues
-    - ./gradlew :library:lintDebug
+    - ./gradlew :espresso-macchiato:lintDebug
     - ./gradlew :sampleapp:lintDebug
 
     # create javadoc to ensure release can be build and published without issues
-    - ./gradlew :library:mavenAndroidJavadocs
+    - ./gradlew :espresso-macchiato:mavenAndroidJavadocs
 
     # ensure that the emulator is ready to use
     - circle-android wait-for-boot:
@@ -62,30 +62,30 @@ test:
     - adb logcat -c
 
     # start instrumentation tests on emulator
-    - ./gradlew :library:connectedCheckCustomized:
+    - ./gradlew :espresso-macchiato:connectedCheckCustomized:
         parallel: true
 
     # since connectedCheckCustomized coverage data is deleted after execute sample app tests ...
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    - mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
         parallel: true
-    - cp -r library/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    - cp -r espresso-macchiato/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
         parallel: true
-    - cp library/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    - cp espresso-macchiato/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
         parallel: true
     # collect code coverage reports from parallel executed tests
-    - mkdir library-node1
-    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/debug/report.xml library-node1/
-    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
+    - mkdir espresso-macchiato-node1
+    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/espresso_macchiato_android_tests/coverage/debug/report.xml espresso-macchiato-node1/
+    - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/espresso_macchiato_android_tests/coverage/coverage.ec espresso-macchiato-node1/
 
 
     # merged coverage to get real coverage report, codecov has issues with merging branch coverage
-    - mv library/build/reports/coverage/debug library/build/reports/coverage/debug1
-    - mv library/build/outputs/code-coverage/connected library/build/outputs/code-coverage/connected1
-    - ./gradlew library:jacocoTestReportAndroid2 -i
+    - mv espresso-macchiato/build/reports/coverage/debug espresso-macchiato/build/reports/coverage/debug1
+    - mv espresso-macchiato/build/outputs/code-coverage/connected espresso-macchiato/build/outputs/code-coverage/connected1
+    - ./gradlew espresso-macchiato:jacocoTestReportAndroid2 -i
 
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
-    - cp -r library/build/reports/coverage2/debug $CIRCLE_TEST_REPORTS/library_android_tests/coverage2
-    - mv library/build/reports/coverage2/debug library/build/reports/coverage2/debug1
+    - mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage2
+    - cp -r espresso-macchiato/build/reports/coverage2/debug $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage2
+    - mv espresso-macchiato/build/reports/coverage2/debug espresso-macchiato/build/reports/coverage2/debug1
 
     - ./gradlew :sampleapp:connectedCheck
 
@@ -95,38 +95,38 @@ test:
         parallel: true
 
     #
-    # for library module
+    # for espresso-macchiato module
     #
 
     # collect xml test results for circle ci to analyze them
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/xml:
+    - mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/xml:
         parallel: true
-    - cp -r library/build/outputs/androidTest-results/connected $CIRCLE_TEST_REPORTS/library_android_tests/xml:
+    - cp -r espresso-macchiato/build/outputs/androidTest-results/connected $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/xml:
         parallel: true
     # collect html test results and make them accessible
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/html:
+    - mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/html:
         parallel: true
-    - cp -r library/build/reports/androidTests/connected $CIRCLE_TEST_REPORTS/library_android_tests/html:
+    - cp -r espresso-macchiato/build/reports/androidTests/connected $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/html:
         parallel: true
     # collect test coverage results and make them accessible
-    #- mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    #- mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
     #    parallel: true
-    #- cp -r library/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    #- cp -r espresso-macchiato/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
     #    parallel: true
-    #- cp library/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/library_android_tests/coverage:
+    #- cp espresso-macchiato/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
     #    parallel: true
     # collect lint report
-    - mkdir -p $CIRCLE_TEST_REPORTS/library_android_tests/lint
-    - cp -r library/build/outputs/lint* $CIRCLE_TEST_REPORTS/library_android_tests/lint
+    - mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/lint
+    - cp -r espresso-macchiato/build/outputs/lint* $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/lint
     # collect code coverage reports from parallel executed tests
-    #- mkdir library-node1
-    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/debug/report.xml library-node1/
-    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/library_android_tests/coverage/coverage.ec library-node1/
+    #- mkdir espresso-macchiato-node1
+    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/espresso_macchiato_android_tests/coverage/debug/report.xml espresso-macchiato-node1/
+    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/espresso_macchiato_android_tests/coverage/coverage.ec espresso-macchiato-node1/
     # collect screen shots of failure situations
-    - mv library/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
+    - mv espresso-macchiato/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
         parallel: true
 
-    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/library_android_tests $CIRCLE_TEST_REPORTS/library_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/library_android_tests $CIRCLE_TEST_REPORTS/library_android_tests_v8 ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v8 ;; esac:
         parallel: true
 
     #
@@ -158,6 +158,6 @@ deployment:
     owner: nenick
     commands:
       # push release artifacts to github
-      - ./gradlew :library:githubRelease -PgithubUser=$GITHUB_USERNAME -PgithubKey=$GITHUB_WRITE_PUBLIC_REPOS_TOKEN
+      - ./gradlew :espresso-macchiato:githubRelease -PgithubUser=$GITHUB_USERNAME -PgithubKey=$GITHUB_WRITE_PUBLIC_REPOS_TOKEN
       # push release artifacts to bintray
-      - ./gradlew :library:bintrayUpload -PbintrayUser=$BINTRAY_USERNAME -PbintrayKey=$BINTRAY_KEY -PdryRun=false
+      - ./gradlew :espresso-macchiato:bintrayUpload -PbintrayUser=$BINTRAY_USERNAME -PbintrayKey=$BINTRAY_KEY -PdryRun=false

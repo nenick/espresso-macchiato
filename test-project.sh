@@ -1,2 +1,2 @@
 
-./gradlew lintDebug :library:mavenAndroidJavadocs :library:connectedCheckCustomized
+./gradlew lintDebug :espresso-macchiato:mavenAndroidJavadocs :espresso-macchiato:connectedCheckCustomized
