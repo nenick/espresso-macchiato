@@ -148,7 +148,7 @@ test:
 
 deployment:
   coverage:
-    branch: [master, collaborator/*]
+    branch: [master, /collaborator\/.*/]
     commands:
       # report code coverage to codecov
       - bash <(curl -s https://codecov.io/bash)
