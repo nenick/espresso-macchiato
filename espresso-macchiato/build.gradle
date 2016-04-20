@@ -81,7 +81,7 @@ github {
     targetCommitish = 'master'
     name = currentReleaseTag()
     body = new File('RELEASE_NOTES.md').text
-    assets = ['library/build/outputs/aar/library-release.aar']
+    assets = ['espresso-macchiato/build/outputs/aar/espresso-macchiato-release.aar']
 }
 
 apply from: "build.connectedCheckCustomized.gradle"
