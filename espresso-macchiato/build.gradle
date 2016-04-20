@@ -86,7 +86,7 @@ github {
     tagName = currentReleaseTag()
     targetCommitish = 'master'
     name = currentReleaseTag()
-    body = new File('RELEASE_NOTES.md').text
+    body = new File(projectDir, '../RELEASE_NOTES.md').text
     assets = ['espresso-macchiato/build/outputs/aar/espresso-macchiato-release.aar']
 }
 
