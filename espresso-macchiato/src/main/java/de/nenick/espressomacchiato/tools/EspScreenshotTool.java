@@ -1,6 +1,7 @@
 package de.nenick.espressomacchiato.tools;
 
 import android.Manifest;
+import android.content.Context;
 import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
@@ -13,6 +14,10 @@ public class EspScreenshotTool {
     public static String screenshotFolderName = "test-screenshots";
 
     public static void takeWithName(String name) {
+        new EspScreenshotTool().takeWithNameInternal(name);
+    }
+
+    protected void takeWithNameInternal(String name) {
         if(!EspPermissionsTool.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             Log.i("EspressoMacchiato", "Store pictures only available with WRITE_EXTERNAL_STORAGE permission.");
             return;
@@ -23,7 +28,7 @@ public class EspScreenshotTool {
             throw new IllegalStateException("screenshot directory could not be created: " + screenshotDirectory.getAbsolutePath());
         }
         String screenshotName = name + ".png";
-        File screenshotFile = new File(obtainScreenshotDirectory(), screenshotName);
+        File screenshotFile = new File(screenshotDirectory, screenshotName);
         Log.v("EspressoMacchiato", "take picture at " + screenshotFile.getAbsolutePath());
 
         boolean isUiAutomatorIncluded;
@@ -48,11 +53,15 @@ public class EspScreenshotTool {
         }
     }
 
-    private static String obtainScreenshotDirectory() {
-        File appStorage = InstrumentationRegistry.getTargetContext().getFilesDir();
+    protected String obtainScreenshotDirectory() {
+        File appStorage = getTargetContext().getFilesDir();
         if (appStorage == null) {
             throw new IllegalStateException("could not find directory to store screenshot");
         }
         return appStorage.getAbsolutePath() + "/" + screenshotFolderName;
+    }
+
+    protected Context getTargetContext() {
+        return InstrumentationRegistry.getTargetContext();
     }
 }
