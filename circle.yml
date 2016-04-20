@@ -148,12 +148,12 @@ test:
 
 deployment:
   coverage:
-    branch: [master]
     commands:
       # report code coverage to codecov
       - bash <(curl -s https://codecov.io/bash)
 
   release:
+    branch: [master]
     tag: /release-.*/
     owner: nenick
     commands:
