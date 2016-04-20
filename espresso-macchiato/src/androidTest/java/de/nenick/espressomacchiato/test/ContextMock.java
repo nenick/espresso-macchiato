@@ -67,7 +67,7 @@ public class ContextMock extends Context {
 
     @Override
     public void setTheme(int resid) {
-
+        // empty because its just a mock
     }
 
     @Override
@@ -239,112 +239,112 @@ public class ContextMock extends Context {
 
     @Override
     public void setWallpaper(Bitmap bitmap) throws IOException {
-
+        // empty because its just a mock
     }
 
     @Override
     public void setWallpaper(InputStream data) throws IOException {
-
+        // empty because its just a mock
     }
 
     @Override
     public void clearWallpaper() throws IOException {
-
+        // empty because its just a mock
     }
 
     @Override
     public void startActivity(Intent intent) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void startActivity(Intent intent, Bundle options) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void startActivities(Intent[] intents) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void startActivities(Intent[] intents, Bundle options) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void startIntentSender(IntentSender intent, Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags) throws IntentSender.SendIntentException {
-
+        // empty because its just a mock
     }
 
     @Override
     public void startIntentSender(IntentSender intent, Intent fillInIntent, int flagsMask, int flagsValues, int extraFlags, Bundle options) throws IntentSender.SendIntentException {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendBroadcast(Intent intent) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendBroadcast(Intent intent, String receiverPermission) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendOrderedBroadcast(Intent intent, String receiverPermission) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendOrderedBroadcast(@NonNull Intent intent, String receiverPermission, BroadcastReceiver resultReceiver, Handler scheduler, int initialCode, String initialData, Bundle initialExtras) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendBroadcastAsUser(Intent intent, UserHandle user) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendBroadcastAsUser(Intent intent, UserHandle user, String receiverPermission) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendOrderedBroadcastAsUser(Intent intent, UserHandle user, String receiverPermission, BroadcastReceiver resultReceiver, Handler scheduler, int initialCode, String initialData, Bundle initialExtras) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendStickyBroadcast(Intent intent) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendStickyOrderedBroadcast(Intent intent, BroadcastReceiver resultReceiver, Handler scheduler, int initialCode, String initialData, Bundle initialExtras) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void removeStickyBroadcast(Intent intent) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendStickyBroadcastAsUser(Intent intent, UserHandle user) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void sendStickyOrderedBroadcastAsUser(Intent intent, UserHandle user, BroadcastReceiver resultReceiver, Handler scheduler, int initialCode, String initialData, Bundle initialExtras) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void removeStickyBroadcastAsUser(Intent intent, UserHandle user) {
-
+        // empty because its just a mock
     }
 
     @Nullable
@@ -361,7 +361,7 @@ public class ContextMock extends Context {
 
     @Override
     public void unregisterReceiver(BroadcastReceiver receiver) {
-
+        // empty because its just a mock
     }
 
     @Nullable
@@ -382,7 +382,7 @@ public class ContextMock extends Context {
 
     @Override
     public void unbindService(@NonNull ServiceConnection conn) {
-
+        // empty because its just a mock
     }
 
     @Override
@@ -422,27 +422,27 @@ public class ContextMock extends Context {
 
     @Override
     public void enforcePermission(@NonNull String permission, int pid, int uid, String message) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void enforceCallingPermission(@NonNull String permission, String message) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void enforceCallingOrSelfPermission(@NonNull String permission, String message) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void grantUriPermission(String toPackage, Uri uri, int modeFlags) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void revokeUriPermission(Uri uri, int modeFlags) {
-
+        // empty because its just a mock
     }
 
     @Override
@@ -467,22 +467,22 @@ public class ContextMock extends Context {
 
     @Override
     public void enforceUriPermission(Uri uri, int pid, int uid, int modeFlags, String message) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void enforceCallingUriPermission(Uri uri, int modeFlags, String message) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void enforceCallingOrSelfUriPermission(Uri uri, int modeFlags, String message) {
-
+        // empty because its just a mock
     }
 
     @Override
     public void enforceUriPermission(Uri uri, String readPermission, String writePermission, int pid, int uid, int modeFlags, String message) {
-
+        // empty because its just a mock
     }
 
     @Override
