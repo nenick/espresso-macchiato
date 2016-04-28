@@ -8,4 +8,8 @@ public class UiSelector {
     public UiSelector textMatches (String regex) {
         return null;
     }
+
+    public UiSelector resourceId (String id){
+        return null;
+    }
 }

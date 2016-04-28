@@ -34,7 +34,8 @@ public class EspPermissionDialog {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }
-        click(getStringResourceByName("allow"));
+        //In Android N the Package is com.google.android.packageinstaller
+        click("com.android.packageinstaller:id/permission_allow_button");
         waitUntilPermissionIsChanged();
     }
 
@@ -54,13 +55,14 @@ public class EspPermissionDialog {
             return;
         }
         avoidAppCrashWhenDenyGrantedPermission();
-        click(getStringResourceByName("deny"));
+        //In Android N the Package is com.google.android.packageinstaller
+        click("com.android.packageinstaller:id/permission_deny_button");
         waitUntilPermissionIsChanged();
     }
 
-    protected void click(String target) {
+    protected void click(String targetId) {
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        UiObject button = device.findObject(new UiSelector().text(target));
+        UiObject button = device.findObject(new UiSelector().resourceId(targetId));
 
         try {
             button.waitForExists(3000);
@@ -79,10 +81,5 @@ public class EspPermissionDialog {
     private void waitUntilPermissionIsChanged() {
         // need to wait some time until permission is changed
         EspWait.forDelay(DELAY_FOR_UPDATE_PERMISSION_STATE);
-    }
-
-    private String getStringResourceByName(String name) {
-        int resId = InstrumentationRegistry.getContext().getResources().getIdentifier(name, "string", "android");
-        return InstrumentationRegistry.getContext().getString(resId);
     }
 }
