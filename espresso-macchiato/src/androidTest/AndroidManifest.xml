@@ -18,6 +18,7 @@
         <activity android:name=".views.NavigationDrawerActivity" />
         <activity android:name=".views.OnActivityResultActivity" />
         <activity android:name=".views.LongListActivity" />
+        <activity android:name=".views.LongRecyclerActivity" />
     </application>
 
 </manifest>
