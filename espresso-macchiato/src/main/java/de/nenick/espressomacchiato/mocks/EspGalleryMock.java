@@ -16,6 +16,8 @@ import java.io.OutputStream;
 
 import static android.support.test.espresso.intent.Intents.intending;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasType;
+import static org.hamcrest.Matchers.allOf;
 
 public class EspGalleryMock {
 
@@ -37,7 +39,7 @@ public class EspGalleryMock {
 
         Intent resultData = new Intent();
         resultData.setData(Uri.fromFile(targetFile));
-        intending(hasAction(Intent.ACTION_GET_CONTENT)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData));
+        intending(allOf(hasAction(Intent.ACTION_GET_CONTENT), hasType("image/*"))).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData));
     }
 
     private void copyFile(InputStream in, OutputStream out) throws IOException {
