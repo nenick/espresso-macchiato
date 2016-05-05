@@ -8,10 +8,12 @@ import android.widget.EditText;
 import junit.framework.AssertionFailedError;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.test.views.LandscapeFixedActivity;
+import de.nenick.espressomacchiato.test.views.LongListActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -52,6 +54,18 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
 
         espDevice.rotateToPortrait();
         espDevice.assertOrientationIsPortrait();
+    }
+
+    @Test
+    @Ignore("change orientation works only for current activity but not following activities")
+    public void testKeepRotation() {
+        espDevice.assertOrientationIsPortrait();
+        espDevice.rotateToLandscape();
+        espDevice.assertOrientationIsLandscape();
+
+        getActivity().startActivity(new Intent(getActivity(), LongListActivity.class));
+
+        espDevice.assertOrientationIsLandscape();
     }
 
     @Test
