@@ -9,7 +9,7 @@ public class EspResourceToolTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testJustForCoverage() {
-        new EspPermissionsTool();
+        new EspResourceTool();
     }
 
 }
