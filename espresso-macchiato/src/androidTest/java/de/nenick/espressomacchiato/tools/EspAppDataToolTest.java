@@ -56,12 +56,37 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    public void testClearSharedPreferencesWhenNoPreferencesExists() {
+        EspAppDataTool.clearSharedPreferences();
+    }
+
+    @Test
     public void testClearDatabase() {
         PersonDbHelper personDbHelper = new PersonDbHelper(InstrumentationRegistry.getContext());
         givenDatabaseEntry(personDbHelper);
 
         EspAppDataTool.clearDatabase();
 
+        thenDatabaseIsEmpty(personDbHelper);
+    }
+
+    @Test
+    @Ignore // TODO need a way to throw error if any connection is open. better way would be to close them all
+    public void testClearDatabaseWithOpenConnection() {
+        EspAppDataTool.clearDatabase();
+
+        PersonDbHelper personDbHelper = new PersonDbHelper(InstrumentationRegistry.getContext());
+        givenDatabaseEntry(personDbHelper);
+
+        // simulate: forget to close database connection
+        personDbHelper.getWritableDatabase();
+        EspAppDataTool.clearDatabase();
+        /*
+        thenDatabaseHasAnEntry(personDbHelper);
+
+        personDbHelper.close();
+        EspAppDataTool.clearDatabase();
+        */
         thenDatabaseIsEmpty(personDbHelper);
     }
 
@@ -91,19 +116,6 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
 
         exception.expect(FileNotFoundException.class);
         InstrumentationRegistry.getTargetContext().getContentResolver().openInputStream(uri);
-    }
-
-    @Test
-    @Ignore("need a way to throw error if connection open or to close them all")
-    public void testClearDatabaseIssueWithOpenConnection() {
-        PersonDbHelper personDbHelper = new PersonDbHelper(InstrumentationRegistry.getContext());
-        givenDatabaseEntry(personDbHelper);
-
-        // forget to close database connection
-        personDbHelper.getWritableDatabase();
-        EspAppDataTool.clearDatabase();
-
-        thenDatabaseIsEmpty(personDbHelper);
     }
 
     @Test
@@ -143,7 +155,17 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
         query = writableDatabase.query(PersonContract.Entry.TABLE_NAME, null, null, null, null, null, null);
         assertThat(query.getCount(), is(0));
         query.close();
-        writableDatabase.close();
+        personDbHelper.close();
+    }
+
+    private void thenDatabaseHasAnEntry(PersonDbHelper personDbHelper) {
+        SQLiteDatabase writableDatabase;
+        Cursor query;
+        writableDatabase = personDbHelper.getWritableDatabase();
+        query = writableDatabase.query(PersonContract.Entry.TABLE_NAME, null, null, null, null, null, null);
+        assertThat(query.getCount(), is(1));
+        query.close();
+        personDbHelper.close();
     }
 
     private void givenDatabaseEntry(PersonDbHelper personDbHelper) {

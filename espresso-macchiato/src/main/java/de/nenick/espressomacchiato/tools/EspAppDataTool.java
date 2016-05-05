@@ -1,7 +1,9 @@
 package de.nenick.espressomacchiato.tools;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.test.InstrumentationRegistry;
+import android.util.Log;
 
 import java.io.File;
 import java.util.Arrays;
@@ -36,6 +38,12 @@ public class EspAppDataTool {
      */
     public static void clearSharedPreferences() {
         String[] preferenceFiles = new File(InstrumentationRegistry.getTargetContext().getFilesDir().getParentFile(), "shared_prefs").list();
+
+        if(preferenceFiles == null) {
+            // occurs when no preferences was created
+            return;
+        }
+
         for (String preferenceFile : preferenceFiles) {
             InstrumentationRegistry.getTargetContext().getSharedPreferences(preferenceFile.replace(".xml", ""), Context.MODE_PRIVATE).edit().clear().commit();
         }
@@ -47,7 +55,14 @@ public class EspAppDataTool {
     public static void clearDatabase() {
         String[] databaseList = InstrumentationRegistry.getTargetContext().databaseList();
         for (String database : databaseList) {
-            InstrumentationRegistry.getContext().deleteDatabase(database);
+
+            // when transaction rollback files exists they are always locked so we can't delete them
+            if(database.contains("-journal")) {
+                continue;
+            }
+            Log.v("EspressoMacchiato", "deleting " + database);
+
+            assertThat("could not delete " + database, InstrumentationRegistry.getContext().deleteDatabase(database), is(true));
             assertThat(InstrumentationRegistry.getContext().getDatabasePath(database).exists(), is(false));
         }
     }
