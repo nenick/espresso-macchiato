@@ -1,8 +1,7 @@
-package de.nenick.espressomacchiato.elements;
+package de.nenick.espressomacchiato.elements.support;
 
 import org.junit.Test;
 
-import de.nenick.espressomacchiato.test.views.LongListActivity;
 import de.nenick.espressomacchiato.test.views.LongRecyclerActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
