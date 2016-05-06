@@ -19,6 +19,7 @@ public class EspTextViewTest extends EspressoTestCase<BaseActivity> {
         TextView textView = new TextView(activityTestRule.getActivity());
         textView.setId(textViewId);
         textView.setText(textViewText);
+        textView.setTextColor(0xff000000);
         addViewToLayout(textView, BaseActivity.rootLayout);
     }
 
@@ -30,5 +31,15 @@ public class EspTextViewTest extends EspressoTestCase<BaseActivity> {
     @Test
     public void testByText() {
         espTextView = EspTextView.byText(textViewText);
+    }
+
+    @Test
+    public void testAssertTextColorIs() {
+        espTextView.assertTextColorIs(0xff000000);
+    }
+
+    @Test
+    public void testAssertTextColorResIs() {
+        espTextView.assertTextColorResIs(android.R.color.black);
     }
 }

@@ -22,6 +22,11 @@ public abstract class EspAllOfBuilder<ElementT extends EspView> {
         return this;
     }
 
+    public EspAllOfBuilder<ElementT> withIsDisplayed() {
+        matcher.add(ViewMatchers.isDisplayed());
+        return this;
+    }
+
     public EspAllOfBuilder<ElementT> withParentInHierarchy(int resourceId) {
         matcher.add(ViewMatchers.isDescendantOfA(ViewMatchers.withId(resourceId)));
         return this;
