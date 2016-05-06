@@ -62,8 +62,9 @@ public class EspAppDataTool {
             }
             Log.v("EspressoMacchiato", "deleting " + database);
 
-            assertThat("could not delete " + database, InstrumentationRegistry.getContext().deleteDatabase(database), is(true));
-            assertThat(InstrumentationRegistry.getContext().getDatabasePath(database).exists(), is(false));
+            assertThat(InstrumentationRegistry.getTargetContext().getDatabasePath(database).exists(), is(true));
+            assertThat("could not delete " + database, InstrumentationRegistry.getTargetContext().deleteDatabase(database), is(true));
+            assertThat(InstrumentationRegistry.getTargetContext().getDatabasePath(database).exists(), is(false));
         }
     }
 
