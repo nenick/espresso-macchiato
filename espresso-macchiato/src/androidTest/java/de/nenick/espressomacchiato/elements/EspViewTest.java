@@ -26,6 +26,8 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testByAll() {
+        givenClickableView();
+
         espView = EspView.byAll().withId(viewId).withIsDisplayed().build();
         espView.assertIsDisplayedOnScreen();
     }
@@ -91,6 +93,9 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testExtend() {
+        givenClickableView();
+        givenClickFeedbackTextView();
+
         MyEspView myEspView = new MyEspView(EspView.byId(viewId));
         myEspView.click();
         espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
