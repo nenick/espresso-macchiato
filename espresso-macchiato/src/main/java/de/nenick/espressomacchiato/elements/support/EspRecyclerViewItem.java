@@ -28,6 +28,13 @@ public class EspRecyclerViewItem extends EspView {
         this.mode = mode;
     }
 
+    public EspRecyclerViewItem(EspRecyclerViewItem template) {
+        super(template.baseMatcher());
+        this.recyclerViewId = template.recyclerViewId;
+        this.index = template.index;
+        this.mode = template.mode;
+    }
+
     public static EspRecyclerViewItem byItemIndex(int recyclerViewId, int index) {
         return new EspRecyclerViewItem(withId(recyclerViewId), recyclerViewId, index, Mode.byItemIndex);
     }
