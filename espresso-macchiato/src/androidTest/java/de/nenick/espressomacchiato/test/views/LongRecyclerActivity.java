@@ -7,14 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,8 +36,6 @@ public class LongRecyclerActivity extends Activity {
 
     private List<Map<String, Object>> data = new ArrayList<>();
 
-    private LayoutInflater layoutInflater;
-
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -53,9 +45,6 @@ public class LongRecyclerActivity extends Activity {
         RecyclerView listView = (RecyclerView) findViewById(R.id.list);
         listView.setLayoutManager(new LinearLayoutManager(this));
 
-        layoutInflater = getLayoutInflater();
-
-        // Create the adapter for the list.
         RecyclerView.Adapter adapter = new LongListAdapter();
 
         // Send the data to the list.

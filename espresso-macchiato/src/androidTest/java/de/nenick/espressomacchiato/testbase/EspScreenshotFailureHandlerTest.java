@@ -39,7 +39,7 @@ public class EspScreenshotFailureHandlerTest extends EspressoTestCase<BaseActivi
         espScreenshotFailureHandler.delegate = new FailureHandler() {
             @Override
             public void handle(Throwable error, Matcher<View> viewMatcher) {
-
+                // avoid that exception is thrown by default failure handler
             }
         };
 

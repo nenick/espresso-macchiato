@@ -1,7 +1,6 @@
 package de.nenick.espressomacchiato.tools;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.support.test.InstrumentationRegistry;
 import android.util.Log;
 

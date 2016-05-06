@@ -158,16 +158,6 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
         personDbHelper.close();
     }
 
-    private void thenDatabaseHasAnEntry(PersonDbHelper personDbHelper) {
-        SQLiteDatabase writableDatabase;
-        Cursor query;
-        writableDatabase = personDbHelper.getWritableDatabase();
-        query = writableDatabase.query(PersonContract.Entry.TABLE_NAME, null, null, null, null, null, null);
-        assertThat(query.getCount(), is(1));
-        query.close();
-        personDbHelper.close();
-    }
-
     private void givenDatabaseEntry(PersonDbHelper personDbHelper) {
         ContentValues values = new ContentValues();
         values.put(PersonContract.Entry.COLUMN_NAME, "John");
