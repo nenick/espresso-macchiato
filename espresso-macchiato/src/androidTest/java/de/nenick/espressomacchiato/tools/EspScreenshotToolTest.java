@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.v7.app.AlertDialog;
+import android.test.mock.MockContext;
 import android.widget.TextView;
 
 import org.junit.Before;
@@ -12,7 +13,6 @@ import org.junit.Test;
 import java.io.File;
 
 import de.nenick.espressomacchiato.elements.EspPermissionDialog;
-import de.nenick.espressomacchiato.test.ContextMock;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
@@ -124,12 +124,7 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
         EspScreenshotTool espScreenshotTool = new EspScreenshotTool() {
             @Override
             protected Context getTargetContext() {
-                return new ContextMock() {
-                    @Override
-                    public File getFilesDir() {
-                        return null;
-                    }
-                };
+                return new MockContext();
             }
         };
 
