@@ -3,6 +3,8 @@ package de.nenick.espressomacchiato.elements.support;
 import android.content.Intent;
 import android.support.test.espresso.NoMatchingViewException;
 
+import junit.framework.AssertionFailedError;
+
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.elements.EspTextView;
@@ -24,7 +26,7 @@ public class EspRecyclerViewItemByVisibleIndexTest extends EspressoTestCase<Long
 
     @Test
     public void testMatcherFailureWhenRecyclerViewHasLessChildrenAsRequestedIndex() {
-        exception.expect(AssertionError.class);
+        exception.expect(AssertionFailedError.class);
         exception.expectMessage("Requested child at index 20 but recycler view has only ");
         exception.expectMessage(" visible childs.");
 
@@ -34,7 +36,7 @@ public class EspRecyclerViewItemByVisibleIndexTest extends EspressoTestCase<Long
 
     @Test
     public void testMatcherFailureWhenChildViewNotMatch() {
-        exception.expect(AssertionError.class);
+        exception.expect(AssertionFailedError.class);
         exception.expectMessage("'with text: is \"item: 20\"' doesn't match the selected view");
 
         EspTextView espTextView = new EspTextView(espRecyclerView.itemByVisibleIndex(0).baseMatcherForItemChild(withId(LongRecyclerActivity.itemTextViewId)));
