@@ -25,6 +25,12 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     private EspTextView espTextView = EspTextView.byId(messageViewId);
 
     @Test
+    public void testByAll() {
+        espView = EspView.byAll().withId(viewId).withIsDisplayed().build();
+        espView.assertIsDisplayedOnScreen();
+    }
+
+    @Test
     public void testAssertions() {
         espTextView.assertNotExist();
 
@@ -83,6 +89,13 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
     }
 
+    @Test
+    public void testExtend() {
+        MyEspView myEspView = new MyEspView(EspView.byId(viewId));
+        myEspView.click();
+        espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
+    }
+
     private void givenViewIsInvisible() {
         performOnUiThread(new Runnable() {
             @Override
@@ -137,5 +150,11 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         textView = new TextView(getActivity());
         textView.setId(id);
         addViewToLayout(textView, BaseActivity.rootLayout);
+    }
+
+    class MyEspView extends EspView {
+        public MyEspView(EspView template) {
+            super(template);
+        }
     }
 }

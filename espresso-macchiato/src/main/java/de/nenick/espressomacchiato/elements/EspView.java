@@ -10,6 +10,8 @@ import org.hamcrest.Matcher;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -30,12 +32,20 @@ public class EspView {
         return new EspView(resourceId);
     }
 
+    public static EspAllOfBuilder<? extends EspView> byAll() {
+        return new EspAllOfBuilder<EspView>() {};
+    }
+
     public EspView(int resourceId) {
         this.baseMatcher = withId(resourceId);
     }
 
     public EspView(Matcher<View> base) {
         this.baseMatcher = base;
+    }
+
+    public EspView(EspView template) {
+        this.baseMatcher = template.baseMatcher();
     }
 
     public void assertIsDisplayedOnScreen() {
@@ -74,5 +84,9 @@ public class EspView {
         allMatcher.add(baseMatcher);
         allMatcher.addAll(Arrays.asList(additional));
         return onView(allOf(allMatcher));
+    }
+
+    public Matcher<View> baseMatcher() {
+        return baseMatcher;
     }
 }
