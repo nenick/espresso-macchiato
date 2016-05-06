@@ -31,6 +31,13 @@ public class EspTextViewTest extends EspressoTestCase<BaseActivity> {
     @Test
     public void testByText() {
         espTextView = EspTextView.byText(textViewText);
+        espTextView.assertIsDisplayedOnScreen();
+    }
+
+    @Test
+    public void testByAll() {
+        espTextView = EspTextView.byAll().withId(textViewId).withIsDisplayed().build();
+        espTextView.assertIsDisplayedOnScreen();
     }
 
     @Test
