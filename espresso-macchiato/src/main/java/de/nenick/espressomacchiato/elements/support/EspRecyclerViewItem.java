@@ -1,17 +1,13 @@
 package de.nenick.espressomacchiato.elements.support;
 
-import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 
 import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.matchers.support.EspRecyclerViewMatcher;
 
-import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 public class EspRecyclerViewItem extends EspView {
@@ -41,7 +37,7 @@ public class EspRecyclerViewItem extends EspView {
     }
 
     public void scrollTo() {
-        if(mode == Mode.byItemIndex) {
+        if (mode == Mode.byItemIndex) {
             findView(EspRecyclerViewMatcher.withMinimalItemCount(index + 1)).perform(RecyclerViewActions.scrollToPosition(index));
         } else {
             throw new UnsupportedOperationException("Method only supported when item accessed " + Mode.byItemIndex.name());
@@ -49,14 +45,10 @@ public class EspRecyclerViewItem extends EspView {
     }
 
     protected Matcher<View> baseMatcherForItemChild(Matcher<View> matcher) {
-        if(mode == Mode.byVisibleIndex) {
+        if (mode == Mode.byVisibleIndex) {
             return EspRecyclerViewMatcher.withRecyclerView(recyclerViewId).atChildIndexOnView(index, matcher);
         } else {
             throw new UnsupportedOperationException("Method only supported when item accessed " + Mode.byVisibleIndex.name());
         }
-    }
-
-    protected ViewInteraction findViewChild(Matcher<View> matcher) {
-        return onView(baseMatcherForItemChild(matcher));
     }
 }

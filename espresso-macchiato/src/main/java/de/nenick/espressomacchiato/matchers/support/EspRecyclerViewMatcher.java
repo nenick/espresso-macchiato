@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.matchers.support;
 
+import android.content.res.Resources;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,13 +29,17 @@ public class EspRecyclerViewMatcher {
     public Matcher<View> atChildIndexOnView(final int index, final Matcher<View> childMatcher) {
 
         return new TypeSafeMatcher<View>() {
-            private View itemView;
+            Resources resources = null;
+            View itemView;
 
             public void describeTo(Description description) {
-
+                String idDescription = this.resources.getResourceName(recyclerViewId);
+                description.appendText("with id: " + idDescription);
             }
 
             public boolean matchesSafely(View view) {
+                this.resources = view.getResources();
+
                 if (itemView == null && (itemView = findExpectedItemView(view)) == null) {
                     return false;
                 }
@@ -48,7 +53,7 @@ public class EspRecyclerViewMatcher {
             }
 
             private View findExpectedItemView(View view) {
-                if(!ViewMatchers.withId(recyclerViewId).matches(view)){
+                if (!ViewMatchers.withId(recyclerViewId).matches(view)) {
                     return null;
                 }
 
