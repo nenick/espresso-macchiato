@@ -34,6 +34,7 @@ public class LongRecyclerActivity extends Activity {
     public static final int selectedRotTextViewId = R.id.selection_row_value;
     public static final int recyclerViewItemCount = 100;
     public static final long lastRecyclerItemId = 99;
+    public static final int itemTextViewId = R.id.rowContentTextView;
     public static final String lastRecyclerItemText = "item: " + lastRecyclerItemId;
 
     protected static final String ROW_ENABLED = "ROW_ENABLED";
