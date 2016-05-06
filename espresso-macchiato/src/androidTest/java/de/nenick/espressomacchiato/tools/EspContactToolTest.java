@@ -69,7 +69,7 @@ public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivit
 
         // check address data
         long rawContactId = contactData.getLong(contactData.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.RAW_CONTACT_ID));
-        Cursor contactAddress = InstrumentationRegistry.getTargetContext().getContentResolver().query(ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI, null, ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID + " = ?", new String[]{String.valueOf(rawContactId)}, null);
+        Cursor contactAddress = InstrumentationRegistry.getTargetContext().getContentResolver().query(ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI, null, ContactsContract.CommonDataKinds.StructuredPostal.RAW_CONTACT_ID + " = ?", new String[]{String.valueOf(rawContactId)}, null);
         assertNotNull(contactAddress);
         assertTrue(contactAddress.moveToFirst());
 
