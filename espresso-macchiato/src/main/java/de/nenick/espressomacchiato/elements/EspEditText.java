@@ -11,10 +11,14 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-public class EspEditText extends EspView {
+public class EspEditText extends EspTextView {
 
     public static EspEditText byId(int resourceId) {
         return new EspEditText(resourceId);
+    }
+
+    public static EspEditText byText(String text) {
+        return new EspEditText(withText(text));
     }
 
     public static EspAllOfBuilder<EspEditText> byAll() {
@@ -31,10 +35,6 @@ public class EspEditText extends EspView {
 
     public void replaceText(String newText) {
        findView().perform(ViewActions.replaceText(newText));
-    }
-
-    public void assertTextIs(String expectedText) {
-        findView().check(matches(withText(expectedText)));
     }
 
     public void assertHintTextIs(String expectedText) {
