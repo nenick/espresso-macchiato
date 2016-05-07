@@ -16,6 +16,8 @@ mocks
 
 tools
 
+* EspScreenShotTool - compare images percentage
+
 test base
 
 matcher

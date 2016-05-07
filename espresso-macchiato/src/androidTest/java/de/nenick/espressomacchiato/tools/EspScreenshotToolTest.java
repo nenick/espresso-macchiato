@@ -108,7 +108,7 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
         // may happen when storage is not setup properly on emulator
         EspScreenshotTool espScreenshotTool = new EspScreenshotTool() {
             @Override
-            protected String obtainScreenshotDirectory() {
+            public String obtainScreenshotDirectory() {
                 return "/" + EspScreenshotTool.screenshotFolderName;
             }
         };
@@ -143,7 +143,7 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
         // may happen when storage is not setup properly on emulator
         EspScreenshotTool espScreenshotTool = new EspScreenshotTool() {
             @Override
-            protected String obtainScreenshotDirectory() {
+            public String obtainScreenshotDirectory() {
                 return "/";
             }
         };
