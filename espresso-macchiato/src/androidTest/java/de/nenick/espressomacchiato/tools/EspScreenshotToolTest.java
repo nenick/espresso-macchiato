@@ -120,11 +120,16 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testGetFileDirFailure() {
-        // may happen when storage is not setup properly on emulator
         EspScreenshotTool espScreenshotTool = new EspScreenshotTool() {
             @Override
             protected Context getTargetContext() {
-                return new MockContext();
+                return new MockContext() {
+                    @Override
+                    public File getFilesDir() {
+                        // may happen when storage is not setup properly on emulator
+                        return null;
+                    }
+                };
             }
         };
 
