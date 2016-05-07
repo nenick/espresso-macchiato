@@ -8,6 +8,7 @@
 * Package "internal" - Actions / Assertions / Matcher (not intended for public usage)
 * error handler - for default assertions (current failure handler only called when using onView checks)
 * contribute - avoid issues with git (read git tag only if necessary)
+* provided com.android.support dependencies - avoid exclude them, so it use project under test versions
 
 ## New or extend elements
 
