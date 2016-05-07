@@ -26,7 +26,7 @@ public class EspScreenshotTool {
      *
      * Actionbar contains a time which must be ignored.
      */
-    public static final double COMPARE_DELTA_TIME_CHANGE = 0.01;
+    public static final double COMPARE_DELTA_TIME_CHANGE = 0.02;
 
     /**
      * This folder will be created in your application data to store screenshots.

@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.tools;
 
 import android.Manifest;
 import android.content.Context;
+import android.os.Build;
 import android.support.test.InstrumentationRegistry;
 import android.support.v7.app.AlertDialog;
 import android.test.mock.MockContext;
@@ -24,6 +25,8 @@ import static org.junit.Assert.assertNotEquals;
 
 public class EspScreenshotToolCompareTest extends EspressoTestCase<NavigationDrawerActivity> {
 
+    private static final double DELTA_FOR_DIFFERENT_DEVICES = 3.0;
+
     @Before
     public void setup() {
         EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -35,6 +38,7 @@ public class EspScreenshotToolCompareTest extends EspressoTestCase<NavigationDra
         double percentage = EspScreenshotTool.comparePercentage(
                 new EspScreenshotTool().obtainScreenshotDirectory() + "/testCompareSamePicture.png",
                 new EspScreenshotTool().obtainScreenshotDirectory() + "/testCompareSamePicture.png");
+
         assertEquals(100.0, percentage, EspScreenshotTool.COMPARE_DELTA_FULL_IDENTICAL);
     }
 
@@ -48,7 +52,11 @@ public class EspScreenshotToolCompareTest extends EspressoTestCase<NavigationDra
                 new EspScreenshotTool().obtainScreenshotDirectory() + "/testCompareSamePictureWithOneMinuteDifference.png",
                 new EspScreenshotTool().obtainScreenshotDirectory() + "/testCompareSamePictureWithOneMinuteDifference2.png");
 
-        assertNotEquals(100.0, percentage, EspScreenshotTool.COMPARE_DELTA_FULL_IDENTICAL);
+        // pre v18 we can't use uiautomator for screenshots so can't include status bar with time changes
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            assertNotEquals(100.0, percentage, EspScreenshotTool.COMPARE_DELTA_FULL_IDENTICAL);
+        }
+
         assertEquals(100.0, percentage, EspScreenshotTool.COMPARE_DELTA_TIME_CHANGE);
     }
 
@@ -62,6 +70,6 @@ public class EspScreenshotToolCompareTest extends EspressoTestCase<NavigationDra
                 new EspScreenshotTool().obtainScreenshotDirectory() + "/testCompareDifferentPictures.png",
                 new EspScreenshotTool().obtainScreenshotDirectory() + "/testCompareDifferentPictures2.png");
 
-        assertEquals(85.1, percentage, EspScreenshotTool.COMPARE_DELTA_TIME_CHANGE);
+        assertEquals(88.0, percentage, EspScreenshotTool.COMPARE_DELTA_TIME_CHANGE + DELTA_FOR_DIFFERENT_DEVICES);
     }
 }
