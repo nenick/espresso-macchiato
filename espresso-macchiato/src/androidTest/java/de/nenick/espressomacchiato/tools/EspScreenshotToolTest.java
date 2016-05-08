@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.test.mock.MockContext;
 import android.widget.TextView;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -22,11 +21,6 @@ import static org.hamcrest.Matchers.is;
 public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
 
     public static final String PICTURE_TEST_SCREEN = "Picture Test Screen";
-
-    @Before
-    public void setup() {
-        EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    }
 
     @Test
     public void testScreenshot() {
@@ -78,8 +72,6 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
     public void testScreenshotWithPermissionDialog() {
         skipTestIfBelowAndroidMarshmallow();
         EspPermissionsTool.resetAllPermission();
-        EspPermissionsTool.ensurePermissions(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
         EspPermissionsTool.requestPermissions(getActivity(), 42, Manifest.permission.READ_CONTACTS);
 
         // wait until all expected content is displayed
@@ -91,16 +83,6 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
         EspPermissionDialog.build(Manifest.permission.READ_CONTACTS).allow();
         File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), EspScreenshotTool.screenshotFolderName + "/test screenshot with permission dialog.png");
         assertThat(screenshot.exists(), is(true));
-    }
-
-    @Test
-    public void testMissingPermission() {
-        skipTestIfBelowAndroidMarshmallow();
-
-        EspPermissionsTool.resetAllPermission();
-        EspScreenshotTool.takeWithName("test screenshot missing permission");
-        File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), EspScreenshotTool.screenshotFolderName + "/test screenshot missing permission.png");
-        assertThat(screenshot.exists(), is(false));
     }
 
     @Test

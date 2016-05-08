@@ -1,6 +1,5 @@
 package de.nenick.espressomacchiato.tools;
 
-import android.Manifest;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -40,11 +39,6 @@ public class EspScreenshotTool {
     }
 
     protected void takeWithNameInternal(String name) {
-        if(!EspPermissionsTool.isPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            Log.i("EspressoMacchiato", "Store pictures only available with WRITE_EXTERNAL_STORAGE permission.");
-            return;
-        }
-
         File screenshotDirectory = new File(obtainScreenshotDirectory());
         if (!screenshotDirectory.exists() && !screenshotDirectory.mkdirs()) {
             throw new IllegalStateException("screenshot directory could not be created: " + screenshotDirectory.getAbsolutePath());
