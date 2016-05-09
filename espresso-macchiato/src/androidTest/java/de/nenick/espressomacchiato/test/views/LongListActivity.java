@@ -23,8 +23,10 @@ import de.nenick.espressomacchiato.test.R;
  */
 public class LongListActivity extends Activity {
 
+    public static final int rootLayout = R.id.layout_activity_list;
     public static final String dataSourceTextColumn = "ROW_TEXT";
     public static final int listViewId = R.id.list;
+    public static final int itemTextViewId = R.id.rowContentTextView;
     public static final int selectedRotTextViewId = R.id.selection_row_value;
     public static final int listViewItemCount = 100;
     public static final long lastListItemId = 99;
