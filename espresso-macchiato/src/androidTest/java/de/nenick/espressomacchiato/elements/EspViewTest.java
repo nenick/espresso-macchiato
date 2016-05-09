@@ -37,7 +37,6 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         espTextView.assertNotExist();
 
         givenClickableView();
-
         espView.assertIsVisible();
         espView.assertIsEnabled();
         espView.assertIsDisplayedOnScreen();
@@ -49,6 +48,15 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         espView.assertIsHidden();
 
         givenViewIsGone();
+        espView.assertIsHidden();
+    }
+
+    @Test
+    public void testAssertIsHiddenWhenNotOnScreen() {
+        givenClickableViewNotOnScreen();
+        espView.assertIsVisible();
+        espView.assertIsEnabled();
+
         espView.assertIsHidden();
     }
 
@@ -139,6 +147,13 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
                 messageView.setText(VIEW_WAS_CLICKED_MESSAGE);
             }
         });
+    }
+
+    private void givenClickableViewNotOnScreen() {
+        for (int i=0;i<20;i++) {
+            addViewToLayout(new Button(activityTestRule.getActivity()), BaseActivity.rootLayout);
+        }
+        givenClickableView();
     }
 
     private void givenClickFeedbackTextView() {

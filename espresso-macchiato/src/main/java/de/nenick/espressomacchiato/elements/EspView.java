@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
+import de.nenick.espressomacchiato.matchers.EspDisplayedMatchers;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -56,10 +57,14 @@ public class EspView {
         findView().check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
+    /**
+     * Assert that you can't see the view
+     */
     public void assertIsHidden() {
         findView().check(matches(anyOf(
                 withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE),
-                withEffectiveVisibility(ViewMatchers.Visibility.GONE))));
+                withEffectiveVisibility(ViewMatchers.Visibility.GONE),
+                EspDisplayedMatchers.isNotDisplaying())));
     }
 
     public void assertNotExist() {
@@ -67,7 +72,7 @@ public class EspView {
     }
 
     public void assertIsEnabled() {
-        findView().check(matches(isDisplayed()));
+        findView().check(matches(isEnabled()));
     }
 
     public void assertIsDisabled() {
@@ -88,5 +93,9 @@ public class EspView {
 
     public Matcher<View> baseMatcher() {
         return baseMatcher;
+    }
+
+    public void swipeUp() {
+        findView().perform(ViewActions.swipeUp());
     }
 }
