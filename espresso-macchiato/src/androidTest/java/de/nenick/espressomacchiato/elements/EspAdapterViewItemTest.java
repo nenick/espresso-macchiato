@@ -7,31 +7,24 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 public class EspAdapterViewItemTest extends EspressoTestCase<LongListActivity> {
 
-    private EspAdapterViewItem espAdapterViewItem = EspAdapterViewItem.byText(LongListActivity.lastListItemText, LongListActivity.dataSourceTextColumn);
-    private EspTextView espTextView = EspTextView.byId(LongListActivity.selectedRotTextViewId);
-
     @Test
-    public void testAssertListItemIsNotShown() {
-        espAdapterViewItem.assertNotExist();
-    }
+    public void testForCoverage() {
+        EspAdapterViewItem.Mode.valueOf("byItemIndex");
+        EspAdapterViewItem.Mode.values();
 
-    @Test
-    public void testScrollTo() {
-        espAdapterViewItem.scrollTo();
-        espAdapterViewItem.assertIsVisible();
-    }
-
-    @Test
-    public void testClickRow() {
-        espAdapterViewItem.scrollTo();
-        espAdapterViewItem.click();
-        espTextView.assertTextIs(String.valueOf(LongListActivity.lastListItemId));
     }
 
     @Test
     @SuppressWarnings("deprecation")
-    public void testByIdObsolete() {
+    public void testByAllNotSupported() {
         exception.expect(UnsupportedOperationException.class);
-        EspListViewItem.byId(0);
+        EspAdapterViewItem.byAll();
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    public void testByIdNotSupported() {
+        exception.expect(UnsupportedOperationException.class);
+        EspAdapterViewItem.byId(0);
     }
 }

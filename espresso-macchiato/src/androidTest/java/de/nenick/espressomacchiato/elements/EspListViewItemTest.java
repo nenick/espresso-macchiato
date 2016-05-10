@@ -7,11 +7,18 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 public class EspListViewItemTest extends EspressoTestCase<LongListActivity> {
 
-    private EspListViewItem espListViewItem = EspListViewItem.byText(LongListActivity.lastListItemText, LongListActivity.dataSourceTextColumn);
-
     @Test
-    public void testByText() {
-        espListViewItem.scrollTo();
-        espListViewItem.assertIsVisible();
+    @SuppressWarnings({"unused", "UnusedAssignment"})
+    public void testJustForCoverage() {
+        EspListViewItem espListViewItem;
+        espListViewItem = EspListViewItem.byItemIndex(0, 0);
+        espListViewItem = EspListViewItem.byVisibleIndex(0, 0);
+        new MyEspListViewItem(EspAdapterViewItem.byItemIndex(0, 0));
+    }
+
+    class MyEspListViewItem extends EspListViewItem {
+        public MyEspListViewItem(EspAdapterViewItem template) {
+            super(template);
+        }
     }
 }

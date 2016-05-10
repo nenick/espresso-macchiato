@@ -21,7 +21,7 @@ public class EspListViewTest extends EspressoTestCase<LongListActivity> {
 
     @Test
     public void testCustomBaseMatcher() {
-        espListView = new EspListView(allOf(withId(R.id.list), isDisplayed()));
+        //espListView = new EspListView(allOf(withId(R.id.list), isDisplayed()));
         espListView.assertIsVisible();
     }
 

@@ -3,10 +3,12 @@ package de.nenick.espressomacchiato.elements;
 import android.support.test.espresso.NoMatchingViewException;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import junit.framework.AssertionFailedError;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
@@ -59,6 +61,28 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
         espView.assertIsHidden();
     }
+
+    @Test
+    public void testAssertIsDisplayedOnScreenWhenViewLargerThanScreen() {
+        givenViewLargerThanScreen();
+
+        exception.expect(AssertionFailedError.class);
+        exception.expectMessage(Matchers.containsString("No part of the view's area is displayed to the user"));
+        espView.assertIsDisplayedOnScreen();
+    }
+
+    private void givenViewLargerThanScreen() {
+        ScrollView scrollView = new ScrollView(getActivity());
+        scrollView.setId(android.R.id.candidatesArea);
+        addViewToLayout(scrollView, BaseActivity.rootLayout);
+
+        Button view = new Button(activityTestRule.getActivity());
+        view.setHeight(3000);
+        view.setWidth(2000);
+        view.setId(viewId);
+        addViewToLayout(view, android.R.id.candidatesArea);
+    }
+
 
     @Test
     public void testAssertIsDisplayedOnScreenFailure() {

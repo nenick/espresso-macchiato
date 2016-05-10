@@ -49,6 +49,11 @@ public class EspView {
         this.baseMatcher = template.baseMatcher();
     }
 
+    /**
+     * Assert you can see the whole view.
+     *
+     * When the view height or width is greater than the screen it would still match.
+     */
     public void assertIsDisplayedOnScreen() {
         findView().check(matches(isCompletelyDisplayed()));
     }
@@ -58,7 +63,7 @@ public class EspView {
     }
 
     /**
-     * Assert that you can't see the view
+     * Assert that you can't see the view.
      */
     public void assertIsHidden() {
         findView().check(matches(anyOf(
@@ -97,5 +102,9 @@ public class EspView {
 
     public void swipeUp() {
         findView().perform(ViewActions.swipeUp());
+    }
+
+    public void swipeDown() {
+        findView().perform(ViewActions.swipeDown());
     }
 }

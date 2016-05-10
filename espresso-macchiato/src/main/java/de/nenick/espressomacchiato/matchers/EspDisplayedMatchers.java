@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.matchers;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -21,6 +22,11 @@ public class EspDisplayedMatchers {
      * That means the view would only be visible when you scroll to it.
      */
     public static Matcher<View> isNotDisplaying() {
+        return expectVisiblePercentage(0);
+    }
+
+    @NonNull
+    private static Matcher<View> expectVisiblePercentage(final int expectedPercentage) {
         return new TypeSafeMatcher<View>() {
             @Override
             public void describeTo(Description description) {
@@ -43,7 +49,8 @@ public class EspDisplayedMatchers {
                 double visibleArea = visibleParts.height() * visibleParts.width();
                 int displayedPercentage = (int) ((visibleArea / maxArea) * 100);
 
-                return displayedPercentage == 0
+                // The difference to original isDisplayingAtLeast matcher implementation is == instead of >=
+                return displayedPercentage == expectedPercentage
                         && withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE).matches(view);
             }
 
