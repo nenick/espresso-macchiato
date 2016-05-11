@@ -14,30 +14,30 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity> {
 
     private EspPage espPage = EspPage.byId(LongListActivity.rootLayout);
-    private EspTextView firstItem = EspTextView.byText("item: 0");
+    private EspTextView firstItemTextView = EspTextView.byText("item: 0");
 
     @Test
     public void testSwipe() {
-        firstItem.assertIsDisplayedOnScreen();
+        firstItemTextView.assertIsDisplayedOnScreen();
 
         espPage.swipeUp();
-        firstItem.assertNotExist();
+        firstItemTextView.assertNotExist();
 
         espPage.swipeDown();
         espPage.swipeDown();
-        firstItem.assertIsDisplayedOnScreen();
+        firstItemTextView.assertIsDisplayedOnScreen();
     }
 
     @Test
     public void testAssertIsHiddenFailureWhenOnlyPartialHidden() {
         scrollListPixelDistance(100);
-        firstItem.assertIsHidden();
+        firstItemTextView.assertIsHidden();
 
-        scrollListPixelDistance(-80);
-        firstItem.assertIsPartiallyDisplayedOnly();
+        scrollListPixelDistance(-50);
+        firstItemTextView.assertIsPartiallyDisplayedOnly();
 
         exception.expect(AssertionFailedError.class);
-        firstItem.assertIsHidden();
+        firstItemTextView.assertIsHidden();
     }
 
     @Test
@@ -45,7 +45,7 @@ public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity>
         scrollListPixelDistance(100);
 
         exception.expect(AssertionFailedError.class);
-        firstItem.assertIsDisplayedOnScreen();
+        firstItemTextView.assertIsDisplayedOnScreen();
     }
 
     private void scrollListPixelDistance(final int distance) {
