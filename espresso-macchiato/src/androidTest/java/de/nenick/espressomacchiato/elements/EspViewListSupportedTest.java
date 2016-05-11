@@ -1,5 +1,7 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.support.test.InstrumentationRegistry;
+
 import junit.framework.AssertionFailedError;
 
 import org.junit.Test;
@@ -12,35 +14,47 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity> {
 
     private EspPage espPage = EspPage.byId(LongListActivity.rootLayout);
+    private EspTextView firstItem = EspTextView.byText("item: 0");
 
     @Test
     public void testSwipe() {
-        EspTextView.byText("item: 0").assertIsDisplayedOnScreen();
+        firstItem.assertIsDisplayedOnScreen();
 
         espPage.swipeUp();
-        EspTextView.byText("item: 0").assertNotExist();
+        firstItem.assertNotExist();
 
         espPage.swipeDown();
         espPage.swipeDown();
-        EspTextView.byText("item: 0").assertIsDisplayedOnScreen();
+        firstItem.assertIsDisplayedOnScreen();
     }
 
     @Test
     public void testAssertIsHiddenFailureWhenOnlyPartialHidden() {
-        getActivity().findViewById(LongListActivity.listViewId).scrollBy(0, 150);
-        EspTextView.byText("item: 0").assertIsHidden();
+        scrollListPixelDistance(100);
+        firstItem.assertIsHidden();
 
-        getActivity().findViewById(LongListActivity.listViewId).scrollBy(0, -70);
+        scrollListPixelDistance(-80);
+        firstItem.assertIsPartiallyDisplayedOnly();
+
         exception.expect(AssertionFailedError.class);
-        EspTextView.byText("item: 0").assertIsHidden();
+        firstItem.assertIsHidden();
     }
 
     @Test
     public void testAssertIsDisplayedOnScreenFailureWhenOnlyPartialHidden() {
-        getActivity().findViewById(LongListActivity.listViewId).scrollBy(0, 70);
+        scrollListPixelDistance(100);
 
         exception.expect(AssertionFailedError.class);
-        EspTextView.byText("item: 0").assertIsDisplayedOnScreen();
+        firstItem.assertIsDisplayedOnScreen();
+    }
+
+    private void scrollListPixelDistance(final int distance) {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().findViewById(LongListActivity.listViewId).scrollBy(0, distance);
+            }
+        });
     }
 
     class MyEspListView extends EspListView {

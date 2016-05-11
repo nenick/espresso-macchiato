@@ -65,9 +65,6 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     @Test
     public void testAssertIsDisplayedOnScreenWhenViewLargerThanScreen() {
         givenViewLargerThanScreen();
-
-        exception.expect(AssertionFailedError.class);
-        exception.expectMessage(Matchers.containsString("No part of the view's area is displayed to the user"));
         espView.assertIsDisplayedOnScreen();
     }
 

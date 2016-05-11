@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
-import de.nenick.espressomacchiato.matchers.EspDisplayedMatchers;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -34,7 +34,8 @@ public class EspView {
     }
 
     public static EspAllOfBuilder<? extends EspView> byAll() {
-        return new EspAllOfBuilder<EspView>() {};
+        return new EspAllOfBuilder<EspView>() {
+        };
     }
 
     public EspView(int resourceId) {
@@ -64,14 +65,28 @@ public class EspView {
 
     /**
      * Assert that you can't see the view.
+     *
+     * Does only work if the view is still part of the view hierarchy.
      */
     public void assertIsHidden() {
         findView().check(matches(anyOf(
                 withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE),
                 withEffectiveVisibility(ViewMatchers.Visibility.GONE),
-                EspDisplayedMatchers.isNotDisplaying())));
+                not(isDisplayingAtLeast(1)))));
     }
 
+    /**
+     * Assert you can only see a small part of the view.
+     *
+     * Does fail if the view is fully displayed.
+     */
+    public void assertIsPartiallyDisplayedOnly() {
+        findView().check(matches(allOf(isDisplayingAtLeast(1), not(isDisplayingAtLeast(100)))));
+    }
+
+    /**
+     * Assert that view is not a part of the view hierarchy.
+     */
     public void assertNotExist() {
         findView().check(doesNotExist());
     }
