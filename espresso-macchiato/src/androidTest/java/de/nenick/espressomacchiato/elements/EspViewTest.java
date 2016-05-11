@@ -1,6 +1,8 @@
 package de.nenick.espressomacchiato.elements;
 
 import android.support.test.espresso.NoMatchingViewException;
+import android.support.v7.app.ActionBar;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -73,7 +75,7 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         scrollView.setId(android.R.id.candidatesArea);
         addViewToLayout(scrollView, BaseActivity.rootLayout);
 
-        Button view = new Button(activityTestRule.getActivity());
+        view = new Button(activityTestRule.getActivity());
         view.setHeight(3000);
         view.setWidth(2000);
         view.setId(viewId);

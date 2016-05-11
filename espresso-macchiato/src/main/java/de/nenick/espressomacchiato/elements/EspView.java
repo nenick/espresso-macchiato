@@ -1,23 +1,32 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.content.Context;
+import android.graphics.Rect;
+import android.os.Build;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.core.deps.guava.base.Preconditions;
 import android.support.test.espresso.matcher.ViewMatchers;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.WindowManager;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
+import de.nenick.espressomacchiato.matchers.support.EspIsDisplayedMatcher;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -52,11 +61,11 @@ public class EspView {
 
     /**
      * Assert you can see the whole view.
-     *
+     * <p>
      * When the view height or width is greater than the screen it would still match.
      */
     public void assertIsDisplayedOnScreen() {
-        findView().check(matches(isCompletelyDisplayed()));
+        findView().check(matches(EspIsDisplayedMatcher.isDisplayingAtLeast(100)));
     }
 
     public void assertIsVisible() {
@@ -65,23 +74,23 @@ public class EspView {
 
     /**
      * Assert that you can't see the view.
-     *
+     * <p>
      * Does only work if the view is still part of the view hierarchy.
      */
     public void assertIsHidden() {
         findView().check(matches(anyOf(
                 withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE),
                 withEffectiveVisibility(ViewMatchers.Visibility.GONE),
-                not(isDisplayingAtLeast(1)))));
+                not(EspIsDisplayedMatcher.isDisplayingAtLeast(1)))));
     }
 
     /**
      * Assert you can only see a small part of the view.
-     *
+     * <p>
      * Does fail if the view is fully displayed.
      */
     public void assertIsPartiallyDisplayedOnly() {
-        findView().check(matches(allOf(isDisplayingAtLeast(1), not(isDisplayingAtLeast(100)))));
+        findView().check(matches(allOf(EspIsDisplayedMatcher.isDisplayingAtLeast(1), not(EspIsDisplayedMatcher.isDisplayingAtLeast(100)))));
     }
 
     /**
@@ -122,4 +131,6 @@ public class EspView {
     public void swipeDown() {
         findView().perform(ViewActions.swipeDown());
     }
+
+
 }
