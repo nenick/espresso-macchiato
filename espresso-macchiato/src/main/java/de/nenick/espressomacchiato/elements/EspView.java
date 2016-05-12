@@ -11,13 +11,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
+import de.nenick.espressomacchiato.matchers.support.EspIsDisplayedMatcher;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -56,7 +55,7 @@ public class EspView {
      * When the view height or width is greater than the screen it would still match.
      */
     public void assertIsDisplayedOnScreen() {
-        findView().check(matches(isCompletelyDisplayed()));
+        findView().check(matches(EspIsDisplayedMatcher.isDisplayingAtLeast(100)));
     }
 
     public void assertIsVisible() {
@@ -72,7 +71,7 @@ public class EspView {
         findView().check(matches(anyOf(
                 withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE),
                 withEffectiveVisibility(ViewMatchers.Visibility.GONE),
-                not(isDisplayingAtLeast(1)))));
+                not(EspIsDisplayedMatcher.isDisplayingAtLeast(1)))));
     }
 
     /**
@@ -81,7 +80,7 @@ public class EspView {
      * Does fail if the view is fully displayed.
      */
     public void assertIsPartiallyDisplayedOnly() {
-        findView().check(matches(allOf(isDisplayingAtLeast(1), not(isDisplayingAtLeast(100)))));
+        findView().check(matches(allOf(EspIsDisplayedMatcher.isDisplayingAtLeast(1), not(EspIsDisplayedMatcher.isDisplayingAtLeast(100)))));
     }
 
     /**
