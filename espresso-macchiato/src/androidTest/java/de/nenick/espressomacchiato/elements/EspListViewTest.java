@@ -20,37 +20,8 @@ public class EspListViewTest extends EspressoTestCase<LongListActivity> {
     }
 
     @Test
-    public void testCustomBaseMatcher() {
-        //espListView = new EspListView(allOf(withId(R.id.list), isDisplayed()));
+    public void testTemplateConstructor() {
+        espListView = new EspListView(espListView);
         espListView.assertIsVisible();
     }
-
-    /*
-
-    @Test // optional
-    public void toggle_Click() {
-        // Click on a toggle button.
-        onRow(TEXT_ITEM_30).onChildView(withId(R.id.rowToggleButton)).perform(click());
-
-        // Check that the toggle button is checked.
-        onRow(TEXT_ITEM_30).onChildView(withId(R.id.rowToggleButton)).check(matches(isChecked()));
-    }
-
-
-     //Make sure that clicking on the toggle button doesn't trigger a click on the row.
-
-    @Test // optional
-    public void toggle_ClickDoesntPropagate() {
-        // Click on one of the rows.
-        onRow(TEXT_ITEM_30).onChildView(withId(R.id.rowContentTextView)).perform(click());
-
-        // Click on the toggle button, in a different row.
-        onRow(TEXT_ITEM_60).onChildView(withId(R.id.rowToggleButton)).perform(click());
-
-        // Check that the activity didn't detect the click on the first column.
-        onView(ViewMatchers.withId(R.id.selection_row_value))
-                .check(matches(withText(TEXT_ITEM_30_SELECTED)));
-    }
-
-    */
 }
