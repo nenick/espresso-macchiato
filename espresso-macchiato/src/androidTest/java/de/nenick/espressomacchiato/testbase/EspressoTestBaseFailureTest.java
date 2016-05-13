@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 
-public class EspressoTestBaseFailureTest extends EspressoTestBase<BaseActivity> {
+public class EspressoTestBaseFailureTest extends EspressoTestBase {
 
     @Rule
     public ActivityTestRule<BaseActivity> activityTestRule = new ActivityTestRule<>(BaseActivity.class);
@@ -21,7 +21,7 @@ public class EspressoTestBaseFailureTest extends EspressoTestBase<BaseActivity> 
 
     @Test
     public void testCurrentActivity() {
-        assertNull(currentActivity());
+        assertNotNull(currentActivity());
     }
 
     @Test

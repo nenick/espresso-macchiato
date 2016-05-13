@@ -17,6 +17,11 @@ public class EspSystemDialogTest extends EspressoTestBase {
     public void testMissingUiAutomator() {
         EspSystemDialog espSystemDialog = new EspSystemDialog() {
             @Override
+            protected void throwIfUiAutomatorNotExist() throws ClassNotFoundException {
+                throw new ClassNotFoundException();
+            }
+
+            @Override
             protected void dismissIfShownInternal() {
                 throw new UnsupportedOperationException();
             }
