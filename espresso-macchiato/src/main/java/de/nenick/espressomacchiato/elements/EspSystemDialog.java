@@ -16,7 +16,7 @@ public abstract class EspSystemDialog {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
 
             try {
-                Class.forName("android.support.test.uiautomator.UiDevice");
+                throwIfUiAutomatorNotExist();
             } catch (ClassNotFoundException e) {
                 Log.w("EspressoMacchiato", "Missing uiautomator classes to dismiss possible ANR dialog.");
                 return;
@@ -24,6 +24,10 @@ public abstract class EspSystemDialog {
 
             dismissIfShownInternal();
         }
+    }
+
+    protected void throwIfUiAutomatorNotExist() throws ClassNotFoundException {
+        Class.forName("android.support.test.uiautomator.UiDevice");
     }
 
     protected abstract void dismissIfShownInternal();
