@@ -87,6 +87,22 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    public void testWithoutUiAutomator() {
+        // may happen when storage is not setup properly on emulator
+        EspScreenshotTool espScreenshotTool = new EspScreenshotTool() {
+            @Override
+            protected void throwIfUiAutomatorNotExist() throws ClassNotFoundException {
+                throw new ClassNotFoundException();
+            }
+        };
+
+        espScreenshotTool.takeWithNameInternal("test without uiautomator");
+
+        File screenshot = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), EspScreenshotTool.screenshotFolderName + "/test without uiautomator.png");
+        assertThat(screenshot.exists(), is(true));
+    }
+
+    @Test
     public void testMkdirFailure() {
         // may happen when storage is not setup properly on emulator
         EspScreenshotTool espScreenshotTool = new EspScreenshotTool() {
