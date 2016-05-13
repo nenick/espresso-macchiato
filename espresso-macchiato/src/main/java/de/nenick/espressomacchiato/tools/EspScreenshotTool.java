@@ -8,6 +8,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
 
+import junit.framework.AssertionFailedError;
+
 import java.io.File;
 
 /**
@@ -42,10 +44,10 @@ public class EspScreenshotTool {
         File screenshotFile = screenshotLocationInternal(name);
         Log.v("EspressoMacchiato", "take picture at " + screenshotFile.getAbsolutePath());
 
-        boolean isUiAutomatorIncluded;
+        boolean isUiAutomatorIncluded = true;
+
         try {
-            Class.forName("android.support.test.uiautomator.UiDevice");
-            isUiAutomatorIncluded = true;
+            throwIfUiAutomatorNotExist();
         } catch (ClassNotFoundException e) {
             isUiAutomatorIncluded = false;
         }
@@ -62,6 +64,10 @@ public class EspScreenshotTool {
                 throw new IllegalStateException("take picture failed", e);
             }
         }
+    }
+
+    protected void throwIfUiAutomatorNotExist() throws ClassNotFoundException {
+        Class.forName("android.support.test.uiautomator.UiDevice");
     }
 
     public String obtainScreenshotDirectory() {
@@ -100,7 +106,7 @@ public class EspScreenshotTool {
         int height2 = img2.getHeight();
 
         if ((width1 != width2) || (height1 != height2)) {
-            throw new AssertionError("Error: Images dimensions mismatch");
+            throw new AssertionFailedError("Images must have same dimensions.");
         }
 
         long diff = 0;
