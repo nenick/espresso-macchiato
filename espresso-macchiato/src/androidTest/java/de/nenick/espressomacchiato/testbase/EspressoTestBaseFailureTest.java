@@ -1,16 +1,22 @@
 package de.nenick.espressomacchiato.testbase;
 
-import android.app.Activity;
+import android.support.test.rule.ActivityTestRule;
 
+import org.junit.Rule;
 import org.junit.Test;
+
+import de.nenick.espressomacchiato.test.views.BaseActivity;
 
 import static org.junit.Assert.assertNull;
 
-public class EspressoTestBaseFailureTest extends EspressoTestBase {
+public class EspressoTestBaseFailureTest extends EspressoTestBase<BaseActivity> {
+
+    @Rule
+    public ActivityTestRule<BaseActivity> activityTestRule = new ActivityTestRule<>(BaseActivity.class);
 
     @Override
-    public Activity getActivity() {
-        return null;
+    public BaseActivity getActivity() {
+        return activityTestRule.getActivity();
     }
 
     @Test

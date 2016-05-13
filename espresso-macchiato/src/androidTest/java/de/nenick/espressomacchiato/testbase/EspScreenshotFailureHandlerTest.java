@@ -14,11 +14,13 @@ import de.nenick.espressomacchiato.test.views.BaseActivity;
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class EspScreenshotFailureHandlerTest extends EspressoTestCase<BaseActivity> {
 
     private EspScreenshotFailureHandler espScreenshotFailureHandler = new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext());
+    private boolean wasDelegateCalled = false;
 
     @Test
     public void testScreenshot() {
@@ -49,6 +51,26 @@ public class EspScreenshotFailureHandlerTest extends EspressoTestCase<BaseActivi
 
         //noinspection ResultOfMethodCallIgnored
         screenshot.delete();
+    }
+
+    @Test
+    public void testScreenshotFailure() {
+        espScreenshotFailureHandler.delegate = new FailureHandler() {
+            @Override
+            public void handle(Throwable error, Matcher<View> viewMatcher) {
+                // avoid that exception is thrown by default failure handler
+                wasDelegateCalled = true;
+            }
+        };
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                espScreenshotFailureHandler.handle(new TestException(), isRoot());
+            }
+        });
+
+        assertTrue(wasDelegateCalled);
     }
 
     private static class TestException extends RuntimeException {
