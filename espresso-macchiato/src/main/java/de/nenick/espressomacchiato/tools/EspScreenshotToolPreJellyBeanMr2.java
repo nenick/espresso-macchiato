@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.tools;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Looper;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.core.deps.guava.collect.Lists;
@@ -90,9 +91,14 @@ class EspScreenshotToolPreJellyBeanMr2 {
 
         for (int j = 0; j < views.size(); j++) {
             view = views.get(j);
-            if (view != null && view.getClass().getName()
-                    //.equals("com.android.internal.policy.PhoneWindow$DecorView")) {
-                    .equals("com.android.internal.policy.impl.PhoneWindow$DecorView")) {
+            String decorViewClass;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                decorViewClass = "com.android.internal.policy.PhoneWindow$DecorView";
+            } else {
+                decorViewClass = "com.android.internal.policy.impl.PhoneWindow$DecorView";
+            }
+
+            if (view != null && view.getClass().getName().equals(decorViewClass)) {
                 decorViews[i] = view;
                 i++;
             }
