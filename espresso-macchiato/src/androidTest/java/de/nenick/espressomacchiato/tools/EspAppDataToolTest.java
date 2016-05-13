@@ -26,6 +26,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
@@ -57,7 +58,9 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     public void testClearSharedPreferencesWhenNoPreferencesExists() {
+        assertTrue(EspAppDataTool.getSharedPreferencesFilesLocation().delete());
         EspAppDataTool.clearSharedPreferences();
+        // assert does not produce an error
     }
 
     @Test
