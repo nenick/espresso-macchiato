@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.test.mock.MockContext;
 import android.widget.TextView;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -133,5 +134,12 @@ public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
         exception.expect(IllegalStateException.class);
         exception.expectMessage("take picture failed");
         espScreenshotTool.takeWithNameInternal("does not work");
+    }
+
+    @Test
+    public void testScreenshotLocationInternal() {
+        File expectedLocation = new File(InstrumentationRegistry.getTargetContext().getFilesDir(), "test-screenshots" + "/location.png");
+        File providedLocation = new EspScreenshotTool().screenshotLocationInternal("location");
+        Assert.assertEquals(expectedLocation, providedLocation);
     }
 }

@@ -39,7 +39,7 @@ public class EspScreenshotTool {
     }
 
     protected void takeWithNameInternal(String name) {
-        File screenshotFile = screenshotLocation(name);
+        File screenshotFile = screenshotLocationInternal(name);
         Log.v("EspressoMacchiato", "take picture at " + screenshotFile.getAbsolutePath());
 
         boolean isUiAutomatorIncluded;
@@ -126,7 +126,11 @@ public class EspScreenshotTool {
     }
 
     public static File screenshotLocation(String pictureName) {
-        File screenshotDirectory = new File(new EspScreenshotTool().obtainScreenshotDirectory());
+        return new EspScreenshotTool().screenshotLocationInternal(pictureName);
+    }
+
+    public File screenshotLocationInternal(String pictureName) {
+        File screenshotDirectory = new File(obtainScreenshotDirectory());
         if (!screenshotDirectory.exists() && !screenshotDirectory.mkdirs()) {
             throw new IllegalStateException("screenshot directory could not be created: " + screenshotDirectory.getAbsolutePath());
         }
