@@ -13,19 +13,19 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.junit.Assert.assertFalse;
 
-public class TextViewMatcherTest extends EspressoTestCase<BaseActivity> {
+public class EspTextViewMatcherTest extends EspressoTestCase<BaseActivity> {
 
     public static final String BLACK = "Black";
     public static final String WHITE = "White";
 
     @Test
     public void testForCoverage() {
-        new TextViewMatcher();
+        new EspTextViewMatcher();
     }
 
     @Test
     public void testOnlyMatchTextView() {
-        Matcher<View> colorMatcher = TextViewMatcher.withTextColor(0xff000000);
+        Matcher<View> colorMatcher = EspTextViewMatcher.withTextColor(0xff000000);
         View nonTextView = new View(InstrumentationRegistry.getContext());
         assertFalse(colorMatcher.matches(nonTextView));
     }
@@ -42,6 +42,6 @@ public class TextViewMatcherTest extends EspressoTestCase<BaseActivity> {
         textView2.setTextColor(0xffffffff);
         addViewToLayout(textView2, BaseActivity.rootLayout);
 
-        new EspTextView(TextViewMatcher.withTextColor(0xffffffff)).assertTextIs(WHITE);
+        new EspTextView(EspTextViewMatcher.withTextColor(0xffffffff)).assertTextIs(WHITE);
     }
 }

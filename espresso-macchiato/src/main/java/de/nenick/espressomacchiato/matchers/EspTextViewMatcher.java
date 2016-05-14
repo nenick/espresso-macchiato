@@ -12,7 +12,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-public class TextViewMatcher {
+public class EspTextViewMatcher {
 
     public static Matcher<View> withTextColorRes(@ColorRes final int color) {
         Context targetContext = InstrumentationRegistry.getTargetContext();

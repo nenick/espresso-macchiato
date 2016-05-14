@@ -7,7 +7,7 @@ import android.view.View;
 import org.hamcrest.Matcher;
 
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
-import de.nenick.espressomacchiato.matchers.TextViewMatcher;
+import de.nenick.espressomacchiato.matchers.EspTextViewMatcher;
 
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -43,10 +43,10 @@ public class EspTextView extends EspView {
     }
 
     public void assertTextColorIs(@ColorInt int color) {
-        findView().check(matches(TextViewMatcher.withTextColor(color)));
+        findView().check(matches(EspTextViewMatcher.withTextColor(color)));
     }
 
     public void assertTextColorResIs(@ColorRes int color) {
-        findView().check(matches(TextViewMatcher.withTextColorRes(color)));
+        findView().check(matches(EspTextViewMatcher.withTextColorRes(color)));
     }
 }

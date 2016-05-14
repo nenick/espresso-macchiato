@@ -6,7 +6,7 @@ import android.view.View;
 import org.hamcrest.Matcher;
 
 import de.nenick.espressomacchiato.elements.EspView;
-import de.nenick.espressomacchiato.matchers.ChildRecursiveMatcher;
+import de.nenick.espressomacchiato.matchers.EspChildRecursiveMatcher;
 
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
@@ -24,7 +24,7 @@ public class EspNavigationMenuItem extends EspView {
     }
 
     public EspNavigationMenuItem(String itemText) {
-        super(allOf(instanceOf(NavigationMenuItemView.class), withChildGroups(withText(itemText)), isDisplayed()));
+        super(allOf(instanceOf(NavigationMenuItemView.class), EspChildRecursiveMatcher.withChildRecursive(withText(itemText)), isDisplayed()));
     }
 
     public EspNavigationMenuItem(Matcher<View> base) {
@@ -41,9 +41,5 @@ public class EspNavigationMenuItem extends EspView {
 
     public void assertIsNotSelected() {
         findView().check(matches(withChild(isNotChecked())));
-    }
-
-    private static Matcher<View> withChildGroups(final Matcher<View> childMatcher) {
-        return new ChildRecursiveMatcher(childMatcher);
     }
 }

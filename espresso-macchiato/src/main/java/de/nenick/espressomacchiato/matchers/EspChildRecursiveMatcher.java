@@ -7,10 +7,14 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-public class ChildRecursiveMatcher extends TypeSafeMatcher<View> {
+public class EspChildRecursiveMatcher extends TypeSafeMatcher<View> {
     private final Matcher<View> childMatcher;
 
-    public ChildRecursiveMatcher(Matcher<View> childMatcher) {
+    public static Matcher<View> withChildRecursive(final Matcher<View> childMatcher) {
+        return new EspChildRecursiveMatcher(childMatcher);
+    }
+
+    public EspChildRecursiveMatcher(Matcher<View> childMatcher) {
         this.childMatcher = childMatcher;
     }
 
