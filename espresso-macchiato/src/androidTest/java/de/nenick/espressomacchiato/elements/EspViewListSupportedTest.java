@@ -33,7 +33,7 @@ public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity>
         scrollListPixelDistance(100);
         firstItemTextView.assertIsHidden();
 
-        scrollListPixelDistance(-70);
+        scrollListPixelDistance(-60);
         firstItemTextView.assertIsPartiallyDisplayedOnly();
 
         exception.expect(AssertionFailedError.class);
