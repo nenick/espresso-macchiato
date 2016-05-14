@@ -21,6 +21,13 @@ public class EspDrawerTest extends EspressoTestCase<NavigationDrawerActivity> {
     }
 
     @Test
+    public void testTemplateConstructor() {
+        espDrawer = new EspDrawer(espDrawer);
+        espDrawer.open();
+        espDrawer.assertIsDisplayedOnScreen();
+    }
+
+    @Test
     @SuppressWarnings("deprecation")
     public void testByIdObsolete() {
         exception.expect(UnsupportedOperationException.class);

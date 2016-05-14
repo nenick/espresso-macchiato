@@ -17,4 +17,8 @@ public class EspPage extends EspView {
     public EspPage(Matcher<View> base) {
         super(base);
     }
+
+    public EspPage(EspPage template) {
+        super(template);
+    }
 }

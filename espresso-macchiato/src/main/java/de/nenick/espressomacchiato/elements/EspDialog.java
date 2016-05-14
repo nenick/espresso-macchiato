@@ -64,6 +64,11 @@ public class EspDialog extends EspView {
         this.spec = spec;
     }
 
+    public EspDialog(EspDialog template) {
+        super(template);
+        this.spec = template.spec;
+    }
+
     public EspTextView title() {
         return EspTextView.byId(spec.titleResource);
     }

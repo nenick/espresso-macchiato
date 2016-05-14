@@ -28,6 +28,11 @@ public class EspDrawer extends EspView {
         this.drawerLayout = drawerLayout;
     }
 
+    public EspDrawer(EspDrawer template) {
+        super(template);
+        this.drawerLayout = template.drawerLayout;
+    }
+
     public void open() {
         findDrawerLayout().perform(ViewActions.actionWithAssertions(new GeneralSwipeAction(Swipe.FAST, GeneralLocation.CENTER_LEFT, GeneralLocation.CENTER_RIGHT, Press.FINGER)));
     }

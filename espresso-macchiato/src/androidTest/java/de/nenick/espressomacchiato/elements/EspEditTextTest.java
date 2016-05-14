@@ -62,4 +62,10 @@ public class EspEditTextTest extends EspressoTestCase<BaseActivity> {
         espEditText = new EspEditText(withText(INITIAL_TEXT));
         espEditText.assertIsVisible();
     }
+
+    @Test
+    public void testTemplateConstructor() {
+        espEditText = new EspEditText(espEditText);
+        espEditText.assertIsVisible();
+    }
 }

@@ -32,4 +32,11 @@ public class EspButtonTest extends EspressoTestCase<BaseActivity> {
         espButton = EspButton.byText(buttonText);
         espButton.assertIsVisible();
     }
+
+    @Test
+    public void testTemplateConstructor() {
+        EspButton template = EspButton.byText(buttonText);
+        this.espButton = new EspButton(template);
+        this.espButton.assertIsVisible();
+    }
 }

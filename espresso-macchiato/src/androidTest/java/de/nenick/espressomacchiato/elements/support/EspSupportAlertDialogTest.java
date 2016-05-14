@@ -96,7 +96,6 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void testDialogDismiss() {
         skipTestIfBelowAndroidMarshmallow();
 
@@ -113,7 +112,6 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void testDialogDismissNonCancelable() {
         skipTestIfBelowAndroidMarshmallow();
 
@@ -133,6 +131,19 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
     public void testSpecObsolete() {
         exception.expect(UnsupportedOperationException.class);
         EspSupportAlertDialog.spec();
+    }
+
+    @Test
+    public void testTemplateConstructor() {
+        espSupportAlertDialog = new EspSupportAlertDialog(espSupportAlertDialog);
+
+        addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
+                .setTitle(TITLE)
+                .setMessage(MESSAGE)
+                .setPositiveButton(OK, clickListener));
+
+        espSupportAlertDialog.confirmButton().click();
+        espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_POSITIVE);
     }
 
     private void givenClickFeedbackTextView() {

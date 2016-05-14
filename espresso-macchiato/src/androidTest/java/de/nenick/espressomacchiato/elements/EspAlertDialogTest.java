@@ -135,6 +135,18 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
         EspAlertDialog.spec();
     }
 
+    @Test
+    public void testTemplateConstructor() {
+        espAlertDialog = new EspAlertDialog(espAlertDialog);
+        addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
+                .setTitle(TITLE)
+                .setMessage(MESSAGE)
+                .setPositiveButton(OK, clickListener));
+
+        espAlertDialog.confirmButton().click();
+        espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_POSITIVE);
+    }
+
     private void givenClickFeedbackTextView() {
         messageView = new TextView(activityTestRule.getActivity());
         messageView.setId(messageViewId);

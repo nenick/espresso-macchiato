@@ -24,7 +24,13 @@ public class EspTextViewTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
-    public void testReplaceText() {
+    public void testAssertTextIs() {
+        espTextView.assertTextIs(textViewText);
+    }
+
+    @Test
+    public void testTemplateConstructor() {
+        espTextView = new EspTextView(espTextView);
         espTextView.assertTextIs(textViewText);
     }
 

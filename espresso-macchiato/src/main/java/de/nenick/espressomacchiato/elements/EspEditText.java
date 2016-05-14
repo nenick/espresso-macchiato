@@ -33,6 +33,10 @@ public class EspEditText extends EspTextView {
         super(base);
     }
 
+    public EspEditText(EspEditText template) {
+        super(template);
+    }
+
     public void replaceText(String newText) {
        findView().perform(ViewActions.replaceText(newText));
     }

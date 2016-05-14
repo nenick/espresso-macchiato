@@ -34,6 +34,10 @@ public class EspTextView extends EspView {
         super(base);
     }
 
+    public EspTextView(EspTextView template) {
+        super(template);
+    }
+
     public void assertTextIs(String expected) {
         findView().check(matches(withText(expected)));
     }

@@ -31,6 +31,10 @@ public class EspNavigationMenuItem extends EspView {
         super(base);
     }
 
+    public EspNavigationMenuItem(EspNavigationMenuItem template) {
+        super(template);
+    }
+
     public void assertIsSelected() {
         findView().check(matches(withChild(isChecked())));
     }

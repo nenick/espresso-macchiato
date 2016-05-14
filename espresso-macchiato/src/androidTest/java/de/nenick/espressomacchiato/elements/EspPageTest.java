@@ -23,4 +23,10 @@ public class EspPageTest extends EspressoTestCase<BaseActivity> {
         espPage = new EspPage(allOf(isDisplayed(), withId(android.R.id.content)));
         espPage.assertIsVisible();
     }
+
+    @Test
+    public void testTemplateConstructor() {
+        espPage = new EspPage(espPage);
+        espPage.assertIsVisible();
+    }
 }

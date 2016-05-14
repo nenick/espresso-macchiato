@@ -73,6 +73,13 @@ public class EspNavigationMenuItemTest extends EspressoTestCase<NavigationDrawer
         espNavigationMenuItemStandard.assertIsHidden();
     }
 
+    @Test
+    public void testTemplateConstructor() {
+        EspNavigationMenuItem template = new EspNavigationMenuItem(withText(navigationItemTitleStandard));
+        espNavigationMenuItemStandard = new EspNavigationMenuItem(template);
+        espNavigationMenuItemStandard.assertIsHidden();
+    }
+
     protected void givenSomeNavigationItems() {
         final TextView textViewClickFeedback = new TextView(activityTestRule.getActivity());
         textViewClickFeedback.setId(textViewClickFeedbackId);

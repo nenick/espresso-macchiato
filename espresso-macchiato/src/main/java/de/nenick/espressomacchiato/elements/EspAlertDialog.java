@@ -25,4 +25,8 @@ public class EspAlertDialog extends EspDialog {
     public EspAlertDialog(Spec spec) {
         super(spec);
     }
+
+    public EspAlertDialog(EspAlertDialog template) {
+        super(template);
+    }
 }

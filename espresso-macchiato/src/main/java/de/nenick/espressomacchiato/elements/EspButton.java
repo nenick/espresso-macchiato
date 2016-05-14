@@ -25,6 +25,10 @@ public class EspButton extends EspView {
         super(base);
     }
 
+    public EspButton(EspButton template) {
+        super(template);
+    }
+
     public void assertTextIs(String expected) {
         findView().check(matches(withText(expected)));
     }
