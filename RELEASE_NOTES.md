@@ -2,8 +2,7 @@
 
 elements
 
-* (planed) for mostly all - support byAll matcher
-* (planed) for mostly all - support template constructor
+* for mostly all - support template constructor
 * EspPermissionDialog - use correct string resource for deny/accept buttons
 * EspView - assert is hidden for not on screen or not full overlapped
 * EspTextView - text color assertion
@@ -21,6 +20,6 @@ tools
 
 * EspScreenShotTool - compare images percentage
 
-test base
-
 matcher
+
+* EspDisplayedMatcher - fix isDisplayingAtLeast Matcher to support appcompat actionbar on android pre v11 versions
