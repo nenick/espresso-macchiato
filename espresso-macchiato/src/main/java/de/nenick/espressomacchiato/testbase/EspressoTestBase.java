@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.testbase;
 
 import android.app.Activity;
 import android.os.Build;
+import android.os.Looper;
 import android.support.annotation.IdRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
@@ -39,14 +40,21 @@ public abstract class EspressoTestBase<A extends Activity> {
             private Activity activity;
         }
         final Holder holder = new Holder();
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
-            public void run() {
-                Set<Activity> activitiesInStages = EspCloseAllActivitiesFunction.getActivitiesInStages(Stage.RESUMED, Stage.PAUSED);
-                if (activitiesInStages.iterator().hasNext()) {
-                    holder.activity = activitiesInStages.iterator().next();
-                }
+        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+            Set<Activity> activitiesInStages = EspCloseAllActivitiesFunction.getActivitiesInStages(Stage.RESUMED, Stage.PAUSED);
+            if (activitiesInStages.iterator().hasNext()) {
+                holder.activity = activitiesInStages.iterator().next();
             }
-        });
+        } else {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
+                public void run() {
+                    Set<Activity> activitiesInStages = EspCloseAllActivitiesFunction.getActivitiesInStages(Stage.RESUMED, Stage.PAUSED);
+                    if (activitiesInStages.iterator().hasNext()) {
+                        holder.activity = activitiesInStages.iterator().next();
+                    }
+                }
+            });
+        }
         return holder.activity;
     }
 

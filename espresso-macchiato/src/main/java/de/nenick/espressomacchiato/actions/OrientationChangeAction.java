@@ -12,6 +12,8 @@ import android.view.View;
 
 import org.hamcrest.Matcher;
 
+import de.nenick.espressomacchiato.testbase.EspressoTestBase;
+
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 
 /**
@@ -47,7 +49,8 @@ public class OrientationChangeAction implements ViewAction {
 
     @Override
     public void perform(UiController uiController, View view) {
-        final Activity activity = (Activity) view.getContext();
+        final Activity activity = EspressoTestBase.currentActivity();
+
 
         // change rotation programmatically ignores android manifest configurations
         if (hasActivityFixedOrientation(activity)) {
