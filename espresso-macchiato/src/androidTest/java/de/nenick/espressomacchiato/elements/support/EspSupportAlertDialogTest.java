@@ -2,10 +2,8 @@ package de.nenick.espressomacchiato.elements.support;
 
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.os.Build;
 import android.widget.TextView;
 
 import org.junit.Before;

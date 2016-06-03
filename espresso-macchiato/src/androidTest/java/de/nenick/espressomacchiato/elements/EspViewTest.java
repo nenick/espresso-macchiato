@@ -1,8 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
 import android.support.test.espresso.NoMatchingViewException;
-import android.support.v7.app.ActionBar;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -10,7 +8,6 @@ import android.widget.TextView;
 
 import junit.framework.AssertionFailedError;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
