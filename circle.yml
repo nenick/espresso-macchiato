@@ -181,6 +181,8 @@ deployment:
       ##################################################
       # report java doc for master branch
       #
+      - git config --global user.email "kuchler.nico@gmail.com"
+      - git config --global user.name "nenick"
       - git checkout gh-pages
       - git rm -r javadoc
       - mv espresso-macchiato/build/docs/javadoc javadoc
