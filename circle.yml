@@ -185,7 +185,7 @@ deployment:
       - git rm -r javadoc
       - mv espresso-macchiato/build/docs/javadoc javadoc
       - git add javadoc
-      - git commit "update to latest javadoc"
+      - git commit -m "update to latest javadoc"
       - git push
 
   report-collaborator:
