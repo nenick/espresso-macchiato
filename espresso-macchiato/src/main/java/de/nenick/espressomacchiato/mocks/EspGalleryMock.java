@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.mocks;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
@@ -19,14 +20,35 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAct
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasType;
 import static org.hamcrest.Matchers.allOf;
 
+/**
+ * Mock requests for gallery picture.
+ */
 public class EspGalleryMock {
 
-    public void givenMockedGalleryResult(String assetFile, String targetFile) {
-        File galleryPhoto = new File(InstrumentationRegistry.getTargetContext().getExternalCacheDir(), targetFile);
+    /**
+     * Convenience method for {@link #givenMockedGalleryResult(String, File)}.
+     *
+     * Picture will be stored at {@link Context#getExternalCacheDir()}.
+     *
+     * @param assetFile      Dummy gallery picture from asset files.
+     * @param targetFileName Target file name for the picture.
+     */
+    public void givenMockedGalleryResult(String assetFile, String targetFileName) {
+        File galleryPhoto = new File(InstrumentationRegistry.getTargetContext().getExternalCacheDir(), targetFileName);
         Log.v("EspGalleryMockFile", galleryPhoto.getAbsolutePath());
         givenMockedGalleryResult(assetFile, galleryPhoto);
     }
 
+    /**
+     * Create mock for {@link Intent#ACTION_GET_CONTENT} intents for type "image/*".
+     *
+     * After request is started the source picture will be copied to the given target.
+     * As result you will get reported an {@link Activity#RESULT_OK}.
+     * As data you will get an uri with the targetFile location.
+     *
+     * @param assetFile  Dummy gallery picture from asset files.
+     * @param targetFile Target where the picture result should be written.
+     */
     public void givenMockedGalleryResult(String assetFile, File targetFile) {
         try {
             AssetManager assetManager = InstrumentationRegistry.getContext().getAssets();
