@@ -1,3 +1,8 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
 machine:
   environment:
     # more clean command line outputs
@@ -161,3 +166,13 @@ deployment:
       - ./gradlew :espresso-macchiato:githubRelease -PgithubUser=$GITHUB_USERNAME -PgithubKey=$GITHUB_WRITE_PUBLIC_REPOS_TOKEN
       # push release artifacts to bintray
       - ./gradlew :espresso-macchiato:bintrayUpload -PbintrayUser=$BINTRAY_USERNAME -PbintrayKey=$BINTRAY_KEY -PdryRun=false
+
+  javadoc:
+      branch: master
+      commands:
+        - git checkout gh-pages
+        - git rm -r javadoc
+        - mv espresso-macchiato/build/docs/javadoc javadoc
+        - git add javadoc
+        - git commit "update to latest javadoc"
+        - git push
