@@ -5,72 +5,96 @@ general:
 
 machine:
   environment:
-    # more clean command line outputs
     TERM: "dumb"
   java:
     version: oraclejdk8
 
 dependencies:
   pre:
+
+    ##################################################
     # workaround for "failed to find Build Tools revision ..."
-    # android list sdk --all --extended
+    # to see all existing stuff use: android list sdk --all --extended
+    #
     - echo y | android update sdk --no-ui --all --filter tool,android-8 #,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
     - echo y | android update sdk --no-ui --all --filter build-tools-23.0.3
 
-
+    ##################################################
     # create android v23 emulator as latest supported android version
+    #
     - echo no | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2) -c 512M --abi default/armeabi-v7a
 
+    ##################################################
     # create android v8 emulator as earliest supported android version
+    #
     - echo no | android create avd -n my-android8 -t $(android list targets | grep android-8 | cut -d" " -f2) -c 512M
 
-    # activate soft keybord because some tests do checks on it
-    # - sed -i -- 's/hw.keyboard=yes/hw.keyboard=no/g' ~/.android/avd/circleci-android22.avd/config.ini
+    ##################################################
+    # activate soft keyboard to perform checks on it
+    #
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/my-android8.avd/config.ini
+
+    ##################################################
+    # activate gpu support to avoid black screenshots
+    #
     - echo "hw.gpu.enabled=yes" >> ~/.android/avd/my-android23.avd/config.ini
     - echo "hw.gpu.mode=auto" >> ~/.android/avd/my-android23.avd/config.ini
-    - echo "hw.keyboard=no" >> ~/.android/avd/my-android8.avd/config.ini
-    - cat ~/.android/avd/my-android23.avd/config.ini
 
 test:
   pre:
+
+    ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
+    #
     - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window ;; 1) emulator -avd my-android8 -no-audio -no-window ;; esac:
         parallel: true
         background: true
 
   override:
+    ##################################################
     # pre build code to see how many time each task need
+    #
     - ./gradlew :espresso-macchiato:assembleRelease
     - ./gradlew :espresso-macchiato:assembleDebug
     - ./gradlew :espresso-macchiato:assembleDebugAndroidTest
     - ./gradlew :sampleapp:assembleDebug
     - ./gradlew :sampleapp:assembleDebugAndroidTest
 
+    ##################################################
     # check lint for error reporting
     # ensure release can be build and published without issues
+    #
     - ./gradlew :espresso-macchiato:lintDebug
     - ./gradlew :sampleapp:lintDebug
 
+    ##################################################
     # create javadoc to ensure release can be build and published without issues
+    # and at end they get published to github pages
+    #
     - ./gradlew :espresso-macchiato:mavenAndroidJavadocs
 
+    ##################################################
     # ensure that the emulator is ready to use
+    #
     - circle-android wait-for-boot:
         parallel: true
-
     # remove the look screen
     - adb shell input keyevent 82:
         parallel: true
-
     # clear logs from emulator
     - adb logcat -c
 
+    ##################################################
     # start instrumentation tests on emulator
+    #
     - ./gradlew :espresso-macchiato:connectedCheckCustomized:
         parallel: true
 
-    # since connectedCheckCustomized coverage data is deleted after execute sample app tests ...
+    ##################################################
+    # collect coverage from instrumentation tests
+    # coverage data from connectedCheckCustomized is deleted after execute sampleapp tests
+    #
     - mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
         parallel: true
     - cp -r espresso-macchiato/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
@@ -82,8 +106,9 @@ test:
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/espresso_macchiato_android_tests/coverage/debug/report.xml espresso-macchiato-node1/
     - scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/espresso_macchiato_android_tests/coverage/coverage.ec espresso-macchiato-node1/
 
-
+    ##################################################
     # merged coverage to get real coverage report, codecov has issues with merging branch coverage
+    #
     - mv espresso-macchiato/build/reports/coverage/debug espresso-macchiato/build/reports/coverage/debug1
     - mv espresso-macchiato/build/outputs/code-coverage/connected espresso-macchiato/build/outputs/code-coverage/connected1
     - ./gradlew espresso-macchiato:jacocoTestReportAndroid2 -i
@@ -92,17 +117,21 @@ test:
     - cp -r espresso-macchiato/build/reports/coverage2/debug $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage2
     - mv espresso-macchiato/build/reports/coverage2/debug espresso-macchiato/build/reports/coverage2/debug1
 
+    ##################################################
+    # run sampleapp instrumentation tests
+    #
     - ./gradlew :sampleapp:connectedCheck
 
   post:
-    # collect logs from emulator and make them accessable
+    ##################################################
+    # collect logs from emulator and make them accessible
+    #
     - adb logcat -d | grep -v GpsLocationProvider | grep -v MediaProvider | grep -v MetadataRetrieverClient | grep -v BackupManagerService | grep -v ARMAssembler | grep -v Choreographer | grep -v IInputConnectionWrapper | grep -v "I/art" | grep -v ConnectivityService | grep -v "D/PhoneInterfaceManager" | grep -v "I/Email" | grep -v "I/Exchange" | grep -v "E/libEGL" | grep -v "D/gralloc" | grep -v "E/installd" | grep -v "D/ConnectivityManager" | grep -v "D/WIFI" | grep -v "V/Mms" > $CIRCLE_ARTIFACTS/logcat_emulator.txt:
         parallel: true
 
-    #
+    ##################################################
     # for espresso-macchiato module
     #
-
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/xml:
         parallel: true
@@ -113,20 +142,9 @@ test:
         parallel: true
     - cp -r espresso-macchiato/build/reports/androidTests/connected $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/html:
         parallel: true
-    # collect test coverage results and make them accessible
-    #- mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
-    #    parallel: true
-    #- cp -r espresso-macchiato/build/reports/coverage/debug $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
-    #    parallel: true
-    #- cp espresso-macchiato/build/outputs/code-coverage/connected/coverage.ec $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage:
-    #    parallel: true
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/lint
     - cp -r espresso-macchiato/build/outputs/lint* $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/lint
-    # collect code coverage reports from parallel executed tests
-    #- mkdir espresso-macchiato-node1
-    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/espresso_macchiato_android_tests/coverage/debug/report.xml espresso-macchiato-node1/
-    #- scp node1:$(ssh node1 'echo $CIRCLE_TEST_REPORTS')/espresso_macchiato_android_tests/coverage/coverage.ec espresso-macchiato-node1/
     # collect screen shots of failure situations
     - mv espresso-macchiato/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
         parallel: true
@@ -134,10 +152,9 @@ test:
     - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v8 ;; esac:
         parallel: true
 
-    #
+    ##################################################
     # for sampleapp module
     #
-
     # collect xml test results for circle ci to analyze them
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
     - cp -r sampleapp/build/outputs/androidTest-results/connected $CIRCLE_TEST_REPORTS/sampleapp_android_tests/xml
@@ -152,27 +169,45 @@ test:
     - cp -r sampleapp/build/outputs/lint* $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
 
 deployment:
-  coverage:
-    branch: [master, /collaborator\/.*/]
+  report-master:
+    branch: master
     commands:
-      # report code coverage to codecov
+
+      ##################################################
+      # report code coverage to codecov for master branch
+      #
+      - bash <(curl -s https://codecov.io/bash)
+
+      ##################################################
+      # report java doc for master branch
+      #
+      - git checkout gh-pages
+      - git rm -r javadoc
+      - mv espresso-macchiato/build/docs/javadoc javadoc
+      - git add javadoc
+      - git commit "update to latest javadoc"
+      - git push
+
+  report-collaborator:
+    branch: /collaborator\/.*/
+    commands:
+
+      ##################################################
+      # report code coverage to codecov for collaborator branches
+      #
       - bash <(curl -s https://codecov.io/bash)
 
   release:
     tag: /release-.*/
     owner: nenick
     commands:
-      # push release artifacts to github
-      - ./gradlew :espresso-macchiato:githubRelease -PgithubUser=$GITHUB_USERNAME -PgithubKey=$GITHUB_WRITE_PUBLIC_REPOS_TOKEN
-      # push release artifacts to bintray
-      - ./gradlew :espresso-macchiato:bintrayUpload -PbintrayUser=$BINTRAY_USERNAME -PbintrayKey=$BINTRAY_KEY -PdryRun=false
 
-  javadoc:
-      branch: master
-      commands:
-        - git checkout gh-pages
-        - git rm -r javadoc
-        - mv espresso-macchiato/build/docs/javadoc javadoc
-        - git add javadoc
-        - git commit "update to latest javadoc"
-        - git push
+      ##################################################
+      # push release artifacts to github
+      #
+      - ./gradlew :espresso-macchiato:githubRelease -PgithubUser=$GITHUB_USERNAME -PgithubKey=$GITHUB_WRITE_PUBLIC_REPOS_TOKEN
+
+      ##################################################
+      # push release artifacts to bintray
+      #
+      - ./gradlew :espresso-macchiato:bintrayUpload -PbintrayUser=$BINTRAY_USERNAME -PbintrayKey=$BINTRAY_KEY -PdryRun=false
