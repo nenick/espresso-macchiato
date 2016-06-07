@@ -110,7 +110,6 @@ test:
 
     - mkdir -p $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage2
     - cp -r espresso-macchiato/build/reports/coverage2/debug $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests/coverage2
-    - mv espresso-macchiato/build/reports/coverage2/debug espresso-macchiato/build/reports/coverage2/debug1
 
     ##################################################
     # run sampleapp instrumentation tests
@@ -172,6 +171,11 @@ deployment:
       # report code coverage to codecov for master branch
       #
       - bash <(curl -s https://codecov.io/bash)
+
+      # try code coverage at codacy
+      - curl https://www.jpm4j.org/install/script | sh
+      - jpm install com.codacy:codacy-coverage-reporter:assembly
+      - codacy-coverage-reporter -l Java -r espresso-macchiato/build/reports/coverage2/debug/report.xml
 
       ##################################################
       # report java doc for master branch
