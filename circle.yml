@@ -175,6 +175,10 @@ deployment:
       # try code coverage at codacy
       - curl https://www.jpm4j.org/install/script | sudo sh
       - sudo jpm install com.codacy:codacy-coverage-reporter:assembly
+      - ls espresso-macchiato/build
+      - ls espresso-macchiato/build/reports
+      - ls espresso-macchiato/build/reports/coverage2
+      - ls espresso-macchiato/build/reports/coverage2/debug
       - codacy-coverage-reporter -l Java -r espresso-macchiato/build/reports/coverage2/debug/report.xml
 
       ##################################################
