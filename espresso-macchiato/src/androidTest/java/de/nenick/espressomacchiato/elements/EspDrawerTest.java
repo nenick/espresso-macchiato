@@ -27,8 +27,9 @@ public class EspDrawerTest extends EspressoTestCase<NavigationDrawerActivity> {
     }
 
     @Test
-    public void testNavigationItemByText() {
+    public void testNavigationMenuItemByText() {
         addNavigationMenuItem();
+        espDrawer.open();
         espDrawer.navigationMenuItem(navigationItemTitleStandard).assertIsDisplayedOnScreen();
     }
 
