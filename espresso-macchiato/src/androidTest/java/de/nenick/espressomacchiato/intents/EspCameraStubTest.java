@@ -27,7 +27,9 @@ import static org.junit.Assert.assertTrue;
 /** Basic tests */
 public class EspCameraStubTest extends EspressoIntentTestCase<OnActivityResultActivity> {
 
-    private final static int REQUEST_CODE = 123;
+    private static final int REQUEST_CODE = 123;
+    private static final String RESULT_JPG = "result.jpg";
+    private static final String SAMPLE_JPG = "sample.jpg";
     private EspTextView requestCodeTextView = EspTextView.byId(OnActivityResultActivity.requestCodeResource);
     private EspTextView resultCodeTextView = EspTextView.byId(OnActivityResultActivity.resultCodeResource);
     private EspTextView dataTextView = EspTextView.byId(OnActivityResultActivity.dataResource);
@@ -49,17 +51,17 @@ public class EspCameraStubTest extends EspressoIntentTestCase<OnActivityResultAc
 
     @After
     public void reset() {
-        if(targetFile != null) {
+        if (targetFile != null) {
             assertTrue(targetFile.delete());
         }
     }
 
     @Test
     public void testCameraStub() throws IOException {
-        targetFile = new File(activity.getExternalCacheDir(), "result.jpg");
+        targetFile = new File(activity.getExternalCacheDir(), RESULT_JPG);
         assertFalse(targetFile.exists());
 
-        Uri pictureUri = EspFilesTool.copyFileFromAssetsToExternalCacheDir("sample.jpg", "result.jpg");
+        Uri pictureUri = EspFilesTool.copyFileFromAssetsToExternalCacheDir(SAMPLE_JPG, RESULT_JPG);
         espCameraStub.register(pictureUri);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -73,7 +75,7 @@ public class EspCameraStubTest extends EspressoIntentTestCase<OnActivityResultAc
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                ((TextView)getActivity().findViewById(OnActivityResultActivity.requestCodeResource)).setText("");
+                ((TextView) getActivity().findViewById(OnActivityResultActivity.requestCodeResource)).setText("");
             }
         });
 
@@ -91,10 +93,10 @@ public class EspCameraStubTest extends EspressoIntentTestCase<OnActivityResultAc
 
     @Test
     public void testCameraStubMultipleTimes() throws IOException {
-        targetFile = new File(activity.getExternalCacheDir(), "result.jpg");
+        targetFile = new File(activity.getExternalCacheDir(), RESULT_JPG);
         assertFalse(targetFile.exists());
 
-        Uri pictureUri = EspFilesTool.copyFileFromAssetsToExternalCacheDir("sample.jpg", "result.jpg");
+        Uri pictureUri = EspFilesTool.copyFileFromAssetsToExternalCacheDir(SAMPLE_JPG, RESULT_JPG);
         espCameraStub.register(pictureUri);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -106,7 +108,7 @@ public class EspCameraStubTest extends EspressoIntentTestCase<OnActivityResultAc
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                ((TextView)getActivity().findViewById(OnActivityResultActivity.requestCodeResource)).setText("");
+                ((TextView) getActivity().findViewById(OnActivityResultActivity.requestCodeResource)).setText("");
             }
         });
         requestCodeTextView.assertTextIs("");
