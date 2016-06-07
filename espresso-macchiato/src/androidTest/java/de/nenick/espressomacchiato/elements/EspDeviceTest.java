@@ -20,6 +20,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 
+/** Basic tests */
 public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
 
     private EspDevice espDevice = new EspDevice();

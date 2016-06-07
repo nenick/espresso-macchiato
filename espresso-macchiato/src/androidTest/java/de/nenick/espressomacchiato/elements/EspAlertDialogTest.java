@@ -3,8 +3,8 @@ package de.nenick.espressomacchiato.elements;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.DialogInterface;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.widget.TextView;
 
@@ -14,6 +14,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
 
     public static final String TITLE = "My Title";

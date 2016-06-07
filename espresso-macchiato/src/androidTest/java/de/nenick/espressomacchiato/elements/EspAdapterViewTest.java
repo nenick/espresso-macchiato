@@ -5,6 +5,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.LongListActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspAdapterViewTest extends EspressoTestCase<LongListActivity> {
 
     private EspAdapterView espAdapterView = EspAdapterView.byId(LongListActivity.listViewId);

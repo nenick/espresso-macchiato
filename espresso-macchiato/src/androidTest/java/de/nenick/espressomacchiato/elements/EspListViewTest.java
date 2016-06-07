@@ -6,6 +6,7 @@ import de.nenick.espressomacchiato.test.R;
 import de.nenick.espressomacchiato.test.views.LongListActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspListViewTest extends EspressoTestCase<LongListActivity> {
 
     private EspListView espListView = EspListView.byId(R.id.list);

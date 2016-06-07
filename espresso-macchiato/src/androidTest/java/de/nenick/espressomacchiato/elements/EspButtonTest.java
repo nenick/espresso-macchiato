@@ -8,6 +8,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspButtonTest extends EspressoTestCase<BaseActivity> {
 
     private String buttonText = "my button";

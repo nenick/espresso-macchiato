@@ -5,6 +5,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.LongListActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspListViewItemTest extends EspressoTestCase<LongListActivity> {
 
     @Test

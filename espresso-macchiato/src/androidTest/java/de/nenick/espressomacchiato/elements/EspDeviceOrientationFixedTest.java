@@ -10,6 +10,7 @@ import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.test.views.LandscapeFixedActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspDeviceOrientationFixedTest extends EspressoTestCase<LandscapeFixedActivity> {
 
     private EspDevice espDevice = EspDevice.root();

@@ -7,12 +7,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
-import de.nenick.espressomacchiato.tools.EspPermissionsTool;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
+import de.nenick.espressomacchiato.tools.EspPermissionsTool;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+/** Basic tests */
 public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
 
     private static final int REQUEST_CODE = 42;

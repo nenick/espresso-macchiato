@@ -13,6 +13,7 @@ import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
 
     public static final String TITLE = "My Title";

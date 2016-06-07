@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import de.nenick.espressomacchiato.testbase.EspressoTestBase;
 
+/** Basic tests */
 public class EspSystemDialogTest extends EspressoTestBase {
 
     @Override

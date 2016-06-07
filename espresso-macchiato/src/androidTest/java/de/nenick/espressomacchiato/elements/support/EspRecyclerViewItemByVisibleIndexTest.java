@@ -14,6 +14,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
+/** Basic tests */
 public class EspRecyclerViewItemByVisibleIndexTest extends EspressoTestCase<LongRecyclerActivity> {
     private EspRecyclerView espRecyclerView = EspRecyclerView.byId(LongRecyclerActivity.recyclerViewId);
 

@@ -9,6 +9,7 @@ import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 import de.nenick.espressomacchiato.tools.EspResourceTool;
 
+/** Basic tests */
 public class EspSystemAnrDialogTest extends EspressoTestCase<BaseActivity> {
 
     @Before

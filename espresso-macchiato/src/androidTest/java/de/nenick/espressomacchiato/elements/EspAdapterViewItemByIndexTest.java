@@ -7,6 +7,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
+/** Basic tests */
 public class EspAdapterViewItemByIndexTest extends EspressoTestCase<LongListActivity> {
 
     private EspAdapterView espAdapterView = EspAdapterView.byId(LongListActivity.listViewId);

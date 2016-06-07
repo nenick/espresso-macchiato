@@ -7,6 +7,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.junit.Assert.assertNotNull;
 
+/** Basic tests */
 public class EspDialogTest extends EspressoTestCase<BaseActivity> {
 
     @Test

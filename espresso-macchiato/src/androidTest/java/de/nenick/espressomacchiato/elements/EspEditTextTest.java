@@ -10,6 +10,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+/** Basic tests */
 public class EspEditTextTest extends EspressoTestCase<BaseActivity> {
 
     public static final String INITIAL_TEXT = "My Text";

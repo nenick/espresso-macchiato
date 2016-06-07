@@ -8,8 +8,18 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
 
+/**
+ * Base for actions and assertions for a system dialog.
+ *
+ * @since Espresso Macchiato 0.4
+ */
 public abstract class EspSystemDialog {
 
+    /**
+     * Dismiss system dialog if shown.
+     *
+     * @since Espresso Macchiato 0.4
+     */
     public void dismissIfShown() {
         // uiautomator is only available since android v18
         // early android version emulator rarely show ANR dialog

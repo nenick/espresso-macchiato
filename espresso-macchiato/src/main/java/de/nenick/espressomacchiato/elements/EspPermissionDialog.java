@@ -10,25 +10,61 @@ import android.support.test.uiautomator.UiSelector;
 import de.nenick.espressomacchiato.tools.EspPermissionsTool;
 import de.nenick.espressomacchiato.tools.EspWait;
 
+/**
+ * Actions and assertions for a permission request dialog.
+ *
+ * You must provide the expected permissions.
+ * It is necessary to avoid test crashes when you accedentely remove a granted permission.
+ * This type of error is not easy to detect when it occurs.
+ *
+ * For pre marshmallow version mostly all functions are disabled to avoid errors.
+ *
+ * @since Espresso Macchiato 0.2
+ */
 public class EspPermissionDialog {
 
     /**
-     * wait below 1000ms was sometimes not enough for permissions update on circle ci emulator
+     * Delay after clicking any permissions dialog button.
+     *
+     * Less than 1000ms was sometimes not enough for permissions update on circle ci emulator
      */
     public static int DELAY_FOR_UPDATE_PERMISSION_STATE = 1000;
     private String[] permissions;
 
-    public static EspPermissionDialog build(String ... permissions) {
+    /**
+     * Create new element instance for given permissions.
+     *
+     * @param permissions List of requested permissions.
+     *
+     * @return New element instance for actions and assertions.
+     *
+     * @since Espresso Macchiato 0.2
+     */
+    public static EspPermissionDialog build(String... permissions) {
         return new EspPermissionDialog(permissions);
     }
 
+    /**
+     * Create new element instance for given permissions.
+     *
+     * @param permissions List of requested permissions.
+     *
+     * @since Espresso Macchiato 0.2
+     */
     public EspPermissionDialog(String[] permissions) {
-        if(permissions.length < 1) {
+        if (permissions.length < 1) {
             throw new IllegalStateException("No expected permissions specified. This could lead to curious test failures.");
         }
         this.permissions = permissions;
     }
 
+    /**
+     * Perform click on allow permission button.
+     *
+     * This will fail if no permission dialog is shown except on pre Android M version.
+     *
+     * @since Espresso Macchiato 0.2
+     */
     public void allow() {
         // permissions handling only available since android marshmallow
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -40,14 +76,15 @@ public class EspPermissionDialog {
     }
 
     /**
-     * Warning: revoke an already granted permission would force your app to restart (test fail).
-     * <p>
-     * Deny tests should be the first executed tests.
-     * Before test run ensure that all permission are revoked.
-     * <p>
-     * 1. Option: ordered test execution to force deny test first @FixMethodOrder(MethodSorters.NAME_ASCENDING) to avoid revoke
-     * <p>
-     * 2. Option: reset all permissions {@link EspPermissionsTool#resetAllPermission()}
+     * Perform click on deny permission button.
+     *
+     * This will fail if no permission dialog is shown except on pre Android M version..
+     *
+     * > Warning: Revoking an already granted permission would force your app to restart (test fail).
+     * You can workaround with @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+     * or use {@link EspPermissionsTool#resetAllPermission()} which does not restart your app.
+     *
+     * @since Espresso Macchiato 0.2
      */
     public void deny() {
         // permissions handling only available since android marshmallow
@@ -55,7 +92,7 @@ public class EspPermissionDialog {
             return;
         }
         avoidAppCrashWhenDenyGrantedPermission();
-        //In Android N the Package is com.google.android.packageinstaller
+        //In Android N preview the Package changed to com.google.android.packageinstaller
         click("com.android.packageinstaller:id/permission_deny_button");
         waitUntilPermissionIsChanged();
     }

@@ -13,6 +13,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
     private static final String VIEW_WAS_CLICKED_MESSAGE = "view was clicked";

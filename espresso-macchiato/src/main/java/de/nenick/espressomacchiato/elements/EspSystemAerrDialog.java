@@ -2,12 +2,23 @@ package de.nenick.espressomacchiato.elements;
 
 import de.nenick.espressomacchiato.tools.EspResourceTool;
 
+/**
+ * Actions and assertions for an Application Error dialog.
+ *
+ * @since Espresso Macchiato 0.4
+ */
 public class EspSystemAerrDialog extends EspSystemDialog {
 
+    /**
+     * Create new element instance.
+     *
+     * @return New element instance for actions and assertions.
+     *
+     * @since Espresso Macchiato 0.4
+     */
     public static EspSystemAerrDialog build() {
         return new EspSystemAerrDialog();
     }
-
 
     @Override
     protected void dismissIfShownInternal() {

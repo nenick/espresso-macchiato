@@ -3,15 +3,28 @@ package de.nenick.espressomacchiato.elements;
 import de.nenick.espressomacchiato.tools.EspResourceTool;
 
 /**
- * Pre configured {@link EspDialog} for general {@link android.support.v7.app.AlertDialog}.
+ * Pre configured {@link EspDialog} for common {@link android.app.AlertDialog}.
+ *
+ * @since Espresso Macchiato 0.2
  */
 public class EspAlertDialog extends EspDialog {
 
-    @Deprecated // mark parent static method as not usable for this class
+    /**
+     * @since Espresso Macchiato 0.2
+     * @deprecated Currently not supported please use a different element creator.
+     */
+    @Deprecated
     public static Spec spec() {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Create new element instance.
+     *
+     * @return New element instance for actions and assertions.
+     *
+     * @since Espresso Macchiato 0.2
+     */
     public static EspAlertDialog build() {
         return new EspAlertDialog(EspDialog.spec()
                 .withRoot(EspResourceTool.idByName("parentPanel"))
@@ -22,10 +35,24 @@ public class EspAlertDialog extends EspDialog {
                 .withCancelButton(android.R.id.button3));
     }
 
+    /**
+     * Create new instance with given specification.
+     *
+     * @param spec Dialog specification for common buttons and text views.
+     *
+     * @since Espresso Macchiato 0.2
+     */
     public EspAlertDialog(Spec spec) {
         super(spec);
     }
 
+    /**
+     * Create new instance based on given element matcher.
+     *
+     * @param template Pre configured element matcher.
+     *
+     * @since Espresso Macchiato 0.5
+     */
     public EspAlertDialog(EspAlertDialog template) {
         super(template);
     }

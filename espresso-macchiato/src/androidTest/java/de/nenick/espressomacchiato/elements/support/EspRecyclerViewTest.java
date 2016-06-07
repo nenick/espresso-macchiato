@@ -5,6 +5,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.LongRecyclerActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspRecyclerViewTest extends EspressoTestCase<LongRecyclerActivity> {
     private EspRecyclerView espRecyclerView = EspRecyclerView.byId(LongRecyclerActivity.recyclerViewId);
 

@@ -24,48 +24,99 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.not;
 
+/**
+ * Basic view actions and assertions for a common view.
+ *
+ * Used as base class for mostly all view elements.
+ * Extending this element is a good starting point if you need to create a new view element.
+ *
+ * @since Espresso Macchiato 0.1
+ */
 public class EspView {
 
     private final Matcher<View> baseMatcher;
 
+    /**
+     * Create new instance matching an element with given resourceId.
+     *
+     * @param resourceId Identifier for this element.
+     *
+     * @since Espresso Macchiato 0.1
+     */
     public static EspView byId(int resourceId) {
         return new EspView(resourceId);
     }
 
+    /**
+     * Create an allOf matcher builder for this element.
+     *
+     * @since Espresso Macchiato 0.4
+     */
     public static EspAllOfBuilder<? extends EspView> byAll() {
         return new EspAllOfBuilder<EspView>() {
         };
     }
 
+    /**
+     * Create new instance matching an element with given resourceId.
+     *
+     * @param resourceId Identifier for this element.
+     *
+     * @since Espresso Macchiato 0.1
+     */
     public EspView(int resourceId) {
         this.baseMatcher = withId(resourceId);
     }
 
+    /**
+     * Create new element instance with custom base matcher.
+     *
+     * @param base Matcher for this element.
+     *
+     * @since Espresso Macchiato 0.2
+     */
     public EspView(Matcher<View> base) {
         this.baseMatcher = base;
     }
 
+    /**
+     * Create new instance based on given element matcher.
+     *
+     * @param template Pre configured element matcher.
+     *
+     * @since Espresso Macchiato 0.5
+     */
     public EspView(EspView template) {
         this.baseMatcher = template.baseMatcher();
     }
 
     /**
-     * Assert you can see the whole view.
-     * <p>
+     * Check that a view is currently full shown on the screen so the user can see it.
+     *
+     * A view can exist and is in state visible but not currently displayed.
      * When the view height or width is greater than the screen it would still match.
+     *
+     * @since Espresso Macchiato 0.3
      */
     public void assertIsDisplayedOnScreen() {
         findView().check(matches(EspIsDisplayedMatcher.isDisplayingAtLeast(100)));
     }
 
+    /**
+     * Check that the view is in state visible.
+     *
+     * @since Espresso Macchiato 0.3
+     */
     public void assertIsVisible() {
         findView().check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
     /**
-     * Assert that you can't see the view.
-     * <p>
-     * Does only work if the view is still part of the view hierarchy.
+     * Check that you can't see the view.
+     *
+     * True when the view is in state invisible or gone or current not visible on screen.
+     *
+     * @since Espresso Macchiato 0.3
      */
     public void assertIsHidden() {
         findView().check(matches(anyOf(
@@ -75,31 +126,68 @@ public class EspView {
     }
 
     /**
-     * Assert you can only see a small part of the view.
-     * <p>
+     * Check only a small part of the view is visible on screen.
+     *
      * Does fail if the view is fully displayed.
+     *
+     * @since Espresso Macchiato 0.4
      */
     public void assertIsPartiallyDisplayedOnly() {
         findView().check(matches(allOf(EspIsDisplayedMatcher.isDisplayingAtLeast(1), not(EspIsDisplayedMatcher.isDisplayingAtLeast(100)))));
     }
 
     /**
-     * Assert that view is not a part of the view hierarchy.
+     * Check that no view matches the given matcher in the view hierarchy.
+     *
+     * @since Espresso Macchiato 0.1
      */
     public void assertNotExist() {
         findView().check(doesNotExist());
     }
 
+    /**
+     * Check that the view is in state enabled.
+     *
+     * @since Espresso Macchiato 0.1
+     */
     public void assertIsEnabled() {
         findView().check(matches(isEnabled()));
     }
 
+    /**
+     * Check that the view is in state disabled.
+     *
+     * @since Espresso Macchiato 0.1
+     */
     public void assertIsDisabled() {
         findView().check(matches(not(isEnabled())));
     }
 
+    /**
+     * Perform click on the view.
+     *
+     * @since Espresso Macchiato 0.1
+     */
     public void click() {
         findView(isDisplayed()).perform(ViewActions.click());
+    }
+
+    /**
+     * Perform swipe up on the view.
+     *
+     * @since Espresso Macchiato 0.4
+     */
+    public void swipeUp() {
+        findView().perform(ViewActions.swipeUp());
+    }
+
+    /**
+     * Perform swipe down on the view.
+     *
+     * @since Espresso Macchiato 0.4
+     */
+    public void swipeDown() {
+        findView().perform(ViewActions.swipeDown());
     }
 
     @SafeVarargs
@@ -113,14 +201,4 @@ public class EspView {
     public Matcher<View> baseMatcher() {
         return baseMatcher;
     }
-
-    public void swipeUp() {
-        findView().perform(ViewActions.swipeUp());
-    }
-
-    public void swipeDown() {
-        findView().perform(ViewActions.swipeDown());
-    }
-
-
 }
