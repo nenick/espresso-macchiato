@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.mocks;
+package de.nenick.espressomacchiato.intents;
 
 import android.app.Activity;
 import android.content.ContentUris;
@@ -15,7 +15,8 @@ import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.OnActivityResultActivity;
 import de.nenick.espressomacchiato.testbase.EspressoIntentTestCase;
 
-public class EspContactPickerMockTest extends EspressoIntentTestCase<OnActivityResultActivity> {
+/** Basic tests */
+public class EspContactStubTest extends EspressoIntentTestCase<OnActivityResultActivity> {
 
     private static final int REQUEST_CODE = 123;
     private static final int CONTACT_ID = 42;
@@ -24,23 +25,21 @@ public class EspContactPickerMockTest extends EspressoIntentTestCase<OnActivityR
     private EspTextView dataTextView = EspTextView.byId(OnActivityResultActivity.dataResource);
     private OnActivityResultActivity activity;
 
-    private EspContactPickerMock espContactPickerMock = new EspContactPickerMock();
-
     @Before
     public void setup() {
         activity = activityTestRule.getActivity();
         activity.setListener(new OnActivityResultActivity.OnActivityResultListener() {
             @Override
             public void onActivityResult(int requestCode, int resultCode, Intent data) {
-                activity.setDataViewText(data.getData().toString());
+                activity.setDataViewText(String.valueOf(data.getData()));
             }
         });
     }
 
     @Test
-    public void testContactPickerMock() {
+    public void testContactPickerStub() {
         Uri dummyContactDataUri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, CONTACT_ID);
-        espContactPickerMock.registerMockWithData(dummyContactDataUri);
+        EspContactStub.register(dummyContactDataUri);
 
         activity.startForResult(createContactPickerIntent(), REQUEST_CODE);
 
@@ -50,9 +49,9 @@ public class EspContactPickerMockTest extends EspressoIntentTestCase<OnActivityR
     }
 
     @Test
-    public void testContactPickerMockWithExtraMatcher() {
+    public void testContactPickerStubWithExtraMatcher() {
         Uri dummyContactDataUri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, CONTACT_ID);
-        espContactPickerMock.registerMockWithData(dummyContactDataUri, IntentMatchers.hasExtraWithKey("MyKey"));
+        EspContactStub.register(dummyContactDataUri, Activity.RESULT_OK, IntentMatchers.hasExtraWithKey("MyKey"));
 
         Intent contactPickerIntent = createContactPickerIntent();
         contactPickerIntent.putExtra("MyKey", "myValue");
@@ -65,16 +64,9 @@ public class EspContactPickerMockTest extends EspressoIntentTestCase<OnActivityR
 
     @Test
     @Ignore("result will be delivered in tear down, after all checks are done")
-    public void testContactPickerMockWhenNotMatching() {
-        activity.setListener(new OnActivityResultActivity.OnActivityResultListener() {
-            @Override
-            public void onActivityResult(int requestCode, int resultCode, Intent data) {
-                activity.setDataViewText(String.valueOf(data.getData()));
-            }
-        });
-
+    public void testWhenNotMatchingExtraMatcher() {
         Uri dummyContactDataUri = ContentUris.withAppendedId(ContactsContract.Data.CONTENT_URI, CONTACT_ID);
-        espContactPickerMock.registerMockWithData(dummyContactDataUri, IntentMatchers.hasExtraWithKey("MyKey"));
+        EspContactStub.register(dummyContactDataUri, Activity.RESULT_OK, IntentMatchers.hasExtraWithKey("MyKey"));
 
         activity.startForResult(createContactPickerIntent(), REQUEST_CODE);
 
