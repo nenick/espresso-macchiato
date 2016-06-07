@@ -3,8 +3,8 @@ de.nenick.espressomacchiato.assertions
 de.nenick.espressomacchiato.assertions.support
 de.nenick.espressomacchiato.elements
 de.nenick.espressomacchiato.elements.support
+de.nenick.espressomacchiato.intents
 de.nenick.espressomacchiato.matchers
 de.nenick.espressomacchiato.matchers.support
-de.nenick.espressomacchiato.mocks
 de.nenick.espressomacchiato.testbase
 de.nenick.espressomacchiato.tools
