@@ -3,18 +3,36 @@ package android.support.test.uiautomator;
 /** Attention only stubbed */
 public class UiSelector {
 
-    /** Attention only stubbed */
+    /**
+     * Attention only stubbed
+     *
+     * @param text Attention only stubbed
+     *
+     * @return Attention only stubbed
+     */
     public UiSelector text(String text) {
         return null;
     }
 
-    /** Attention only stubbed */
-    public UiSelector textMatches (String regex) {
+    /**
+     * Attention only stubbed
+     *
+     * @param regex Attention only stubbed
+     *
+     * @return Attention only stubbed
+     */
+    public UiSelector textMatches(String regex) {
         return null;
     }
 
-    /** Attention only stubbed */
-    public UiSelector resourceId (String id){
+    /**
+     * Attention only stubbed
+     *
+     * @param id Attention only stubbed
+     *
+     * @return Attention only stubbed
+     */
+    public UiSelector resourceId(String id) {
         return null;
     }
 }

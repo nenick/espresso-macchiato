@@ -41,6 +41,8 @@ public class EspView {
      *
      * @param resourceId Identifier for this element.
      *
+     * @return New element instance for actions and assertions.
+     *
      * @since Espresso Macchiato 0.1
      */
     public static EspView byId(int resourceId) {
@@ -49,6 +51,8 @@ public class EspView {
 
     /**
      * Create an allOf matcher builder for this element.
+     *
+     * @return New allOf matcher builder.
      *
      * @since Espresso Macchiato 0.4
      */
@@ -87,7 +91,7 @@ public class EspView {
      * @since Espresso Macchiato 0.5
      */
     public EspView(EspView template) {
-        this.baseMatcher = template.baseMatcher();
+        this.baseMatcher = template.baseMatcher;
     }
 
     /**
@@ -190,15 +194,18 @@ public class EspView {
         findView().perform(ViewActions.swipeDown());
     }
 
+    /**
+     * Find view to perform actions or assertions.
+     *
+     * @param additional Provide extra matcher additional to the base matcher.
+     *
+     * @return View interaction to perform actions or assertions.
+     */
     @SafeVarargs
     protected final ViewInteraction findView(Matcher<View>... additional) {
         ArrayList<Matcher<? super View>> allMatcher = new ArrayList<>();
         allMatcher.add(baseMatcher);
         allMatcher.addAll(Arrays.asList(additional));
         return onView(allOf(allMatcher));
-    }
-
-    public Matcher<View> baseMatcher() {
-        return baseMatcher;
     }
 }

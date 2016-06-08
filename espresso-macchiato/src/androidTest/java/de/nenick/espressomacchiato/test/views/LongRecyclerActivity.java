@@ -88,6 +88,7 @@ public class LongRecyclerActivity extends Activity {
         }
     }
 
+    /** Adapter with some dummy data */
     private class LongListAdapter extends RecyclerView.Adapter<VHolder> {
 
         @Override

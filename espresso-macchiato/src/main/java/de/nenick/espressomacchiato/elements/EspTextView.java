@@ -24,6 +24,8 @@ public class EspTextView extends EspView {
      *
      * @param resourceId Identifier for this element.
      *
+     * @return New element instance for actions and assertions.
+     *
      * @since Espresso Macchiato 0.1
      */
     public static EspTextView byId(int resourceId) {
@@ -35,6 +37,8 @@ public class EspTextView extends EspView {
      *
      * @param text Identifier for this element.
      *
+     * @return New element instance for actions and assertions.
+     *
      * @since Espresso Macchiato 0.2
      */
     public static EspTextView byText(String text) {
@@ -44,10 +48,13 @@ public class EspTextView extends EspView {
     /**
      * Create an allOf matcher builder for this element.
      *
+     * @return New allOf matcher builder.
+     *
      * @since Espresso Macchiato 0.4
      */
     public static EspAllOfBuilder<? extends EspTextView> byAll() {
-        return new EspAllOfBuilder<EspTextView>() {};
+        return new EspAllOfBuilder<EspTextView>() {
+        };
     }
 
     /**

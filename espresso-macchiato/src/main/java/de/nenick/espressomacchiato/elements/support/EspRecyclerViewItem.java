@@ -80,7 +80,7 @@ public class EspRecyclerViewItem extends EspView {
      * @since Espresso Macchiato 0.5
      */
     public EspRecyclerViewItem(EspRecyclerViewItem template) {
-        super(template.baseMatcher());
+        super(template);
         this.recyclerViewId = template.recyclerViewId;
         this.index = template.index;
         this.mode = template.mode;

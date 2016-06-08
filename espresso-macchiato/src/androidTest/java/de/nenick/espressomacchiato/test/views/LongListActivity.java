@@ -72,6 +72,7 @@ public class LongListActivity extends Activity {
         }
     }
 
+    /** Adapter with some dummy data */
     private class LongListAdapter extends SimpleAdapter {
 
         public LongListAdapter(String[] from, int[] to) {

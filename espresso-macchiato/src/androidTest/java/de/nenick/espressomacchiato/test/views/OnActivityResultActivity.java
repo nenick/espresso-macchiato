@@ -20,6 +20,7 @@ public class OnActivityResultActivity extends AppCompatActivity {
     private TextView dataView;
     private OnActivityResultListener listener;
 
+    /** Listener for activity results */
     public interface OnActivityResultListener {
         void onActivityResult(int requestCode, int resultCode, Intent data);
     }

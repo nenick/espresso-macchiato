@@ -14,11 +14,13 @@ public class PersonDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /** Simple create method */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(PersonContract.SQL_CREATE);
     }
 
+    /** Simple update method */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         throw new UnsupportedOperationException();

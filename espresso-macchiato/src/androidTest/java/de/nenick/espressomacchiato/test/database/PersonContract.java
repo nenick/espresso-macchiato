@@ -10,6 +10,7 @@ public class PersonContract {
                     Entry._ID + " INTEGER PRIMARY KEY," +
                     Entry.COLUMN_NAME + " TEXT" + " )";
 
+    /** Dummy test database contract */
     public static abstract class Entry implements BaseColumns {
         public static final String TABLE_NAME = "person";
         public static final String COLUMN_NAME = "name";

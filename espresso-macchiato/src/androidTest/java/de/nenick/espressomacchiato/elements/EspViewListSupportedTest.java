@@ -59,6 +59,7 @@ public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity>
         });
     }
 
+    /** Element extension */
     class MyEspListView extends EspListView {
 
         public MyEspListView(EspListView template) {
@@ -71,6 +72,7 @@ public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity>
         }
     }
 
+    /** Element extension */
     class MyEspAdapterViewItem extends EspAdapterViewItem {
 
         public MyEspAdapterViewItem(EspAdapterViewItem template) {

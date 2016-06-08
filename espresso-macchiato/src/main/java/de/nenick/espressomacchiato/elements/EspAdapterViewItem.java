@@ -159,9 +159,8 @@ public class EspAdapterViewItem extends EspView {
     }
 
     /**
-     * @deprecated Currently not supported please use a different element creator.
-     *
      * @since Espresso Macchiato 0.3
+     * @deprecated Currently not supported please use a different element creator.
      */
     @Deprecated
     public static EspView byId(int resourceId) {

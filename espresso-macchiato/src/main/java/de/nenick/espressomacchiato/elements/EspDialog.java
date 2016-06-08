@@ -14,15 +14,6 @@ public class EspDialog extends EspView {
     protected Spec spec;
 
     /**
-     * @since Espresso Macchiato 0.2
-     * @deprecated Currently not supported please use a different element creator.
-     */
-    @Deprecated // mark parent static method as not usable for this class
-    public static EspView byId(int rootResource) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * Start creating new element instance with given specification.
      *
      * @return New dialog specification builder.
@@ -232,5 +223,15 @@ public class EspDialog extends EspView {
      */
     public void dismiss() {
         Espresso.pressBack();
+    }
+
+
+    /**
+     * @since Espresso Macchiato 0.2
+     * @deprecated Currently not supported please use a different element creator.
+     */
+    @Deprecated // mark parent static method as not usable for this class
+    public static EspView byId(int rootResource) {
+        throw new UnsupportedOperationException();
     }
 }

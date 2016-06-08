@@ -19,6 +19,8 @@ public class EspAdapterView extends EspView {
      *
      * @param resourceId Identifier for this element.
      *
+     * @return New element instance for action and assertions.
+     *
      * @since Espresso Macchiato 0.3
      */
     public static EspAdapterView byId(int resourceId) {

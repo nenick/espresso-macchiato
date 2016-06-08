@@ -19,6 +19,8 @@ public class EspButton extends EspView {
      *
      * @param resourceId Identifier for this element.
      *
+     * @return New element instance for actions and assertions.
+     *
      * @since Espresso Macchiato 0.1
      */
     public static EspButton byId(int resourceId) {
@@ -29,6 +31,8 @@ public class EspButton extends EspView {
      * Create new instance matching an element with given text.
      *
      * @param text Identifier for this element.
+     *
+     * @return New element instance for actions and assertions.
      *
      * @since Espresso Macchiato 0.2
      */

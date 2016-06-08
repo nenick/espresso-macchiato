@@ -10,15 +10,6 @@ import de.nenick.espressomacchiato.tools.EspResourceTool;
 public class EspAlertDialog extends EspDialog {
 
     /**
-     * @since Espresso Macchiato 0.2
-     * @deprecated Currently not supported please use a different element creator.
-     */
-    @Deprecated
-    public static Spec spec() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * Create new element instance.
      *
      * @return New element instance for actions and assertions.
@@ -55,5 +46,14 @@ public class EspAlertDialog extends EspDialog {
      */
     public EspAlertDialog(EspAlertDialog template) {
         super(template);
+    }
+
+    /**
+     * @since Espresso Macchiato 0.2
+     * @deprecated Currently not supported please use a different element creator.
+     */
+    @Deprecated
+    public static Spec spec() {
+        throw new UnsupportedOperationException();
     }
 }

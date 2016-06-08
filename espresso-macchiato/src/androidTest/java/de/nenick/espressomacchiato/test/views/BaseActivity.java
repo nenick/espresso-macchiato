@@ -11,6 +11,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public static int rootLayout = R.id.layout_activity_base;
 
+    /** Simple create method */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

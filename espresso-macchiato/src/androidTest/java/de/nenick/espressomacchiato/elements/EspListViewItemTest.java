@@ -17,6 +17,7 @@ public class EspListViewItemTest extends EspressoTestCase<LongListActivity> {
         new MyEspListViewItem(EspAdapterViewItem.byItemIndex(0, 0));
     }
 
+    /** Element extension */
     class MyEspListViewItem extends EspListViewItem {
         public MyEspListViewItem(EspAdapterViewItem template) {
             super(template);

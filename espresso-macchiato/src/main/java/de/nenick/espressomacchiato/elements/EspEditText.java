@@ -23,6 +23,8 @@ public class EspEditText extends EspTextView {
      *
      * @param resourceId Identifier for this element.
      *
+     * @return New element instance for actions and assertions.
+     *
      * @since Espresso Macchiato 0.1
      */
     public static EspEditText byId(int resourceId) {
@@ -34,6 +36,8 @@ public class EspEditText extends EspTextView {
      *
      * @param text Identifier for this element.
      *
+     * @return New element instance for actions and assertions.
+     *
      * @since Espresso Macchiato 0.2
      */
     public static EspEditText byText(String text) {
@@ -43,10 +47,13 @@ public class EspEditText extends EspTextView {
     /**
      * Create an allOf matcher builder for this element.
      *
+     * @return New allOf matcher builder.
+     *
      * @since Espresso Macchiato 0.4
      */
     public static EspAllOfBuilder<EspEditText> byAll() {
-        return new EspAllOfBuilder<EspEditText>() {};
+        return new EspAllOfBuilder<EspEditText>() {
+        };
     }
 
     /**
@@ -92,11 +99,10 @@ public class EspEditText extends EspTextView {
      * @since Espresso Macchiato 0.1
      */
     public void replaceText(String newText) {
-       findView().perform(ViewActions.replaceText(newText));
+        findView().perform(ViewActions.replaceText(newText));
     }
 
     /**
-     *
      * Check that the element hint has the expected text.
      *
      * @param expectedText Expected hint text.
