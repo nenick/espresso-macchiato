@@ -7,7 +7,7 @@ import de.nenick.espressomacchiato.elements.EspTextView;
 
 import de.nenick.espressomacchiato.sampleapp.R;
 
-
+/** Sample test page object */
 public class EspLoginPage extends EspPage {
 
     public EspLoginPage() {

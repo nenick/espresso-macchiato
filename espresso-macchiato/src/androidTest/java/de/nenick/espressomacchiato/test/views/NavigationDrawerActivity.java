@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import de.nenick.espressomacchiato.test.R;
 
+/** Activity with drawer layout */
 public class NavigationDrawerActivity extends AppCompatActivity {
 
     public static int rootLayout = R.id.layout_activity_navigation_drawer;

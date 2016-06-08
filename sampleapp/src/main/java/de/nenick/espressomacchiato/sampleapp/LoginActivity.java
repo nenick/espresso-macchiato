@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+/** Dummy Login activity with only fail logic */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText password;

@@ -19,6 +19,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+/** Basic test */
 public class EspScreenshotToolTest extends EspressoTestCase<BaseActivity> {
 
     public static final String PICTURE_TEST_SCREEN = "Picture Test Screen";

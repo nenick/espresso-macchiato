@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 
+/** Basic test */
 public class EspFindTestClassFunctionTest extends EspressoTestCase<BaseActivity> {
 
     @Before

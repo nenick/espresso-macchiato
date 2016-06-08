@@ -29,6 +29,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+/** Basic test */
 public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
 
     private static final String PRFERENCE_FALLBACK_VALUE = "not exist";

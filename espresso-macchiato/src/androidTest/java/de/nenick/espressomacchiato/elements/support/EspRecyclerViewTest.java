@@ -35,6 +35,7 @@ public class EspRecyclerViewTest extends EspressoTestCase<LongRecyclerActivity> 
         espRecyclerView.itemByItemIndex(0).assertIsDisplayedOnScreen();
     }
 
+    /** Element extension */
     class MyEspRecyclerView extends EspRecyclerView {
         public MyEspRecyclerView(EspRecyclerView template) {
             super(template);

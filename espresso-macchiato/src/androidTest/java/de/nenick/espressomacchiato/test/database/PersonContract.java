@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.test.database;
 
 import android.provider.BaseColumns;
 
+/** Dummy test database contract */
 public class PersonContract {
 
     public static final String SQL_CREATE =

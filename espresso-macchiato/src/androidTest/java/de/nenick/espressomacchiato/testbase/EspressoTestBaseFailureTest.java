@@ -9,6 +9,7 @@ import de.nenick.espressomacchiato.test.views.BaseActivity;
 
 import static org.junit.Assert.assertNotNull;
 
+/** Basic test */
 public class EspressoTestBaseFailureTest extends EspressoTestBase {
 
     @Rule

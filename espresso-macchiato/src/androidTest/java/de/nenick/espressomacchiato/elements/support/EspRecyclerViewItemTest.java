@@ -20,6 +20,7 @@ public class EspRecyclerViewItemTest extends EspressoTestCase<LongRecyclerActivi
         myEspRecyclerViewItem.assertIsDisplayedOnScreen();
     }
 
+    /** Element extension */
     class MyEspRecyclerViewItem extends EspRecyclerViewItem {
 
         public MyEspRecyclerViewItem(EspRecyclerViewItem template) {

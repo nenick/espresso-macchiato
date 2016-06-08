@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import de.nenick.espressomacchiato.test.R;
 
+/** Simple activity but with fixed orientation. */
 public class LandscapeFixedActivity extends AppCompatActivity {
 
     public static int rootLayout = R.id.layout_activity_landscape_fixed;

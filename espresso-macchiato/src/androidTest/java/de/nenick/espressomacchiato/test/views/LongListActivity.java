@@ -19,6 +19,8 @@ import java.util.Map;
 import de.nenick.espressomacchiato.test.R;
 
 /**
+ * Activity with ListView and 100 entries.
+ *
  * Copy of from https://github.com/googlesamples/android-testing/blob/master/ui/espresso/DataAdapterSample/app/src/main/java/com/example/android/testing/espresso/DataAdapterSample/LongListActivity.java
  */
 public class LongListActivity extends Activity {

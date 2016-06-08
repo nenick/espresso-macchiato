@@ -5,6 +5,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.sampleapp.LoginActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** sample test using page objects */
 public class LoginTest extends EspressoTestCase<LoginActivity> {
 
     private EspLoginPage loginPage = new EspLoginPage();

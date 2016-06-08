@@ -11,6 +11,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.junit.Assert.assertFalse;
 
+/** Basic test */
 public class EspRecyclerViewMatcherTest extends EspressoTestCase<LongRecyclerActivity> {
 
     @Test

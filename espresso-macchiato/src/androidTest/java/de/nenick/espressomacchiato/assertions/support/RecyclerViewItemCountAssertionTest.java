@@ -10,6 +10,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
+/** Basic test */
 public class RecyclerViewItemCountAssertionTest extends EspressoTestCase<BaseActivity> {
 
     @Test

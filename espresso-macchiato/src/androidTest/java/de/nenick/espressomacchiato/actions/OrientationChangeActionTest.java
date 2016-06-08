@@ -8,6 +8,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic test */
 public class OrientationChangeActionTest extends EspressoTestCase<BaseActivity> {
 
     private OrientationChangeAction orientationChangeAction = OrientationChangeAction.orientationLandscape();

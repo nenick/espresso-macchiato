@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import de.nenick.espressomacchiato.test.R;
 
+/** Simple activity with just a root layout */
 public class BaseActivity extends AppCompatActivity {
 
     public static int rootLayout = R.id.layout_activity_base;

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import de.nenick.espressomacchiato.test.R;
 
+/** Actvity with onActivityResult logic */
 public class OnActivityResultActivity extends AppCompatActivity {
 
     public static int requestCodeResource = R.id.requestCode;

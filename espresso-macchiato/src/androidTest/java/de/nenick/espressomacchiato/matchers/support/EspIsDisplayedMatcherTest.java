@@ -5,6 +5,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestBase;
 
+/** Basic test */
 public class EspIsDisplayedMatcherTest extends EspressoTestBase<BaseActivity> {
 
 

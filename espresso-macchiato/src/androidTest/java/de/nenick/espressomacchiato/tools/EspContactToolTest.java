@@ -18,6 +18,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+/** Basic test */
 public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivity> {
 
     private static final String TEST_CONTACT_NAME = "Test Contact";

@@ -19,7 +19,7 @@ import java.util.Map;
 import de.nenick.espressomacchiato.test.R;
 
 /**
- * Copy of from https://github.com/googlesamples/android-testing/blob/master/ui/espresso/DataAdapterSample/app/src/main/java/com/example/android/testing/espresso/DataAdapterSample/LongListActivity.java
+ * Activity with RecyclerView and 100 entries.
  */
 public class LongRecyclerActivity extends Activity {
 

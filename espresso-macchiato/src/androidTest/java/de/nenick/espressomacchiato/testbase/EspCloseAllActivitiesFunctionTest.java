@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 
+/** Basic test */
 public class EspCloseAllActivitiesFunctionTest extends EspressoTestCase<BaseActivity> {
 
     @Test

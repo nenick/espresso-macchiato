@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+/** Basic test */
 public class EspScreenshotFailureHandlerTest extends EspressoTestCase<BaseActivity> {
 
     private EspScreenshotFailureHandler espScreenshotFailureHandler = new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext());
@@ -73,6 +74,7 @@ public class EspScreenshotFailureHandlerTest extends EspressoTestCase<BaseActivi
         assertTrue(wasDelegateCalled);
     }
 
+    /** Dummy test exception */
     private static class TestException extends RuntimeException {
     }
 }

@@ -6,6 +6,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic test */
 public class EspWaitTest extends EspressoTestCase<BaseActivity> {
 
     @Before

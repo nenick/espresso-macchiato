@@ -16,6 +16,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
+/** Basic test */
 @SuppressWarnings("ResourceType")
 public class EspAllOfBuilderTest extends EspressoTestCase<BaseActivity> {
 

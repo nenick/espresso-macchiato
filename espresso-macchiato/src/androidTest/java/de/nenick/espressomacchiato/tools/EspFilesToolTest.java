@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import de.nenick.espressomacchiato.testbase.EspressoTestBase;
 
+/** Basic test */
 public class EspFilesToolTest extends EspressoTestBase {
 
     @Override

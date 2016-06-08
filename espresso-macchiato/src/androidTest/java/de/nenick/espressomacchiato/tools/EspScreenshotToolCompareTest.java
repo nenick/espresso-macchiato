@@ -17,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+/** Basic test */
 public class EspScreenshotToolCompareTest extends EspressoTestCase<NavigationDrawerActivity> {
 
     private static final double DELTA_FOR_DIFFERENT_DEVICES = 3.0;

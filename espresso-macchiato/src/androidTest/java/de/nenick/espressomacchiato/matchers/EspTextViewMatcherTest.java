@@ -13,6 +13,7 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.junit.Assert.assertFalse;
 
+/** Basic test */
 public class EspTextViewMatcherTest extends EspressoTestCase<BaseActivity> {
 
     public static final String BLACK = "Black";
