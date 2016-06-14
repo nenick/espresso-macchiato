@@ -193,6 +193,7 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         addViewToLayout(textView, BaseActivity.rootLayout);
     }
 
+    /** Element extension */
     class MyEspView extends EspView {
         public MyEspView(EspView template) {
             super(template);

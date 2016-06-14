@@ -9,6 +9,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.NavigationDrawerActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspDrawerTest extends EspressoTestCase<NavigationDrawerActivity> {
 
     private static final int GROUP_ID_STANDARD = 10;

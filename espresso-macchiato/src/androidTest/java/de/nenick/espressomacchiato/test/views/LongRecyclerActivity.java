@@ -64,6 +64,7 @@ public class LongRecyclerActivity extends Activity {
         }
     }
 
+    /** View holder for list entries */
     private class VHolder extends RecyclerView.ViewHolder {
 
         private TextView content;
