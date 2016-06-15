@@ -43,7 +43,7 @@ public class EspCameraStub {
      *
      * @since Espresso Macchiato 0.6
      */
-    public void register(Uri pictureLocation) {
+    public static void register(Uri pictureLocation) {
         Intent resultData = new Intent();
         resultData.setData(pictureLocation);
         intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData));
