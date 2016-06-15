@@ -177,6 +177,15 @@ public class EspView {
     }
 
     /**
+     * Perform long click on the view.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void longClick() {
+        findView(isDisplayed()).perform(ViewActions.longClick());
+    }
+
+    /**
      * Perform swipe up on the view.
      *
      * @since Espresso Macchiato 0.4
