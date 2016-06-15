@@ -32,6 +32,16 @@ public abstract class EspAllOfBuilder<ElementT extends EspView> {
         return this;
     }
 
+    public EspAllOfBuilder<ElementT> withText(String text) {
+        matcher.add(ViewMatchers.withText(text));
+        return this;
+    }
+
+    public EspAllOfBuilder<ElementT> withVisibility(ViewMatchers.Visibility visible) {
+        matcher.add(ViewMatchers.withEffectiveVisibility(visible));
+        return this;
+    }
+
     public ElementT build() {
         try {
             Matcher<View> allOfMatcher = Matchers.allOf(matcher);
