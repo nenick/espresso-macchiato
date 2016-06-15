@@ -63,7 +63,7 @@ public class EspRecyclerView extends EspView {
     /**
      * Access item by his visible index.
      *
-     * @param index That is the index which a human can see.
+     * @param index That is the index which a human can see. First item is at index 0.
      *
      * @return New element instance for action and assertions.
      *
