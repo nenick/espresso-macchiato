@@ -86,6 +86,17 @@ public class EspRecyclerView extends EspView {
         return EspRecyclerViewItem.byItemIndex(resourceId, index);
     }
 
+    /**
+     * Access the layout manager of this recycler view.
+     *
+     * @return New instance for action and assertions.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public EspRecyclerViewLayoutManager layoutManager() {
+        return new EspRecyclerViewLayoutManager(findView());
+    }
+
     private int resourceId() {
         return resourceId;
     }

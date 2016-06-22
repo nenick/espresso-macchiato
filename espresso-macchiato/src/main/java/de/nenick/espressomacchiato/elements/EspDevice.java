@@ -1,5 +1,7 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.content.res.Configuration;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 
@@ -31,7 +33,6 @@ public class EspDevice {
      * Create new element instance.
      *
      * @return New Instance for actions and assertions.
-     *
      * @since Espresso Macchiato 0.2
      */
     public static EspDevice root() {
@@ -96,6 +97,34 @@ public class EspDevice {
      */
     public void assertOrientationIsLandscape() {
         onView(isRoot()).check(isOrientationLandscape());
+    }
+
+    /**
+     * Compares the current device screen size to the size given as parameter.
+     * The method will only return true if and only if the screen size is an exact match. For example a large tablet is XLARGE but not LARGE.
+     *
+     * @param screenSize SCREENLAYOUT_SIZE constant from android.content.res.Configuration for example Configuration.SCREENLAYOUT_SIZE_XLARGE
+     * @return true, if actual screen size matches given size
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public boolean isScreenSizeEqualTo(int screenSize) {
+        int currentScreenSize = InstrumentationRegistry.getContext().getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+        return screenSize == currentScreenSize;
+    }
+
+    /**
+     * Compares the current device screen size to the size given as parameter.
+     * The method will return true if the actual screen size is equal to or smaller than the given screen size.
+     *
+     * @param screenSize SCREENLAYOUT_SIZE constant from android.content.res.Configuration for example Configuration.SCREENLAYOUT_SIZE_XLARGE
+     * @return true, if actual screen size is equal or greater than given size
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public boolean isScreenSizeAtLeast(int screenSize) {
+        int currentScreenSize = InstrumentationRegistry.getContext().getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+        return currentScreenSize <= screenSize;
     }
 
     /**
