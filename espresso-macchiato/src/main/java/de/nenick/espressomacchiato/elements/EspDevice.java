@@ -115,16 +115,16 @@ public class EspDevice {
 
     /**
      * Compares the current device screen size to the size given as parameter.
-     * The method will return true if the actual screen size is equal to or smaller than the given screen size.
+     * The method will return true if the actual screen size is equal to or greater than the given screen size.
      *
      * @param screenSize SCREENLAYOUT_SIZE constant from android.content.res.Configuration for example Configuration.SCREENLAYOUT_SIZE_XLARGE
-     * @return true, if actual screen size is equal or greater than given size
+     * @return true, if actual screen size is equal to or greater than given size
      *
      * @since Espresso Macchiato 0.6
      */
     public boolean isScreenSizeAtLeast(int screenSize) {
         int currentScreenSize = InstrumentationRegistry.getContext().getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
-        return currentScreenSize <= screenSize;
+        return currentScreenSize >= screenSize;
     }
 
     /**
