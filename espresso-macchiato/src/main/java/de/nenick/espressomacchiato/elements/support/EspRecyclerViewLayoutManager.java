@@ -3,6 +3,7 @@ package de.nenick.espressomacchiato.elements.support;
 import android.support.test.espresso.ViewInteraction;
 
 import de.nenick.espressomacchiato.assertions.support.GridLayoutManagerColumnCountAssertion;
+import de.nenick.espressomacchiato.assertions.support.LayoutManagerItemVisibilityAssertion;
 
 import static de.nenick.espressomacchiato.assertions.support.LayoutManagerTypeAssertion.isGridLayoutManager;
 
@@ -26,6 +27,14 @@ public class EspRecyclerViewLayoutManager {
     public void assertColumnCount(int expectedColumnCount) {
         assertGridLayoutManager();
         recyclerViewInteraction.check(new GridLayoutManagerColumnCountAssertion(expectedColumnCount));
+    }
+
+    public void assertItemIsVisible(int index) {
+        recyclerViewInteraction.check(new LayoutManagerItemVisibilityAssertion(index, true));
+    }
+
+    public void assertItemIsNotVisible(int index) {
+        recyclerViewInteraction.check(new LayoutManagerItemVisibilityAssertion(index, false));
     }
 
 }
