@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.support.annotation.NonNull;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -9,6 +10,7 @@ import org.hamcrest.Matcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
 import de.nenick.espressomacchiato.matchers.support.EspIsDisplayedMatcher;
@@ -209,12 +211,33 @@ public class EspView {
      * @param additional Provide extra matcher additional to the base matcher.
      *
      * @return View interaction to perform actions or assertions.
+     *
+     * @since Espresso Macchiato 0.1
      */
-    @SafeVarargs
-    protected final ViewInteraction findView(Matcher<View>... additional) {
+    protected ViewInteraction findView(List<Matcher<View>> additional) {
         ArrayList<Matcher<? super View>> allMatcher = new ArrayList<>();
         allMatcher.add(baseMatcher);
-        allMatcher.addAll(Arrays.asList(additional));
+        allMatcher.addAll(additional);
         return onView(allOf(allMatcher));
+    }
+
+    /**
+     * Convenience method for {@link #findView(List)}
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    @SafeVarargs
+    protected final ViewInteraction findView(Matcher<View>... matcher) {
+        return findView(createMatcherList(matcher));
+    }
+
+    @SafeVarargs
+    @NonNull
+    protected final ArrayList<Matcher<View>> createMatcherList(Matcher<View>... matcher) {
+        return new ArrayList<>(Arrays.asList(matcher));
+    }
+
+    protected Matcher<View> baseMatcher() {
+        return baseMatcher;
     }
 }

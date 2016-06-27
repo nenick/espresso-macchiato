@@ -1,14 +1,21 @@
 package de.nenick.espressomacchiato.elements.support;
 
+import android.support.annotation.Nullable;
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.view.View;
 
 import org.hamcrest.Matcher;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.matchers.support.EspRecyclerViewMatcher;
 
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.CoreMatchers.allOf;
 
 /**
  * Actions and assertions for RecyclerView items.
@@ -17,59 +24,35 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  */
 public class EspRecyclerViewItem extends EspView {
 
-    enum Mode {
-        byItemIndex,
-        byVisibleIndex
-    }
-
-    private int recyclerViewId;
+    private final Matcher<View> recyclerViewMatcher;
     private int index;
-    private Mode mode;
 
     /**
      * Create new instance based on adapter index.
      *
-     * @param recyclerViewId Adapter view containing this item.
+     * @param recyclerView   Matcher for adapter view containing this item.
      * @param index          Item index for doing actions or assertions.
      *
      * @return New instance for actions and assertions.
      *
      * @since Espresso Macchiato 0.5
      */
-    public static EspRecyclerViewItem byItemIndex(int recyclerViewId, int index) {
-        return new EspRecyclerViewItem(withId(recyclerViewId), recyclerViewId, index, Mode.byItemIndex);
-    }
-
-    /**
-     * Create new instance based on visible index.
-     *
-     * @param recyclerViewId Adapter view containing this item.
-     * @param index          Item index for doing actions or assertions.
-     *
-     * @return New instance for actions and assertions.
-     *
-     * @since Espresso Macchiato 0.5
-     */
-    public static EspRecyclerViewItem byVisibleIndex(int recyclerViewId, int index) {
-        return new EspRecyclerViewItem(EspRecyclerViewMatcher.withRecyclerView(recyclerViewId).atChildIndex(index), recyclerViewId, index, Mode.byVisibleIndex);
+    public static EspRecyclerViewItem byItemIndex(Matcher<View> recyclerView, int index) {
+        return new EspRecyclerViewItem(recyclerView, index);
     }
 
     /**
      * Create new instance.
      *
-     * @param base           For {@link Mode#byItemIndex} use RecyclerView base matcher.
-     *                       For {@link Mode#byVisibleIndex} use EspRecyclerViewMatcher.
-     * @param recyclerViewId Adapter view containing this item.
+     * @param base           Matcher for item parent (RecyclerView).
      * @param index          Item index for doing actions or assertions.
-     * @param mode           Choose an index {@link Mode}.
      *
      * @since Espresso Macchiato 0.5
      */
-    public EspRecyclerViewItem(Matcher<View> base, int recyclerViewId, int index, Mode mode) {
+    public EspRecyclerViewItem(Matcher<View> base, int index) {
         super(base);
-        this.recyclerViewId = recyclerViewId;
+        recyclerViewMatcher = base;
         this.index = index;
-        this.mode = mode;
     }
 
     /**
@@ -81,30 +64,23 @@ public class EspRecyclerViewItem extends EspView {
      */
     public EspRecyclerViewItem(EspRecyclerViewItem template) {
         super(template);
-        this.recyclerViewId = template.recyclerViewId;
+        this.recyclerViewMatcher = template.baseMatcher();
         this.index = template.index;
-        this.mode = template.mode;
     }
 
     /**
      * Make the item visible.
      *
-     * Does only work when this item is accessed by adapter index.
-     *
      * @since Espresso Macchiato 0.5
      */
     public void scrollTo() {
-        if (mode == Mode.byItemIndex) {
-            findView(EspRecyclerViewMatcher.withMinimalItemCount(index + 1)).perform(RecyclerViewActions.scrollToPosition(index));
-        } else {
-            throw new UnsupportedOperationException("Method only supported when item accessed " + Mode.byItemIndex.name());
-        }
+        // check first if adapter has enough items to avoid strange error messages
+        Matcher<View> itemCountMatcher = EspRecyclerViewMatcher.withMinimalAdapterItemCount(index + 1);
+        findRecyclerView(itemCountMatcher).perform(RecyclerViewActions.scrollToPosition(index));
     }
 
     /**
      * Base for matching a view inside this item.
-     *
-     * Does only work when this item is accessed by visible index.
      *
      * @param matcher Matcher for any item child view.
      *
@@ -112,11 +88,19 @@ public class EspRecyclerViewItem extends EspView {
      *
      * @since Espresso Macchiato 0.5
      */
-    protected Matcher<View> baseMatcherForItemChild(Matcher<View> matcher) {
-        if (mode == Mode.byVisibleIndex) {
-            return EspRecyclerViewMatcher.withRecyclerView(recyclerViewId).atChildIndexOnView(index, matcher);
-        } else {
-            throw new UnsupportedOperationException("Method only supported when item accessed " + Mode.byVisibleIndex.name());
-        }
+    protected Matcher<View> baseMatcherForItemChild(@Nullable Matcher<View> matcher) {
+        return EspRecyclerViewMatcher.withRecyclerView(recyclerViewMatcher).atChildIndexOnView(index, matcher);
+    }
+
+    protected ViewInteraction findRecyclerView(Matcher<View> additional) {
+        return super.findView(createMatcherList(additional));
+    }
+
+    @Override
+    protected ViewInteraction findView(List<Matcher<View>> additional) {
+        ArrayList<Matcher<? super View>> allMatcher = new ArrayList<>();
+        allMatcher.add(baseMatcherForItemChild(null));
+        allMatcher.addAll(additional);
+        return onView(allOf(allMatcher));
     }
 }

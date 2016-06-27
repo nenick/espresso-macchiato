@@ -1,9 +1,12 @@
 package de.nenick.espressomacchiato.matchers.support;
 
 import android.content.res.Resources;
+import android.support.annotation.Nullable;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import junit.framework.AssertionFailedError;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -12,35 +15,37 @@ import org.hamcrest.TypeSafeMatcher;
 
 public class EspRecyclerViewMatcher {
 
-    private final int recyclerViewId;
+    private final Matcher<View> recyclerViewMatcher;
 
-    public static EspRecyclerViewMatcher withRecyclerView(int recyclerViewId) {
-        return new EspRecyclerViewMatcher(recyclerViewId);
+    public static EspRecyclerViewMatcher withRecyclerView(Matcher<View> recyclerViewMatcher) {
+        return new EspRecyclerViewMatcher(recyclerViewMatcher);
     }
 
-    public EspRecyclerViewMatcher(int recyclerViewId) {
-        this.recyclerViewId = recyclerViewId;
+    public EspRecyclerViewMatcher(Matcher<View> recyclerViewMatcher) {
+        this.recyclerViewMatcher = recyclerViewMatcher;
     }
 
     public Matcher<View> atChildIndex(final int position) {
         return atChildIndexOnView(position, null);
     }
 
-    public Matcher<View> atChildIndexOnView(final int index, final Matcher<View> childMatcher) {
+    public Matcher<View> atChildIndexOnView(final int index, @Nullable final Matcher<View> childMatcher) {
 
         return new TypeSafeMatcher<View>() {
             Resources resources = null;
             View itemView;
 
             public void describeTo(Description description) {
-                String idDescription = this.resources.getResourceName(recyclerViewId);
-                description.appendText("with id: " + idDescription);
+                recyclerViewMatcher.describeTo(description);
+                if(childMatcher != null) {
+                    childMatcher.describeTo(description);
+                }
             }
 
             public boolean matchesSafely(View view) {
                 this.resources = view.getResources();
 
-                if (itemView == null && (itemView = findExpectedItemView(view)) == null) {
+                if (itemView == null && (itemView = findExpectedItemView(view, index)) == null) {
                     return false;
                 }
 
@@ -52,22 +57,30 @@ public class EspRecyclerViewMatcher {
                 return Matchers.allOf(descendantOfSelectedItem, childMatcher).matches(view);
             }
 
-            private View findExpectedItemView(View view) {
-                if (!ViewMatchers.withId(recyclerViewId).matches(view)) {
+            /**
+             * Checks all current displayed items if they match with expected item.
+             */
+            private @Nullable View findExpectedItemView(View possibleRecyclerView, int expectedAdapterIndex) {
+                // we need the recycler view to access all current displayed items
+                if (!recyclerViewMatcher.matches(possibleRecyclerView)) {
                     return null;
                 }
+                RecyclerView recyclerView = (RecyclerView) possibleRecyclerView;
 
-                RecyclerView recyclerView = (RecyclerView) view;
-                if (recyclerView.getChildCount() < index) {
-                    throw new AssertionError("Requested child at index " + index + " but recycler view has only " + recyclerView.getChildCount() + " visible childs.");
+                // compare children current adapter index with expected adapter index
+                for (int i = 0; i < recyclerView.getChildCount(); i++) {
+                    View recyclerViewChild = recyclerView.getChildAt(i);
+                    if(recyclerView.getChildAdapterPosition(recyclerViewChild) == expectedAdapterIndex) {
+                         return recyclerViewChild;
+                     }
                 }
 
-                return recyclerView.getChildAt(index);
+                throw new AssertionFailedError("Requested item is currently not displayed. Try first scrollTo() to make the item visible.");
             }
         };
     }
 
-    public static Matcher<View> withMinimalItemCount(final int minimalCount) {
+    public static Matcher<View> withMinimalAdapterItemCount(final int minimalCount) {
         return new TypeSafeMatcher<View>() {
 
             @Override

@@ -61,29 +61,16 @@ public class EspRecyclerView extends EspView {
     }
 
     /**
-     * Access item by his visible index.
-     *
-     * @param index That is the index which a human can see. First item is at index 0.
-     *
-     * @return New element instance for action and assertions.
-     *
-     * @since Espresso Macchiato 0.5
-     */
-    public EspRecyclerViewItem itemByVisibleIndex(int index) {
-        return EspRecyclerViewItem.byVisibleIndex(resourceId, index);
-    }
-
-    /**
      * Access item by index known by the adapter.
      *
      * @param index Item index in adapter.
      *
      * @return New element instance for action and assertions.
      *
-     * @since Espresso Macchiato 0.5
+     * @since Espresso Macchiato 0.6
      */
-    public EspRecyclerViewItem itemByItemIndex(int index) {
-        return EspRecyclerViewItem.byItemIndex(resourceId, index);
+    public EspRecyclerViewItem itemByIndex(int index) {
+        return EspRecyclerViewItem.byItemIndex(baseMatcher(), index);
     }
 
     /**

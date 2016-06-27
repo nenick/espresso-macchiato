@@ -2,6 +2,9 @@
 
 elements
 
+* EspRecyclerView - itemByVisibleIndex removed, itemByItemIndex renamed to itemByIndex
+* EspRecyclerViewItem - reimplement to access item view content with adapter index
+
 mocks -> intents
 
 * EspGalleryMock -> EspGalleryStub
