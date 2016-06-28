@@ -16,6 +16,8 @@ import org.hamcrest.TypeSafeMatcher;
 public class EspRecyclerViewMatcher {
 
     private final Matcher<View> recyclerViewMatcher;
+    private boolean allowItemNotFound = false;
+    private boolean failWhenViewExist = false;
 
     public static EspRecyclerViewMatcher withRecyclerView(Matcher<View> recyclerViewMatcher) {
         return new EspRecyclerViewMatcher(recyclerViewMatcher);
@@ -25,7 +27,12 @@ public class EspRecyclerViewMatcher {
         this.recyclerViewMatcher = recyclerViewMatcher;
     }
 
-    public Matcher<View> atChildIndex(final int position) {
+    public EspRecyclerViewMatcher ignoreItemNotFound(boolean allow) {
+        allowItemNotFound = allow;
+        return this;
+    }
+
+    public Matcher<View> atIndex(final int position) {
         return atChildIndexOnView(position, null);
     }
 
@@ -37,7 +44,7 @@ public class EspRecyclerViewMatcher {
 
             public void describeTo(Description description) {
                 recyclerViewMatcher.describeTo(description);
-                if(childMatcher != null) {
+                if (childMatcher != null) {
                     childMatcher.describeTo(description);
                 }
             }
@@ -60,7 +67,9 @@ public class EspRecyclerViewMatcher {
             /**
              * Checks all current displayed items if they match with expected item.
              */
-            private @Nullable View findExpectedItemView(View possibleRecyclerView, int expectedAdapterIndex) {
+            private
+            @Nullable
+            View findExpectedItemView(View possibleRecyclerView, int expectedAdapterIndex) {
                 // we need the recycler view to access all current displayed items
                 if (!recyclerViewMatcher.matches(possibleRecyclerView)) {
                     return null;
@@ -70,12 +79,21 @@ public class EspRecyclerViewMatcher {
                 // compare children current adapter index with expected adapter index
                 for (int i = 0; i < recyclerView.getChildCount(); i++) {
                     View recyclerViewChild = recyclerView.getChildAt(i);
-                    if(recyclerView.getChildAdapterPosition(recyclerViewChild) == expectedAdapterIndex) {
-                         return recyclerViewChild;
-                     }
+                    if (recyclerView.getChildAdapterPosition(recyclerViewChild) == expectedAdapterIndex) {
+                        if(failWhenViewExist) {
+                            throw new AssertionFailedError("Requested item should be hidden but is displayed.");
+                        }
+
+                        return recyclerViewChild;
+                    }
+                }
+
+                if (allowItemNotFound) {
+                    return null;
                 }
 
                 throw new AssertionFailedError("Requested item is currently not displayed. Try first scrollTo() to make the item visible.");
+
             }
         };
     }

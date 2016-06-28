@@ -1,20 +1,26 @@
 package de.nenick.espressomacchiato.elements.support;
 
 import android.support.annotation.Nullable;
+import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import junit.framework.AssertionFailedError;
 
 import org.hamcrest.Matcher;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.nenick.espressomacchiato.assertions.support.LayoutManagerItemVisibilityAssertion;
 import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.matchers.support.EspRecyclerViewMatcher;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static org.hamcrest.CoreMatchers.allOf;
 
 /**
@@ -30,8 +36,8 @@ public class EspRecyclerViewItem extends EspView {
     /**
      * Create new instance based on adapter index.
      *
-     * @param recyclerView   Matcher for adapter view containing this item.
-     * @param index          Item index for doing actions or assertions.
+     * @param recyclerView Matcher for adapter view containing this item.
+     * @param index        Item index for doing actions or assertions.
      *
      * @return New instance for actions and assertions.
      *
@@ -44,8 +50,8 @@ public class EspRecyclerViewItem extends EspView {
     /**
      * Create new instance.
      *
-     * @param base           Matcher for item parent (RecyclerView).
-     * @param index          Item index for doing actions or assertions.
+     * @param base  Matcher for item parent (RecyclerView).
+     * @param index Item index for doing actions or assertions.
      *
      * @since Espresso Macchiato 0.5
      */
@@ -80,6 +86,56 @@ public class EspRecyclerViewItem extends EspView {
     }
 
     /**
+     * Check that this item is not displayed on screen.
+     *
+     * Is true when the item exist but not displayed so you must scroll to it.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    @Override
+    public void assertIsHidden() {
+        findRecyclerView().check(LayoutManagerItemVisibilityAssertion.isHidden(index));
+    }
+
+    /**
+     * Check that this item exist.
+     *
+     * Is true when adapter has matching item ignores the display state.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+
+    public void assertExist() {
+        findRecyclerView().check(new ViewAssertion() {
+            @Override
+            public void check(View view, NoMatchingViewException noViewFoundException) {
+                if (noViewFoundException != null) {
+                    throw noViewFoundException;
+                }
+
+                RecyclerView recyclerView = (RecyclerView) view;
+                if (index >= recyclerView.getAdapter().getItemCount()) {
+                    throw new AssertionFailedError("Requested item should exist.");
+                }
+            }
+        });
+    }
+
+    /**
+     * Check that this item is not displayed on screen.
+     *
+     * Is true when the no matching item exist in adapter.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    @Override
+    public void assertNotExist() {
+        onView(EspRecyclerViewMatcher.withRecyclerView(recyclerViewMatcher)
+                .ignoreItemNotFound(true).atIndex(index)
+        ).check(doesNotExist());
+    }
+
+    /**
      * Base for matching a view inside this item.
      *
      * @param matcher Matcher for any item child view.
@@ -92,10 +148,34 @@ public class EspRecyclerViewItem extends EspView {
         return EspRecyclerViewMatcher.withRecyclerView(recyclerViewMatcher).atChildIndexOnView(index, matcher);
     }
 
-    protected ViewInteraction findRecyclerView(Matcher<View> additional) {
-        return super.findView(createMatcherList(additional));
+    /**
+     * Create an interaction to perform assertion and actions on recycler view.
+     *
+     * @return
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    protected ViewInteraction findRecyclerView() {
+        return onView(baseMatcher());
     }
 
+    /**
+     * Create an interaction to perform assertion and actions on recycler view.
+     *
+     * @param additional
+     * @return
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    protected ViewInteraction findRecyclerView(Matcher<View> additional) {
+        return onView(allOf(baseMatcher(), additional));
+    }
+
+    /**
+     * Create an interaction to perform assertion and actions on list items.
+     * @param additional
+     * @return
+     */
     @Override
     protected ViewInteraction findView(List<Matcher<View>> additional) {
         ArrayList<Matcher<? super View>> allMatcher = new ArrayList<>();

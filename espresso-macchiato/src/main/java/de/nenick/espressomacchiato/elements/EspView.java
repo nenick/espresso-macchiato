@@ -120,7 +120,7 @@ public class EspView {
     /**
      * Check that you can't see the view.
      *
-     * True when the view is in state invisible or gone or current not visible on screen.
+     * True when the view is in state invisible, gone or currently not displayed on screen.
      *
      * @since Espresso Macchiato 0.3
      */

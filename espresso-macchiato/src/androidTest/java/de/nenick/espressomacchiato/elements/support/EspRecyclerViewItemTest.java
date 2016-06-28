@@ -99,6 +99,42 @@ public class EspRecyclerViewItemTest extends EspressoTestCase<LongRecyclerActivi
         itemInitialNotDisplayed.assertIsDisplayedOnScreen();
     }
 
+    @Test
+    public void testAssertIsHidden() {
+        itemInitialNotDisplayed.assertIsHidden();
+    }
+
+    @Test
+    public void testAssertIsHiddenFailed() {
+        exception.expect(AssertionFailedError.class);
+        exception.expectMessage("expected item 0 to not be visible, but was visible");
+        itemInitialDisplayed.assertIsHidden();
+    }
+
+    @Test
+    public void testAssertNotExist() {
+        itemInitialNotExist.assertNotExist();
+    }
+
+    @Test
+    public void testAssertNotExistFailed() {
+        exception.expect(AssertionFailedError.class);
+        exception.expectMessage("View is present in the hierarchy.");
+        itemInitialDisplayed.assertNotExist();
+    }
+
+    @Test
+    public void testAssertExist() {
+        itemInitialNotDisplayed.assertExist();
+    }
+
+    @Test
+    public void testAssertExistFailed() {
+        exception.expect(AssertionFailedError.class);
+        exception.expectMessage("Requested item should exist.");
+        itemInitialNotExist.assertExist();
+    }
+
     /** Element extension */
     class MyEspRecyclerViewItem extends EspRecyclerViewItem {
 

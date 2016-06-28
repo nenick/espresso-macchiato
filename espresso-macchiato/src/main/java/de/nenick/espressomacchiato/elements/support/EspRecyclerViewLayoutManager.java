@@ -28,13 +28,4 @@ public class EspRecyclerViewLayoutManager {
         assertGridLayoutManager();
         recyclerViewInteraction.check(new GridLayoutManagerColumnCountAssertion(expectedColumnCount));
     }
-
-    public void assertItemIsVisible(int index) {
-        recyclerViewInteraction.check(new LayoutManagerItemVisibilityAssertion(index, true));
-    }
-
-    public void assertItemIsNotVisible(int index) {
-        recyclerViewInteraction.check(new LayoutManagerItemVisibilityAssertion(index, false));
-    }
-
 }
