@@ -119,7 +119,7 @@ public class EspRecyclerViewItemTest extends EspressoTestCase<LongRecyclerActivi
     @Test
     public void testAssertNotExistFailed() {
         exception.expect(AssertionFailedError.class);
-        exception.expectMessage("View is present in the hierarchy.");
+        exception.expectMessage("View is present in the hierarchy:");
         itemInitialDisplayed.assertNotExist();
     }
 
