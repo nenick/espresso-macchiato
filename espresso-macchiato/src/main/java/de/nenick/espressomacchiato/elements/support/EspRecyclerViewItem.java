@@ -77,6 +77,10 @@ public class EspRecyclerViewItem extends EspView {
     /**
      * Make the item visible.
      *
+     * When you use CoordinatorLayout and it is expanded then the item may not be full displayed.
+     * This happen because the list is partly moved outside of the screen through CoordinatorLayout.
+     * You can workaround this issue by calling {@link EspAppBarLayout#collapse()}.
+     *
      * @since Espresso Macchiato 0.5
      */
     public void scrollTo() {
@@ -151,7 +155,7 @@ public class EspRecyclerViewItem extends EspView {
     /**
      * Create an interaction to perform assertion and actions on recycler view.
      *
-     * @return
+     * @return Interaction for assertion and actions.
      *
      * @since Espresso Macchiato 0.6
      */
@@ -162,8 +166,9 @@ public class EspRecyclerViewItem extends EspView {
     /**
      * Create an interaction to perform assertion and actions on recycler view.
      *
-     * @param additional
-     * @return
+     * @param additional More specification about the requested element.
+     *
+     * @return Interaction for assertion and actions.
      *
      * @since Espresso Macchiato 0.6
      */
@@ -173,8 +178,10 @@ public class EspRecyclerViewItem extends EspView {
 
     /**
      * Create an interaction to perform assertion and actions on list items.
-     * @param additional
-     * @return
+     *
+     * @param additional More specification about the requested element.
+     *
+     * @return Interaction for assertion and actions.
      */
     @Override
     protected ViewInteraction findView(List<Matcher<View>> additional) {
