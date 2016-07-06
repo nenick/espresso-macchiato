@@ -20,6 +20,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.allOf;
@@ -158,6 +159,15 @@ public class EspView {
      */
     public void assertIsEnabled() {
         findView().check(matches(isEnabled()));
+    }
+
+    /**
+     * Check that the view is in state enabled.
+     *
+     * @since Espresso Macchiato 0.7
+     */
+    public void assertIsSelected() {
+        findView().check(matches(isSelected()));
     }
 
     /**
