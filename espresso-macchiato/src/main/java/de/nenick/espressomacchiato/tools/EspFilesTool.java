@@ -18,6 +18,7 @@ public class EspFilesTool {
             InputStream assetFileStream = assetManager.open(assetFile);
             FileOutputStream targetFileStream = new FileOutputStream(targetFile);
             copyFile(assetFileStream, targetFileStream);
+            targetFileStream.close();
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
