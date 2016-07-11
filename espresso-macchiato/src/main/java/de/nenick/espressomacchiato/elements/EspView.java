@@ -144,6 +144,17 @@ public class EspView {
     }
 
     /**
+     * Check if at least a small part of the view is visible on screen.
+     *
+     * Does fail if the view is not displayed. Success if partially or full visible.
+     *
+     * @since Espresso Macchiato 0.4
+     */
+    public void assertIsPartiallyDisplayedOnScreen() {
+        findView().check(matches(allOf(EspIsDisplayedMatcher.isDisplayingAtLeast(1))));
+    }
+
+    /**
      * Check that no view matches the given matcher in the view hierarchy.
      *
      * @since Espresso Macchiato 0.1
