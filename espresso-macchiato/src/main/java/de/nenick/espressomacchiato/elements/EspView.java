@@ -200,6 +200,14 @@ public class EspView {
     }
 
     /**
+     * Perform double click on the view.
+     *
+     * @since Espresso Macchiato 0.1
+     */
+    public void doubleClick() {
+        findView(isDisplayed()).perform(ViewActions.doubleClick());
+    }
+    /**
      * Perform long click on the view.
      *
      * @since Espresso Macchiato 0.6
