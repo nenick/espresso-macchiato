@@ -252,7 +252,7 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
     /** Element extension */
     class MyEspView extends EspView {
-        public MyEspView(EspView template) {
+        MyEspView(EspView template) {
             super(template);
         }
     }
