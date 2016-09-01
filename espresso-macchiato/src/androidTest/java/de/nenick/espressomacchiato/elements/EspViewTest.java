@@ -199,13 +199,29 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
             }
 
             GestureDetector gestureDetector = null;
+            MySimpleOnGestureListener mySimpleOnGestureListener;
+            long lastClick;
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (gestureDetector == null) {
-                    gestureDetector = new GestureDetector(activityTestRule.getActivity(), new MySimpleOnGestureListener());
+                    mySimpleOnGestureListener = new MySimpleOnGestureListener();
+                    gestureDetector = new GestureDetector(activityTestRule.getActivity(), mySimpleOnGestureListener);
                 }
-                return gestureDetector.onTouchEvent(event);
+                if (gestureDetector.onTouchEvent(event)) {
+                    return true;
+                }
+
+                // On slow devices (e.g. emulator) we need more delay to detect the double click.
+                // Delay from SimpleOnGestureListener is to less to detect it.
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastClick < 1000) {
+                    mySimpleOnGestureListener.onDoubleTap(event);
+                    return true;
+                }
+                lastClick = currentTime;
+
+                return false;
             }
         });
     }
