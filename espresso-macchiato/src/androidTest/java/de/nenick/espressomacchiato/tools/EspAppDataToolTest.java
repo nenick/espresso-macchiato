@@ -51,6 +51,7 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
         new EspAppDataTool();
     }
 
+    /** Clear database after all test done. */
     @AfterClass
     public static void resetAfterClass() {
         EspAppDataTool.clearDatabase();

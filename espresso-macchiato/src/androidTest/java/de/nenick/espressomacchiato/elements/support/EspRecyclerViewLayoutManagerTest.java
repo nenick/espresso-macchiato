@@ -11,6 +11,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.LongRecyclerActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+/** Basic tests */
 public class EspRecyclerViewLayoutManagerTest extends EspressoTestCase<LongRecyclerActivity> {
 
     private static final int GRID_COLUMN_COUNT = 5;
