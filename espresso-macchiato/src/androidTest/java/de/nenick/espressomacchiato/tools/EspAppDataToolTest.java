@@ -1,15 +1,18 @@
 package de.nenick.espressomacchiato.tools;
 
+import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 
-import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -23,11 +26,13 @@ import de.nenick.espressomacchiato.test.database.PersonDbHelper;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 
 /** Basic test */
 public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
@@ -38,12 +43,17 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
     private static final String CUSTOM_PREFERENCE = "MyCustomPreference";
     private static final String FILE_NAME = "myfile";
 
-    @After
+    @Before
     public void reset() {
         EspAppDataTool.clearDatabase();
 
         // just for coverage
         new EspAppDataTool();
+    }
+
+    @AfterClass
+    public static void resetAfterClass() {
+        EspAppDataTool.clearDatabase();
     }
 
     @Test
@@ -75,7 +85,23 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
-    @Ignore // TODO need a way to throw error if any connection is open. better way would be to close them all
+    @TargetApi(11)
+    public void testClearDatabaseWithWriteAheadLogging() {
+        assumeThat(Build.VERSION.SDK_INT, is(greaterThanOrEqualTo(Build.VERSION_CODES.HONEYCOMB)));
+
+        PersonDbHelper personDbHelper = new PersonDbHelper(InstrumentationRegistry.getContext());
+        personDbHelper.getWritableDatabase().enableWriteAheadLogging();
+        personDbHelper.getWritableDatabase().beginTransaction();
+        givenDatabaseEntry(personDbHelper);
+
+        EspAppDataTool.clearDatabase();
+
+        thenDatabaseIsEmpty(personDbHelper);
+    }
+
+    @Test
+    @Ignore
+    // TODO need a way to throw error if any connection is open. better way would be to close them all
     public void testClearDatabaseWithOpenConnection() {
         EspAppDataTool.clearDatabase();
 

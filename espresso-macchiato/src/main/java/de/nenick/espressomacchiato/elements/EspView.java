@@ -164,21 +164,30 @@ public class EspView {
     }
 
     /**
+     * Check that the view is in state selected.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void assertIsSelected() {
+        findView().check(matches(isSelected()));
+    }
+
+    /**
+     * Check that the view is not in state selected.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void assertIsNotSelected() {
+        findView().check(matches(not(isSelected())));
+    }
+
+    /**
      * Check that the view is in state enabled.
      *
      * @since Espresso Macchiato 0.1
      */
     public void assertIsEnabled() {
         findView().check(matches(isEnabled()));
-    }
-
-    /**
-     * Check that the view is in state enabled.
-     *
-     * @since Espresso Macchiato 0.7
-     */
-    public void assertIsSelected() {
-        findView().check(matches(isSelected()));
     }
 
     /**
@@ -207,6 +216,7 @@ public class EspView {
     public void doubleClick() {
         findView(isDisplayed()).perform(ViewActions.doubleClick());
     }
+
     /**
      * Perform long click on the view.
      *

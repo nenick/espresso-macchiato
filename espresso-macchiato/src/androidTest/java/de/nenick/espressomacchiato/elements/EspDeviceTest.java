@@ -1,6 +1,8 @@
 package de.nenick.espressomacchiato.elements;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.test.InstrumentationRegistry;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,8 @@ import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /** Basic tests */
 public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
@@ -33,6 +37,8 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
     private EspEditText espEditText = EspEditText.byId(editTextId);
     private EspPage startPage = EspPage.byId(BaseActivity.rootLayout);
     private EspPage nextPage = EspPage.byId(LandscapeFixedActivity.rootLayout);
+
+    private int currentScreenSize = InstrumentationRegistry.getContext().getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
     @Test
     public void setup() {
@@ -141,6 +147,26 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
 
         espEditText.click();
         espDevice.assertSoftKeyboardIsClosed();
+    }
+
+    @Test
+    public void testIsScreenSizeEqualTo() {
+        assertTrue(espDevice.isScreenSizeEqualTo(currentScreenSize));
+        assertFalse(espDevice.isScreenSizeEqualTo(currentScreenSize + 1));
+    }
+
+    @Test
+    public void testIsScreenSizeAtLeast() {
+        assertTrue(espDevice.isScreenSizeAtLeast(currentScreenSize));
+        assertTrue(espDevice.isScreenSizeAtLeast(currentScreenSize - 1));
+        assertFalse(espDevice.isScreenSizeAtLeast(currentScreenSize + 1));
+    }
+
+    @Test
+    public void testIsScreenSizeAtMost() {
+        assertTrue(espDevice.isScreenSizeAtMost(currentScreenSize));
+        assertTrue(espDevice.isScreenSizeAtMost(currentScreenSize + 1));
+        assertFalse(espDevice.isScreenSizeAtMost(currentScreenSize - 1));
     }
 
     private void givenButtonToStartNextPage() {

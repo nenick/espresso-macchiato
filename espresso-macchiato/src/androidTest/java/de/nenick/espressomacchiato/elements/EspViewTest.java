@@ -43,6 +43,7 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
         givenClickableView();
         espView.assertIsVisible();
+        espView.assertIsNotSelected();
         espView.assertIsEnabled();
         espView.assertIsDisplayedOnScreen();
 
@@ -54,6 +55,9 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
         givenViewIsGone();
         espView.assertIsHidden();
+
+        givenViewIsSelected();
+        espView.assertIsSelected();
     }
 
     @Test
@@ -171,6 +175,15 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         });
     }
 
+    private void givenViewIsSelected() {
+        performOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                view.setSelected(true);
+            }
+        });
+    }
+
     private void givenClickableView() {
         view = new Button(activityTestRule.getActivity());
         view.setId(viewId);
@@ -228,7 +241,7 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
 
     private void givenClickableViewNotOnScreen() {
-        for (int i=0;i<20;i++) {
+        for (int i = 0; i < 20; i++) {
             addViewToLayout(new Button(activityTestRule.getActivity()), BaseActivity.rootLayout);
         }
         givenClickableView();
