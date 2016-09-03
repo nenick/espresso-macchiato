@@ -90,7 +90,7 @@ public class EspNavigationMenuItemTest extends EspressoTestCase<NavigationDrawer
         performOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final NavigationView navigationView = (NavigationView) activityTestRule.getActivity().findViewById(NavigationDrawerActivity.drawerNavigationView);
+                final NavigationView navigationView = (NavigationView) getActivity().findViewById(NavigationDrawerActivity.drawerNavigationView);
 
                 Menu menu = navigationView.getMenu();
                 final MenuItem menuItemStandard = menu.add(GROUP_ID_STANDARD, 1, Menu.NONE, null);

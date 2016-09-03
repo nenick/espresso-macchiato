@@ -29,7 +29,7 @@ public class EspDialog extends EspView {
      *
      * @since Espresso Macchiato 0.2
      */
-    protected static class Spec {
+    public static class Spec {
 
         private int rootResource;
         private int titleResource;

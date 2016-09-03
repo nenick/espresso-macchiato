@@ -2,6 +2,11 @@
 
 elements
 
+* EspRecyclerView - itemByVisibleIndex removed, itemByItemIndex renamed to itemByIndex
+* EspRecyclerViewItem - reimplement to access item view content with adapter index
+* EspRecyclerViewItem - assertion for displayed/hidden/exist/notExist
+* EspAppBarLayout - collapse or expand toolbar programmatically
+
 mocks -> intents
 
 * EspGalleryMock -> EspGalleryStub

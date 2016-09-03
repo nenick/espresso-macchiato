@@ -61,29 +61,27 @@ public class EspRecyclerView extends EspView {
     }
 
     /**
-     * Access item by his visible index.
-     *
-     * @param index That is the index which a human can see.
-     *
-     * @return New element instance for action and assertions.
-     *
-     * @since Espresso Macchiato 0.5
-     */
-    public EspRecyclerViewItem itemByVisibleIndex(int index) {
-        return EspRecyclerViewItem.byVisibleIndex(resourceId, index);
-    }
-
-    /**
      * Access item by index known by the adapter.
      *
      * @param index Item index in adapter.
      *
      * @return New element instance for action and assertions.
      *
-     * @since Espresso Macchiato 0.5
+     * @since Espresso Macchiato 0.6
      */
-    public EspRecyclerViewItem itemByItemIndex(int index) {
-        return EspRecyclerViewItem.byItemIndex(resourceId, index);
+    public EspRecyclerViewItem itemByIndex(int index) {
+        return EspRecyclerViewItem.byItemIndex(baseMatcher(), index);
+    }
+
+    /**
+     * Access the layout manager of this recycler view.
+     *
+     * @return New instance for action and assertions.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public EspRecyclerViewLayoutManager layoutManager() {
+        return new EspRecyclerViewLayoutManager(findView());
     }
 
     private int resourceId() {

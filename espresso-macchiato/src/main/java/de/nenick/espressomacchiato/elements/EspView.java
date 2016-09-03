@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.support.annotation.NonNull;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -9,6 +10,7 @@ import org.hamcrest.Matcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
 import de.nenick.espressomacchiato.matchers.support.EspIsDisplayedMatcher;
@@ -18,6 +20,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isSelected;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.allOf;
@@ -118,7 +121,7 @@ public class EspView {
     /**
      * Check that you can't see the view.
      *
-     * True when the view is in state invisible or gone or current not visible on screen.
+     * True when the view is in state invisible, gone or currently not displayed on screen.
      *
      * @since Espresso Macchiato 0.3
      */
@@ -141,6 +144,17 @@ public class EspView {
     }
 
     /**
+     * Check if at least a small part of the view is visible on screen.
+     *
+     * Does fail if the view is not displayed. Success if partially or full visible.
+     *
+     * @since Espresso Macchiato 0.4
+     */
+    public void assertIsPartiallyDisplayedOnScreen() {
+        findView().check(matches(allOf(EspIsDisplayedMatcher.isDisplayingAtLeast(1))));
+    }
+
+    /**
      * Check that no view matches the given matcher in the view hierarchy.
      *
      * @since Espresso Macchiato 0.1
@@ -159,6 +173,15 @@ public class EspView {
     }
 
     /**
+     * Check that the view is in state enabled.
+     *
+     * @since Espresso Macchiato 0.7
+     */
+    public void assertIsSelected() {
+        findView().check(matches(isSelected()));
+    }
+
+    /**
      * Check that the view is in state disabled.
      *
      * @since Espresso Macchiato 0.1
@@ -174,6 +197,23 @@ public class EspView {
      */
     public void click() {
         findView(isDisplayed()).perform(ViewActions.click());
+    }
+
+    /**
+     * Perform double click on the view.
+     *
+     * @since Espresso Macchiato 0.1
+     */
+    public void doubleClick() {
+        findView(isDisplayed()).perform(ViewActions.doubleClick());
+    }
+    /**
+     * Perform long click on the view.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void longClick() {
+        findView(isDisplayed()).perform(ViewActions.longClick());
     }
 
     /**
@@ -200,12 +240,33 @@ public class EspView {
      * @param additional Provide extra matcher additional to the base matcher.
      *
      * @return View interaction to perform actions or assertions.
+     *
+     * @since Espresso Macchiato 0.1
      */
-    @SafeVarargs
-    protected final ViewInteraction findView(Matcher<View>... additional) {
+    protected ViewInteraction findView(List<Matcher<View>> additional) {
         ArrayList<Matcher<? super View>> allMatcher = new ArrayList<>();
         allMatcher.add(baseMatcher);
-        allMatcher.addAll(Arrays.asList(additional));
+        allMatcher.addAll(additional);
         return onView(allOf(allMatcher));
+    }
+
+    /**
+     * Convenience method for {@link #findView(List)}
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    @SafeVarargs
+    protected final ViewInteraction findView(Matcher<View>... matcher) {
+        return findView(createMatcherList(matcher));
+    }
+
+    @SafeVarargs
+    @NonNull
+    protected final ArrayList<Matcher<View>> createMatcherList(Matcher<View>... matcher) {
+        return new ArrayList<>(Arrays.asList(matcher));
+    }
+
+    protected Matcher<View> baseMatcher() {
+        return baseMatcher;
     }
 }

@@ -67,9 +67,15 @@ public class EspAppDataTool {
         for (String database : databaseList) {
 
             // when transaction rollback files exists they are always locked so we can't delete them
-            if (database.contains("-journal")) {
+            if (database.contains(".db-journal")) {
                 continue;
             }
+
+            // not exist but listed db files (occurs with web views)
+            if (database.contains(".db-wal") || database.contains(".db-shm")) {
+                continue;
+            }
+
             Log.v("EspressoMacchiato", "deleting " + database);
 
             assertThat(InstrumentationRegistry.getTargetContext().getDatabasePath(database).exists(), is(true));

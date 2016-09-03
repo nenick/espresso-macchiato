@@ -9,6 +9,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.LongRecyclerActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertFalse;
 
 /** Basic test */
@@ -16,14 +17,14 @@ public class EspRecyclerViewMatcherTest extends EspressoTestCase<LongRecyclerAct
 
     @Test
     public void testAtChildIndexOnViewOnlyMatchRecyclerView() {
-        Matcher<View> itemCountMatcher = EspRecyclerViewMatcher.withRecyclerView(LongRecyclerActivity.recyclerViewId).atChildIndex(0);
+        Matcher<View> itemCountMatcher = EspRecyclerViewMatcher.withRecyclerView(withId(LongRecyclerActivity.recyclerViewId)).atIndex(0);
         View nonRecyclerView = new View(InstrumentationRegistry.getContext());
         assertFalse(itemCountMatcher.matches(nonRecyclerView));
     }
 
     @Test
     public void testWithMinimalItemCountOnlyMatchRecyclerView() {
-        Matcher<View> itemCountMatcher = EspRecyclerViewMatcher.withMinimalItemCount(10);
+        Matcher<View> itemCountMatcher = EspRecyclerViewMatcher.withMinimalAdapterItemCount(10);
         View nonRecyclerView = new View(InstrumentationRegistry.getContext());
         assertFalse(itemCountMatcher.matches(nonRecyclerView));
     }
