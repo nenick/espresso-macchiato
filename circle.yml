@@ -12,7 +12,7 @@ dependencies:
     # to see all existing stuff use: android list sdk --all --extended
     #
     - echo y | android update sdk --no-ui --all --filter tool,android-8 #,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
-    - echo y | android update sdk --no-ui --all --filter build-tools-23.0.3
+    - echo y | android update sdk --no-ui --all --filter build-tools-24.0.0
 
     ##################################################
     # create android v23 emulator as latest supported android version
