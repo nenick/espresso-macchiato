@@ -11,7 +11,7 @@ dependencies:
     # workaround for "failed to find Build Tools revision ..."
     # to see all existing stuff use: android list sdk --all --extended
     #
-    - echo y | android update sdk --no-ui --all --filter tool,android-8,android-24 #,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
+    - echo y | android update sdk --no-ui --all --filter tool,android-9,android-24 #,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
     - echo y | android update sdk --no-ui --all --filter build-tools-24.0.0
 
     ##################################################
@@ -20,15 +20,15 @@ dependencies:
     - echo no | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2) -c 512M --abi default/armeabi-v7a
 
     ##################################################
-    # create android v8 emulator as earliest supported android version
+    # create android v9 emulator as earliest supported android version
     #
-    - echo no | android create avd -n my-android8 -t $(android list targets | grep android-8 | cut -d" " -f2) -c 512M
+    - echo no | android create avd -n my-android9 -t $(android list targets | grep android-9 | cut -d" " -f2) -c 512M
 
     ##################################################
     # activate soft keyboard to perform checks on it
     #
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
-    - echo "hw.keyboard=no" >> ~/.android/avd/my-android8.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/my-android9.avd/config.ini
 
     ##################################################
     # activate gpu support to avoid black screenshots
@@ -42,7 +42,7 @@ test:
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
     #
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window ;; 1) emulator -avd my-android8 -no-audio -no-window ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window ;; 1) emulator -avd my-android9 -no-audio -no-window ;; esac:
         parallel: true
         background: true
 
@@ -144,7 +144,7 @@ test:
     - mv espresso-macchiato/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
         parallel: true
 
-    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v8 ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v9 ;; esac:
         parallel: true
 
     ##################################################
