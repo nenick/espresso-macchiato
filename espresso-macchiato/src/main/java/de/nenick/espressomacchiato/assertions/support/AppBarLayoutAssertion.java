@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.assertions.support;
 
+import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.test.espresso.NoMatchingViewException;
@@ -7,6 +8,8 @@ import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import de.nenick.espressomacchiato.tools.EspResourceTool;
 
 import static org.hamcrest.Matchers.is;
 
@@ -53,7 +56,17 @@ public class AppBarLayoutAssertion {
                 }
 
                 boolean isFullCollapsed = appBarLayout.getBottom() - toolbar.getHeight() == 0;
+                isFullCollapsed |= appBarLayout.getBottom() - toolbar.getHeight() - getStatusBarHeight(view.getContext()) == 0;
                 ViewMatchers.assertThat("is full collapsed", isFullCollapsed, is(true));
+            }
+
+            public int getStatusBarHeight(Context context) {
+                int result = 0;
+                int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+                if (resourceId > 0) {
+                    result = context.getResources().getDimensionPixelSize(resourceId);
+                }
+                return result;
             }
         };
     }
