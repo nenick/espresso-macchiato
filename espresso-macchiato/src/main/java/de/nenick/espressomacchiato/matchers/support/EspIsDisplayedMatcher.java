@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.matchers.support;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
@@ -74,10 +75,14 @@ public class EspIsDisplayedMatcher {
             DisplayMetrics m = new DisplayMetrics();
             ((WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(m);
 
-            // Get status bar height
             int statusBarHeight = EspResourceTool.getStatusBarHeight(view.getContext());
+            int actionBarHeight = getActionBarHeight(view);
 
-            // Get action bar height
+            return new Rect(0, 0, m.widthPixels, m.heightPixels - (statusBarHeight + actionBarHeight));
+        }
+
+        @TargetApi(11)
+        private int getActionBarHeight(View view) {
             TypedValue tv = new TypedValue();
             boolean resolveAttribute;
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -90,8 +95,7 @@ public class EspIsDisplayedMatcher {
             if(resolveAttribute) {
                 actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, view.getContext().getResources().getDisplayMetrics());
             }
-
-            return new Rect(0, 0, m.widthPixels, m.heightPixels - (statusBarHeight + actionBarHeight));
+            return actionBarHeight;
         }
     }
 }
