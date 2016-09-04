@@ -27,7 +27,7 @@ apply from: "build.connectedCheckCustomized.gradle"
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         // v8 ist lowest min sdk which supported by espresso
