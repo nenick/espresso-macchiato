@@ -1,15 +1,19 @@
 package de.nenick.espressomacchiato.elements.support;
 
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.view.View;
 
 import org.hamcrest.Matcher;
 
 import de.nenick.espressomacchiato.actions.support.AppBarLayoutAction;
+import de.nenick.espressomacchiato.assertions.support.AppBarLayoutAssertion;
 import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
 
 /**
+ * Action and assertions for AppBarLayouts.
  *
+ * Support for {@link CollapsingToolbarLayout}
  *
  * @since Espresso Macchiato 0.6
  */
@@ -89,5 +93,23 @@ public class EspAppBarLayout extends EspView {
      */
     public void expand() {
         findView().perform(AppBarLayoutAction.expand());
+    }
+
+    /**
+     * Check if the app bar layout is full expanded.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void assertIsExpanded() {
+        findView().check(AppBarLayoutAssertion.assertIsExpanded());
+    }
+
+    /**
+     * Check if the app bar layout is full expanded.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void assertIsCollapsed() {
+        findView().check(AppBarLayoutAssertion.assertIsCollapsed());
     }
 }

@@ -7,7 +7,7 @@ elements
 * EspRecyclerView - support for testing LayoutManager
 * EspRecyclerViewItem - reimplement to access item view content with adapter index
 * EspRecyclerViewItem - assertion for displayed/hidden/exist/notExist
-* EspAppBarLayout - collapse or expand toolbar programmatically
+* EspAppBarLayout - collapse or expand toolbar programmatically and check his state
 * EspDevice - helper to check current screen size for alternate execution paths (isScreenSizeEqualTo, isScreenSizeAtLeast, isScreenSizeAtMost)
 
 mocks -> intents

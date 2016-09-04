@@ -19,6 +19,8 @@
         <activity android:name=".views.OnActivityResultActivity" />
         <activity android:name=".views.LongListActivity" />
         <activity android:name=".views.LongRecyclerActivity" />
+        <activity android:name=".views.CollapsingToolbarActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
     </application>
 
 </manifest>
