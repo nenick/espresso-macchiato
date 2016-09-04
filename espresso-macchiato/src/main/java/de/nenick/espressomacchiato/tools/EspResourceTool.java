@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.tools;
 
+import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
 public class EspResourceTool {
@@ -14,4 +15,14 @@ public class EspResourceTool {
         return InstrumentationRegistry.getContext().getResources().getIdentifier(name, "id", "android");
 
     }
+
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
 }

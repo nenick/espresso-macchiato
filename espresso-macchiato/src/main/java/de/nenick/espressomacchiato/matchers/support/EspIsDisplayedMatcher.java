@@ -14,6 +14,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+import de.nenick.espressomacchiato.tools.EspResourceTool;
+
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 
 
@@ -49,9 +51,11 @@ public class EspIsDisplayedMatcher {
 
         @Override
         public boolean matchesSafely(View view) {
+            // get visible area for selected view
+            // it also tell us if at least a small part visible, when not we can abort here
             Rect visibleParts = new Rect();
-            boolean visibleAtAll = view.getGlobalVisibleRect(visibleParts);
-            if (!visibleAtAll) {
+            boolean isAtLeastSomethingVisible = view.getGlobalVisibleRect(visibleParts);
+            if (!isAtLeastSomethingVisible) {
                 return false;
             }
 
@@ -62,8 +66,8 @@ public class EspIsDisplayedMatcher {
             double maxArea = viewHeight * viewWidth;
             double visibleArea = visibleParts.height() * visibleParts.width();
             int displayedPercentage = (int) ((visibleArea / maxArea) * 100);
-
-            return displayedPercentage >= areaPercentage && withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE).matches(view);
+            boolean isViewFullVisible = displayedPercentage >= areaPercentage;
+            return isViewFullVisible && withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE).matches(view);
         }
 
         private Rect getScreenWithoutStatusBarActionBar(View view) {
@@ -71,8 +75,7 @@ public class EspIsDisplayedMatcher {
             ((WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(m);
 
             // Get status bar height
-            int resourceId = view.getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
-            int statusBarHeight = (resourceId > 0) ? view.getContext().getResources().getDimensionPixelSize(resourceId) : 0;
+            int statusBarHeight = EspResourceTool.getStatusBarHeight(view.getContext());
 
             // Get action bar height
             TypedValue tv = new TypedValue();
