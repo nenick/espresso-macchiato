@@ -77,7 +77,7 @@ test:
             parallel: true
     - case $CIRCLE_NODE_INDEX in 1) ps aux > cmd_full_output.txt ;; esac:
                     parallel: true
-    - cp ~/cmd_full_output.txt $CIRCLE_ARTIFACTS:
+    - cp cmd_full_output.txt $CIRCLE_ARTIFACTS:
         parallel: true
     #- case $CIRCLE_NODE_INDEX in 1) killall emulator ;; esac:
     #            parallel: true
