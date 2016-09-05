@@ -39,6 +39,8 @@ dependencies:
 test:
   pre:
 
+    - set -o pipefail && run_cmd | tee ~/cmd_full_output
+
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
     #
@@ -173,6 +175,8 @@ test:
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
     - cp -r sampleapp/build/outputs/lint* $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
+
+    - cp ~/cmd_full_output $CIRCLE_ARTIFACTS
 
 deployment:
   report-master:
