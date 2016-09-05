@@ -39,8 +39,6 @@ dependencies:
 test:
   pre:
 
-    - set -o pipefail && run_cmd | tee ~/cmd_full_output:
-        parallel: true
 
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
@@ -77,8 +75,10 @@ test:
     #
     - case $CIRCLE_NODE_INDEX in 0) circle-android wait-for-boot ;; 1) circle-android wait-for-boot ;; esac:
             parallel: true
-    - case $CIRCLE_NODE_INDEX in 1) ps aux ;; esac:
+    - case $CIRCLE_NODE_INDEX in 1) ps aux > cmd_full_output.txt ;; esac:
                     parallel: true
+    - cp ~/cmd_full_output.txt $CIRCLE_ARTIFACTS:
+        parallel: true
     #- case $CIRCLE_NODE_INDEX in 1) killall emulator ;; esac:
     #            parallel: true
     #- case $CIRCLE_NODE_INDEX in 1) emulator -avd my-android9 -no-audio -no-window ;; esac:
@@ -176,9 +176,6 @@ test:
     # collect lint report
     - mkdir -p $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
     - cp -r sampleapp/build/outputs/lint* $CIRCLE_TEST_REPORTS/sampleapp_android_tests/lint
-
-    - cp ~/cmd_full_output $CIRCLE_ARTIFACTS:
-          parallel: true
 
 deployment:
   report-master:
