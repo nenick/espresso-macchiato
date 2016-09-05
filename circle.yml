@@ -36,6 +36,8 @@ dependencies:
     - echo "hw.gpu.enabled=yes" >> ~/.android/avd/my-android23.avd/config.ini
     - echo "hw.gpu.mode=auto" >> ~/.android/avd/my-android23.avd/config.ini
 
+    - echo "sdcard.size=100M" >> ~/.android/avd/my-android10.avd/config.ini
+    - echo "vm.heapSize=32" >> ~/.android/avd/my-android10.avd/config.ini
 test:
   pre:
 
