@@ -11,7 +11,7 @@ dependencies:
     # workaround for "failed to find Build Tools revision ..."
     # to see all existing stuff use: android list sdk --all --extended
     #
-    - ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk --no-ui --all --filter "tools,platform-tools,android-9,android-24,extra-android-m2repository #,extra-android-support,extra-google-google_play_services,extra-google-m2repository
+    - ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk --no-ui --all --filter "tools,platform-tools,android-9,android-24,extra-android-m2repository" #,extra-android-support,extra-google-google_play_services,extra-google-m2repository
     - echo y | android update sdk --no-ui --all --filter build-tools-24.0.2
 
     ##################################################
