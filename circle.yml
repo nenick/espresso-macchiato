@@ -72,8 +72,10 @@ test:
     ##################################################
     # ensure that the emulator is ready to use
     #
-    - circle-android wait-for-boot:
-        parallel: true
+    - case $CIRCLE_NODE_INDEX in 0) circle-android wait-for-boot ;; 1) circle-android wait-for-boot; adb shell stop; adb shell start; circle-android wait-for-boot ;; esac:
+            parallel: true
+    #- circle-android wait-for-boot:
+    #    parallel: true
     # remove the look screen
     - adb shell input keyevent 82:
         parallel: true
