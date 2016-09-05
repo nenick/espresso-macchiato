@@ -81,8 +81,9 @@ test:
         parallel: true
     - case $CIRCLE_NODE_INDEX in 1) killall emulator64-arm ;; esac:
                 parallel: true
-    #- case $CIRCLE_NODE_INDEX in 1) emulator -avd my-android9 -no-audio -no-window ;; esac:
-    #            parallel: true
+
+    - case $CIRCLE_NODE_INDEX in 1) emulator -avd my-android9 -no-audio -no-window ;; esac:
+                parallel: true
     - sleep 10
     - case $CIRCLE_NODE_INDEX in 1) circle-android wait-for-boot ;; esac:
                 parallel: true
