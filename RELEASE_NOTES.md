@@ -27,7 +27,7 @@ matcher
 
 dependencies
 
-* support libraries - update 23 to 24.2.0
+* support libraries - update 23 to 24.1.1
 * lowest supported android version - changed from v8 to v9 because of support libraries since 24.2.0
 
 test base
