@@ -105,7 +105,9 @@ public class EspAppDataTool {
      */
     public static void clearCache() {
         File cacheDir = InstrumentationRegistry.getTargetContext().getCacheDir();
-        assertThat(deleteRecursive(cacheDir), is(true));
+        if(cacheDir.list() != null) {
+            assertThat(deleteRecursive(cacheDir), is(true));
+        }
     }
 
     /**

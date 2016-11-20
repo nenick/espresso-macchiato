@@ -136,6 +136,14 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    public void testClearCacheFilesWhenNoCacheExists() throws IOException {
+        File cacheDir = InstrumentationRegistry.getTargetContext().getCacheDir();
+        deleteChildFile(cacheDir, cacheDir);
+
+        EspAppDataTool.clearCache();
+    }
+
+    @Test
     public void testClearCacheFiles() throws IOException {
         Uri uri = givenCacheFile(FILE_NAME);
 
@@ -240,5 +248,19 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
 
     private void thenCustomPreferencesIsCleared(SharedPreferences customPreferences) {
         assertThat(customPreferences.getString(CUSTOM_PREFERENCE, PRFERENCE_FALLBACK_VALUE), is(PRFERENCE_FALLBACK_VALUE));
+    }
+
+    private void deleteChildFile(File parentDir, File targetFile) {
+        if(targetFile.isDirectory()) {
+            File[] files = targetFile.listFiles();
+            if(files != null) {
+                for (File file : files) {
+                    deleteChildFile(parentDir, file);
+                }
+            }
+        }
+        if(!targetFile.equals(parentDir) && !targetFile.delete()) {
+            throw new IllegalStateException("Failed to delete file: " + targetFile);
+        }
     }
 }
