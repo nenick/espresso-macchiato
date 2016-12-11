@@ -32,3 +32,7 @@
 ## New or extend mocks
 
 * Mocks with static methods
+
+## Update Support libraries dependencies
+
+* lowest supported android version - changed from v8 to v9 because of support libraries since 24.2.0

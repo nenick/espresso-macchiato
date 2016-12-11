@@ -20,6 +20,7 @@ tools
 
 * EspFilesTool - tool for preparing test data
 * EspAppDataTool - BugFix for removing databases when app use WebView
+* EspAppDataTool - BugFix when cacheDir().list() return null after cacheDir was deleted
 
 matcher
 
@@ -28,6 +29,3 @@ matcher
 dependencies
 
 * support libraries - update 23 to 24.1.1
-* lowest supported android version - changed from v8 to v9 because of support libraries since 24.2.0
-
-test base
