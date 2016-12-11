@@ -79,7 +79,7 @@ test:
     - adb shell input keyevent 82:
         parallel: true
     # clear logs from emulator
-    - adb logcat -c
+    # - adb logcat -c
 
     ##################################################
     # start instrumentation tests on emulator
