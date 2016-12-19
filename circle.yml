@@ -15,9 +15,9 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter build-tools-25.1.0
 
     ##################################################
-    # create android v24 emulator as latest supported android version
+    # create android v23 emulator as latest supported android version
     #
-    - echo no | android create avd -n my-android24 -t $(android list targets | grep android-24 | cut -d" " -f2) -c 512M --abi default/armeabi-v7a
+    - echo no | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2) -c 512M --abi default/armeabi-v7a
 
     ##################################################
     # create android v10 emulator as earliest supported android version
@@ -27,14 +27,14 @@ dependencies:
     ##################################################
     # activate soft keyboard to perform checks on it
     #
-    - echo "hw.keyboard=no" >> ~/.android/avd/my-android24.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
     - echo "hw.keyboard=no" >> ~/.android/avd/my-android10.avd/config.ini
 
     ##################################################
     # activate gpu support to avoid black screenshots
     #
-    - echo "hw.gpu.enabled=yes" >> ~/.android/avd/my-android24.avd/config.ini
-    - echo "hw.gpu.mode=auto" >> ~/.android/avd/my-android24.avd/config.ini
+    - echo "hw.gpu.enabled=yes" >> ~/.android/avd/my-android23.avd/config.ini
+    - echo "hw.gpu.mode=auto" >> ~/.android/avd/my-android23.avd/config.ini
 
 test:
   pre:
@@ -43,7 +43,7 @@ test:
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
     #
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android24 -no-audio -no-window ;; 1) emulator -avd my-android10 -no-audio -no-window ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window ;; 1) emulator -avd my-android10 -no-audio -no-window ;; esac:
         parallel: true
         background: true
 
@@ -145,7 +145,7 @@ test:
     - mv espresso-macchiato/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
         parallel: true
 
-    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v24 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v10 ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v10 ;; esac:
         parallel: true
 
     ##################################################
