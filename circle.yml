@@ -11,30 +11,30 @@ dependencies:
     # workaround for "failed to find Build Tools revision ..."
     # to see all existing stuff use: android list sdk --all --extended
     #
-    - ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk --no-ui --all --filter "tools,platform-tools,android-8,android-24,extra-android-m2repository" #,extra-android-support,extra-google-google_play_services,extra-google-m2repository
-    - echo y | android update sdk --no-ui --all --filter build-tools-24.0.2
+    - ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk --no-ui --all --filter "tools,platform-tools,android-10,android-25,extra-android-m2repository" #,extra-android-support,extra-google-google_play_services,extra-google-m2repository
+    - echo y | android update sdk --no-ui --all --filter build-tools-25.1.0
 
     ##################################################
-    # create android v23 emulator as latest supported android version
+    # create android v25 emulator as latest supported android version
     #
-    - echo no | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2) -c 512M --abi default/armeabi-v7a
+    - echo no | android create avd -n my-android25 -t $(android list targets | grep android-25 | cut -d" " -f2) -c 512M --abi default/armeabi-v7a
 
     ##################################################
-    # create android v8 emulator as earliest supported android version
+    # create android v10 emulator as earliest supported android version
     #
-    - echo no | android create avd -n my-android8 -t $(android list targets | grep android-8 | cut -d" " -f2) -c 512M
+    - echo no | android create avd -n my-android10 -t $(android list targets | grep android-10 | cut -d" " -f2) -c 512M
 
     ##################################################
     # activate soft keyboard to perform checks on it
     #
-    - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
-    - echo "hw.keyboard=no" >> ~/.android/avd/my-android8.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/my-android25.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/my-android10.avd/config.ini
 
     ##################################################
     # activate gpu support to avoid black screenshots
     #
-    - echo "hw.gpu.enabled=yes" >> ~/.android/avd/my-android23.avd/config.ini
-    - echo "hw.gpu.mode=auto" >> ~/.android/avd/my-android23.avd/config.ini
+    - echo "hw.gpu.enabled=yes" >> ~/.android/avd/my-android25.avd/config.ini
+    - echo "hw.gpu.mode=auto" >> ~/.android/avd/my-android25.avd/config.ini
 
 test:
   pre:
@@ -43,7 +43,7 @@ test:
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
     #
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window ;; 1) emulator -avd my-android8 -no-audio -no-window ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android25 -no-audio -no-window ;; 1) emulator -avd my-android10 -no-audio -no-window ;; esac:
         parallel: true
         background: true
 
@@ -145,7 +145,7 @@ test:
     - mv espresso-macchiato/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
         parallel: true
 
-    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v8 ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v25 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v10 ;; esac:
         parallel: true
 
     ##################################################
