@@ -48,7 +48,7 @@ dependencies:
     - /usr/local/android-sdk-linux/platforms/android-23
     - /usr/local/android-sdk-linux/platforms/android-25
     - /usr/local/android-sdk-linux/platform-tools
-    - /usr/local/android-sdk-linux/build-tools/$BUILD_TOOLS_VERSION
+    - "/usr/local/android-sdk-linux/build-tools/${BUILD_TOOLS_VERSION}"
     - /usr/local/android-sdk-linux/extras/android/m2repostory
     #- $ANDROID_HOME/tools
     #- $ANDROID_HOME/platform-tools
