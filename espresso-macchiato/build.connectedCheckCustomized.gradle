@@ -7,7 +7,6 @@ buildscript {
     }
 }
 
-
 // Custom connectedCheck task to pull extra application data after test run finished
 
 // AndroidTestTask https://android.googlesource.com/platform/tools/build/+/3c6ba532ac7618701123629906a854c157ae59c0/gradle/src/main/groovy/com/android/build/gradle/internal/tasks/DeviceProviderInstrumentTestTask.groovy
@@ -103,6 +102,7 @@ task connectedCheckRunTests << {
     })
     runListener.setReportDir(testResultXmlOutputDirectory)
 
+    def failed = false;
     try {
         def runner = new RemoteAndroidTestRunner(applicationId, "android.support.test.runner.AndroidJUnitRunner", AndroidDebugBridge.createBridge().devices[0])
         runner.addInstrumentationArg("coverage", "true");
@@ -116,23 +116,38 @@ task connectedCheckRunTests << {
         runner.run(runListener)
 
         TestRunResult testRunResult = runListener.getRunResult();
-        if(testRunResult.hasFailedTests()) {
+        if (testRunResult.hasFailedTests()) {
             throw new GradleException("There were failing tests.")
         }
+    } catch (Exception e) {
+        failed = true;
+        throw e;
     } finally {
         TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultHtmlOutputDirectory)
         report.generateReport()
 
-        // pull coverage data from device
-        exec {
-            commandLine android.getAdbExe().absolutePath
-            args = ["pull", coverageFileOnDevice, coverageOutputDirectory.absolutePath + "/coverage.ec"]
+        try {
+            // pull coverage data from device
+            exec {
+                commandLine android.getAdbExe().absolutePath
+                args = ["pull", coverageFileOnDevice, coverageOutputDirectory.absolutePath + "/coverage.ec"]
+            }
+        } catch (Exception e) {
+            if (!failed) {
+                throw e;
+            }
         }
 
-        // pull screenshots from device
-        exec {
-            commandLine android.getAdbExe().absolutePath
-            args = ["pull", screenshotsOnDevice, screenshotOutputDirectory.absolutePath]
+        try {
+            // pull screenshots from device
+            exec {
+                commandLine android.getAdbExe().absolutePath
+                args = ["pull", screenshotsOnDevice, screenshotOutputDirectory.absolutePath]
+            }
+        } catch (Exception e) {
+            if (!failed) {
+                throw e;
+            }
         }
     }
 
