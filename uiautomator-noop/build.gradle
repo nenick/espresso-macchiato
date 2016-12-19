@@ -8,7 +8,7 @@ android {
         // v18 is minimal version for ui automator
         // http://stackoverflow.com/questions/31181443/uiautomator-on-android-lower-than-4-3
         minSdkVersion 18
-        targetSdkVersion 24
+        targetSdkVersion 25
     }
     buildTypes {
         release {
