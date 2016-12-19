@@ -14,7 +14,7 @@ dependencies:
     # to see all existing stuff use: android list sdk --all --extended
     #
     #- echo y | android update sdk --no-ui --all --filter tools
-    #- echo y | android update sdk --no-ui --all --filter platform-tools
+    - echo y | android update sdk --no-ui --all --filter platform-tools
     - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
     - if [ ! -d "$ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION" ]; then echo y | android update sdk --no-ui --all --filter build-tools-$BUILD_TOOLS_VERSION; fi
     - if [ ! -d "$ANDROID_HOME/plattforms/android-10" ]; then echo y | android update sdk --no-ui --all --filter android-10; fi
@@ -47,6 +47,7 @@ dependencies:
     - /usr/local/android-sdk-linux/platforms/android-10
     - /usr/local/android-sdk-linux/platforms/android-23
     - /usr/local/android-sdk-linux/platforms/android-25
+    - /usr/local/android-sdk-linux/platform-tools
     - /usr/local/android-sdk-linux/build-tools/$BUILD_TOOLS_VERSION
     - /usr/local/android-sdk-linux/extras/android/m2repostory
     #- $ANDROID_HOME/tools
