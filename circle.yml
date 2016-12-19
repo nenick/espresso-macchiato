@@ -15,13 +15,15 @@ dependencies:
     #
     #- echo y | android update sdk --no-ui --all --filter tools
     #- echo y | android update sdk --no-ui --all --filter platform-tools
-    - ls $ANDROID_HOME
     - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
     - if [ ! -d "$ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION" ]; then echo y | android update sdk --no-ui --all --filter build-tools-$BUILD_TOOLS_VERSION; fi
     - if [ ! -d "$ANDROID_HOME/plattforms/android-10" ]; then echo y | android update sdk --no-ui --all --filter android-10; fi
     - if [ ! -d "$ANDROID_HOME/plattforms/android-23" ]; then echo y | android update sdk --no-ui --all --filter android-23; fi
     - if [ ! -d "$ANDROID_HOME/plattforms/android-25" ]; then echo y | android update sdk --no-ui --all --filter android-25; fi
 
+    - ls $ANDROID_HOME
+    - ls /usr/lcoal/android-sdk-linux/
+    - ls /usr/lcoal/android-sdk-linux/platforms/
     ##################################################
     # create android emulator with latest supported android version
     #
@@ -46,8 +48,8 @@ dependencies:
 
   cache_directories:
     - /usr/lcoal/android-sdk-linux/platforms/android-10
-    - /usr/lcoal/android-sdk-linux/platforms/platforms/android-23
-    - /usr/lcoal/android-sdk-linux/platforms/platforms/android-25
+    - /usr/lcoal/android-sdk-linux/platforms/android-23
+    - /usr/lcoal/android-sdk-linux/platforms/android-25
     - /usr/lcoal/android-sdk-linux/build-tools/$BUILD_TOOLS_VERSION
     - $ANDROID_HOME/extras/android/m2repostory
     #- $ANDROID_HOME/tools
