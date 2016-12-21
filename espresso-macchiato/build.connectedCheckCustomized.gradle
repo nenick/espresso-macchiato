@@ -30,7 +30,7 @@ task connectedCheckRunTests << {
     String adbCommand = android.getAdbExe().absolutePath
     String coverageFileOnDevice = "/data/data/${applicationId}/coverage.ec"
     String screenshotsOnDevice = "/data/data/${applicationId}/files/test-screenshots"
-    String testApk = "espresso-macchiato/build/outputs/apk/espresso-macchiato-debug-androidTest-unaligned.apk"
+    String testApk = "espresso-macchiato/build/outputs/apk/espresso-macchiato-debug-androidTest.apk"
 
     // define all output directories
     def testResultXmlOutputDirectory = file("build/outputs/androidTest-results/connected")
@@ -109,7 +109,7 @@ task connectedCheckRunTests << {
         runner.addInstrumentationArg("coverageFile", coverageFileOnDevice);
         runner.setRunName(deviceName);
 
-        logger.lifecycle("install test apk")
+        logger.lifecycle("install test apk: " + testApk)
         device.installPackage(testApk, true /* force reinstall */)
 
         logger.lifecycle("start test run")
