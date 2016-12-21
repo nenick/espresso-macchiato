@@ -1,7 +1,14 @@
 machine:
   environment:
-    TERM: "dumb"
+    TERM: "dumb" # better circleci build log output
+
+    ##################################################
+    # Script wide version configuration
+    #
+    M2_REPOSITORY_REVISION: 41
     BUILD_TOOLS_VERSION: 25.0.2
+    EARLIEST_SUPPORTED_ANDROID_VERSION: 10
+    LATEST_SUPPORTED_ANDROID_VERSION: 23
 
   java:
     version: oraclejdk8
@@ -15,33 +22,34 @@ dependencies:
     #
     #- echo y | android update sdk --no-ui --all --filter tools
     - echo y | android update sdk --no-ui --all --filter platform-tools
-    - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
+    - if [ ! $M2_REPOSITORY_REVISION -lt `cat source.properties | grep Revision | cut -d= -f2 | cut -d. -f1`]; then echo y | android update sdk --no-ui --all --filter extra-android-m2repository; fi
     - if [ ! -d "$ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION" ]; then echo y | android update sdk --no-ui --all --filter build-tools-$BUILD_TOOLS_VERSION; fi
-    - if [ ! -d "$ANDROID_HOME/platforms/android-10" ]; then echo y | android update sdk --no-ui --all --filter android-10; fi
-    - if [ ! -d "$ANDROID_HOME/platforms/android-23" ]; then echo y | android update sdk --no-ui --all --filter android-23; fi
+    - if [ ! -d "$ANDROID_HOME/platforms/android-$EARLIEST_SUPPORTED_ANDROID_VERSION" ]; then echo y | android update sdk --no-ui --all --filter android-$EARLIEST_SUPPORTED_ANDROID_VERSION; fi
+    - if [ ! -d "$ANDROID_HOME/platforms/android-$LATEST_SUPPORTED_ANDROID_VERSION" ]; then echo y | android update sdk --no-ui --all --filter android-$LATEST_SUPPORTED_ANDROID_VERSION; fi
+
     - if [ ! -d "$ANDROID_HOME/platforms/android-25" ]; then echo y | android update sdk --no-ui --all --filter android-25; fi
 
     ##################################################
     # create android emulator with latest supported android version
     #
-    - echo no | android create avd -n my-android23 -t $(android list targets | grep android-23 | cut -d" " -f2) -c 512M --abi default/armeabi-v7a
+    - echo no | android create avd -n my-android$LATEST_SUPPORTED_ANDROID_VERSION -t $(android list targets | grep android-$LATEST_SUPPORTED_ANDROID_VERSION | cut -d" " -f2) -c 512M --abi default/armeabi-v7a
 
     ##################################################
     # create android emulator with earliest supported android version
     #
-    - echo no | android create avd -n my-android10 -t $(android list targets | grep android-10 | cut -d" " -f2) -c 512M
+    - echo no | android create avd -n my-android$EARLIEST_SUPPORTED_ANDROID_VERSION -t $(android list targets | grep android-$EARLIEST_SUPPORTED_ANDROID_VERSION | cut -d" " -f2) -c 512M
 
     ##################################################
     # activate soft keyboard to perform checks on it
     #
-    - echo "hw.keyboard=no" >> ~/.android/avd/my-android23.avd/config.ini
-    - echo "hw.keyboard=no" >> ~/.android/avd/my-android10.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/my-android$LATEST_SUPPORTED_ANDROID_VERSION.avd/config.ini
+    - echo "hw.keyboard=no" >> ~/.android/avd/my-android$EARLIEST_SUPPORTED_ANDROID_VERSION.avd/config.ini
 
     ##################################################
     # activate gpu support to avoid black screenshots
     #
-    - echo "hw.gpu.enabled=yes" >> ~/.android/avd/my-android23.avd/config.ini
-    - echo "hw.gpu.mode=auto" >> ~/.android/avd/my-android23.avd/config.ini
+    - echo "hw.gpu.enabled=yes" >> ~/.android/avd/my-android$LATEST_SUPPORTED_ANDROID_VERSION.avd/config.ini
+    - echo "hw.gpu.mode=auto" >> ~/.android/avd/my-android$LATEST_SUPPORTED_ANDROID_VERSION.avd/config.ini
 
   cache_directories:
     - /usr/local/android-sdk-linux/platforms
@@ -57,7 +65,7 @@ test:
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
     #
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window ;; 1) emulator -avd my-android10 -no-audio -no-window ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android$LATEST_SUPPORTED_ANDROID_VERSION -no-audio -no-window ;; 1) emulator -avd my-android$EARLIEST_SUPPORTED_ANDROID_VERSION -no-audio -no-window ;; esac:
         parallel: true
         background: true
 
@@ -159,7 +167,7 @@ test:
     - mv espresso-macchiato/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
         parallel: true
 
-    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v10 ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v$LATEST_SUPPORTED_ANDROID_VERSION ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v$EARLIEST_SUPPORTED_ANDROID_VERSION ;; esac:
         parallel: true
 
     ##################################################
