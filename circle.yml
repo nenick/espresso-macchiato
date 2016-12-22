@@ -22,7 +22,8 @@ dependencies:
     #
     #- echo y | android update sdk --no-ui --all --filter tools
     - echo y | android update sdk --no-ui --all --filter platform-tools
-    - if [ ! $M2_REPOSITORY_REVISION -lt `cat $ANDROID_HOME/extras/android/m2repository/source.properties | grep Revision | cut -d= -f2 | cut -d. -f1`]; then echo y | android update sdk --no-ui --all --filter extra-android-m2repository; fi
+    #- if [ ! $M2_REPOSITORY_REVISION -lt `cat $ANDROID_HOME/extras/android/m2repository/source.properties | grep Revision | cut -d= -f2 | cut -d. -f1`]; then echo y | android update sdk --no-ui --all --filter extra-android-m2repository; fi
+    - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
     - if [ ! -d "$ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION" ]; then echo y | android update sdk --no-ui --all --filter build-tools-$BUILD_TOOLS_VERSION; fi
     - if [ ! -d "$ANDROID_HOME/platforms/android-$EARLIEST_SUPPORTED_ANDROID_VERSION" ]; then echo y | android update sdk --no-ui --all --filter android-$EARLIEST_SUPPORTED_ANDROID_VERSION; fi
     - if [ ! -d "$ANDROID_HOME/platforms/android-$LATEST_SUPPORTED_ANDROID_VERSION" ]; then echo y | android update sdk --no-ui --all --filter android-$LATEST_SUPPORTED_ANDROID_VERSION; fi
@@ -55,7 +56,7 @@ dependencies:
     - /usr/local/android-sdk-linux/platforms
     - /usr/local/android-sdk-linux/platform-tools
     - /usr/local/android-sdk-linux/build-tools
-    - /usr/local/android-sdk-linux/extras/android/m2repository
+    #- /usr/local/android-sdk-linux/extras/android/m2repository
     #- $ANDROID_HOME/tools
 
 test:
