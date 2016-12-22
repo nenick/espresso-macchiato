@@ -24,8 +24,6 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter platform-tools
     - if [ ! $M2_REPOSITORY_REVISION -lt `cat $ANDROID_HOME/extras/android/m2repository/source.properties | grep Revision | cut -d= -f2 | cut -d. -f1`]; then echo y | android update sdk --no-ui --all --filter extra-android-m2repository; fi
     - if [ ! -d "$ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION" ]; then echo y | android update sdk --no-ui --all --filter build-tools-$BUILD_TOOLS_VERSION; fi
-    - ls "$ANDROID_HOME/platforms/android-$EARLIEST_SUPPORTED_ANDROID_VERSION"
-    - ls $ANDROID_HOME/platforms/android-$EARLIEST_SUPPORTED_ANDROID_VERSION
     - if [ ! -d "$ANDROID_HOME/platforms/android-$EARLIEST_SUPPORTED_ANDROID_VERSION" ]; then echo y | android update sdk --no-ui --all --filter android-$EARLIEST_SUPPORTED_ANDROID_VERSION; fi
     - if [ ! -d "$ANDROID_HOME/platforms/android-$LATEST_SUPPORTED_ANDROID_VERSION" ]; then echo y | android update sdk --no-ui --all --filter android-$LATEST_SUPPORTED_ANDROID_VERSION; fi
 
@@ -34,12 +32,12 @@ dependencies:
     ##################################################
     # create android emulator with latest supported android version
     #
-    - if [ ! -d "~/.android/avd/my-android$LATEST_SUPPORTED_ANDROID_VERSION" ]; then echo no | android create avd -n my-android$LATEST_SUPPORTED_ANDROID_VERSION -t $(android list targets | grep android-$LATEST_SUPPORTED_ANDROID_VERSION | cut -d" " -f2) -c 512M --abi default/armeabi-v7a; fi
+    - if [ ! -d "~/.android/avd/my-android$LATEST_SUPPORTED_ANDROID_VERSION.avd" ]; then echo no | android create avd -n my-android$LATEST_SUPPORTED_ANDROID_VERSION -t $(android list targets | grep android-$LATEST_SUPPORTED_ANDROID_VERSION | cut -d" " -f2) -c 512M --abi default/armeabi-v7a; fi
 
     ##################################################
     # create android emulator with earliest supported android version
     #
-    - if [ ! -d "~/.android/avd/my-android$EARLIEST_SUPPORTED_ANDROID_VERSION" ]; then echo no | android create avd -n my-android$EARLIEST_SUPPORTED_ANDROID_VERSION -t $(android list targets | grep android-$EARLIEST_SUPPORTED_ANDROID_VERSION | cut -d" " -f2) -c 512M; fi
+    - if [ ! -d "~/.android/avd/my-android$EARLIEST_SUPPORTED_ANDROID_VERSION.avd" ]; then echo no | android create avd -n my-android$EARLIEST_SUPPORTED_ANDROID_VERSION -t $(android list targets | grep android-$EARLIEST_SUPPORTED_ANDROID_VERSION | cut -d" " -f2) -c 512M; fi
 
     ##################################################
     # activate soft keyboard to perform checks on it
