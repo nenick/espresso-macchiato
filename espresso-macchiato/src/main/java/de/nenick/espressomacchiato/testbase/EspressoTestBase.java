@@ -144,7 +144,7 @@ public abstract class EspressoTestBase<A extends Activity> {
     }
 
     public void skipTestIfAndroidGingerbread_MR1() {
-        Assume.assumeThat(Build.VERSION.SDK_INT, Matchers.greaterThanOrEqualTo(Build.VERSION_CODES.GINGERBREAD_MR1));
+        Assume.assumeThat(Build.VERSION.SDK_INT, Matchers.not(Matchers.is(Build.VERSION_CODES.GINGERBREAD_MR1)));
     }
 
     /*public <T> void assertThat(final T actual, final Matcher<? super T> expected) {
