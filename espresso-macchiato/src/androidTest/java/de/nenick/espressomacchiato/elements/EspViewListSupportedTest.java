@@ -25,7 +25,6 @@ public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity>
         firstItemTextView.assertNotExist();
 
         espPage.swipeDown();
-        espPage.swipeDown();
         firstItemTextView.assertIsDisplayedOnScreen();
     }
 
@@ -76,7 +75,7 @@ public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity>
     /** Element extension */
     class MyEspAdapterViewItem extends EspAdapterViewItem {
 
-        public MyEspAdapterViewItem(EspAdapterViewItem template) {
+        MyEspAdapterViewItem(EspAdapterViewItem template) {
             super(template);
         }
 
