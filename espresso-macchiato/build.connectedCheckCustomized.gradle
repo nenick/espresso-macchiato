@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-rc1'
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 
@@ -123,35 +123,37 @@ task connectedCheckRunTests << {
         failed = true;
         throw e;
     } finally {
-        TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultHtmlOutputDirectory)
-        report.generateReport()
-
         try {
-            // pull coverage data from device
-            exec {
-                commandLine android.getAdbExe().absolutePath
-                args = ["pull", coverageFileOnDevice, coverageOutputDirectory.absolutePath + "/coverage.ec"]
-            }
-        } catch (Exception e) {
-            if (!failed) {
-                throw e;
-            }
-        }
+            TestReport report = new TestReport(ReportType.SINGLE_FLAVOR, testResultXmlOutputDirectory, testResultHtmlOutputDirectory)
+            report.generateReport()
 
-        try {
-            // pull screenshots from device
-            exec {
-                commandLine android.getAdbExe().absolutePath
-                args = ["pull", screenshotsOnDevice, screenshotOutputDirectory.absolutePath]
+            try {
+                // pull coverage data from device
+                exec {
+                    commandLine android.getAdbExe().absolutePath
+                    args = ["pull", coverageFileOnDevice, coverageOutputDirectory.absolutePath + "/coverage.ec"]
+                }
+            } catch (Exception e) {
+                if (!failed) {
+                    throw e;
+                }
             }
-        } catch (Exception e) {
-            if (!failed) {
-                throw e;
+
+            try {
+                // pull screenshots from device
+                exec {
+                    commandLine android.getAdbExe().absolutePath
+                    args = ["pull", screenshotsOnDevice, screenshotOutputDirectory.absolutePath]
+                }
+            } catch (Exception e) {
+                if (!failed) {
+                    throw e;
+                }
             }
+        } finally {
+            device.uninstallPackage(applicationId)
         }
     }
-
-    // don't device.uninstallPackage(applicationId)
 }
 afterEvaluate {
     tasks.connectedCheckRunTests.dependsOn tasks.assembleDebugAndroidTest

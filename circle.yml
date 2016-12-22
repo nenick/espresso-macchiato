@@ -57,6 +57,7 @@ dependencies:
     - /usr/local/android-sdk-linux/build-tools
     - /usr/local/android-sdk-linux/extras/android/m2repository
     #- $ANDROID_HOME/tools
+    - ~/.android
 
 test:
   pre:
