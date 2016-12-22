@@ -8,7 +8,7 @@ machine:
     M2_REPOSITORY_REVISION: 41
     BUILD_TOOLS_VERSION: 25.0.2
     EARLIEST_SUPPORTED_ANDROID_VERSION: 10
-    LATEST_SUPPORTED_ANDROID_VERSION: 24
+    LATEST_SUPPORTED_ANDROID_VERSION: 23
 
   java:
     version: oraclejdk8
@@ -27,7 +27,7 @@ dependencies:
     - if [ ! -d "$ANDROID_HOME/build-tools/$BUILD_TOOLS_VERSION" ]; then echo y | android update sdk --no-ui --all --filter build-tools-$BUILD_TOOLS_VERSION; fi
     - if [ ! -d "$ANDROID_HOME/platforms/android-$EARLIEST_SUPPORTED_ANDROID_VERSION" ]; then echo y | android update sdk --no-ui --all --filter android-$EARLIEST_SUPPORTED_ANDROID_VERSION; fi
     - if [ ! -d "$ANDROID_HOME/platforms/android-$LATEST_SUPPORTED_ANDROID_VERSION" ]; then echo y | android update sdk --no-ui --all --filter android-$LATEST_SUPPORTED_ANDROID_VERSION; fi
-    - if [ ! -d "$ANDROID_HOME/system-images/android-$LATEST_SUPPORTED_ANDROID_VERSION" ]; then echo y | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-$LATEST_SUPPORTED_ANDROID_VERSION; fi
+
     - if [ ! -d "$ANDROID_HOME/platforms/android-25" ]; then echo y | android update sdk --no-ui --all --filter android-25; fi
 
     ##################################################
@@ -56,7 +56,6 @@ dependencies:
     - /usr/local/android-sdk-linux/platforms
     - /usr/local/android-sdk-linux/platform-tools
     - /usr/local/android-sdk-linux/build-tools
-    - /usr/local/android-sdk-linux/system-images
     #- /usr/local/android-sdk-linux/extras/android/m2repository
     #- $ANDROID_HOME/tools
 
