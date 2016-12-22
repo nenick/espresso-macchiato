@@ -25,10 +25,10 @@ public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity>
         firstItemTextView.assertIsDisplayedOnScreen();
 
         espPage.swipeUp();
-        espPage.swipeUp(); // sometimes one swipe is not enough to show first item full again
         firstItemTextView.assertNotExist();
 
         espPage.swipeDown();
+        espPage.swipeDown(); // sometimes one swipe is not enough to show first item full again
         firstItemTextView.assertIsDisplayedOnScreen();
     }
 
