@@ -19,9 +19,13 @@ public class EspViewListSupportedTest extends EspressoTestCase<LongListActivity>
 
     @Test
     public void testSwipe() {
+        // swipe further than top/bottom results in an AppNotIdleException
+        skipTestIfAndroidGingerbread_MR1();
+
         firstItemTextView.assertIsDisplayedOnScreen();
 
         espPage.swipeUp();
+        espPage.swipeUp(); // sometimes one swipe is not enough to show first item full again
         firstItemTextView.assertNotExist();
 
         espPage.swipeDown();

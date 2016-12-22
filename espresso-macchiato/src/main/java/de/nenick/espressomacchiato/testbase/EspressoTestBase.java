@@ -125,6 +125,10 @@ public abstract class EspressoTestBase<A extends Activity> {
         });
     }
 
+    /**
+     * Get Activity from generic param when writing your own basic TestCase class.
+     */
+    @SuppressWarnings("WeakerAccess")
     protected Class<A> getGenericActivityClass() {
         Type genericSuperclass = getClass().getGenericSuperclass();
         if (genericSuperclass instanceof ParameterizedType) {
@@ -137,6 +141,10 @@ public abstract class EspressoTestBase<A extends Activity> {
 
     public void skipTestIfBelowAndroidMarshmallow() {
         Assume.assumeThat(Build.VERSION.SDK_INT, Matchers.greaterThanOrEqualTo(Build.VERSION_CODES.M));
+    }
+
+    public void skipTestIfAndroidGingerbread_MR1() {
+        Assume.assumeThat(Build.VERSION.SDK_INT, Matchers.greaterThanOrEqualTo(Build.VERSION_CODES.GINGERBREAD_MR1));
     }
 
     /*public <T> void assertThat(final T actual, final Matcher<? super T> expected) {
