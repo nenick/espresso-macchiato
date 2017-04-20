@@ -43,7 +43,7 @@ test:
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
     #
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android23 -no-audio -no-window ;; 1) emulator -avd my-android8 -no-audio -no-window ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android8 -no-audio -no-window ;; 1) emulator -avd my-android23 -no-audio -no-window ;; esac:
         parallel: true
         background: true
 
@@ -145,7 +145,7 @@ test:
     - mv espresso-macchiato/build/outputs/test-screenshots $CIRCLE_TEST_REPORTS/:
         parallel: true
 
-    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v23 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v8 ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v8 ;; 1) mv $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests $CIRCLE_TEST_REPORTS/espresso_macchiato_android_tests_v23 ;; esac:
         parallel: true
 
     ##################################################
