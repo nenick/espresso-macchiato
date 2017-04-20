@@ -11,7 +11,7 @@ dependencies:
     # workaround for "failed to find Build Tools revision ..."
     # to see all existing stuff use: android list sdk --all --extended
     #
-    - ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk --no-ui --all --filter "android-8,sysimg-23"
+    - ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | android update sdk --no-ui --all --filter "android-8,sys-img-armeabi-v7a-android-23"
 
     ##################################################
     # create android v23 emulator as latest supported android version
