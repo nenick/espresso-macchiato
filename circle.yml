@@ -43,7 +43,7 @@ test:
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
     #
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android8 -no-audio -no-window ;; 1) emulator -avd my-android23 -no-audio -no-window ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android8 -no-audio -no-windo -no-boot-animw ;; 1) emulator -avd my-android23 -no-audio -no-window -no-boot-anim ;; esac:
         parallel: true
         background: true
 
@@ -78,8 +78,8 @@ test:
     - adb shell settings put global window_animation_scale 0 &
     - adb shell settings put global transition_animation_scale 0 &
     - adb shell settings put global animator_duration_scale 0 &    
-    # remove the look screen
-    - adb shell input keyevent 82:
+    # wait until emulator is ready
+    - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82':
         parallel: true
 
     # clear logs from emulator
