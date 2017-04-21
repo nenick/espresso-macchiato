@@ -74,10 +74,10 @@ test:
     # ensure that the emulator is ready to use
     #
     # wait until emulator is ready
-    - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82':
+    - case $CIRCLE_NODE_INDEX in 1) adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82' ;; esac:
         parallel: true
-    - circle-android wait-for-boot:
-        parallel: true
+    #- circle-android wait-for-boot:
+    #    parallel: true
     - adb shell settings put global window_animation_scale 0
     - adb shell settings put global transition_animation_scale 0
     - adb shell settings put global animator_duration_scale 0    
