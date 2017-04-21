@@ -46,7 +46,7 @@ test:
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
     #
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android8 -no-audio -no-windo ;; 1) emulator -avd my-android23 -no-audio -no-window -no-boot-anim ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android8 -no-audio -no-window -no-boot-anim ;; 1) emulator -avd my-android23 -no-audio -no-window -no-boot-anim ;; esac:
         parallel: true
         background: true
 
@@ -81,9 +81,12 @@ test:
         parallel: true
     #- circle-android wait-for-boot:
     #    parallel: true
-    - adb shell settings put global window_animation_scale 0
-    - adb shell settings put global transition_animation_scale 0
-    - adb shell settings put global animator_duration_scale 0    
+    - adb shell settings put global window_animation_scale 0:
+        parallel: true
+    - adb shell settings put global transition_animation_scale 0:
+        parallel: true
+    - adb shell settings put global animator_duration_scale 0:
+        parallel: true
 
 
     # clear logs from emulator
