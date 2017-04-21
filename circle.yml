@@ -43,7 +43,7 @@ test:
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
     #
-    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android8 -no-audio -no-windo -no-boot-animw ;; 1) emulator -avd my-android23 -no-audio -no-window -no-boot-anim ;; esac:
+    - case $CIRCLE_NODE_INDEX in 0) emulator -avd my-android8 -no-audio -no-windo -no-boot-anim ;; 1) emulator -avd my-android23 -no-audio -no-window -no-boot-anim ;; esac:
         parallel: true
         background: true
 
