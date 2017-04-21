@@ -77,7 +77,7 @@ test:
     # ensure that the emulator is ready to use
     #
     # wait until emulator is ready
-    - case $CIRCLE_NODE_INDEX in 1) adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82' ;; esac:
+    - adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82':
         parallel: true
     #- circle-android wait-for-boot:
     #    parallel: true
