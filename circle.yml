@@ -75,9 +75,13 @@ test:
     #
     - circle-android wait-for-boot:
         parallel: true
+    - adb shell settings put global window_animation_scale 0 &
+    - adb shell settings put global transition_animation_scale 0 &
+    - adb shell settings put global animator_duration_scale 0 &    
     # remove the look screen
     - adb shell input keyevent 82:
         parallel: true
+
     # clear logs from emulator
     # - adb logcat -c
 
