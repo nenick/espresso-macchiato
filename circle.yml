@@ -39,6 +39,9 @@ dependencies:
 test:
   pre:
 
+    # (2) prebuild sample conntected android tests
+    - case $CIRCLE_NODE_INDEX in 1) ./gradlew :espresso-macchiato:assembleDebug :espresso-macchiato:assembleDebugAndroidTest ;; esac:
+        parallel: true
 
     ##################################################
     # start emulator for instrumentation tests (lowest and latest supported android version)
