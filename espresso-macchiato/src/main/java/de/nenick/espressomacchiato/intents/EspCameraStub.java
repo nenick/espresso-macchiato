@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 
 /**
  * Stubbing camera picture request with {@link MediaStore#ACTION_IMAGE_CAPTURE}.

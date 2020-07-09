@@ -1,4 +1,4 @@
-package android.support.test.uiautomator;
+package androidx.test.uiautomator;
 
 import android.app.Instrumentation;
 
@@ -25,7 +25,7 @@ public class UiDevice {
      *
      * @return Attention only stubbed
      */
-    public UiObject findObject(UiSelector selector) {
+    public androidx.test.uiautomator.UiObject findObject(UiSelector selector) {
         return new UiObject();
     }
 

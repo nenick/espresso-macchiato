@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.actions;
 
 import android.app.Activity;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 
 import org.junit.Test;
 

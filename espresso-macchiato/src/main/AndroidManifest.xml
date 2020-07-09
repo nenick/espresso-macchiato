@@ -1,10 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     package="de.nenick.espressomacchiato">
 
     <!-- uiautomator force android v18 but it is only used for devices with v23 or higher
          so we still can support lower android versions -->
-    <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18" />
+    <uses-sdk tools:overrideLibrary="android_libs.ub_uiautomator" />
 
     <application>
         <activity

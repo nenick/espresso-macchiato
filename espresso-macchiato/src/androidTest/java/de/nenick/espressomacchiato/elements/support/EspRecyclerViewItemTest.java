@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.elements.support;
 
 import android.content.Intent;
-import android.support.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.NoMatchingViewException;
 import android.view.View;
 
 import junit.framework.AssertionFailedError;
@@ -14,7 +14,7 @@ import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.test.views.LongRecyclerActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 /** Basic tests */
 public class EspRecyclerViewItemTest extends EspressoTestCase<LongRecyclerActivity> {

@@ -1,11 +1,11 @@
 package de.nenick.espressomacchiato.elements.support;
 
-import android.support.annotation.Nullable;
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.ViewAssertion;
-import android.support.test.espresso.ViewInteraction;
-import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewAssertion;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import android.view.View;
 
 import junit.framework.AssertionFailedError;
@@ -19,8 +19,8 @@ import de.nenick.espressomacchiato.assertions.support.LayoutManagerItemVisibilit
 import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.matchers.support.EspRecyclerViewMatcher;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static org.hamcrest.CoreMatchers.allOf;
 
 /**

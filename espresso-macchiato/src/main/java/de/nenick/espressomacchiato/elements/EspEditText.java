@@ -1,15 +1,15 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.support.test.espresso.action.ViewActions;
+import androidx.test.espresso.action.ViewActions;
 import android.view.View;
 
 import org.hamcrest.Matcher;
 
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
 
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withHint;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withHint;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Actions and assertions for a EditText.

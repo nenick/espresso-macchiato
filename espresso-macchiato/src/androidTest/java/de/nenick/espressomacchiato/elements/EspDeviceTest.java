@@ -2,8 +2,9 @@ package de.nenick.espressomacchiato.elements;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.test.InstrumentationRegistry;
-import android.support.v7.app.AlertDialog;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.test.InstrumentationRegistry;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;

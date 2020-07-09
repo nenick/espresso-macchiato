@@ -1,7 +1,8 @@
 package de.nenick.espressomacchiato.elements.support;
 
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.view.View;
+
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.hamcrest.Matcher;
 

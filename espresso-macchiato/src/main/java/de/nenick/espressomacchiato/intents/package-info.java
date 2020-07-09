@@ -5,7 +5,7 @@
  * A solution could be to use UiAutomator to handle third party Activities.
  * But the preferred way is to stub the third party applications and let them report your configured result.
  *
- * For Intent stubbing you must use the {@link android.support.test.espresso.intent.rule.IntentsTestRule} or it will not work.
+ * For Intent stubbing you must use the {@link androidx.test.espresso.intent.rule.IntentsTestRule} or it will not work.
  * (Necessary dependencies already provided by Espresso Macchiato library)
  *
  * <!-- <pre> -->

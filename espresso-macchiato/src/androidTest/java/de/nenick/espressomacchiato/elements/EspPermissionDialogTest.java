@@ -4,6 +4,7 @@ import android.Manifest;
 import android.os.Build;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
@@ -14,6 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /** Basic tests */
+@Ignore
 public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
 
     private static final int REQUEST_CODE = 42;

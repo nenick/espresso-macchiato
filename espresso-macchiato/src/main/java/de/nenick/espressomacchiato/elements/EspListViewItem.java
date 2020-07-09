@@ -6,7 +6,7 @@ import org.hamcrest.Matcher;
 
 import de.nenick.espressomacchiato.matchers.EspAdapterViewItemMatcher;
 
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Actions and assertions for ListView items including ChildViews and AdapterItems.

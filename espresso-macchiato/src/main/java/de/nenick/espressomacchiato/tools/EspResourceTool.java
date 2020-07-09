@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.tools;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 
 public class EspResourceTool {
 

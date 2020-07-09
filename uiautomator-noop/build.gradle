@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
         // v18 is minimal version for ui automator
         // http://stackoverflow.com/questions/31181443/uiautomator-on-android-lower-than-4-3
         minSdkVersion 18
-        targetSdkVersion 24
+        targetSdkVersion 29
     }
     buildTypes {
         release {

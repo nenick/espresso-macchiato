@@ -1,10 +1,11 @@
 package de.nenick.espressomacchiato.actions.support;
 
-import android.support.design.widget.AppBarLayout;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
-import android.support.test.espresso.matcher.ViewMatchers;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import android.view.View;
+
+import com.google.android.material.appbar.AppBarLayout;
 
 import org.hamcrest.Matcher;
 

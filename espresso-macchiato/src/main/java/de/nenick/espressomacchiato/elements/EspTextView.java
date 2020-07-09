@@ -1,16 +1,17 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
 import android.view.View;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 
 import org.hamcrest.Matcher;
 
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
 import de.nenick.espressomacchiato.matchers.EspTextViewMatcher;
 
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Actions and assertions for a TextView.

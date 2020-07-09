@@ -1,6 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.support.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.NoMatchingViewException;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;

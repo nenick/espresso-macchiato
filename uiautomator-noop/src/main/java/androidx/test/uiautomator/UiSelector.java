@@ -1,4 +1,4 @@
-package android.support.test.uiautomator;
+package androidx.test.uiautomator;
 
 /** Attention only stubbed */
 public class UiSelector {

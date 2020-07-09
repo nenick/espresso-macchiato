@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.matchers;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;

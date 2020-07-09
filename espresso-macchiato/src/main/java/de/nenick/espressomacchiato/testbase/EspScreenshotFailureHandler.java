@@ -1,8 +1,8 @@
 package de.nenick.espressomacchiato.testbase;
 
 import android.content.Context;
-import android.support.test.espresso.FailureHandler;
-import android.support.test.espresso.base.DefaultFailureHandler;
+import androidx.test.espresso.FailureHandler;
+import androidx.test.espresso.base.DefaultFailureHandler;
 import android.util.Log;
 import android.view.View;
 

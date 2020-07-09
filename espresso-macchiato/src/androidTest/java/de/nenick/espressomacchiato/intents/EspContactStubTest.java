@@ -5,7 +5,7 @@ import android.content.ContentUris;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
-import android.support.test.espresso.intent.matcher.IntentMatchers;
+import androidx.test.espresso.intent.matcher.IntentMatchers;
 
 import org.junit.Before;
 import org.junit.Ignore;

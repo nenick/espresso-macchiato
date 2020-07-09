@@ -4,15 +4,14 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.test.espresso.core.deps.guava.net.MediaType;
-
-import static android.support.test.espresso.intent.Intents.intending;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasType;
+import android.provider.MediaStore;
+import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasType;
 import static org.hamcrest.Matchers.allOf;
 
 /**
- * Stubbing gallery picture request with {@link Intent#ACTION_GET_CONTENT} and {@link MediaType#ANY_IMAGE_TYPE}.
+ * Stubbing gallery picture request with {@link Intent#ACTION_GET_CONTENT} and {@link MediaStore.Images.Media#CONTENT_TYPE}.
  *
  * Typical application starts the gallery picker and use the reported Uri to access selected picture by ContentResolver.
  * With this stubs you can avoid the start of the picture picker and let them report your preferred picture Uri.
@@ -48,6 +47,6 @@ public class EspGalleryStub {
     public static void register(Uri pictureLocation) {
         Intent resultData = new Intent();
         resultData.setData(pictureLocation);
-        intending(allOf(hasAction(Intent.ACTION_GET_CONTENT), hasType(MediaType.ANY_IMAGE_TYPE.toString()))).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData));
+        intending(allOf(hasAction(Intent.ACTION_GET_CONTENT), hasType(MediaStore.Images.Media.CONTENT_TYPE))).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData));
     }
 }

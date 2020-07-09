@@ -1,8 +1,9 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.support.design.widget.NavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.junit.Test;
 

@@ -2,8 +2,9 @@ package de.nenick.espressomacchiato.tools;
 
 import android.Manifest;
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.v7.app.AlertDialog;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.test.InstrumentationRegistry;
 import android.test.mock.MockContext;
 import android.widget.TextView;
 

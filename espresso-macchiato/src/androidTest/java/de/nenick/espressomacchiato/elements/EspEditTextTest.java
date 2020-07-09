@@ -8,7 +8,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 /** Basic tests */
 public class EspEditTextTest extends EspressoTestCase<BaseActivity> {

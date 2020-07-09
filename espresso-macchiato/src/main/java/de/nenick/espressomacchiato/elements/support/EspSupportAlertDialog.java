@@ -3,7 +3,7 @@ package de.nenick.espressomacchiato.elements.support;
 import de.nenick.espressomacchiato.elements.EspDialog;
 
 /**
- * Pre configured {@link EspDialog} for common {@link android.support.v7.app.AlertDialog}.
+ * Pre configured {@link EspDialog} for common {@link androidx.appcompat.app.AlertDialog}.
  *
  * @since Espresso Macchiato 0.4
  */
@@ -18,8 +18,8 @@ public class EspSupportAlertDialog extends EspDialog {
      */
     public static EspSupportAlertDialog build() {
         return new EspSupportAlertDialog(EspDialog.spec()
-                .withRoot(android.support.design.R.id.parentPanel)
-                .withTitle(android.support.design.R.id.alertTitle)
+                .withRoot(com.google.android.material.R.id.parentPanel)
+                .withTitle(com.google.android.material.R.id.alertTitle)
                 .withMessage(android.R.id.message)
                 .withConfirmButton(android.R.id.button1)
                 .withDenyButton(android.R.id.button2)

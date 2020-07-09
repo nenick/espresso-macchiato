@@ -2,13 +2,13 @@ package de.nenick.espressomacchiato.testbase;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.core.deps.guava.collect.Sets;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitor;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import android.support.test.runner.lifecycle.Stage;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitor;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
+import androidx.test.runner.lifecycle.Stage;
 import android.util.Log;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -32,7 +32,7 @@ public class EspCloseAllActivitiesFunction {
     }
 
     public static Set<Activity> getActivitiesInStages(Stage... stages) {
-        final Set<Activity> activities = Sets.newHashSet();
+        final Set<Activity> activities = new HashSet<>();
         final ActivityLifecycleMonitor instance = ActivityLifecycleMonitorRegistry.getInstance();
         for (Stage stage : stages) {
             activities.addAll(instance.getActivitiesInStage(stage));

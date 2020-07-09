@@ -1,8 +1,9 @@
 package de.nenick.espressomacchiato.tools;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.annotation.NonNull;
+import androidx.test.InstrumentationRegistry;
 import android.util.Log;
 
 import java.io.File;

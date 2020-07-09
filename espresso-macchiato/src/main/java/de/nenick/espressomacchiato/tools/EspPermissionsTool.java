@@ -3,8 +3,9 @@ package de.nenick.espressomacchiato.tools;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.test.InstrumentationRegistry;
-import android.support.v4.app.ActivityCompat;
+
+import androidx.core.app.ActivityCompat;
+import androidx.test.InstrumentationRegistry;
 
 import de.nenick.espressomacchiato.elements.EspPermissionDialog;
 

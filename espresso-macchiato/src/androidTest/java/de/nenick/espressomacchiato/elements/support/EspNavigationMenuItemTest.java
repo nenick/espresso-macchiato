@@ -1,12 +1,13 @@
 package de.nenick.espressomacchiato.elements.support;
 
-import android.support.design.widget.NavigationView;
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.v4.view.MenuItemCompat;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.core.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.NavigationDrawerActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 /** Basic tests */
 public class EspNavigationMenuItemTest extends EspressoTestCase<NavigationDrawerActivity> {

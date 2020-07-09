@@ -2,9 +2,10 @@ package de.nenick.espressomacchiato.matchers;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.test.InstrumentationRegistry;
 import android.view.View;
 import android.widget.TextView;
 

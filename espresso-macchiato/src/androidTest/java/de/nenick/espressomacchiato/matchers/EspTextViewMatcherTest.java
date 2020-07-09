@@ -1,6 +1,6 @@
 package de.nenick.espressomacchiato.matchers;
 
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 import android.view.View;
 import android.widget.TextView;
 

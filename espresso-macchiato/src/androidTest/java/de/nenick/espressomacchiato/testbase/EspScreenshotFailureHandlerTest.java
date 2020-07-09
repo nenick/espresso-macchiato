@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.testbase;
 
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.FailureHandler;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.FailureHandler;
 import android.view.View;
 
 import org.hamcrest.Matcher;
@@ -11,7 +11,7 @@ import java.io.File;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;

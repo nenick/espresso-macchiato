@@ -3,11 +3,15 @@ package de.nenick.espressomacchiato.testbase;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Looper;
-import android.support.annotation.IdRes;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.test.runner.lifecycle.Stage;
+
+import androidx.annotation.IdRes;
+import androidx.appcompat.app.AlertDialog;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.Espresso;
+import androidx.test.runner.AndroidJUnit4;
+import androidx.test.runner.lifecycle.Stage;
+
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -81,7 +85,7 @@ public abstract class EspressoTestBase<A extends Activity> {
         });
     }
 
-    protected void addDialog(final android.support.v7.app.AlertDialog.Builder dialog) {
+    protected void addDialog(final AlertDialog.Builder dialog) {
         performOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -94,7 +98,9 @@ public abstract class EspressoTestBase<A extends Activity> {
         performOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Log.e("DIALOG", "start");
                 dialog.show();
+                Log.e("DIALOG", "started");
             }
         });
     }
