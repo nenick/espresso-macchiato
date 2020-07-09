@@ -245,6 +245,15 @@ public class EspView {
     }
 
     /**
+     * Perform scrollTo view
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void scrollTo() {
+        findView().perform(ViewActions.scrollTo());
+    }
+
+    /**
      * Find view to perform actions or assertions.
      *
      * @param additional Provide extra matcher additional to the base matcher.

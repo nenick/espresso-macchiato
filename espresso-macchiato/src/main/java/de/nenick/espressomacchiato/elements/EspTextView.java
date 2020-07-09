@@ -47,6 +47,19 @@ public class EspTextView extends EspView {
     }
 
     /**
+     * Create new instance matching an element with given text.
+     *
+     * @param resourceId Identifier for this element.
+     *
+     * @return New element instance for actions and assertions.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public static EspTextView byText(int resourceId) {
+        return new EspTextView(withText(resourceId));
+    }
+
+    /**
      * Create an allOf matcher builder for this element.
      *
      * @return New allOf matcher builder.
