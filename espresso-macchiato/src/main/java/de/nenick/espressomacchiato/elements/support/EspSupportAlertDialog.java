@@ -3,7 +3,7 @@ package de.nenick.espressomacchiato.elements.support;
 import de.nenick.espressomacchiato.elements.EspDialog;
 
 /**
- * Pre configured {@link EspDialog} for common {@link android.support.v7.app.AlertDialog}.
+ * Pre configured {@link EspDialog} for common {@link androidx.appcompat.app.AlertDialog}.
  *
  * @since Espresso Macchiato 0.4
  */

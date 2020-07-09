@@ -1,6 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.support.test.espresso.Espresso;
+import androidx.test.espresso.Espresso;
 
 /**
  * Base for action and assertion for Dialogs.

@@ -2,7 +2,7 @@ package de.nenick.espressomacchiato.tools;
 
 import android.content.res.AssetManager;
 import android.net.Uri;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import java.io.File;
 import java.io.FileOutputStream;

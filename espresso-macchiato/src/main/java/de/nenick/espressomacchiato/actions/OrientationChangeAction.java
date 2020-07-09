@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 import android.util.Log;
 import android.view.View;
 
@@ -14,7 +14,7 @@ import org.hamcrest.Matcher;
 
 import de.nenick.espressomacchiato.testbase.EspressoTestBase;
 
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 
 /**
  * An Espresso ViewAction that changes the requestedOrientation of the screen

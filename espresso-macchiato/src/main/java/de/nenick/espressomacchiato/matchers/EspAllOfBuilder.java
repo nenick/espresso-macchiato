@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.matchers;
 
-import android.support.test.espresso.core.deps.guava.collect.Lists;
-import android.support.test.espresso.matcher.ViewMatchers;
+import androidx.test.espresso.core.deps.guava.collect.Lists;
+import androidx.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 
 import org.hamcrest.Matcher;

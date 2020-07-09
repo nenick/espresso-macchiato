@@ -1,14 +1,14 @@
 package de.nenick.espressomacchiato.assertions;
 
-import android.support.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.NoMatchingViewException;
 
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 /** Basic test */
 public class AdapterViewItemCountAssertionTest extends EspressoTestCase<BaseActivity> {

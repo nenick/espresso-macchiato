@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath 'com.novoda:bintray-release:0.3.4'
+        classpath 'com.novoda:bintray-release:0.5.0'
         classpath 'ch.raffael.pegdown-doclet:pegdown-doclet:1.3'
     }
 }
@@ -13,11 +13,11 @@ plugins {
     id "co.riiid.gradle" version "0.4.2"
 }
 
-// default android plugin
-apply plugin: 'com.android.library'
-
 // publish release artifacts to bintray repository
 apply plugin: 'com.novoda.bintray-release'
+
+// default android plugin
+apply plugin: 'com.android.library'
 
 // interpret javadoc comments with markdown
 apply plugin: 'ch.raffael.pegdown-doclet'
@@ -26,16 +26,16 @@ apply plugin: 'ch.raffael.pegdown-doclet'
 apply from: "build.connectedCheckCustomized.gradle"
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 28
     buildToolsVersion "24.0.2"
 
     defaultConfig {
         // v8 ist lowest min sdk which supported by espresso
         // v9 ist lowest min sdk which supported by support libraries since 24.2.0
         minSdkVersion 8
-        targetSdkVersion 24
+        targetSdkVersion 28
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         debug {
@@ -51,18 +51,18 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
-    compile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    api 'androidx.test.espresso:espresso-contrib:3.1.0'
+    api 'androidx.test.espresso:espresso-intents:3.1.0'
 
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
-    compile 'com.android.support:support-annotations:24.1.1'
-    compile 'com.android.support:cardview-v7:24.1.1'
+    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'com.google.android.material:material:1.0.0'
+    api 'androidx.annotation:annotation:1.0.0'
+    api 'androidx.cardview:cardview:1.0.0'
 
     // real uiautomator is not accessible inside Android Studio when used as compile dependency
-    provided project(':uiautomator-noop')
+    compileOnly project(':uiautomator-noop')
 
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 }
 
 // ##################################################

@@ -3,7 +3,7 @@ package de.nenick.espressomacchiato.testbase;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import android.view.View;
 
 import de.nenick.espressomacchiato.R;

@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.elements.support;
 
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import junit.framework.AssertionFailedError;
 
@@ -11,7 +11,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.CollapsingToolbarActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Basic tests

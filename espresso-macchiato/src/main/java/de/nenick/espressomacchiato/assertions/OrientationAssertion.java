@@ -1,9 +1,9 @@
 package de.nenick.espressomacchiato.assertions;
 
 import android.content.res.Configuration;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.ViewAssertion;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewAssertion;
 import android.view.View;
 
 public class OrientationAssertion implements ViewAssertion {

@@ -2,11 +2,11 @@ package de.nenick.espressomacchiato.testbase;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.core.deps.guava.collect.Sets;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitor;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import android.support.test.runner.lifecycle.Stage;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.espresso.core.deps.guava.collect.Sets;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitor;
+import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
+import androidx.test.runner.lifecycle.Stage;
 import android.util.Log;
 
 import java.util.Set;

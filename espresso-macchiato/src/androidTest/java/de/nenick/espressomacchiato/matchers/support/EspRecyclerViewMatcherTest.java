@@ -1,6 +1,6 @@
 package de.nenick.espressomacchiato.matchers.support;
 
-import android.support.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import android.view.View;
 
 import org.hamcrest.Matcher;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.LongRecyclerActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertFalse;
 
 /** Basic test */

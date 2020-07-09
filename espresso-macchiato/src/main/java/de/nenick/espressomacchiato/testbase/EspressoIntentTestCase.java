@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.testbase;
 
 import android.app.Activity;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
+import androidx.test.espresso.intent.rule.IntentsTestRule;
 
 import org.junit.Rule;
 

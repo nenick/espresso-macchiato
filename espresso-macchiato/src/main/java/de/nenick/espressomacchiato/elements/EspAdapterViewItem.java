@@ -1,6 +1,6 @@
 package de.nenick.espressomacchiato.elements;
 
-import android.support.test.espresso.matcher.ViewMatchers;
+import androidx.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 
 import org.hamcrest.Matcher;
@@ -10,9 +10,9 @@ import java.util.Map;
 import de.nenick.espressomacchiato.matchers.EspAdapterViewItemMatcher;
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
 
-import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onData;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.instanceOf;
 
 /**

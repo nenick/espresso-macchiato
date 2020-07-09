@@ -1,14 +1,14 @@
 package de.nenick.espressomacchiato.assertions;
 
 import android.graphics.Rect;
-import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.ViewAssertion;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewAssertion;
 import android.util.Log;
 import android.view.View;
 
 import de.nenick.espressomacchiato.elements.EspDevice;
 
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
+import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
 public class KeyboardAssertion implements ViewAssertion {

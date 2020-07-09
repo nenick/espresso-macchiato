@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.matchers;
 
-import android.support.annotation.Nullable;
-import android.support.test.espresso.matcher.ViewMatchers;
+import androidx.annotation.Nullable;
+import androidx.test.espresso.matcher.ViewMatchers;
 import android.view.View;
 import android.widget.AdapterView;
 

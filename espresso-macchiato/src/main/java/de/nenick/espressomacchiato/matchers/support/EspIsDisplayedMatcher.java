@@ -4,8 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.test.espresso.core.deps.guava.base.Preconditions;
-import android.support.test.espresso.matcher.ViewMatchers;
+import androidx.test.espresso.core.deps.guava.base.Preconditions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -17,7 +17,7 @@ import org.hamcrest.TypeSafeMatcher;
 
 import de.nenick.espressomacchiato.tools.EspResourceTool;
 
-import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 
 
 public class EspIsDisplayedMatcher {
@@ -88,7 +88,7 @@ public class EspIsDisplayedMatcher {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 resolveAttribute = view.getContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
             } else {
-                resolveAttribute = view.getContext().getTheme().resolveAttribute(android.support.v7.appcompat.R.attr.actionBarSize, tv, true);
+                resolveAttribute = view.getContext().getTheme().resolveAttribute(androidx.appcompat.appcompat.R.attr.actionBarSize, tv, true);
             }
 
             int actionBarHeight = 0;

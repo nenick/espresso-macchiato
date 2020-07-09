@@ -1,15 +1,15 @@
 package de.nenick.espressomacchiato.elements;
 
 import android.content.res.Configuration;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.action.ViewActions;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.action.ViewActions;
 
 import de.nenick.espressomacchiato.assertions.KeyboardAssertion;
 import de.nenick.espressomacchiato.tools.EspWait;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationLandscape;
 import static de.nenick.espressomacchiato.actions.OrientationChangeAction.orientationPortrait;
 import static de.nenick.espressomacchiato.assertions.OrientationAssertion.isOrientationLandscape;

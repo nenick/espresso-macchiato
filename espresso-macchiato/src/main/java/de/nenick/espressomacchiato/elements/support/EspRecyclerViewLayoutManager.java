@@ -1,9 +1,9 @@
 package de.nenick.espressomacchiato.elements.support;
 
-import android.support.test.espresso.ViewInteraction;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.test.espresso.ViewInteraction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import de.nenick.espressomacchiato.assertions.support.GridLayoutManagerColumnCountAssertion;
 

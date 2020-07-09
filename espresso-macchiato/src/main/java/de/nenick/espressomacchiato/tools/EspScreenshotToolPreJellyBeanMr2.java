@@ -4,8 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Looper;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.core.deps.guava.collect.Lists;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.espresso.core.deps.guava.collect.Lists;
 import android.view.View;
 
 import java.io.File;
