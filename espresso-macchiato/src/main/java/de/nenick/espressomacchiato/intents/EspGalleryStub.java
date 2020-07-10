@@ -47,6 +47,6 @@ public class EspGalleryStub {
     public static void register(Uri pictureLocation) {
         Intent resultData = new Intent();
         resultData.setData(pictureLocation);
-        intending(allOf(hasAction(Intent.ACTION_GET_CONTENT), hasType(MediaStore.Images.Media.CONTENT_TYPE))).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData));
+        intending(allOf(hasAction(Intent.ACTION_GET_CONTENT), hasType("image/*"))).respondWith(new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData));
     }
 }

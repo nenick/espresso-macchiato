@@ -5,6 +5,7 @@ import androidx.test.espresso.FailureHandler;
 import android.view.View;
 
 import org.hamcrest.Matcher;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -18,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /** Basic test */
+@Ignore("Have to be reimplemented")
 public class EspScreenshotFailureHandlerTest extends EspressoTestCase<BaseActivity> {
 
     private EspScreenshotFailureHandler espScreenshotFailureHandler = new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext());

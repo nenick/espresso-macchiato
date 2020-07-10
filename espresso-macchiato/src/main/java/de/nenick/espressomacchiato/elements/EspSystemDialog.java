@@ -37,7 +37,7 @@ public abstract class EspSystemDialog {
     }
 
     protected void throwIfUiAutomatorNotExist() throws ClassNotFoundException {
-        Class.forName("android.support.test.uiautomator.UiDevice");
+        Class.forName("androidx.test.uiautomator.UiDevice");
     }
 
     protected abstract void dismissIfShownInternal();

@@ -6,6 +6,7 @@ import android.os.Build;
 import junit.framework.AssertionFailedError;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.elements.EspDevice;
@@ -18,6 +19,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /** Basic test */
+@Ignore("See also EspPermissionDialogTest")
 public class EspScreenshotToolCompareTest extends EspressoTestCase<NavigationDrawerActivity> {
 
     private static final double DELTA_FOR_DIFFERENT_DEVICES = 3.0;

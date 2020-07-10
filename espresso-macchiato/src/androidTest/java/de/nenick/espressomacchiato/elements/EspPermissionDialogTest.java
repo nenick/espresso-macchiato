@@ -15,6 +15,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /** Basic tests */
+// TODO Since Android N we need another strategy.
+// Can't find the resource anymore to apply language independent clicks on the buttons. And revoking
+// permission lets the app always restart since Android N.
 @Ignore
 public class EspPermissionDialogTest extends EspressoTestCase<BaseActivity> {
 

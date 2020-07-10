@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import androidx.test.InstrumentationRegistry;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
@@ -21,6 +22,7 @@ public class EspPermissionsToolTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    @Ignore("See also EspPermissionDialogTest")
     public void testReportWhenPermissionNotDeclaredInManifest() {
         exception.expect(IllegalStateException.class);
         exception.expectMessage("Not all requested permissions are declared in your manifest files.");
@@ -28,6 +30,7 @@ public class EspPermissionsToolTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
+    @Ignore("See also EspPermissionDialogTest")
     public void testFailureWrongPackageName() {
         InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override

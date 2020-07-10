@@ -24,7 +24,7 @@ public class EspSystemAnrDialog extends EspSystemDialog {
     protected void dismissIfShownInternal() {
         // sometimes a system process isn't responding on emulator and this must be confirmed
         if (dialogIsShownWith(EspResourceTool.stringResourceByName("anr_process", ".*").replace("?", "\\?"))) {
-            click(EspResourceTool.stringResourceByName("wait"));
+            click(EspResourceTool.stringResourceByName("wait").toUpperCase());
         }
     }
 }

@@ -74,18 +74,7 @@ public class EspPermissionDialog {
             return;
         }
         //In Android N the Package is com.google.android.packageinstaller
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
-            try {
-
-
-            Resources res = InstrumentationRegistry.getInstrumentation().getContext().getPackageManager().getResourcesForApplication("com.google.android.packageinstaller");
-            int resourceId = res.getIdentifier("com.android.packageinstaller:string/permission_warning_template", null, null);
-            } catch (PackageManager.NameNotFoundException e) {}
-            click("com.google.android.packageinstaller:id/permission_allow_button");
-        } else {
-            click("com.android.packageinstaller:id/permission_allow_button");
-        }
+        click("com.android.packageinstaller:id/permission_allow_button");
 
         waitUntilPermissionIsChanged();
     }

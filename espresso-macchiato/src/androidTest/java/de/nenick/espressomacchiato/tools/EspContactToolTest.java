@@ -8,6 +8,7 @@ import androidx.test.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.OnActivityResultActivity;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /** Basic test */
+@Ignore("See also EspPermissionDialogTest")
 public class EspContactToolTest extends EspressoTestCase<OnActivityResultActivity> {
 
     private static final String TEST_CONTACT_NAME = "Test Contact";

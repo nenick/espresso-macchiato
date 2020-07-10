@@ -64,10 +64,10 @@ public abstract class EspressoTestBase<A extends Activity> {
 
     @Before
     public void setupEspresso() {
-        Espresso.setFailureHandler(new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext()));
-        keepScreenUsable();
-        EspSystemAnrDialog.build().dismissIfShown();
-        EspSystemAerrDialog.build().dismissIfShown();
+        //Espresso.setFailureHandler(new EspScreenshotFailureHandler(InstrumentationRegistry.getTargetContext()));
+        //keepScreenUsable();
+        //EspSystemAnrDialog.build().dismissIfShown();
+        //EspSystemAerrDialog.build().dismissIfShown();
     }
 
     @After
@@ -92,17 +92,29 @@ public abstract class EspressoTestBase<A extends Activity> {
                 dialog.show();
             }
         });
+        try {
+            // Ensure the click listener is fully attached. There where flaky tests which created
+            // and immediately clicked a button dialog but the added listener wasn't called.
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void addDialog(final android.app.AlertDialog.Builder dialog) {
         performOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.e("DIALOG", "start");
                 dialog.show();
-                Log.e("DIALOG", "started");
             }
         });
+        try {
+            // Ensure the click listener is fully attached. There where flaky tests which created
+            // and immediately clicked a button dialog but the added listener wasn't called.
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void performOnUiThread(Runnable runnable) {

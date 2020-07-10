@@ -35,13 +35,11 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             messageView.setText("clicked button: " + which);
-            dialog.dismiss();
         }
     };
     private DialogInterface.OnDismissListener dismissListener = new DialogInterface.OnDismissListener() {
         @Override
         public void onDismiss(DialogInterface dialog) {
-
             messageView.setText(DISMISSED);
         }
     };
@@ -55,7 +53,6 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
-    @Ignore
     public void testDialogWithConfirm() {
         espAlertDialog.assertNotExist();
         addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
@@ -80,18 +77,12 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setPositiveButton(OK, clickListener)
                 .setNegativeButton(DENY, clickListener));
 
-        Log.e("DIALOG", "click");
-
         espAlertDialog.denyButton().click();
-
-        Log.e("DIALOG", "check");
         espAlertDialog.assertNotExist();
-        Log.e("DIALOG", "check");
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_NEGATIVE);
     }
 
     @Test
-    @Ignore
     public void testDialogWithCancel() {
         addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
                 .setTitle(TITLE)
@@ -108,7 +99,6 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
 
 
     @Test
-    @Ignore
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void testDialogDismiss() {
         skipTestIfBelowAndroidMarshmallow();
@@ -126,7 +116,6 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
-    @Ignore
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void testDialogDismissNonCancelable() {
         skipTestIfBelowAndroidMarshmallow();
@@ -144,7 +133,6 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
 
     @Test
     @SuppressWarnings("deprecation")
-    @Ignore
     public void testSpecObsolete() {
         exception.expect(UnsupportedOperationException.class);
         EspAlertDialog.spec();
@@ -154,12 +142,10 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
     public void testTemplateConstructor() {
         espAlertDialog = new EspAlertDialog(espAlertDialog);
         addDialog(new AlertDialog.Builder(activityTestRule.getActivity())
-                .setTitle(TITLE + "!!!!!!!!!!")
+                .setTitle(TITLE)
                 .setMessage(MESSAGE)
                 .setPositiveButton(OK, clickListener));
 
-        espAlertDialog.assertIsVisible();
-        Log.e("DIALOG", "click");
         espAlertDialog.confirmButton().click();
         Log.e("DIALOG", "check");
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_POSITIVE);

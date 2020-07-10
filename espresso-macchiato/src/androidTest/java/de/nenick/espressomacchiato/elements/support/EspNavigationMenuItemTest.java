@@ -64,7 +64,7 @@ public class EspNavigationMenuItemTest extends EspressoTestCase<NavigationDrawer
     @Test
     public void testClickFailureWhenInvisible() {
         exception.expect(NoMatchingViewException.class);
-        exception.expectMessage("No views in hierarchy found matching: ((an instance of android.support.design.internal.NavigationMenuItemView and has child: with text: is \"standard navigation item\" and is displayed on the screen to the user) and is displayed on the screen to the user)");
+        exception.expectMessage("No views in hierarchy found matching: ((an instance of com.google.android.material.internal.NavigationMenuItemView and has child: with text: is \"standard navigation item\" and is displayed on the screen to the user) and is displayed on the screen to the user)");
 
         espNavigationMenuItemStandard.click();
     }

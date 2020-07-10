@@ -101,8 +101,7 @@ public class EspAppDataToolTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
-    @Ignore
-    // TODO need a way to throw error if any connection is open. better way would be to close them all
+    @Ignore("need a way to throw error if any connection is open. better way would be to close them all")
     public void testClearDatabaseWithOpenConnection() {
         EspAppDataTool.clearDatabase();
 
