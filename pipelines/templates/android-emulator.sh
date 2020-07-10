@@ -12,12 +12,12 @@ echo "Installing emulator"
 echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install ${EMULATOR_CONFIG}
 
 # Create emulator
-echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n xamarin_android_emulator -k ${EMULATOR_CONFIG} --force
+echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n android_emulator -k ${EMULATOR_CONFIG} --force
 
 echo "Starting emulator"
 
 # Start emulator in background
-nohup $ANDROID_HOME/emulator/emulator -avd xamarin_android_emulator -no-snapshot > /dev/null 2>&1 &
+nohup $ANDROID_HOME/emulator/emulator -avd android_emulator -no-snapshot > /dev/null 2>&1 &
 
 # Wait until emulator is started
 $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
