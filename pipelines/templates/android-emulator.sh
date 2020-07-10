@@ -4,7 +4,9 @@
 [ -z "$1" ] && echo "Missing argument for android version (e.g. android-27)" && exit 1
 
 # Configuration
-EMULATOR_CONFIG="system-images;android-27;default;x86"
+EMULATOR_CONFIG="system-images;android-18;default;x86"
+
+echo "Starting emulator $1"
 
 # Install AVD files
 echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install "${EMULATOR_CONFIG}"
