@@ -1,0 +1,15 @@
+pool:
+  vmImage: 'macOS-10.15'
+
+steps:
+  - task: Bash@3
+    displayName: Start Emulator
+    inputs:
+      filePath: 'pipelines/templates/android-emulator.sh'
+      arguments: 'android-18'
+
+  - task: Gradle@2
+    displayName: Android Tests
+    inputs:
+      tasks: 'connectedCheck'
+      gradleWrapperFile: 'gradlew'
