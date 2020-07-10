@@ -7,10 +7,10 @@
 EMULATOR_CONFIG="system-images;$1;default;x86"
 
 # Install AVD files
-echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install ${EMULATOR_CONFIG}
+echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install "${EMULATOR_CONFIG}"
 
 # Create emulator
-echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n xamarin_android_emulator -k ${EMULATOR_CONFIG} --force
+echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n xamarin_android_emulator -k "${EMULATOR_CONFIG}" --force
 
 $ANDROID_HOME/emulator/emulator -list-avds
 
