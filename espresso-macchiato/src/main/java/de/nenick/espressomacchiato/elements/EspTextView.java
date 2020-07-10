@@ -116,6 +116,17 @@ public class EspTextView extends EspView {
     }
 
     /**
+     * Check that the element has the expected text.
+     *
+     * @param resourceId Expected view text.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void assertTextIs(int resourceId) {
+        findView().check(matches(withText(resourceId)));
+    }
+
+    /**
      * Check that the element has the expected text color.
      *
      * @param color Expected view text color value.

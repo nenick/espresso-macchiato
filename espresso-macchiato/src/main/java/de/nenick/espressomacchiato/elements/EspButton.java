@@ -96,4 +96,15 @@ public class EspButton extends EspView {
     public void assertTextIs(String expected) {
         findView().check(matches(withText(expected)));
     }
+
+    /**
+     * Checks that the current text matches the expected text.
+     *
+     * @param resourceId Expected text.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void assertTextIs(int resourceId) {
+        findView().check(matches(withText(resourceId)));
+    }
 }
