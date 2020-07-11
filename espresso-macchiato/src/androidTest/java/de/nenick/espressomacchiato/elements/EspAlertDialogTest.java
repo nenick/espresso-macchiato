@@ -9,10 +9,7 @@ import android.os.Build;
 import android.util.Log;
 import android.widget.TextView;
 
-import androidx.test.espresso.Espresso;
-
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.test.views.BaseActivity;
@@ -45,7 +42,7 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
     };
 
     private EspAlertDialog espAlertDialog = EspAlertDialog.build();
-    private EspTextView  espTextView = EspTextView.byId(messageViewId);
+    private EspTextView espTextView = EspTextView.byId(messageViewId);
 
     @Before
     public void setup() {
@@ -63,6 +60,7 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
         espAlertDialog.assertIsVisible();
         espAlertDialog.title().assertTextIs(TITLE);
         espAlertDialog.message().assertTextIs(MESSAGE);
+        workaroundClickListenerNotAddedYet();
         espAlertDialog.confirmButton().click();
 
         espAlertDialog.assertNotExist();
@@ -77,6 +75,7 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setPositiveButton(OK, clickListener)
                 .setNegativeButton(DENY, clickListener));
 
+        workaroundClickListenerNotAddedYet();
         espAlertDialog.denyButton().click();
         espAlertDialog.assertNotExist();
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_NEGATIVE);
@@ -91,6 +90,7 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setNeutralButton(CANCEL, clickListener)
                 .setNegativeButton(DENY, clickListener));
 
+        workaroundClickListenerNotAddedYet();
         espAlertDialog.cancelButton().click();
 
         espAlertDialog.assertNotExist();
@@ -146,8 +146,8 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setMessage(MESSAGE)
                 .setPositiveButton(OK, clickListener));
 
+        workaroundClickListenerNotAddedYet();
         espAlertDialog.confirmButton().click();
-        Log.e("DIALOG", "check");
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_POSITIVE);
     }
 
@@ -155,5 +155,16 @@ public class EspAlertDialogTest extends EspressoTestCase<BaseActivity> {
         messageView = new TextView(activityTestRule.getActivity());
         messageView.setId(messageViewId);
         addViewToLayout(messageView, BaseActivity.rootLayout);
+    }
+
+    /**
+     * When slow emulated then adding click listener is delayed and click won't work.
+     */
+    private void workaroundClickListenerNotAddedYet() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
