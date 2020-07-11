@@ -1,28 +1,34 @@
 #!/usr/bin/env bash
 
-# Validate arguments
-[ -z "$1" ] && echo "Missing argument for android version (e.g. android-27)" && exit 1
+################################################################################
+# Configure emulator variant
 
-# Configuration
-EMULATOR_CONFIG="system-images;$1;default;x86"
+[ -z "${1}" ] && echo "Missing argument for android version (e.g. android-27)" && exit 1
+AVD_VARIANT="system-images;${1};default;x86"
+AVD_NAME=${1}
 
-# Install AVD files
-echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install "${EMULATOR_CONFIG}"
+################################################################################
+# Install and create emulator
 
-# Create emulator
-echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n xamarin_android_emulator -k "${EMULATOR_CONFIG}" --force
+echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install ${AVD_VARIANT}
+echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n ${AVD_NAME} -k ${AVD_VARIANT} --force
 
-$ANDROID_HOME/emulator/emulator -list-avds
+################################################################################
+# Activate soft keyboard to perform checks on it
 
-echo "Starting emulator"
+echo "hw.keyboard=no" >> ~/.android/avd/${AVD_NAME}.avd/config.ini
 
-# Start emulator in background
-nohup $ANDROID_HOME/emulator/emulator -avd xamarin_android_emulator -no-snapshot > /dev/null 2>&1 &
+################################################################################
+# Start emulator
+
+nohup $ANDROID_HOME/emulator/emulator -avd ${AVD_NAME} -no-snapshot > /dev/null 2>&1 &
+
+################################################################################
+# Wait until emulator is ready
+
 $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
 
-$ANDROID_HOME/platform-tools/adb devices
-
-echo "Emulator started"
-
+################################################################################
 # Give Emulator a few seconds to be really ready
+
 sleep 10
