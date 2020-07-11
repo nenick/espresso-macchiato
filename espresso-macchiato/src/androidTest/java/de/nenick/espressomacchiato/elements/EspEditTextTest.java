@@ -1,10 +1,14 @@
 package de.nenick.espressomacchiato.elements;
 
+import android.os.Build;
 import android.widget.EditText;
+
+import androidx.test.annotation.UiThreadTest;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import de.nenick.espressomacchiato.test.BuildConfig;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
@@ -22,10 +26,15 @@ public class EspEditTextTest extends EspressoTestCase<BaseActivity> {
 
     @Before
     public void setup() {
-        EditText editText = new EditText(activityTestRule.getActivity());
-        editText.setId(editTextId);
-        editText.setHint(HINT_TEXT);
-        addViewToLayout(editText, BaseActivity.rootLayout);
+        performOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                EditText editText = new EditText(activityTestRule.getActivity());
+                editText.setId(editTextId);
+                editText.setHint(HINT_TEXT);
+                addViewToLayout(editText, BaseActivity.rootLayout);
+            }
+        });
     }
 
     @Test
