@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.sampleapp.test;
 
+
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.sampleapp.LoginActivity;
