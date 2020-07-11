@@ -60,6 +60,7 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
         espSupportAlertDialog.assertIsVisible();
         espSupportAlertDialog.title().assertTextIs(TITLE);
         espSupportAlertDialog.message().assertTextIs(MESSAGE);
+        workaroundClickListenerNotAddedYet();
         espSupportAlertDialog.confirmButton().click();
 
         espSupportAlertDialog.assertNotExist();
@@ -74,6 +75,7 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setPositiveButton(OK, clickListener)
                 .setNegativeButton(DENY, clickListener));
 
+        workaroundClickListenerNotAddedYet();
         espSupportAlertDialog.denyButton().click();
 
         espSupportAlertDialog.assertNotExist();
@@ -89,6 +91,7 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setNeutralButton(CANCEL, clickListener)
                 .setNegativeButton(DENY, clickListener));
 
+        workaroundClickListenerNotAddedYet();
         espSupportAlertDialog.cancelButton().click();
 
         espSupportAlertDialog.assertNotExist();
@@ -142,6 +145,7 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
                 .setMessage(MESSAGE)
                 .setPositiveButton(OK, clickListener));
 
+        workaroundClickListenerNotAddedYet();
         espSupportAlertDialog.confirmButton().click();
         espTextView.assertTextIs(CLICKED_BUTTON + DialogInterface.BUTTON_POSITIVE);
     }
@@ -150,5 +154,16 @@ public class EspSupportAlertDialogTest extends EspressoTestCase<BaseActivity> {
         messageView = new TextView(activityTestRule.getActivity());
         messageView.setId(messageViewId);
         addViewToLayout(messageView, BaseActivity.rootLayout);
+    }
+
+    /**
+     * When slow emulated then adding click listener is delayed and click won't work.
+     */
+    private void workaroundClickListenerNotAddedYet() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
