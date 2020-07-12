@@ -8,6 +8,8 @@ import androidx.test.espresso.action.Swipe;
 import androidx.test.espresso.action.ViewActions;
 
 import de.nenick.espressomacchiato.elements.support.EspNavigationMenuItem;
+import de.nenick.espressomacchiato.tools.EspWait;
+
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -66,7 +68,9 @@ public class EspDrawer extends EspView {
      * @since Espresso Macchiato 0.1
      */
     public void open() {
-        findDrawerLayout().perform(ViewActions.actionWithAssertions(new GeneralSwipeAction(Swipe.FAST, GeneralLocation.CENTER_LEFT, GeneralLocation.CENTER_RIGHT, Press.FINGER)));
+        findDrawerLayout().perform(new GeneralSwipeAction(Swipe.FAST, GeneralLocation.CENTER_LEFT, GeneralLocation.CENTER_RIGHT, Press.FINGER));
+        // Espresso does not wait until open animation ended. Try to stabilize it.
+        EspWait.forIdle();
     }
 
     /**
@@ -75,7 +79,7 @@ public class EspDrawer extends EspView {
      * @since Espresso Macchiato 0.1
      */
     public void close() {
-        findDrawerLayout().perform(ViewActions.actionWithAssertions(new GeneralSwipeAction(Swipe.FAST, GeneralLocation.CENTER_RIGHT, GeneralLocation.CENTER_LEFT, Press.FINGER)));
+        findDrawerLayout().perform(new GeneralSwipeAction(Swipe.FAST, GeneralLocation.CENTER_RIGHT, GeneralLocation.CENTER_LEFT, Press.FINGER));
     }
 
     /**
