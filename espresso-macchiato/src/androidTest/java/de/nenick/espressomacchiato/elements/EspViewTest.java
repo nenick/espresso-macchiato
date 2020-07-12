@@ -15,6 +15,8 @@ import org.junit.Test;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
+import static org.hamcrest.Matchers.containsString;
+
 /** Basic tests */
 public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
@@ -70,8 +72,17 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     }
 
     @Test
-    public void testAssertIsDisplayedOnScreenWhenViewLargerThanScreen() {
-        givenViewLargerThanScreen();
+    public void testAssertIsDisplayedOnScreenWhenViewIsPartlyOutOfScreen() {
+        givenViewPartlyOutOfScreen();
+
+        exception.expect(AssertionFailedError.class);
+        exception.expectMessage(containsString("at least 100 percent of the view's area is displayed to the user"));
+        espView.assertIsDisplayedOnScreen();
+    }
+
+    @Test
+    public void testAssertIsDisplayedOnScreenWhenViewLargerAsScreenButInScrollView() {
+        givenViewLargerThanScreenInScrollView();
         espView.assertIsDisplayedOnScreen();
     }
 
@@ -135,8 +146,16 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         espTextView.assertTextIs(VIEW_WAS_DOUBLE_CLICKED_MESSAGE);
     }
 
+    private void givenViewPartlyOutOfScreen() {
+        view = new Button(activityTestRule.getActivity());
+        view.setHeight(3000);
+        view.setWidth(2000);
+        view.setId(viewId);
+        view.setX(-300);
+        addViewToLayout(view, BaseActivity.rootLayout);
+    }
 
-    private void givenViewLargerThanScreen() {
+    private void givenViewLargerThanScreenInScrollView() {
         ScrollView scrollView = new ScrollView(getActivity());
         scrollView.setId(android.R.id.candidatesArea);
         addViewToLayout(scrollView, BaseActivity.rootLayout);
