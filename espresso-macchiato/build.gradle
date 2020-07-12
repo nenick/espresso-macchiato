@@ -50,6 +50,11 @@ android {
         disable 'InvalidPackage'
     }
 
+    testOptions {
+        // Disable animations to speed up ui test execution and reduce flakiness.
+        animationsDisabled = true
+    }
+
     useLibrary 'android.test.mock'
 }
 
