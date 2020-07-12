@@ -2,14 +2,30 @@ pool:
   vmImage: 'macOS-10.15'
 
 steps:
+  - task: Gradle@2
+    displayName: APK Build
+    inputs:
+      tasks: 'assembleAndroidTest'
+      gradleWrapperFile: 'gradlew'
+
   - task: Bash@3
-    displayName: Start Emulator
+    displayName: Emulator Setup
     inputs:
       filePath: 'pipelines/templates/android-emulator.sh'
       arguments: 'android-18'
 
   - task: Gradle@2
-    displayName: Android Tests
+    displayName: Android Tests (macchiato)
     inputs:
-      tasks: 'connectedCheck'
+      tasks: 'espresso-macchiato:connectedCheck'
       gradleWrapperFile: 'gradlew'
+      testResultsFiles: 'espresso-macchiato/**/TEST-*.xml'
+      testRunTitle: 'espresso-macchiato'
+
+  - task: Gradle@2
+    displayName: Android Tests (sampleapp)
+    inputs:
+      tasks: 'sampleapp:connectedCheck'
+      gradleWrapperFile: 'gradlew'
+      testResultsFiles: 'sampleapp/**/TEST-*.xml'
+      testRunTitle: 'sampleapp'
