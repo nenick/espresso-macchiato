@@ -185,8 +185,13 @@ public class EspDeviceTest extends EspressoTestCase<BaseActivity> {
     }
 
     private void givenEditTextToOpenSoftKeyboard() {
-        EditText editText = new EditText(activityTestRule.getActivity());
-        editText.setId(editTextId);
-        addViewToLayout(editText, BaseActivity.rootLayout);
+        performOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                EditText editText = new EditText(activityTestRule.getActivity());
+                editText.setId(editTextId);
+                addViewToLayoutReuseUiThread(editText, BaseActivity.rootLayout);
+            }
+        });
     }
 }
