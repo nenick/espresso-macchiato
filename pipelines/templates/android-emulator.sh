@@ -11,7 +11,7 @@ AVD_NAME=${1}
 # Install and create emulator
 
 echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install ${AVD_VARIANT}
-echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n ${AVD_NAME} -k ${AVD_VARIANT} -c 512M -no-audio -no-window --force
+echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n ${AVD_NAME} -k ${AVD_VARIANT} -c 512M --force
 
 ################################################################################
 # Activate soft keyboard to perform checks on it
@@ -21,7 +21,7 @@ echo "hw.keyboard=no" >> ~/.android/avd/${AVD_NAME}.avd/config.ini
 ################################################################################
 # Start emulator
 
-nohup $ANDROID_HOME/emulator/emulator -avd ${AVD_NAME} -no-snapshot > /dev/null 2>&1 &
+nohup $ANDROID_HOME/emulator/emulator -avd ${AVD_NAME} -no-snapshot -no-audio -no-window > /dev/null 2>&1 &
 
 ################################################################################
 # Wait until emulator is ready
