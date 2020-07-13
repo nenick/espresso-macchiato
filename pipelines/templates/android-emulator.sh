@@ -27,7 +27,7 @@ cat ~/.android/avd/${AVD_NAME}.avd/config.ini
 
 ################################################################################
 # Start emulator
-nohup $ANDROID_HOME/emulator/emulator -avd ${AVD_NAME} -no-snapshot -no-audio -no-window > /dev/null 2>&1 &
+nohup $ANDROID_HOME/emulator/emulator -avd ${AVD_NAME} -no-boot-anim -accel auto -gpu auto -no-snapshot -no-audio -no-window > /dev/null 2>&1 &
 
 ################################################################################
 # Wait until emulator is ready
