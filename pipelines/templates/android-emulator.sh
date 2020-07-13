@@ -32,3 +32,10 @@ $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sy
 # Give Emulator a few seconds to be really ready
 
 sleep 10
+
+################################################################################
+# Disable animations for more speed and less flakiness on emulators.
+
+$ANDROID_HOME/platform-tools/adb shell settings put global window_animation_scale 0
+$ANDROID_HOME/platform-tools/adb shell settings put global transition_animation_scale 0
+$ANDROID_HOME/platform-tools/adb shell settings put global animator_duration_scale 0
