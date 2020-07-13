@@ -31,7 +31,7 @@ steps:
       testRunTitle: 'sampleapp'
 
   - task: Bash@3
-    displayName: Emulator Setup
+    displayName: Collect (Emulator Logs)
     inputs:
       filePath: 'pipelines/templates/android-emulator-logs.sh'
       arguments: 'android-emulator-logcat.txt'
