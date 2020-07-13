@@ -29,6 +29,11 @@ nohup $ANDROID_HOME/emulator/emulator -avd ${AVD_NAME} -no-snapshot > /dev/null 
 $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
 
 ################################################################################
+# Print emulator config for debug purpose.
+
+cat ~/.android/avd/${AVD_NAME}.avd/config.ini
+
+################################################################################
 # Give Emulator a few seconds to be really ready
 
 sleep 10
