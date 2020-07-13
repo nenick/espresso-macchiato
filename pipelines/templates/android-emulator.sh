@@ -11,7 +11,7 @@ AVD_NAME=${1}
 # Install and create emulator
 
 echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install ${AVD_VARIANT}
-echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n ${AVD_NAME} -k ${AVD_VARIANT} -c 512M --force
+echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n ${AVD_NAME} -k ${AVD_VARIANT} -c 512M -no-audio -no-window --force
 
 ################################################################################
 # Activate soft keyboard to perform checks on it
