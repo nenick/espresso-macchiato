@@ -14,11 +14,12 @@ echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n ${AVD_NAME} -k ${AV
 ################################################################################
 # Activate soft keyboard to perform checks on it
 echo "hw.keyboard=no" >> ~/.android/avd/${AVD_NAME}.avd/config.ini
-# Use more CPUs for emulation.
+# Use more cpu kernals for emulation.
 echo "hw.cpu.ncore=4" >> ~/.android/avd/${AVD_NAME}.avd/config.ini
-# Use more Ram for emulation.
+# Use more ram for emulation.
 echo "hw.ramSize=1536" >> ~/.android/avd/${AVD_NAME}.avd/config.ini
-
+# Use more heap for emulation.
+echo "vm.heapSize=256" >> ~/.android/avd/${AVD_NAME}.avd/config.ini
 
 ################################################################################
 # Print emulator config for debug purpose.
