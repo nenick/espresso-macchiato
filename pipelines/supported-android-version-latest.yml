@@ -35,7 +35,9 @@ steps:
     inputs:
       filePath: 'pipelines/templates/android-emulator-logs.sh'
       arguments: 'android-emulator-logcat.txt'
+    condition: succeededOrFailed()
 
   - publish: android-emulator-logcat.txt
     displayName: Publish (Emulator Logs)
     artifact: Android Emulator
+    condition: succeededOrFailed()
