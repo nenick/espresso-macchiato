@@ -15,8 +15,9 @@ echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n ${AVD_NAME} -k ${AV
 
 ################################################################################
 # Activate soft keyboard to perform checks on it
-
 echo "hw.keyboard=no" >> ~/.android/avd/${AVD_NAME}.avd/config.ini
+# Use more CPUs for emulation.
+echo "hw.cpu.ncore=4" >> ~/.android/avd/${AVD_NAME}.avd/config.ini
 
 ################################################################################
 # Start emulator
