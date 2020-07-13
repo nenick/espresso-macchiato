@@ -30,6 +30,12 @@ android {
             disable 'GoogleAppIndexingWarning' // ignore GoogleAppIndexingWarning, this app will never be released
         }
     }
+
+    testOptions {
+        // Disable animations to speed up ui test execution and reduce flakiness.
+        // Avoid the PerformException: Error performing 'single click' on view 'Animations or transitions are enabled on the target device.
+        animationsDisabled = true
+    }
 }
 
 repositories {
