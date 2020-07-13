@@ -29,3 +29,13 @@ steps:
       gradleWrapperFile: 'gradlew'
       testResultsFiles: 'sampleapp/**/TEST-*.xml'
       testRunTitle: 'sampleapp'
+
+  - task: Bash@3
+    displayName: Emulator Setup
+    inputs:
+      filePath: 'pipelines/templates/android-emulator-logs.sh'
+      arguments: 'android-emulator-logcat.txt'
+
+  - publish: android-emulator-logcat.txt
+    displayName: Publish (Emulator Logs)
+    artifact: Android Emulator
