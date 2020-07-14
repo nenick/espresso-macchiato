@@ -1,6 +1,7 @@
 package de.nenick.espressomacchiato.elements;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -21,8 +22,10 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.isSelected;
+import static androidx.test.espresso.matcher.ViewMatchers.withChild;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.not;
@@ -95,6 +98,28 @@ public class EspView {
      */
     public EspView(EspView template) {
         this.baseMatcher = template.baseMatcher;
+    }
+
+    /**
+     * Checks if view has a currently displayed child with given text.
+     *
+     * @param expectedText Text which should be displayed.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public Matcher<View> withDisplayedChild(String expectedText) {
+        return withChild(allOf(withText(expectedText), isDisplayed()));
+    }
+
+    /**
+     * Checks if view has a currently displayed child with given text.
+     *
+     * @param expectedText Text which should be displayed.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public Matcher<View> withDisplayedChild(int expectedText) {
+        return withChild(allOf(withText(expectedText), isDisplayed()));
     }
 
     /**
