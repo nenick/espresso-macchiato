@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.elements;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
+import androidx.test.espresso.Root;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
@@ -19,6 +19,7 @@ import de.nenick.espressomacchiato.matchers.support.EspIsDisplayedMatcher;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.isSelected;
@@ -101,25 +102,76 @@ public class EspView {
     }
 
     /**
-     * Checks if view has a currently displayed child with given text.
+     * Checks if view has a child with given text.
      *
-     * @param expectedText Text which should be displayed.
+     * @param text Text which should be on child
      *
      * @since Espresso Macchiato 0.6
      */
-    public Matcher<View> withDisplayedChild(String expectedText) {
-        return withChild(allOf(withText(expectedText), isDisplayed()));
+    public Matcher<View> withChildren(String text) {
+        return withChild(withText(text));
     }
 
     /**
-     * Checks if view has a currently displayed child with given text.
+     * Checks if view has a child with given text.
      *
-     * @param expectedText Text which should be displayed.
+     * @param text Text which should be on child
      *
      * @since Espresso Macchiato 0.6
      */
-    public Matcher<View> withDisplayedChild(int expectedText) {
-        return withChild(allOf(withText(expectedText), isDisplayed()));
+    public Matcher<View> withChildren(int text) {
+        return withChild(withText(text));
+    }
+
+    /**
+     * Checks if view has a descendant with given text.
+     *
+     * @param text Text which should be on descendant.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public Matcher<View> withDescendant(String text) {
+        return hasDescendant(withText(text));
+    }
+
+    /**
+     * Checks if view has a descendant with given text.
+     *
+     * @param text Text which should be on descendant.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public Matcher<View> withDescendant(int text) {
+        return hasDescendant(withText(text));
+    }
+
+    /**
+     * Clicks view in root which fits the root matcher.
+     *
+     * @param rootMatchers RootMatcher.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public ViewInteraction clickRoot(Matcher<Root> rootMatchers) {
+        return findView().inRoot(rootMatchers).perform(ViewActions.click());
+    }
+
+    /**
+     * Checks if the view has focus.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void hasFocus() {
+        findView().check(matches(ViewMatchers.hasFocus()));
+    }
+
+    /**
+     * Checks if the view has no focus.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void hasNoFocus() {
+        findView().check(matches(not(ViewMatchers.hasFocus())));
     }
 
     /**
