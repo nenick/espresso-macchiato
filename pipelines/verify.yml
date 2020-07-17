@@ -1,5 +1,6 @@
 jobs:
-  - job: test supported android version (earliest)
+  - job: earliestVersion
+    displayName: 'test supported android version (earliest)'
     pool:
       vmImage: 'macOS-10.15'
     steps:
@@ -7,7 +8,8 @@ jobs:
         parameters:
           androidVersion: 'android-18'
 
-  - job: test supported android version (latest)
+  - job: latestVersion
+    displayName: 'test supported android version (latest)'
     pool:
       vmImage: 'macOS-10.15'
     steps:
