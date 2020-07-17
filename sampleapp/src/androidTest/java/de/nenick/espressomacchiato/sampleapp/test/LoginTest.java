@@ -3,6 +3,7 @@ package de.nenick.espressomacchiato.sampleapp.test;
 
 import org.junit.Test;
 
+import de.nenick.espressomacchiato.elements.EspDevice;
 import de.nenick.espressomacchiato.sampleapp.LoginActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 
@@ -16,6 +17,7 @@ public class LoginTest extends EspressoTestCase<LoginActivity> {
         loginPage.confirm().assertIsDisabled();
         loginPage.username().replaceText("MyUserName");
         loginPage.password().replaceText("*****");
+        EspDevice.root().closeSoftKeyboard();
         loginPage.confirm().click();
         loginPage.errorMessage().assertTextIs("Username or password not correct.");
     }
