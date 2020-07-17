@@ -2,6 +2,6 @@ pool:
   vmImage: 'macOS-10.15'
 
 steps:
-  - template: templates/supported-android-verison.yml
+  - template: templates/supported-android-version.yml
     parameters:
       androidVersion: 'android-29'
