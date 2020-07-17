@@ -21,7 +21,7 @@ steps:
       tasks: 'espresso-macchiato:connectedCheck'
       gradleWrapperFile: 'gradlew'
       testResultsFiles: 'espresso-macchiato/**/TEST-*.xml'
-      testRunTitle: 'espresso-macchiato'
+      testRunTitle: 'espresso-macchiato-${{ parameters.androidVersion }}'
 
   - task: Gradle@2
     displayName: Android Tests (sampleapp)
@@ -29,16 +29,16 @@ steps:
       tasks: 'sampleapp:connectedCheck'
       gradleWrapperFile: 'gradlew'
       testResultsFiles: 'sampleapp/**/TEST-*.xml'
-      testRunTitle: 'sampleapp'
+      testRunTitle: 'sampleapp-${{ parameters.androidVersion }}'
 
   - task: Bash@3
     displayName: Collect (Emulator Logs)
     inputs:
       filePath: 'pipelines/templates/android-emulator-logs.sh'
-      arguments: 'android-emulator-logcat.txt'
+      arguments: '${{ parameters.androidVersion }}-logcat.txt'
     condition: succeededOrFailed()
 
-  - publish: android-emulator-logcat.txt
+  - publish: ${{ parameters.androidVersion }}-logcat.txt
     displayName: Publish (Emulator Logs)
     artifact: Android Emulator
     condition: succeededOrFailed()
