@@ -8,9 +8,9 @@ jobs:
           androidVersion: 'android-18'
 
   - job: test supported android version (latest)
-      pool:
-        vmImage: 'macOS-10.15'
-      steps:
-        - template: templates/supported-android-version.yml
-          parameters:
-            androidVersion: 'android-29'
+    pool:
+      vmImage: 'macOS-10.15'
+    steps:
+      - template: templates/supported-android-version.yml
+        parameters:
+          androidVersion: 'android-29'
