@@ -40,5 +40,5 @@ steps:
 
   - publish: ${{ parameters.androidVersion }}-logcat.txt
     displayName: Publish (Emulator Logs)
-    artifact: Android Emulator
+    artifact: Emulator ${{ parameters.androidVersion }}
     condition: succeededOrFailed()
