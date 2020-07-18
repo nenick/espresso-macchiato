@@ -3,6 +3,8 @@ jobs:
     displayName: 'test supported android version (earliest)'
     pool:
       vmImage: 'macOS-10.15'
+    variables:
+      IS_CI_ENVIRONMENT: true
     steps:
       - template: templates/supported-android-version.yml
         parameters:

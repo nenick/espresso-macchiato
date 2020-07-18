@@ -33,7 +33,7 @@ android {
 
     testOptions {
         // Disable animations to speed up ui test execution and reduce flakiness.
-        // Avoid the PerformException: Error performing 'single click' on view 'Animations or transitions are enabled on the target device.
+        // This does only disable window animations. Other animation kinds have still to be disabled manually.
         animationsDisabled = true
     }
 }
