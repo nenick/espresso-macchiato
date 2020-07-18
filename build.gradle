@@ -30,10 +30,12 @@ allprojects {
 // improve build server performance by disabling preDex on circle ci
 // http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.
 subprojects {
-    project.plugins.whenPluginAdded { plugin ->
+    if(rootProject.ext.isCiEnvironment) project.plugins.whenPluginAdded { plugin ->
         if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
+            println("disable preDexLibraries")
             project.android.dexOptions.preDexLibraries = !rootProject.ext.isCiEnvironment
         } else if ("com.android.build.gradle.LibraryPlugin".equals(plugin.class.name)) {
+            println("disable preDexLibraries")
             project.android.dexOptions.preDexLibraries = !rootProject.ext.isCiEnvironment
         }
     }
