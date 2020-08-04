@@ -20,6 +20,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
 import static androidx.test.espresso.matcher.ViewMatchers.isSelected;
@@ -277,6 +278,24 @@ public class EspView {
     }
 
     /**
+     * Check that the view is clickable.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void assertIsClickable() {
+        findView().check(matches(isClickable()));
+    }
+
+    /**
+     * Check that the view is not clickable.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void assertIsNotClickable() {
+        findView().check(matches(not(isClickable())));
+    }
+
+    /**
      * Perform click on the view.
      *
      * @since Espresso Macchiato 0.1
@@ -319,6 +338,24 @@ public class EspView {
      */
     public void swipeDown() {
         findView().perform(ViewActions.swipeDown());
+    }
+
+    /**
+     * Perform swipe left on the view.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void swipeLeft() {
+        findView().perform(ViewActions.swipeLeft());
+    }
+
+    /**
+     * Perform swipe right on the view.
+     *
+     * @since Espresso Macchiato 0.6
+     */
+    public void swipeRight() {
+        findView().perform(ViewActions.swipeRight());
     }
 
     /**

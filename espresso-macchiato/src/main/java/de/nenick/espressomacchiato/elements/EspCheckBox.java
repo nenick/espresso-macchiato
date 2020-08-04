@@ -89,7 +89,7 @@ public class EspCheckBox extends EspView {
      *
      * @since Espresso Macchiato 0.6
      */
-    public void isChecked() {
+    public void assertIsChecked() {
         findView().check(matches(ViewMatchers.isChecked()));
     }
 
@@ -98,7 +98,7 @@ public class EspCheckBox extends EspView {
      *
      * @since Espresso Macchiato 0.6
      */
-    public void isNotChecked() {
+    public void assertIsNotChecked() {
         findView().check(matches(not(ViewMatchers.isChecked())));
     }
 
