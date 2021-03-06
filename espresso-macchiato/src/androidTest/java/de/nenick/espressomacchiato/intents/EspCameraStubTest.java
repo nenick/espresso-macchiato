@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.OnActivityResultActivity;
 import de.nenick.espressomacchiato.testbase.EspressoIntentTestCase;
 import de.nenick.espressomacchiato.tools.EspFilesTool;

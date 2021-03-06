@@ -7,11 +7,9 @@ import android.os.Looper;
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AlertDialog;
 import androidx.test.InstrumentationRegistry;
-import androidx.test.espresso.Espresso;
 import androidx.test.runner.AndroidJUnit4;
 import androidx.test.runner.lifecycle.Stage;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;

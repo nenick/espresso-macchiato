@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.instanceOf;
  *
  * @since Espresso Macchiato 0.3
  */
-public class EspAdapterViewItem extends EspView {
+public class EspAdapterViewItem {
 
     private int adapterViewId;
     private int index;

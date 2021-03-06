@@ -1,1 +1,7 @@
-include ':sampleapp', ':espresso-macchiato', ':uiautomator-noop'
+include ':esp-core',
+        ':esp-system-dialogs',
+        ':esp-google-maps'
+
+include ':sampleapp',
+        ':espresso-macchiato',
+        ':uiautomator-noop'

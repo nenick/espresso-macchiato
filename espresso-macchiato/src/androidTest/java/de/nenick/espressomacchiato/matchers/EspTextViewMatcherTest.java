@@ -7,7 +7,6 @@ import android.widget.TextView;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
-import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 

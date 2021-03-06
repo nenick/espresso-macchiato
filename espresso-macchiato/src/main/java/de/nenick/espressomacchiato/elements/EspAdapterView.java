@@ -10,7 +10,7 @@ import de.nenick.espressomacchiato.assertions.AdapterViewItemCountAssertion;
  *
  * @since Espresso Macchiato 0.3
  */
-public class EspAdapterView extends EspView {
+public class EspAdapterView {
 
     private int resourceId;
 

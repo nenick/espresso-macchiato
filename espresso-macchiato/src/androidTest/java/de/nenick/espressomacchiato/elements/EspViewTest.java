@@ -32,22 +32,12 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
     private EspTextView espTextView = EspTextView.byId(messageViewId);
 
     @Test
-    public void testByAll() {
-        givenClickableView();
-
-        espView = EspView.byAll().withId(viewId).withIsDisplayed().build();
-        espView.assertIsDisplayedOnScreen();
-    }
-
-    @Test
     public void testAssertions() {
         espTextView.assertNotExist();
 
         givenClickableView();
-        espView.assertIsVisible();
         espView.assertIsNotSelected();
         espView.assertIsEnabled();
-        espView.assertIsDisplayedOnScreen();
 
         givenViewIsDisabled();
         espView.assertIsDisabled();
@@ -97,15 +87,6 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
 
     @Test
-    public void testClick() {
-        givenClickableView();
-        givenClickFeedbackTextView();
-
-        espView.click();
-        espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
-    }
-
-    @Test
     public void testClickFailureWhenNotVisible() {
         exception.expect(NoMatchingViewException.class);
         exception.expectMessage("No views in hierarchy found matching: (with id: android:id/button1 and is displayed on the screen to the user)");
@@ -124,26 +105,6 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
 
         espView.click();
         espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
-    }
-
-    @Test
-    public void testExtend() {
-        givenClickableView();
-        givenClickFeedbackTextView();
-
-        MyEspView myEspView = new MyEspView(EspView.byId(viewId));
-        myEspView.click();
-        espTextView.assertTextIs(VIEW_WAS_CLICKED_MESSAGE);
-    }
-
-    @Test
-    public void testDoubleClick() {
-        givenDoubleClickableView();
-        givenClickFeedbackTextView();
-
-        espView.doubleClick();
-
-        espTextView.assertTextIs(VIEW_WAS_DOUBLE_CLICKED_MESSAGE);
     }
 
     private void givenViewPartlyOutOfScreen() {
@@ -216,48 +177,6 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         });
     }
 
-    private void givenDoubleClickableView() {
-        view = new Button(activityTestRule.getActivity());
-        view.setId(viewId);
-        addViewToLayout(view, BaseActivity.rootLayout);
-
-        view.setOnTouchListener(new View.OnTouchListener() {
-            class MySimpleOnGestureListener extends GestureDetector.SimpleOnGestureListener {
-                @Override
-                public boolean onDoubleTap(MotionEvent e) {
-                    messageView.setText(VIEW_WAS_DOUBLE_CLICKED_MESSAGE);
-                    return super.onDoubleTap(e);
-                }
-            }
-
-            GestureDetector gestureDetector = null;
-            MySimpleOnGestureListener mySimpleOnGestureListener;
-            long lastClick;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (gestureDetector == null) {
-                    mySimpleOnGestureListener = new MySimpleOnGestureListener();
-                    gestureDetector = new GestureDetector(activityTestRule.getActivity(), mySimpleOnGestureListener);
-                }
-                if (gestureDetector.onTouchEvent(event)) {
-                    return true;
-                }
-
-                // On slow devices (e.g. emulator) we need more delay to detect the double click.
-                // Delay from SimpleOnGestureListener is to less to detect it.
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastClick < 1000) {
-                    mySimpleOnGestureListener.onDoubleTap(event);
-                    return true;
-                }
-                lastClick = currentTime;
-
-                return false;
-            }
-        });
-    }
-
 
     private void givenClickableViewNotOnScreen() {
         for (int i = 0; i < 20; i++) {
@@ -282,10 +201,4 @@ public class EspViewTest extends EspressoTestCase<BaseActivity> {
         addViewToLayout(textView, BaseActivity.rootLayout);
     }
 
-    /** Element extension */
-    class MyEspView extends EspView {
-        MyEspView(EspView template) {
-            super(template);
-        }
-    }
 }

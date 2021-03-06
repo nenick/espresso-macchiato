@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.nenick.espressomacchiato.assertions.support.LayoutManagerItemVisibilityAssertion;
-import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.matchers.support.EspRecyclerViewMatcher;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -28,7 +27,7 @@ import static org.hamcrest.CoreMatchers.allOf;
  *
  * @since Espresso Macchiato 0.5
  */
-public class EspRecyclerViewItem extends EspView {
+public class EspRecyclerViewItem {
 
     private final Matcher<View> recyclerViewMatcher;
     private int index;

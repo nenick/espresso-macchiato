@@ -1,14 +1,13 @@
 package de.nenick.espressomacchiato.elements.support;
 
 import de.nenick.espressomacchiato.assertions.support.RecyclerViewItemCountAssertion;
-import de.nenick.espressomacchiato.elements.EspView;
 
 /**
  * Actions and assertions for RecyclerView.
  *
  * @since Espresso Macchiato 0.5
  */
-public class EspRecyclerView extends EspView {
+public class EspRecyclerView {
 
     protected int resourceId;
 
