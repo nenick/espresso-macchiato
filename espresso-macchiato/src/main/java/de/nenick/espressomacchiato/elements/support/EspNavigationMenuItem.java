@@ -6,7 +6,6 @@ import com.google.android.material.internal.NavigationMenuItemView;
 
 import org.hamcrest.Matcher;
 
-import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.matchers.EspChildRecursiveMatcher;
 
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -23,7 +22,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
  *
  * @since Espresso Macchiato 0.1
  */
-public class EspNavigationMenuItem extends EspView {
+public class EspNavigationMenuItem {
 
     /**
      * Create new instance matching an element with given text.

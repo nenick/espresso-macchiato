@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.OnActivityResultActivity;
 import de.nenick.espressomacchiato.testbase.EspressoIntentTestCase;
 

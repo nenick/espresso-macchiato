@@ -11,15 +11,13 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import de.nenick.espressomacchiato.elements.EspView;
-
 /**
  * Fluent builder fo allOf matcher.
  *
  * @param <ElementT> View element type which will be used to perform actions and assertions on match.
  * @since Espresso Macchiato 0.4
  */
-public abstract class EspAllOfBuilder<ElementT extends EspView> {
+public abstract class EspAllOfBuilder<ElementT> {
 
     protected ArrayList<Matcher<? super View>> matcher = Lists.newArrayList();
 

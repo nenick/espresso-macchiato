@@ -49,9 +49,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        username = (EditText) findViewById(R.id.editTextUsername);
-        password = (EditText) findViewById(R.id.editTextPassword);
-        confirmButton = (Button) findViewById(R.id.buttonConfirm);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        confirmButton = (Button) findViewById(R.id.confirm);
         errorMessage = (TextView) findViewById(R.id.textViewErrorMessage);
 
         username.addTextChangedListener(textWatcher);

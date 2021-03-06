@@ -9,7 +9,7 @@ import androidx.test.espresso.Espresso;
  *
  * @since Espresso Macchiato 0.2
  */
-public class EspDialog extends EspView {
+public class EspDialog {
 
     protected Spec spec;
 

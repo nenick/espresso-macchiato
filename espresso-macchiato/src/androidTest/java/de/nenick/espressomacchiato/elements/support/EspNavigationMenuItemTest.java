@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.nenick.espressomacchiato.elements.EspDrawer;
-import de.nenick.espressomacchiato.elements.EspTextView;
 import de.nenick.espressomacchiato.test.views.NavigationDrawerActivity;
 import de.nenick.espressomacchiato.testbase.EspressoTestCase;
 

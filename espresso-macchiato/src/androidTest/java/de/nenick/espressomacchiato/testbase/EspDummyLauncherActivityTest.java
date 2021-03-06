@@ -2,9 +2,7 @@ package de.nenick.espressomacchiato.testbase;
 
 import org.junit.Test;
 
-import de.nenick.espressomacchiato.elements.EspButton;
 import de.nenick.espressomacchiato.elements.EspDevice;
-import de.nenick.espressomacchiato.elements.EspPage;
 import de.nenick.espressomacchiato.test.views.BaseActivity;
 
 /** Basic test */

@@ -5,7 +5,6 @@ import androidx.test.espresso.action.GeneralLocation;
 import androidx.test.espresso.action.GeneralSwipeAction;
 import androidx.test.espresso.action.Press;
 import androidx.test.espresso.action.Swipe;
-import androidx.test.espresso.action.ViewActions;
 
 import de.nenick.espressomacchiato.elements.support.EspNavigationMenuItem;
 import de.nenick.espressomacchiato.tools.EspWait;
@@ -19,7 +18,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
  *
  * @since Espresso Macchiato 0.1
  */
-public class EspDrawer extends EspView {
+public class EspDrawer {
 
     protected final int drawerLayout;
 

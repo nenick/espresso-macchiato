@@ -8,7 +8,6 @@ import org.hamcrest.Matcher;
 
 import de.nenick.espressomacchiato.actions.support.AppBarLayoutAction;
 import de.nenick.espressomacchiato.assertions.support.AppBarLayoutAssertion;
-import de.nenick.espressomacchiato.elements.EspView;
 import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
 
 /**
@@ -18,7 +17,7 @@ import de.nenick.espressomacchiato.matchers.EspAllOfBuilder;
  *
  * @since Espresso Macchiato 0.6
  */
-public class EspAppBarLayout extends EspView {
+public class EspAppBarLayout {
 
     /**
      * Create new instance matching an element with given resourceId.
