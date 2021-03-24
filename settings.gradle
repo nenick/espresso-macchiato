@@ -1,3 +1,7 @@
+include ':esp-androidx-appcompat'
+include ':esp-androidx-recyclerview'
+include ':esp-android-material'
+include ':esp-androidx-drawerlayout'
 include ':esp-core',
         ':esp-system-dialogs',
         ':esp-google-maps'
