@@ -4,13 +4,12 @@ include ':esp-android-material'
 
 include ':esp-androidx-appcompat'
 include ':esp-androidx-drawerlayout'
-include ':esp-androidx-recyclerview'
+//include ':esp-androidx-recyclerview'
 
 
-include ':esp-system-dialogs'
-include ':esp-google-maps'
+//include ':esp-system-dialogs'
 
 include ':sampleapp'
 
-include ':espresso-macchiato'
-include ':uiautomator-noop'
+//include ':espresso-macchiato'
+//include ':uiautomator-noop'
