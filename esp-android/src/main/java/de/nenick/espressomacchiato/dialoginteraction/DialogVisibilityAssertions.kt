@@ -1,10 +1,10 @@
-package de.nenick.espressomacchiato.espresso.dialog
+package de.nenick.espressomacchiato.dialoginteraction
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
-import de.nenick.espressomacchiato.view.IsActivityInForeground
+import de.nenick.espressomacchiato.internals.IsActivityInForegroundMatcher
 
 interface DialogVisibilityAssertions {
     fun checkIsDisplayed() {
@@ -12,6 +12,6 @@ interface DialogVisibilityAssertions {
     }
 
     fun checkNotDisplayed() {
-        IsActivityInForeground.assertActivityInForeground("Expected no dialog shown, but found something like a dialog.")
+        IsActivityInForegroundMatcher.assertActivityInForeground("Expected no dialog shown, but found something like a dialog.")
     }
 }

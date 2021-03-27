@@ -1,7 +1,6 @@
-package de.nenick.espressomacchiato.espresso.view
+package de.nenick.espressomacchiato.viewinteraction
 
 import android.widget.Button
-import androidx.test.platform.app.InstrumentationRegistry
 import de.nenick.espressomacchiato.testtools.AssertionTest
 import de.nenick.espressomacchiato.testtools.BaseActivity
 import de.nenick.espressomacchiato.view.EspView

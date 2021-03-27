@@ -1,10 +1,8 @@
 package de.nenick.espressomacchiato.dialog
 
 import androidx.test.espresso.matcher.RootMatchers.isDialog
-import de.nenick.espressomacchiato.espresso.dialog.DialogVisibilityAssertions
-import de.nenick.espressomacchiato.espresso.tools.EspResourceTool.Companion.androidId
+import de.nenick.espressomacchiato.tools.EspResourceTool.Companion.androidId
 import de.nenick.espressomacchiato.internals.OpenForExtensions
-import de.nenick.espressomacchiato.view.IsActivityInForeground
 import de.nenick.espressomacchiato.widget.EspButton
 import de.nenick.espressomacchiato.widget.EspTextView
 

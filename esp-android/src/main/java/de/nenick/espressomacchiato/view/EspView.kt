@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import de.nenick.espressomacchiato.EspGlobalSettings
 import de.nenick.espressomacchiato.internals.*
-import de.nenick.espressomacchiato.view.IsActivityInForeground.Companion.assertActivityInForeground
+import de.nenick.espressomacchiato.internals.IsActivityInForegroundMatcher.Companion.assertActivityInForeground
 import org.hamcrest.Matcher
 
 // Scope marker reduces the amount methods when views get nested e.g. the page style.

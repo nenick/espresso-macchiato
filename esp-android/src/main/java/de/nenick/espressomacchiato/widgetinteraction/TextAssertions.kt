@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.espresso.view
+package de.nenick.espressomacchiato.widgetinteraction
 
 import androidx.annotation.StringRes
 import androidx.test.espresso.matcher.ViewMatchers.withText

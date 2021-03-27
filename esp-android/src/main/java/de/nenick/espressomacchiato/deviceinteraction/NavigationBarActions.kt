@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.espresso.device
+package de.nenick.espressomacchiato.deviceinteraction
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions.pressMenuKey

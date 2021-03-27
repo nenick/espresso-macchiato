@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.espresso.view
+package de.nenick.espressomacchiato.viewinteraction
 
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import de.nenick.espressomacchiato.internals.HasChecks

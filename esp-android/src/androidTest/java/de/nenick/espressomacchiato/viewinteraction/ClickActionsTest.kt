@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.espresso.view
+package de.nenick.espressomacchiato.viewinteraction
 
 import android.R
 import android.widget.Button
@@ -6,6 +6,7 @@ import android.widget.TextView
 import de.nenick.espressomacchiato.view.EspView
 import de.nenick.espressomacchiato.testtools.BaseActivity
 import de.nenick.espressomacchiato.testtools.BaseActivityTest
+import de.nenick.espressomacchiato.widgetinteraction.TextAssertions
 import org.junit.Test
 
 class ClickActionsTest : BaseActivityTest() {

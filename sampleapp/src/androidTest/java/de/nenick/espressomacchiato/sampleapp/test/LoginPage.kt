@@ -4,7 +4,7 @@ import de.nenick.espressomacchiato.dialog.EspAlertDialog
 import de.nenick.espressomacchiato.widget.EspButton
 import de.nenick.espressomacchiato.widget.EspEditText
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.espresso.view.EnabledAssertions
+import de.nenick.espressomacchiato.viewinteraction.EnabledAssertions
 import de.nenick.espressomacchiato.sampleapp.R
 
 @Suppress("UNCHECKED_CAST")

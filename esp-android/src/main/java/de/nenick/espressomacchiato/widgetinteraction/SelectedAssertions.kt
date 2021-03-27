@@ -1,10 +1,7 @@
-package de.nenick.espressomacchiato.espresso.view
+package de.nenick.espressomacchiato.widgetinteraction
 
 import androidx.test.espresso.ViewInteraction
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.*
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.isSelected
 import org.hamcrest.CoreMatchers
 

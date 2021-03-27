@@ -1,6 +1,6 @@
 package de.nenick.espressomacchiato.dialog
 
-import de.nenick.espressomacchiato.espresso.dialog.DialogVisibilityAssertions
+import de.nenick.espressomacchiato.dialoginteraction.DialogVisibilityAssertions
 import de.nenick.espressomacchiato.internals.OpenForExtensions
 
 @Suppress("FunctionName")

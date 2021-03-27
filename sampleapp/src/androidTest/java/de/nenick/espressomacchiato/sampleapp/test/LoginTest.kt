@@ -1,16 +1,13 @@
 package de.nenick.espressomacchiato.sampleapp.test
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import de.nenick.espressomacchiato.dialog.EspAlertDialog
-import de.nenick.espressomacchiato.espresso.view.EnabledAssertions
+import de.nenick.espressomacchiato.viewinteraction.EnabledAssertions
 import de.nenick.espressomacchiato.sampleapp.R
 import de.nenick.espressomacchiato.widget.EspButton
 import de.nenick.espressomacchiato.widget.EspEditText

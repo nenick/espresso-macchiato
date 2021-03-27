@@ -8,7 +8,7 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import de.nenick.espressomacchiato.EspGlobalSettings
-import de.nenick.espressomacchiato.espresso.view.VisibilityAssertions
+import de.nenick.espressomacchiato.viewinteraction.VisibilityAssertions
 import de.nenick.espressomacchiato.testtools.ElementTest
 import de.nenick.espressomacchiato.widget.EspTextView
 import org.hamcrest.Description

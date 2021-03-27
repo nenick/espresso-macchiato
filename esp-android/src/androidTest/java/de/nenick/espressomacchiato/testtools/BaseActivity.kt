@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.annotation.Nullable
 import de.nenick.espressomacchiato.widget.EspTextView
-import de.nenick.espressomacchiato.espresso.view.ClickActions
+import de.nenick.espressomacchiato.viewinteraction.ClickActions
 import de.nenick.espressomacchiato.test.R
 
 class MyLabelB(id:Int) : EspTextView(id), ClickActions {}

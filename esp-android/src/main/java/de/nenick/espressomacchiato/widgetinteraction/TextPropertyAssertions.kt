@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.espresso.view
+package de.nenick.espressomacchiato.widgetinteraction
 
 import android.view.View
 import android.widget.TextView
@@ -6,7 +6,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import org.hamcrest.Description
 import org.hamcrest.Matcher

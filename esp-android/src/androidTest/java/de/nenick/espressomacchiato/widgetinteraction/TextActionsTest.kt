@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.espresso.view
+package de.nenick.espressomacchiato.widgetinteraction
 
 import android.widget.EditText
 import android.widget.TextView

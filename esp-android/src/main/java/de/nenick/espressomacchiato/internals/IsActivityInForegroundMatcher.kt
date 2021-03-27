@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.view
+package de.nenick.espressomacchiato.internals
 
 import android.view.WindowManager
 import androidx.test.espresso.Espresso
@@ -9,12 +9,12 @@ import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 import java.lang.IllegalStateException
 
-class IsActivityInForeground(private val result: Result) : TypeSafeMatcher<Root?>() {
+class IsActivityInForegroundMatcher(private val result: Result) : TypeSafeMatcher<Root?>() {
 
     companion object {
         fun assertActivityInForeground(errorMessage: String) {
             val result = Result()
-            Espresso.onView(ViewMatchers.isRoot()).inRoot(IsActivityInForeground(result)).check(ViewAssertions.matches(ViewMatchers.isRoot()))
+            Espresso.onView(ViewMatchers.isRoot()).inRoot(IsActivityInForegroundMatcher(result)).check(ViewAssertions.matches(ViewMatchers.isRoot()))
             if (!result.foundActivityInForeground) {
                 throw IllegalStateException(errorMessage)
             }

@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.espresso.tools
+package de.nenick.espressomacchiato.tools
 
 import androidx.test.platform.app.InstrumentationRegistry
 

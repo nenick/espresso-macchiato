@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.espresso.view
+package de.nenick.espressomacchiato.widgetinteraction
 
 import androidx.test.espresso.action.ViewActions.*
 import de.nenick.espressomacchiato.EspGlobalSettings
