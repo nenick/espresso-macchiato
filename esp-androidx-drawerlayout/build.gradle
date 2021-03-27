@@ -11,6 +11,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    testOptions {
+        animationsDisabled = true
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
