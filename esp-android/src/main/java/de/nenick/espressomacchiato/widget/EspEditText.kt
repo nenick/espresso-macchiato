@@ -26,4 +26,7 @@ class EspEditText(
 
     constructor(@IdRes viewId: Int, rootMatchers: Matcher<Root>, interactions: EspEditText.() -> Unit = {})
             : this(withId(viewId), rootMatchers, interactions)
+
+    constructor(viewMatcher: Matcher<View>, interactions: EspEditText.() -> Unit = {})
+            : this(viewMatcher, null, interactions)
 }

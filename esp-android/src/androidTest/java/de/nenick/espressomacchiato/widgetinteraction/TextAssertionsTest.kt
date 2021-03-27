@@ -30,6 +30,6 @@ class TextAssertionsTest : BaseActivityTest() {
         messageView = TextView(context)
         messageView.id = messageViewId
         messageView.text = defaultMessage
-        replaceViewInLayout(messageView, BaseActivity.rootLayout)
+        addViewToRoot(messageView)
     }
 }
