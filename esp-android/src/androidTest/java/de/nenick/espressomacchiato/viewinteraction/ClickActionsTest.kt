@@ -67,7 +67,9 @@ class ClickActionsTest : DefaultInteractionTest() {
 
     private fun givenResetClickFeedbackView() {
         clickCounter = 0
-        messageView.text = notClickedMessage
+        runOnMainSync {
+            messageView.text = notClickedMessage
+        }
     }
 
     private fun givenClickableView() {
