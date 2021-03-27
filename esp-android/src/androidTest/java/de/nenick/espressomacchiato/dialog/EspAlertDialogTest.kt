@@ -1,11 +1,17 @@
 package de.nenick.espressomacchiato.dialog
 
 import android.app.AlertDialog
+import androidx.test.ext.junit.rules.activityScenarioRule
+import de.nenick.espressomacchiato.test.core.BaseActivity
 import de.nenick.espressomacchiato.test.core.BaseActivityTest
 import org.junit.Assert.assertEquals
+import org.junit.Rule
 import org.junit.Test
 
-class EspAlertDialogTest : BaseActivityTest() {
+class EspAlertDialogTest : BaseActivityTest<BaseActivity>() {
+
+    @get:Rule
+    override val activityScenarioRule = activityScenarioRule<BaseActivity>()
 
     private var clicked = ""
     private var dismissed = false

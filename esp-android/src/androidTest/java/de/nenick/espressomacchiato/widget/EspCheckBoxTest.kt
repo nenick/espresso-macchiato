@@ -1,10 +1,10 @@
 package de.nenick.espressomacchiato.widget
 
 import android.widget.CheckBox
-import de.nenick.espressomacchiato.test.core.ElementTest
+import de.nenick.espressomacchiato.test.core.DefaultElementTest
 import org.junit.Test
 
-class EspCheckBoxTest : ElementTest<EspButton>() {
+class EspCheckBoxTest : DefaultElementTest<EspButton>() {
     private val checkBoxId = android.R.id.primary
     private val checkBox = CheckBox(context).apply {
         id = checkBoxId

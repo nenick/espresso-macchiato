@@ -4,11 +4,11 @@ import android.R
 import android.widget.Button
 import android.widget.TextView
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.test.core.BaseActivityTest
+import de.nenick.espressomacchiato.test.core.DefaultInteractionTest
 import de.nenick.espressomacchiato.widgetinteraction.TextAssertions
 import org.junit.Test
 
-class ClickActionsTest : BaseActivityTest() {
+class ClickActionsTest : DefaultInteractionTest() {
 
     private val notClickedMessage = "not clicked yet"
     private val clickedMessage = "view was clicked"

@@ -1,6 +1,7 @@
 package de.nenick.espressomacchiato.test.core
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Root
@@ -19,7 +20,7 @@ import java.lang.reflect.ParameterizedType
 // It's complaining here but not when the "NewApi" usage is inside androidTest folder.
 // This code is only targeting testing so we ignore this warning. Interestingly it works.
 @SuppressLint("NewApi")
-abstract class ElementTest<ELEMENT : EspView> : BaseActivityTest() {
+abstract class ElementTest<ELEMENT : EspView, TEST_ACTIVITY : Activity> : BaseActivityTest<TEST_ACTIVITY>() {
 
     val testViewId: Int = android.R.id.home
     val testView: View = View(context).apply {

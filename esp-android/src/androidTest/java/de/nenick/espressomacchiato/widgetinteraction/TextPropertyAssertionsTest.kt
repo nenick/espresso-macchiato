@@ -4,11 +4,10 @@ import android.graphics.Color
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.test.core.BaseActivity
-import de.nenick.espressomacchiato.test.core.BaseActivityTest
+import de.nenick.espressomacchiato.test.core.DefaultInteractionTest
 import org.junit.Test
 
-class TextPropertyAssertionsTest : BaseActivityTest() {
+class TextPropertyAssertionsTest : DefaultInteractionTest() {
 
     private val colorBlackHex = Color.parseColor("#ff000000")
     @ColorRes

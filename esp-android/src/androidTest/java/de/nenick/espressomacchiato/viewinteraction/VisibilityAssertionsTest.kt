@@ -2,11 +2,11 @@ package de.nenick.espressomacchiato.viewinteraction
 
 import android.view.View
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.test.core.AssertionTest
+import de.nenick.espressomacchiato.test.core.DefaultInteractionTest
 import junit.framework.AssertionFailedError
 import org.junit.Test
 
-class VisibilityAssertionsTest : AssertionTest() {
+class VisibilityAssertionsTest : DefaultInteractionTest() {
 
     private lateinit var view: View
     private val viewId = android.R.id.message

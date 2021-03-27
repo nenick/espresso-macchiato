@@ -8,8 +8,8 @@ import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import de.nenick.espressomacchiato.EspGlobalSettings
+import de.nenick.espressomacchiato.test.core.DefaultElementTest
 import de.nenick.espressomacchiato.viewinteraction.VisibilityAssertions
-import de.nenick.espressomacchiato.test.core.ElementTest
 import de.nenick.espressomacchiato.widget.EspTextView
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -18,9 +18,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
-import java.lang.IllegalStateException
 
-class EspViewTest : ElementTest<EspView>() {
+class EspViewTest : DefaultElementTest<EspView>() {
 
     @get:Rule
     val expectedException = ExpectedException.none()!!

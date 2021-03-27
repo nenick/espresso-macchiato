@@ -1,12 +1,11 @@
 package de.nenick.espressomacchiato.widgetinteraction
 
 import android.widget.TextView
+import de.nenick.espressomacchiato.test.core.DefaultInteractionTest
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.test.core.BaseActivity
-import de.nenick.espressomacchiato.test.core.BaseActivityTest
 import org.junit.Test
 
-class TextAssertionsTest : BaseActivityTest() {
+class TextAssertionsTest : DefaultInteractionTest() {
 
     private val defaultMessage = "Hello"
 

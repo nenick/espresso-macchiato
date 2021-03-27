@@ -4,14 +4,12 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
-import androidx.test.ext.junit.rules.activityScenarioRule
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Rule
 
-abstract class BaseActivityTest {
+abstract class BaseActivityTest<TEST_ACTIVITY : Activity> {
 
-    @get:Rule
-    var activityScenarioRule = activityScenarioRule<BaseActivity>()
+    abstract val activityScenarioRule: ActivityScenarioRule<TEST_ACTIVITY>
 
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     val context = InstrumentationRegistry.getInstrumentation().targetContext!!
