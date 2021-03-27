@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="de.nenick.espressomacchiato.test.core">
+
+    <application>
+        <activity
+            android:name="de.nenick.espressomacchiato.test.core.BaseActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            tools:replace="android:theme" />
+    </application>
+</manifest>
