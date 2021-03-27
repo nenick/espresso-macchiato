@@ -1,4 +1,4 @@
-package com.example.esp_android_material;
+package de.nenick.espressomacchiato.android.material.appbar;
 
 
 import com.google.android.material.appbar.AppBarLayout;
