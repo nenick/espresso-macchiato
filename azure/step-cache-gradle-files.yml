@@ -1,0 +1,22 @@
+# No real parameter but specify variables does not work here.
+parameters:
+  - name: GRADLE_CACHE_FOLDER
+    default: $(HOME)/.gradle
+    type: string
+
+steps:
+
+  # First remove all stuff to have a minimal cache size.
+  - task: Bash@3
+    displayName: CleanUp Gradle Cache
+    inputs:
+      targetType: inline
+      script: rm -rf ${{ parameters.GRADLE_CACHE_FOLDER }}/* && touch gradle-cache.info
+
+  - task: Cache@2
+    displayName: Cache Gradle Libraries
+    inputs:
+      key: gradlew | v2 | gradle/wrapper/gradle-wrapper.properties | gradle-cache.info
+      # Match gradle-wrapper.properties to rebuild cache with each major change to keep a minimal cache size.
+      restoreKeys: gradlew | v2 | gradle/wrapper/gradle-wrapper.properties
+      path: ${{ parameters.GRADLE_CACHE_FOLDER }}

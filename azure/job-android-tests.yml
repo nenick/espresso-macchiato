@@ -1,0 +1,60 @@
+parameters:
+  - name: androidVersion
+    type: string
+
+jobs:
+  - job: AndroidTests${{ parameters.androidVersion }}
+    displayName: Android Tests (v${{ parameters.androidVersion }})
+    steps:
+
+      - task: Gradle@2
+        displayName: Build APKs
+        inputs:
+          tasks: 'assembleAndroidTest'
+          gradleWrapperFile: 'gradlew'
+
+      - task: Bash@3
+        displayName: Create Emulator
+        inputs:
+          targetType: inline
+          script: ./azure/emulator-create.sh ${{ parameters.androidVersion }} 5554 5556
+
+      - task: Bash@3
+        displayName: Start Emulator
+        inputs:
+          targetType: inline
+          script: |
+            ./azure/emulator-start-on-ci.sh 5554 5556
+            ./azure/emulator-wait.sh 5554 5556
+            ./azure/emulator-optimize.sh 5554 5556
+            ./azure/emulator-collect-preconditions.sh 5554 5556
+            ./azure/emulator-collect-logcat.sh 5554 5556
+
+      - task: PublishPipelineArtifact@1
+        displayName: Publish Emulator Settings
+        inputs:
+          targetPath: emulator-settings
+          artifactName: Emulator Settings
+        condition: succeededOrFailed()
+
+      - task: Bash@3
+        displayName: Test on Emulator
+        inputs:
+          targetType: inline
+          script: |
+            # Task should fail if any bash command fail. Through pipelines the previus command result is by default ignored.
+            set -o pipefail
+            # Print info about test execution to have some ongoing feedback. Must be done in the same task where we want the output.
+            ./azure/emulator-print-test-execution.sh 5554 5556
+            # Start test run
+            ./azure/emulator-run-tests-parallel.sh 5554 5556
+
+      - task: PublishTestResults@2
+        displayName: Publish Test Results
+        inputs:
+          testRunTitle: UI Tests Results ${{ parameters.androidVersion }}
+          mergeTestResults: true
+        condition: succeededOrFailed()
+
+      - template: step-publish-emulator-artifacts.yml
+      - template: step-cache-gradle-files-post.yml

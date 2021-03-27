@@ -1,0 +1,13 @@
+steps:
+
+  - task: Bash@3
+    displayName: CleanUp Gradle Cache
+    inputs:
+      targetType: inline
+      # stop: to finish all processing
+      # daemon: to ignore always new generated files
+      # du: to mark cache as changed when new content was added
+      script: |
+        ./gradlew --stop &&
+        rm -rf $(HOME)/.gradle/daemon
+        du -s $(HOME)/.gradle | cut -f1 > gradle-cache.info

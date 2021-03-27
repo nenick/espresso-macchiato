@@ -1,0 +1,16 @@
+pool:
+  # 10.15 has issues with slow emulator, error is:
+  # Unable to create basic Accelerated OpenGL renderer.
+  # Unable to create basic Accelerated OpenGL renderer.
+  # Core Image is now using the software OpenGL renderer. This will be slow.
+  vmImage: 'macOS-10.14'
+
+jobs:
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '18'
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '30'
