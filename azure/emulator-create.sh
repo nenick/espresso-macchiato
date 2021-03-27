@@ -12,14 +12,15 @@ set -o pipefail
 
 create() {
     ANDROID_VERSION=$1
+    ANDROID_ABI=$2
 
-    if [[ ! -z "$2" ]]; then
+    if [[ ! -z "$3" ]]; then
         PORT=$2
-        SELECT="-s emulator-$2"
-        APPEND="-$2"
+        SELECT="-s emulator-$3"
+        APPEND="-$3"
     fi
 
-    echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n android-ci$APPEND -k "system-images;android-$ANDROID_VERSION;default;x86_64" -c 512M --force
+    echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n android-ci$APPEND -k "system-images;android-$ANDROID_VERSION;google_apis;$ANDROID_ABI" -c 512M --force
 
     # https://stuff.mit.edu/afs/sipb/project/android/docs/tools/devices/managing-avds-cmdline.html
     # https://android.googlesource.com/platform/prebuilts/android-emulator/+/master/linux-x86_64/lib/hardware-properties.ini
@@ -48,13 +49,18 @@ create() {
 
 ANDROID_VERSION=$1
 shift
+if [[ "18 19" == *"$ANDROID_VERSION"* ]]; then
+    ANDROID_ABI=x86
+else
+    ANDROID_ABI=x86_64
+fi
 
-echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-$ANDROID_VERSION;default;x86_64"
+echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "system-images;android-$ANDROID_VERSION;google_apis;$ANDROID_ABI"
 
 if [[ -z "$@" ]]; then
-    create $ANDROID_VERSION
+    create $ANDROID_VERSION $ANDROID_ABI
 else
     for PORT in $@; do
-        create $ANDROID_VERSION $PORT
+        create $ANDROID_VERSION $ANDROID_ABI $PORT
     done
 fi

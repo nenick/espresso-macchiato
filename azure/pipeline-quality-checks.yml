@@ -9,8 +9,15 @@ jobs:
 
   - template: job-android-tests.yml
     parameters:
+      # earliest supported android version
       androidVersion: '18'
 
   - template: job-android-tests.yml
     parameters:
+      # fastest android version for emulator
+      androidVersion: '24'
+
+  - template: job-android-tests.yml
+    parameters:
+      # latest supported android version
       androidVersion: '30'
