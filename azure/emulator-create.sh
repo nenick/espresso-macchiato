@@ -26,9 +26,9 @@ create() {
     # https://android.googlesource.com/platform/prebuilts/android-emulator/+/master/linux-x86_64/lib/hardware-properties.ini
 
     # Minimal screen size to have successful running tests.
-    #sed -i "" "s/hw.lcd.density=.*/hw.lcd.density=120/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
-    #sed -i "" "s/hw.lcd.height=.*/hw.lcd.height=480/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
-    #sed -i "" "s/hw.lcd.width=.*/hw.lcd.width=320/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
+    sed -i "" "s/hw.lcd.density=.*/hw.lcd.density=120/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
+    sed -i "" "s/hw.lcd.height=.*/hw.lcd.height=320/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
+    sed -i "" "s/hw.lcd.width=.*/hw.lcd.width=240/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
 
     # Disable all extra stuff e.g. sensors.
     sed -i "" "s/yes/no/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
