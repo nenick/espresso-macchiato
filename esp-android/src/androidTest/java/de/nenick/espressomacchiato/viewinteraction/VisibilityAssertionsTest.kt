@@ -2,7 +2,7 @@ package de.nenick.espressomacchiato.viewinteraction
 
 import android.view.View
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.testtools.AssertionTest
+import de.nenick.espressomacchiato.test.core.AssertionTest
 import junit.framework.AssertionFailedError
 import org.junit.Test
 

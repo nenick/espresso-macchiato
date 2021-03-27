@@ -22,7 +22,11 @@ repositories {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.21"
-    implementation 'com.google.android.material:material:1.3.0'
+    implementation project (":esp-android")
 
-    androidTestImplementation project(":esp-internal-test-core")
+    api 'androidx.test:runner:1.3.0'
+    api 'androidx.test:rules:1.3.0'
+    api 'androidx.test.ext:junit-ktx:1.1.2'
+
+    api "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
 }

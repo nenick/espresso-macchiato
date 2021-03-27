@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.testtools
+package de.nenick.espressomacchiato.test.core
 
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type

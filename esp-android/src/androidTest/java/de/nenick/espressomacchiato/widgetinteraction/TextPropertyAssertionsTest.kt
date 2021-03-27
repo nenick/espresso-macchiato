@@ -4,8 +4,8 @@ import android.graphics.Color
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.testtools.BaseActivity
-import de.nenick.espressomacchiato.testtools.BaseActivityTest
+import de.nenick.espressomacchiato.test.core.BaseActivity
+import de.nenick.espressomacchiato.test.core.BaseActivityTest
 import org.junit.Test
 
 class TextPropertyAssertionsTest : BaseActivityTest() {

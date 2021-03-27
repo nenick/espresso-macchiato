@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.widget
 
 import android.widget.CheckBox
-import de.nenick.espressomacchiato.testtools.ElementTest
+import de.nenick.espressomacchiato.test.core.ElementTest
 import org.junit.Test
 
 class EspCheckBoxTest : ElementTest<EspButton>() {

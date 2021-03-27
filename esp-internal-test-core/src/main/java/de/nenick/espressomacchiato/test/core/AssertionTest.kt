@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.testtools
+package de.nenick.espressomacchiato.test.core
 
 import org.junit.Rule
 import org.junit.rules.ExpectedException

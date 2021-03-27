@@ -1,3 +1,4 @@
+include ':esp-internal-test-core'
 include ':esp-android'
 include ':esp-android-material'
 

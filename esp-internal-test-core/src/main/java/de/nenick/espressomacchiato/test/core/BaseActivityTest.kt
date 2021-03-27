@@ -1,4 +1,4 @@
-package de.nenick.espressomacchiato.testtools
+package de.nenick.espressomacchiato.test.core
 
 import android.app.Activity
 import android.view.View
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
+import de.nenick.espressomacchiato.test.core.BaseActivity
 import org.junit.Rule
 
 abstract class BaseActivityTest {

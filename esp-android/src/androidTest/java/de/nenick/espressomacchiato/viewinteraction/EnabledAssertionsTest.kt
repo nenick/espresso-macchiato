@@ -1,8 +1,8 @@
 package de.nenick.espressomacchiato.viewinteraction
 
 import android.widget.Button
-import de.nenick.espressomacchiato.testtools.AssertionTest
-import de.nenick.espressomacchiato.testtools.BaseActivity
+import de.nenick.espressomacchiato.test.core.AssertionTest
+import de.nenick.espressomacchiato.test.core.BaseActivity
 import de.nenick.espressomacchiato.view.EspView
 import junit.framework.AssertionFailedError
 import org.junit.Test

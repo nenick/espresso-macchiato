@@ -1,7 +1,7 @@
 package de.nenick.espressomacchiato.dialog
 
 import android.app.AlertDialog
-import de.nenick.espressomacchiato.testtools.BaseActivityTest
+import de.nenick.espressomacchiato.test.core.BaseActivityTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

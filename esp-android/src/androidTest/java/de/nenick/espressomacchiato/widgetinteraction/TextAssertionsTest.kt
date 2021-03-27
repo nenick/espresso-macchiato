@@ -2,14 +2,13 @@ package de.nenick.espressomacchiato.widgetinteraction
 
 import android.widget.TextView
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.test.R
-import de.nenick.espressomacchiato.testtools.BaseActivity
-import de.nenick.espressomacchiato.testtools.BaseActivityTest
+import de.nenick.espressomacchiato.test.core.BaseActivity
+import de.nenick.espressomacchiato.test.core.BaseActivityTest
 import org.junit.Test
 
 class TextAssertionsTest : BaseActivityTest() {
 
-    private val defaultMessage = context.getString(R.string.name)
+    private val defaultMessage = "Hello"
 
     private lateinit var messageView: TextView
     private val messageViewId = android.R.id.text1
@@ -24,7 +23,7 @@ class TextAssertionsTest : BaseActivityTest() {
     @Test
     fun checkTestById() {
         givenTextView()
-        espMessageView.checkText(R.string.name)
+        espMessageView.checkText(defaultMessage)
     }
 
     private fun givenTextView() {

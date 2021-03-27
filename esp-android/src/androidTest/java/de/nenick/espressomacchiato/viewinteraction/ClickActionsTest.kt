@@ -4,8 +4,8 @@ import android.R
 import android.widget.Button
 import android.widget.TextView
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.testtools.BaseActivity
-import de.nenick.espressomacchiato.testtools.BaseActivityTest
+import de.nenick.espressomacchiato.test.core.BaseActivity
+import de.nenick.espressomacchiato.test.core.BaseActivityTest
 import de.nenick.espressomacchiato.widgetinteraction.TextAssertions
 import org.junit.Test
 
