@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.nenick.epressomacchiato.android.material">
+
+    <application>
+        <activity
+            android:name="de.nenick.espressomacchiato.android.material.test.tools.CollapsibleToolbarActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+    </application>
+</manifest>

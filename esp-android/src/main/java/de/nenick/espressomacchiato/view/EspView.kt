@@ -43,6 +43,10 @@ class EspView(
     constructor(@IdRes viewId: Int, rootMatchers: Matcher<Root>, interactions: EspView.() -> Unit = {})
             : this(withId(viewId), rootMatchers, interactions)
 
+    /** Short way to locate this view by custom view matcher. */
+    constructor(viewMatcher: Matcher<View>, interactions: EspView.() -> Unit = {})
+            : this(viewMatcher, null, interactions)
+
     init {
         // The compile may be right to complain about it but the possible issues did not happen yet.
         // This supports the fancy EspView(id) { check(something) } style.

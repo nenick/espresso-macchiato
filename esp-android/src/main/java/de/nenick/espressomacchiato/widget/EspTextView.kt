@@ -24,4 +24,7 @@ class EspTextView(
 
     constructor(@IdRes viewId: Int, rootMatchers: Matcher<Root>, interactions: EspTextView.() -> Unit = {})
             : this(withId(viewId), rootMatchers, interactions)
+
+    constructor(viewMatcher: Matcher<View>, interactions: EspTextView.() -> Unit = {})
+            : this(viewMatcher, null, interactions)
 }
