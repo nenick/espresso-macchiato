@@ -6,18 +6,23 @@ import org.junit.Test
 
 class EspEditTextTest : DefaultElementTest<EspEditText>() {
     private val editTextId = android.R.id.primary
-    private val editText = EditText(context).apply {
-        id = editTextId
-    }
+    private lateinit var editText: EditText
 
     @Test
     fun example() {
-        addViewToRoot(editText)
+        givenEditText()
 
         EspEditText(editTextId) {
             checkText("")
             performTypeText("Hello")
             checkText("Hello")
         }
+    }
+
+    fun givenEditText() = runOnMainSync {
+        editText = EditText(context).apply {
+            id = editTextId
+        }
+        addViewToRoot(editText)
     }
 }

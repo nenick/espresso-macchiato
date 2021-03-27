@@ -20,7 +20,7 @@ class HintAssertionsTest : DefaultInteractionTest() {
         espMessageView.checkHint(defaultMessage)
     }
 
-    private fun givenEditText() {
+    private fun givenEditText() = runOnMainSync {
         messageView = EditText(context)
         messageView.id = messageViewId
         messageView.hint = defaultMessage

@@ -47,7 +47,7 @@ class TextActionsTest : DefaultInteractionTest() {
         espMessageView.checkText("")
     }
 
-    private fun givenEditText() {
+    private fun givenEditText() = runOnMainSync {
         messageView = EditText(context)
         messageView.id = messageViewId
         messageView.text = defaultMessage

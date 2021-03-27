@@ -33,7 +33,7 @@ class TextPropertyAssertionsTest : DefaultInteractionTest() {
         messageView = TextView(context)
         messageView.id = messageViewId
         messageView.text = "hello"
-        messageView.setTextColor(context.getColor(android.R.color.black))
+        messageView.setTextColor(context.resources.getColor(android.R.color.black))
         addViewToRoot(messageView)
     }
 }
