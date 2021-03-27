@@ -36,8 +36,9 @@ class TextActionsTest : BaseActivityTest() {
         EspGlobalSettings.typeTextStrategy = ViewActions::replaceText
 
         givenEditText()
-        espMessageView.performTypeText(" added")
-        espMessageView.checkText("$defaultMessage added")
+        espMessageView.checkText(defaultMessage)
+        espMessageView.performTypeText("new content")
+        espMessageView.checkText("new content")
     }
 
     @Test
@@ -51,6 +52,6 @@ class TextActionsTest : BaseActivityTest() {
         messageView = EditText(context)
         messageView.id = messageViewId
         messageView.text = defaultMessage
-        replaceViewInLayout(messageView, BaseActivity.rootLayout)
+        addViewToRoot(messageView)
     }
 }

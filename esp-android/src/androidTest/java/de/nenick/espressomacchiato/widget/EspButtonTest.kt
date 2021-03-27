@@ -16,7 +16,7 @@ class EspButtonTest : ElementTest<EspButton>() {
 
     @Test
     fun example() {
-        setViewToRoot(button)
+        addViewToRoot(button)
 
         EspButton(buttonId) {
             checkText("Click Me")

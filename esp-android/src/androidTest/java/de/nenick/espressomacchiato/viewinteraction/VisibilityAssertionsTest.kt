@@ -30,6 +30,6 @@ class VisibilityAssertionsTest : AssertionTest() {
     private fun givenSimpleView() {
         view = View(context)
         view.id = viewId
-        setViewToRoot(view)
+        addViewToRoot(view)
     }
 }

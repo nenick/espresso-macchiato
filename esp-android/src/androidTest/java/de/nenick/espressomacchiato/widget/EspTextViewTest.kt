@@ -13,7 +13,7 @@ class EspTextViewTest : ElementTest<EspTextView>() {
 
     @Test
     fun example() {
-        setViewToRoot(textView)
+        addViewToRoot(textView)
 
         EspTextView(textViewId) {
             checkText("Hello")

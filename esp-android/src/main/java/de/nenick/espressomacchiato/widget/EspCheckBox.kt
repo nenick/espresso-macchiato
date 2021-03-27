@@ -28,4 +28,7 @@ class EspCheckBox(
 
     constructor(@IdRes viewId: Int, rootMatchers: Matcher<Root>, interactions: EspCheckBox.() -> Unit = {})
             : this(ViewMatchers.withId(viewId), rootMatchers, interactions)
+
+    constructor(viewMatcher: Matcher<View>, interactions: EspCheckBox.() -> Unit = {})
+            : this(viewMatcher, null, interactions)
 }

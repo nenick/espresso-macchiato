@@ -42,6 +42,6 @@ class EnabledAssertionsTest : AssertionTest() {
         statefulView = Button(context)
         statefulView.id = statefulViewId
         statefulView.text = "click me"
-        replaceViewInLayout(statefulView, BaseActivity.rootLayout)
+        addViewToRoot(statefulView)
     }
 }

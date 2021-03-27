@@ -11,7 +11,7 @@ import de.nenick.espressomacchiato.view.EspView
 import de.nenick.espressomacchiato.widget.EspTextView
 import org.hamcrest.Matchers
 
-@Suppress("TestFunctionName", "UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "FunctionName")
 @OpenForExtensions
 class EspCollapsibleToolbar(
         interactions: EspCollapsibleToolbar.() -> Unit

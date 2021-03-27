@@ -1,6 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.nenick.espressomacchiato">
-    <application>
-        <activity android:name="de.nenick.espressomacchiato.test.core.BaseActivity" />
-    </application>
-</manifest>
+<manifest package="de.nenick.espressomacchiato" />

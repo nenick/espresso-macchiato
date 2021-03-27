@@ -50,6 +50,13 @@ class EspViewTest : ElementTest<EspView>() {
     }
 
     @Test
+    fun createInstanceByViewMatcherWithLambdaReceiverArgument() {
+        hasConstructorForCustomViewMatcher()
+        val lambdaArgument : EspView.() -> Unit = { check(isDisplayed()) }
+        EspView(withId(this.testViewId), lambdaArgument)
+    }
+
+    @Test
     fun extendableWithAnonymousObjectStyle() {
         val anonymous = object : EspView(this.testViewId), VisibilityAssertions {}
         anonymous.checkIsVisible()

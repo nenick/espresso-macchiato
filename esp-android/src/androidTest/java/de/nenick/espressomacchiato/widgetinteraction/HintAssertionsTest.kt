@@ -25,6 +25,6 @@ class HintAssertionsTest : BaseActivityTest() {
         messageView = EditText(context)
         messageView.id = messageViewId
         messageView.hint = defaultMessage
-        replaceViewInLayout(messageView, BaseActivity.rootLayout)
+        addViewToRoot(messageView)
     }
 }

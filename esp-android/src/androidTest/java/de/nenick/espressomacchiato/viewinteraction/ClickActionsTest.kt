@@ -4,7 +4,6 @@ import android.R
 import android.widget.Button
 import android.widget.TextView
 import de.nenick.espressomacchiato.view.EspView
-import de.nenick.espressomacchiato.test.core.BaseActivity
 import de.nenick.espressomacchiato.test.core.BaseActivityTest
 import de.nenick.espressomacchiato.widgetinteraction.TextAssertions
 import org.junit.Test
@@ -75,7 +74,7 @@ class ClickActionsTest : BaseActivityTest() {
         clickableView = Button(context)
         clickableView.id = clickableViewId
         clickableView.text = "click me"
-        replaceViewInLayout(clickableView, BaseActivity.rootLayout)
+        addViewToRoot(clickableView)
     }
 
     private fun givenClickListener() {
@@ -93,7 +92,7 @@ class ClickActionsTest : BaseActivityTest() {
     private fun givenClickFeedbackView() {
         messageView = TextView(context)
         messageView.id = messageViewId
-        replaceViewInLayout(messageView, BaseActivity.rootLayout)
+        addViewToRoot(messageView)
         givenResetClickFeedbackView()
     }
 }

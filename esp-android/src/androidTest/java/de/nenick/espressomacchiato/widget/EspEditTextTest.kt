@@ -1,18 +1,18 @@
 package de.nenick.espressomacchiato.widget
 
-import android.widget.Button
+import android.widget.EditText
 import de.nenick.espressomacchiato.test.core.ElementTest
 import org.junit.Test
 
 class EspEditTextTest : ElementTest<EspEditText>() {
     private val editTextId = android.R.id.primary
-    private val editText = Button(context).apply {
+    private val editText = EditText(context).apply {
         id = editTextId
     }
 
     @Test
     fun example() {
-        setViewToRoot(editText)
+        addViewToRoot(editText)
 
         EspEditText(editTextId) {
             checkText("")

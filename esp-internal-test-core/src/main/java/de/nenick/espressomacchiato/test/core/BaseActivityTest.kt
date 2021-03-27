@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
-import de.nenick.espressomacchiato.test.core.BaseActivity
 import org.junit.Rule
 
 abstract class BaseActivityTest {
@@ -15,16 +14,15 @@ abstract class BaseActivityTest {
     var activityScenarioRule = activityScenarioRule<BaseActivity>()
 
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
-    val context = InstrumentationRegistry.getInstrumentation().context!!
+    val context = InstrumentationRegistry.getInstrumentation().targetContext!!
 
-    fun setViewToRoot(view: View) {
-        replaceViewInLayout(view, BaseActivity.rootLayout)
+    fun addViewToRoot(view: View) {
+        addViewToLayout(view, BaseActivity.rootLayout)
     }
 
-    fun replaceViewInLayout(view: View, @IdRes targetLayoutId: Int) {
+    private fun addViewToLayout(view: View, @IdRes targetLayoutId: Int) {
         activityScenarioRule.scenario.onActivity {
             val layout = it.findViewById<ViewGroup>(targetLayoutId)
-            layout.removeAllViews()
             layout.addView(view)
         }
     }

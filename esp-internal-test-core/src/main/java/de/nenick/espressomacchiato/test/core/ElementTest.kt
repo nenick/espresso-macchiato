@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.test.core
 
 import android.annotation.SuppressLint
 import android.view.View
+import android.view.ViewGroup
 import androidx.test.espresso.Root
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -21,13 +22,17 @@ import java.lang.reflect.ParameterizedType
 abstract class ElementTest<ELEMENT : EspView> : BaseActivityTest() {
 
     val testViewId: Int = android.R.id.home
-    val testView: View = View(context).apply { id = testViewId }
+    val testView: View = View(context).apply {
+        id = testViewId
+        layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 50)
+        setBackgroundColor(context.getColor(android.R.color.holo_green_dark))
+    }
 
     private val elementTypeUnderTest = thisGenericParameterType()
 
     @Before
     fun setupElementTest() {
-        setViewToRoot(testView)
+        addViewToRoot(testView)
     }
 
     @Test
@@ -41,7 +46,8 @@ abstract class ElementTest<ELEMENT : EspView> : BaseActivityTest() {
         hasConstructorForAllSituations()
         hasConstructorForViewId()
         hasConstructorForViewIdWithCustomRoot()
-        assertEquals(6 /* each constructor exist twice */, elementTypeUnderTest.constructors.size)
+        hasConstructorForCustomViewMatcher()
+        assertEquals(8 /* each constructor exist twice */, elementTypeUnderTest.constructors.size)
     }
 
     fun hasConstructorForAllSituations() {
@@ -59,7 +65,6 @@ abstract class ElementTest<ELEMENT : EspView> : BaseActivityTest() {
         val constructor = elementTypeUnderTest.getConstructor(Int::class.java, Function1::class.java)
 
         assertEquals(Int::class.java, constructor.parameters[0].type)
-        constructor.parameters[0].modifiers
         assertEquals(parameterizedType<Function1<ELEMENT, Unit>>(), constructor.parameters[1].parameterizedType)
 
         val elementInstance = constructor.newInstance(testViewId, { _: ELEMENT -> })
@@ -74,6 +79,16 @@ abstract class ElementTest<ELEMENT : EspView> : BaseActivityTest() {
         assertEquals(parameterizedType<Function1<ELEMENT, Unit>>(), constructor.parameters[2].parameterizedType)
 
         val elementInstance = constructor.newInstance(testViewId, RootMatchers.DEFAULT, { _: ELEMENT -> })
+        elementInstance.check(isDisplayed())
+    }
+
+    fun hasConstructorForCustomViewMatcher() {
+        val constructor = elementTypeUnderTest.getConstructor(Matcher::class.java, Function1::class.java)
+
+        assertEquals(parameterizedType<Matcher<View>>(), constructor.parameters[0].parameterizedType)
+        assertEquals(parameterizedType<Function1<ELEMENT, Unit>>(), constructor.parameters[1].parameterizedType)
+
+        val elementInstance = constructor.newInstance(withId(testViewId), { _: ELEMENT -> })
         elementInstance.check(isDisplayed())
     }
 

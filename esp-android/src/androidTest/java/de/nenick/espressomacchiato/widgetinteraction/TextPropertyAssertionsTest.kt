@@ -35,6 +35,6 @@ class TextPropertyAssertionsTest : BaseActivityTest() {
         messageView.id = messageViewId
         messageView.text = "hello"
         messageView.setTextColor(context.getColor(android.R.color.black))
-        replaceViewInLayout(messageView, BaseActivity.rootLayout)
+        addViewToRoot(messageView)
     }
 }

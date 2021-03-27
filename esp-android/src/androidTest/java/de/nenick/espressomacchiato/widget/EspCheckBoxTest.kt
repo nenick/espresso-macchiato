@@ -10,11 +10,10 @@ class EspCheckBoxTest : ElementTest<EspButton>() {
         id = checkBoxId
         text = "Check Me"
     }
-    private var clicked = false
 
     @Test
     fun example() {
-        setViewToRoot(checkBox)
+        addViewToRoot(checkBox)
 
         EspCheckBox(checkBoxId) {
             checkIsNotChecked()

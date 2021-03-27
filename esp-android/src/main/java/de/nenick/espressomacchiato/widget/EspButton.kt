@@ -26,4 +26,7 @@ class EspButton(
 
     constructor(@IdRes viewId: Int, rootMatchers: Matcher<Root>, interactions: EspButton.() -> Unit = {})
             : this(withId(viewId), rootMatchers, interactions)
+
+    constructor(viewMatcher: Matcher<View>, interactions: EspButton.() -> Unit = {})
+            : this(viewMatcher, null, interactions)
 }
