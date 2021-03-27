@@ -2,6 +2,8 @@ package de.nenick.espressomacchiato.espresso.view
 
 import android.widget.EditText
 import android.widget.TextView
+import androidx.test.espresso.action.ViewActions
+import de.nenick.espressomacchiato.EspGlobalSettings
 import de.nenick.espressomacchiato.view.EspView
 import de.nenick.espressomacchiato.test.R
 import de.nenick.espressomacchiato.testtools.BaseActivity
@@ -25,6 +27,15 @@ class TextActionsTest : BaseActivityTest() {
 
     @Test
     fun performTypeText() {
+        givenEditText()
+        espMessageView.performTypeText(" added")
+        espMessageView.checkText("$defaultMessage added")
+    }
+
+    @Test
+    fun performTypeTextSupportsDifferentStrategy() = EspGlobalSettings.temporaryEspSettingsChange {
+        EspGlobalSettings.typeTextStrategy = ViewActions::replaceText
+
         givenEditText()
         espMessageView.performTypeText(" added")
         espMessageView.checkText("$defaultMessage added")

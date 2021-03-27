@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.view.View
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -121,7 +120,7 @@ class EspViewTest : ElementTest<EspView>() {
     }
 
     @Test
-    fun detectsUnexpectedNonActivityRoot() {
+    fun detectsUnexpectedNonActivityRoot() = EspGlobalSettings.temporaryEspSettingsChange {
         EspGlobalSettings.activityForegroundCheckEnabled = true
 
         // no issue when activity is in foreground

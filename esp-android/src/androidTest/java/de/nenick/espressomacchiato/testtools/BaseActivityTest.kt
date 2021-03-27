@@ -16,7 +16,9 @@ abstract class BaseActivityTest {
     private val instrumentation = InstrumentationRegistry.getInstrumentation()
     val context = InstrumentationRegistry.getInstrumentation().context!!
 
-    fun setViewToRoot(view: View) { replaceViewInLayout(view, BaseActivity.rootLayout) }
+    fun setViewToRoot(view: View) {
+        replaceViewInLayout(view, BaseActivity.rootLayout)
+    }
 
     fun replaceViewInLayout(view: View, @IdRes targetLayoutId: Int) {
         activityScenarioRule.scenario.onActivity {
