@@ -34,7 +34,7 @@ jobs:
         displayName: Publish Emulator Settings
         inputs:
           targetPath: emulator-settings
-          artifactName: Emulator Settings
+          artifactName: Emulator Settings ${{ parameters.androidVersion }}
         condition: succeededOrFailed()
 
       - task: Bash@3
