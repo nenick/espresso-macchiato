@@ -6,7 +6,7 @@
 
     <!-- main content -->
     <LinearLayout
-        android:id="@+id/layout_activity_navigation_drawer"
+        android:id="@+id/layout_activity_base"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" />

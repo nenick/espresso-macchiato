@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.nenick.epressomacchiato.androidx.drawer">
+
+    <application>
+        <activity
+            android:name="de.nenick.espressomacchiato.androidx.test.tools.DrawerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+    </application>
+</manifest>
