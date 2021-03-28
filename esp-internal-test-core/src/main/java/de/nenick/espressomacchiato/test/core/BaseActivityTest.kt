@@ -6,8 +6,13 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
+import de.nenick.espressomacchiato.screenshot.EspScreenshotRule
+import org.junit.Rule
 
 abstract class BaseActivityTest<TEST_ACTIVITY : Activity> {
+
+    @get:Rule
+    val screenshotRule = EspScreenshotRule()
 
     abstract val activityScenarioRule: ActivityScenarioRule<TEST_ACTIVITY>
 

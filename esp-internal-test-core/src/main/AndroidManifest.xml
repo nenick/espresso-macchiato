@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="de.nenick.espressomacchiato.test.core">
 
+    <uses-sdk tools:overrideLibrary="de.nenick.espressomacchiato.screenshot, android_libs.ub_uiautomator" />
+
     <application>
-        <activity android:name="de.nenick.espressomacchiato.test.core.BaseActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar"/>
+        <activity
+            android:name="de.nenick.espressomacchiato.test.core.BaseActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
     </application>
 </manifest>

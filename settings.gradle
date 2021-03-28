@@ -1,15 +1,17 @@
+
+include ':esp-android',
+        ':esp-android-material'
+
+include ':esp-androidx-appcompat',
+        ':esp-androidx-drawerlayout'
+
+include ':esp-screenshot'
+
 include ':esp-internal-test-core'
-include ':esp-android'
-include ':esp-android-material'
-
-include ':esp-androidx-appcompat'
-include ':esp-androidx-drawerlayout'
-//include ':esp-androidx-recyclerview'
-
-
-//include ':esp-system-dialogs'
 
 include ':sampleapp'
 
+//include ':esp-androidx-recyclerview'
+//include ':esp-system-dialogs'
 //include ':espresso-macchiato'
 //include ':uiautomator-noop'
