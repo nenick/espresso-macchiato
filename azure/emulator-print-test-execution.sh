@@ -12,7 +12,7 @@ log() {
 }
 
 if [[ -z "$@" ]]; then
-    log
+    log &
 else
     for PORT in $@; do
         log $PORT &

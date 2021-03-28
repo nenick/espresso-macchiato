@@ -15,7 +15,7 @@ create() {
     ANDROID_ABI=$2
 
     if [[ ! -z "$3" ]]; then
-        PORT=$2
+        PORT=$3
         SELECT="-s emulator-$3"
         APPEND="-$3"
     fi

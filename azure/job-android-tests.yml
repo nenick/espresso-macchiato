@@ -5,6 +5,10 @@ parameters:
 jobs:
   - job: AndroidTests${{ parameters.androidVersion }}
     displayName: Android Tests (v${{ parameters.androidVersion }})
+    variables:
+      ports:
+      #ports: 5554 5556
+
     steps:
 
       - task: Gradle@2
@@ -17,18 +21,18 @@ jobs:
         displayName: Create Emulator
         inputs:
           targetType: inline
-          script: ./azure/emulator-create.sh ${{ parameters.androidVersion }} 5554 5556
+          script: ./azure/emulator-create.sh ${{ parameters.androidVersion }} $(ports)
 
       - task: Bash@3
         displayName: Start Emulator
         inputs:
           targetType: inline
           script: |
-            ./azure/emulator-start-on-ci.sh 5554 5556
-            ./azure/emulator-wait.sh 5554 5556
-            ./azure/emulator-optimize.sh 5554 5556
-            ./azure/emulator-collect-preconditions.sh 5554 5556
-            ./azure/emulator-collect-logcat.sh 5554 5556
+            ./azure/emulator-start-on-ci.sh $(ports)
+            ./azure/emulator-wait.sh $(ports)
+            ./azure/emulator-optimize.sh $(ports)
+            ./azure/emulator-collect-preconditions.sh $(ports)
+            ./azure/emulator-collect-logcat.sh $(ports)
 
       - task: PublishPipelineArtifact@1
         displayName: Publish Emulator Settings
@@ -45,9 +49,9 @@ jobs:
             # Task should fail if any bash command fail. Through pipelines the previus command result is by default ignored.
             set -o pipefail
             # Print info about test execution to have some ongoing feedback. Must be done in the same task where we want the output.
-            ./azure/emulator-print-test-execution.sh 5554 5556
+            ./azure/emulator-print-test-execution.sh $(ports)
             # Start test run
-            ./azure/emulator-run-tests-parallel.sh 5554 5556
+            ./azure/emulator-run-tests-parallel.sh $(ports)
 
       - task: PublishTestResults@2
         displayName: Publish Test Results
