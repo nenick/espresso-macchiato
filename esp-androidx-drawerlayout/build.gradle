@@ -28,6 +28,7 @@ dependencies {
     implementation project(":esp-android")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.21"
+    implementation "androidx.appcompat:appcompat:1.2.0"
 
     api 'androidx.test.espresso:espresso-contrib:3.3.0'
 
