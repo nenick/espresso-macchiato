@@ -10,11 +10,16 @@ jobs:
   - template: job-android-tests.yml
     parameters:
       # earliest supported android version
+      androidVersion: '16'
+
+  - template: job-android-tests.yml
+    parameters:
+      # earliest supported android version by ui automator (e.g. take screenshots)
       androidVersion: '18'
 
   - template: job-android-tests.yml
     parameters:
-      # fastest android version for emulator
+      # fastest android version for emulator ??
       androidVersion: '24'
 
   - template: job-android-tests.yml

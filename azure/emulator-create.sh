@@ -49,7 +49,7 @@ create() {
 
 ANDROID_VERSION=$1
 shift
-if [[ "18 19" == *"$ANDROID_VERSION"* ]]; then
+if [[ "16 17 18 19" == *"$ANDROID_VERSION"* ]]; then
     ANDROID_ABI=x86
 else
     ANDROID_ABI=x86_64
