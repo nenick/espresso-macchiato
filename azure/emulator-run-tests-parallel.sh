@@ -20,11 +20,16 @@ source azure/function-parallel-command.sh
 # We revert the shard order because the system tests goes as whole package to the second shard.
 # And the second emulators starts a little bit later because the second gradle daemon have to
 # be started first. So to balance the execution time we switch the target emulator.
-POS=0
-COMMANDS=()
-for PORT in $@; do
-    COMMANDS+=("run $PORT $# $POS")
-    POS=$(($POS + 1))
-done
 
-runParallel "${COMMANDS[@]}"
+if [[ -z "$@" ]]; then
+    ./gradlew connectedDebugAndroidTest
+else
+    POS=0
+    COMMANDS=()
+    for PORT in $@; do
+        COMMANDS+=("run $PORT $# $POS")
+        POS=$(($POS + 1))
+    done
+    runParallel "${COMMANDS[@]}"
+fi
+

@@ -11,6 +11,8 @@ jobs:
 
     steps:
 
+      - template: step-cache-gradle-files.yml
+
       - task: Gradle@2
         displayName: Build APKs
         inputs:
@@ -58,6 +60,17 @@ jobs:
         inputs:
           testRunTitle: UI Tests Results ${{ parameters.androidVersion }}
           mergeTestResults: true
+        condition: succeededOrFailed()
+
+      - task: Bash@3
+        displayName: Prepare Emulator Screenshots
+        inputs:
+          targetType: inline
+          script: |
+            mkdir emulator-screenshots
+            for PORT in $(ports); do
+                unzip "*/build/outputs/connected_android_test_additional_output/debugAndroidTest/connected/android-ci-$PORT*/screenshots.zip" -d emulator-screenshots/
+            done
         condition: succeededOrFailed()
 
       - template: step-publish-emulator-artifacts.yml

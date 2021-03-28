@@ -1,16 +1,4 @@
 steps:
-  - template: step-cache-gradle-files.yml
-
-  - task: Bash@3
-    displayName: Prepare Emulator Artifacts
-    inputs:
-      targetType: inline
-      script: |
-        mkdir emulator-screenshots
-        for PORT in 5554 5556; do
-            unzip "*/build/outputs/connected_android_test_additional_output/debugAndroidTest/connected/android-ci-$PORT(AVD) - 7.0/screenshots.zip" -d emulator-screenshots/$PORT
-        done
-    condition: succeededOrFailed()
 
   - task: PublishPipelineArtifact@1
     displayName: Publish Emulator Screenshots
