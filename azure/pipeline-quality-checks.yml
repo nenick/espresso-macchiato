@@ -24,5 +24,10 @@ jobs:
 
   - template: job-android-tests.yml
     parameters:
+      # additional test data download works properly
+      androidVersion: '29'
+
+  - template: job-android-tests.yml
+    parameters:
       # latest supported android version
       androidVersion: '30'

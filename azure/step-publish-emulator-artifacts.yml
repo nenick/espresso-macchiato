@@ -1,15 +1,19 @@
+parameters:
+  - name: androidVersion
+    type: string
+
 steps:
 
   - task: PublishPipelineArtifact@1
     displayName: Publish Emulator Screenshots
     inputs:
       targetPath: emulator-screenshots
-      artifactName: Emulator Screenshots
+      artifactName: Emulator ${{ parameters.androidVersion }} Screenshots
     condition: succeededOrFailed()
 
   - task: PublishPipelineArtifact@1
     displayName: Publish Emulator Logs
     inputs:
       targetPath: emulator-logs
-      artifactName: Emulator Logs
+      artifactName: Emulator ${{ parameters.androidVersion }} Logs
     condition: succeededOrFailed()
