@@ -34,7 +34,7 @@ ANDROID_VERSION=$1
 shift
 
 echo "Check if fixes for content are necessary ..."
-if [[ "18 19" == *"$ANDROID_VERSION"* ]]; then
+if [[ "19" == *"$ANDROID_VERSION"* ]]; then
     echo "Apply fix for content media no Android found"
 else
     echo "Emulator should work fine"

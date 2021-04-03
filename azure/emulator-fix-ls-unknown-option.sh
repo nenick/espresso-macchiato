@@ -32,7 +32,7 @@ ANDROID_VERSION=$1
 shift
 
 echo "Check if fixes for ls are necessary ..."
-if [[ "18 19" == *"$ANDROID_VERSION"* ]]; then
+if [[ "16 17 18 19" == *"$ANDROID_VERSION"* ]]; then
     echo "Apply fix for ls: Unknown option '-1'"
 else
     echo "Emulator should work fine"

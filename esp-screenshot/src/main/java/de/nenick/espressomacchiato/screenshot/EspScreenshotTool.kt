@@ -1,7 +1,9 @@
 package de.nenick.espressomacchiato.screenshot
 
+import android.os.Build
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
+import de.nenick.espressomacchiato.screenshot.internal.EspScreenshotToolPreJellyBeanMr2
 import org.junit.Assert
 import java.io.File
 
@@ -14,8 +16,12 @@ object EspScreenshotTool {
      */
     fun takeScreenshot(targetFile: File) {
         targetFile.parentFile!!.mkdirs()
-        val instrumentation = InstrumentationRegistry.getInstrumentation()
-        val device = UiDevice.getInstance(instrumentation)
-        Assert.assertTrue(device.takeScreenshot(targetFile))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            val instrumentation = InstrumentationRegistry.getInstrumentation()
+            val device = UiDevice.getInstance(instrumentation)
+            Assert.assertTrue(device.takeScreenshot(targetFile))
+        } else {
+            EspScreenshotToolPreJellyBeanMr2().takeScreenShot(targetFile)
+        }
     }
 }

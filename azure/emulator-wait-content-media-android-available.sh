@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 fixTestDataDownload() {
-    if [[ ! -z "$q" ]]; then
-        PORT=$1
-        SELECT="-s emulator-$1"
+    ANDROID_VERSION=$1
+    if [[ ! -z "$2" ]]; then
+        PORT=$2
+        SELECT="-s emulator-$2"
     fi
 
     $ANDROID_HOME/platform-tools/adb $SELECT shell content query --uri content://media/external/file --projection _data
@@ -26,21 +27,28 @@ fixTestDataDownload() {
         fi
     done
 
-    $ANDROID_HOME/platform-tools/adb $SELECT shell content query --uri content://media/external/file --projection _data
-
     if [[ ! "$MEDIA_STORAGE" =~ .*Android ]]; then
-        echo "Android data directory not found, create explicit media entry"
-        # Necessary for android 18 that gradle will find the correct path.
-        $ANDROID_HOME/platform-tools/adb shell content insert --uri content://media/external/file --bind _data:s:/storage/sdcard/Android
+        echo "Android data directory not found, try to create it explicitly"
+
+        if [[ "16" == *"$ANDROID_VERSION"* ]]; then
+            $ANDROID_HOME/platform-tools/adb $SELECT shell content insert --uri content://media/external/file --bind _data:s:/mnt/sdcard/Android
+        fi
+
+        if [[ "18" == *"$ANDROID_VERSION"* ]]; then
+            $ANDROID_HOME/platform-tools/adb $SELECT shell content insert --uri content://media/external/file --bind _data:s:/storage/sdcard/Android
+        fi
     fi
+
+    $ANDROID_HOME/platform-tools/adb $SELECT shell content query --uri content://media/external/file --projection _data
 }
 
-
+ANDROID_VERSION=$1
+shift
 
 if [[ -z "$@" ]]; then
-    fixTestDataDownload
+    fixTestDataDownload $ANDROID_VERSION
 else
     for PORT in $@; do
-        fixTestDataDownload $PORT
+        fixTestDataDownload $ANDROID_VERSION $PORT
     done
 fi

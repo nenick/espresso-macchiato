@@ -32,7 +32,7 @@ jobs:
           script: |
             ./azure/emulator-start-on-ci.sh $(ports)
             ./azure/emulator-wait.sh $(ports)
-            ./azure/emulator-wait-content-media-android-available.sh $(ports)
+            ./azure/emulator-wait-content-media-android-available.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-fix-ls-unknown-option.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-fix-content-media-query.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-optimize.sh $(ports)
