@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="de.nenick.espressomacchiato.screenshot" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="de.nenick.espressomacchiato.screenshot">
+
+    <!-- https://stackoverflow.com/questions/64221188/write-external-storage-when-targeting-android-10 -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18"
+        tools:ignore="ScopedStorage" />
+</manifest>

@@ -3,6 +3,7 @@ package de.nenick.espressomacchiato.screenshot.internal
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert
 import java.io.*
+import java.lang.IllegalStateException
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
@@ -11,7 +12,8 @@ internal object AdditionalTestDataZipper {
 
     private const val screenshotDirName = "screenshots"
     private val context = InstrumentationRegistry.getInstrumentation().context
-    private val externalFilesDir = context.getExternalFilesDir(null)!!
+    private val externalFilesDir = context.getExternalFilesDir(null)
+            ?: throw IllegalStateException("No external storage found? Be sure to have sdcard activated and write permission for external storage.")
 
     val screenshotDirectory = File(externalFilesDir, screenshotDirName).also {
         it.deleteRecursively()
@@ -20,7 +22,12 @@ internal object AdditionalTestDataZipper {
         Assert.assertTrue(it.exists())
     }
 
-    // SimpleTestRunnable.queryAdditionalTestOutputLocation
+    // Location which gets pulled by android gradle tools after test run.
+    //
+    // Hint, following must contain an "Android" directory:
+    // $ANDROID_HOME/platform-tools/adb shell "content query --uri content://media/external/file --projection _data
+    //
+    // Found at: SimpleTestRunnable.queryAdditionalTestOutputLocation
     // https://android.googlesource.com/platform/tools/base/+/studio-master-dev/build-system/gradle-core/src/main/java/com/android/build/gradle/internal/testing/SimpleTestRunnable.java
     private val additionalTestDataDirectory = File(externalFilesDir, "test_data").also {
         it.mkdirs()

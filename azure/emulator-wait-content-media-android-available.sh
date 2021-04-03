@@ -29,20 +29,9 @@ fixTestDataDownload() {
     $ANDROID_HOME/platform-tools/adb $SELECT shell content query --uri content://media/external/file --projection _data
 
     if [[ ! "$MEDIA_STORAGE" =~ .*Android ]]; then
-        echo "Android data directory not found"
-
-        # The Android folder must exist at start time to get additional test data download to work.
-        # Versions after android 18 will have all properly prepared.
-        #echo "Prepare Android data directory"
-        #$ANDROID_HOME/platform-tools/adb -s emulator-5554 shell mkdir /storage/sdcard/Android
-
-        # Usually its now enough to restart the emulator to get Android folder reported.
-        #echo "Restart emulator to fix test_data download"
-        #$ANDROID_HOME/platform-tools/adb $SELECT -e reboot
-
-        #./azure/emulator-wait.sh $1
-
-        #$ANDROID_HOME/platform-tools/adb $SELECT shell content query --uri content://media/external/file --projection _data
+        echo "Android data directory not found, create explicit media entry"
+        # Necessary for android 18 that gradle will find the correct path.
+        $ANDROID_HOME/platform-tools/adb shell content insert --uri content://media/external/file --bind _data:s:/storage/sdcard/Android
     fi
 }
 
