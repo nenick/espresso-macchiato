@@ -6,10 +6,12 @@ import androidx.test.espresso.Root
 import androidx.test.espresso.matcher.ViewMatchers
 import de.nenick.espressomacchiato.androidx.drawerinteraction.EspDrawerActions
 import de.nenick.espressomacchiato.androidx.drawerinteraction.EspDrawerAssertions
+import de.nenick.espressomacchiato.internals.OpenForExtensions
 import de.nenick.espressomacchiato.view.EspView
 import org.hamcrest.Matcher
 
 @Suppress("UNCHECKED_CAST")
+@OpenForExtensions
 class EspDrawer(
         viewMatcher: Matcher<View>,
         rootMatchers: Matcher<Root>? = null,
