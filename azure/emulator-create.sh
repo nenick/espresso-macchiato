@@ -38,6 +38,8 @@ create() {
     #sed -i "" "s/hw.keyboard=.*/hw.keyboard=yes/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
     # disable on screen android navigation buttons.
     sed -i "" "s/hw.mainKeys=.*/hw.mainKeys=yes/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
+    # sdcard is useful for to provide additional test data (so content query --uri content://media/external/file will returns something useful)
+    sed -i "" "s/hw.sdCard=.*/hw.sdCard=yes/g" ~/.android/avd/android-ci$APPEND.avd/config.ini
 
     # For tests it should be possible to run completely offline.
     sed -i "" "s/hw.gsmModem=.*/hw.gsmModem=no/g" ~/.android/avd/android-ci$APPEND.avd/config.ini

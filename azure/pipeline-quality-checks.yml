@@ -7,27 +7,35 @@ pool:
 
 jobs:
 
+  # earliest supported android version by espresso macchiato
   - template: job-android-tests.yml
     parameters:
-      # earliest supported android version
+      # earliest android version with additional test data download support
       androidVersion: '16'
 
+  # earliest supported android version by ui automator (e.g. take screenshots)
   - template: job-android-tests.yml
     parameters:
-      # earliest supported android version by ui automator (e.g. take screenshots)
       androidVersion: '18'
 
   - template: job-android-tests.yml
     parameters:
+      # has issue, ls: Unknown option '-1'
+      androidVersion: '19'
+
+  - template: job-android-tests.yml
+    parameters:
+      # first version where additional test data download works seamless ??
       # fastest android version for emulator ??
       androidVersion: '24'
 
   - template: job-android-tests.yml
     parameters:
-      # additional test data download works properly
+      # latest version where additional test data download works seamless
       androidVersion: '29'
 
+  # latest supported android version
   - template: job-android-tests.yml
     parameters:
-      # latest supported android version
+      # changes external storage behaviour when downloading additional test data
       androidVersion: '30'
