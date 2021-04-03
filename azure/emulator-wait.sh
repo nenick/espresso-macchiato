@@ -10,9 +10,11 @@ waitForDevice() {
 
     # wait for device
     # https://stackoverflow.com/questions/41151883/wait-for-android-emulator-to-be-running-before-next-shell-command
-    $ANDROID_HOME/platform-tools/adb $SELECT wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do echo "emulator '$1' is starting ..." && sleep 5; done'
+    $ANDROID_HOME/platform-tools/adb $SELECT wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do echo "emulator '$1' is starting ..." && sleep 5; done; input keyevent 82'
+
+    # Proposals containing "tr" command does not work on earlier android versions e.g. android 18
     # https://docs.microsoft.com/en-us/azure/devops/pipelines/ecosystems/android?view=azure-devops
-    #$ANDROID_HOME/platform-tools/adb $SELECT wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do echo "emulator '$1' is starting ..." && sleep 5; done; input keyevent 82'
+    # $ANDROID_HOME/platform-tools/adb $SELECT wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do echo "emulator '$1' is starting ..." && sleep 5; done; input keyevent 82'
 }
 
 source azure/function-parallel-command.sh
