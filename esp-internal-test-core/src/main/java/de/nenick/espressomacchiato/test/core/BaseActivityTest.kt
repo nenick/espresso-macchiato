@@ -8,11 +8,18 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import de.nenick.espressomacchiato.screenshot.EspScreenshotRule
 import org.junit.Rule
+import org.junit.rules.RuleChain
 
 abstract class BaseActivityTest<TEST_ACTIVITY : Activity> {
 
+    private val screenshotRule = EspScreenshotRule()
+
     @get:Rule
-    val screenshotRule = EspScreenshotRule()
+    val chain by lazy {
+        RuleChain.emptyRuleChain()
+                .around(activityScenarioRule)
+                .around(screenshotRule)!!
+    }
 
     abstract val activityScenarioRule: ActivityScenarioRule<TEST_ACTIVITY>
 

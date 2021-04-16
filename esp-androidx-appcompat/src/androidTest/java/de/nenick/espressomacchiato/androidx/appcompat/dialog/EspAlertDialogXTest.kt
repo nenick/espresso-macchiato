@@ -6,12 +6,10 @@ import de.nenick.espressomacchiato.dialog.EspAlertDialog
 import de.nenick.espressomacchiato.test.core.BaseActivity
 import de.nenick.espressomacchiato.test.core.BaseActivityTest
 import org.junit.Assert.assertEquals
-import org.junit.Rule
 import org.junit.Test
 
 class EspAlertDialogXTest : BaseActivityTest<BaseActivity>() {
 
-    @get:Rule
     override val activityScenarioRule = activityScenarioRule<BaseActivity>()
 
     private var clicked = ""

@@ -9,13 +9,11 @@ import de.nenick.espressomacchiato.test.core.BaseActivityTest
 import de.nenick.espressomacchiato.test.core.BaseActivity
 import org.hamcrest.CoreMatchers
 import org.junit.Assert
-import org.junit.Rule
 import java.lang.Exception
 import java.lang.IllegalStateException
 
 class EspScreenshotRuleTest : BaseActivityTest<BaseActivity>() {
 
-    @get:Rule
     override val activityScenarioRule = activityScenarioRule<BaseActivity>()
 
     private val testSuccessfulDescription = Description.createTestDescription("com.example.MySuccessTest", "isSuccessful")

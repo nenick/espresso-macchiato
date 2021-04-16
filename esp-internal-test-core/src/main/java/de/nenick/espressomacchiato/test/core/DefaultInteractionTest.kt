@@ -9,6 +9,5 @@ abstract class DefaultInteractionTest : BaseActivityTest<BaseActivity>() {
     @get:Rule
     val expectedException = ExpectedException.none()!!
 
-    @get:Rule
     override val activityScenarioRule = activityScenarioRule<BaseActivity>()
 }
