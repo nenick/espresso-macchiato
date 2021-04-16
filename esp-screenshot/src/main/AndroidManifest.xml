@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="de.nenick.espressomacchiato.screenshot">
 
+    <!-- uiautomator - we use an alternative, on earlier version to take screenshots. -->
+    <uses-sdk tools:overrideLibrary="android_libs.ub_uiautomator" />
+
     <!-- Necessary to store screenshots where gradle will download them after test execution.
          https://stackoverflow.com/questions/64221188/write-external-storage-when-targeting-android-10 -->
     <uses-permission
