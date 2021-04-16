@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="de.nenick.espressomacchiato.screenshot">
 
-    <!-- https://stackoverflow.com/questions/64221188/write-external-storage-when-targeting-android-10 -->
+    <!-- Necessary to store screenshots where gradle will download them after test execution.
+         https://stackoverflow.com/questions/64221188/write-external-storage-when-targeting-android-10 -->
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18"

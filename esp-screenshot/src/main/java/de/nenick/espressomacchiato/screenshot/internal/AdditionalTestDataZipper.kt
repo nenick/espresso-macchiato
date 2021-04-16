@@ -11,7 +11,7 @@ import java.util.zip.ZipOutputStream
 internal object AdditionalTestDataZipper {
 
     private const val screenshotDirName = "screenshots"
-    private val context = InstrumentationRegistry.getInstrumentation().context
+    private val context = InstrumentationRegistry.getInstrumentation().targetContext
     private val externalFilesDir = context.getExternalFilesDir(null)
             ?: throw IllegalStateException("No external storage found? Be sure to have sdcard activated and write permission for external storage.")
 
