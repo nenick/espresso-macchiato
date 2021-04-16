@@ -31,6 +31,7 @@ jobs:
 
   - template: job-android-tests.yml
     parameters:
+      # has click issues when open/close multiple dialogs fast
       # latest version where additional test data download works seamless
       androidVersion: '29'
 
