@@ -1,6 +1,7 @@
 package de.nenick.espressomacchiato.dialog
 
 import android.app.AlertDialog
+import android.os.Build
 import androidx.test.ext.junit.rules.activityScenarioRule
 import de.nenick.espressomacchiato.test.core.BaseActivity
 import de.nenick.espressomacchiato.test.core.BaseActivityTest
@@ -49,14 +50,26 @@ class EspAlertDialogTest : BaseActivityTest<BaseActivity>() {
 
     private fun showDialog() {
         runOnMainSync {
-            AlertDialog.Builder(it)
+            val dialogBuilder = AlertDialog.Builder(it)
                     .setTitle("My title")
                     .setMessage("My message")
                     .setNegativeButton("Negative") { _, _ -> clicked = "Negative" }
                     .setNeutralButton("Neutral") { _, _ -> clicked = "Neutral" }
                     .setPositiveButton("Positive") { _, _ -> clicked = "Positive" }
-                    .setOnDismissListener { dismissed = true }
-                    .show()
+
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+                dialogBuilder.apply {
+                    setOnDismissListener { dismissed = true }
+                    show()
+                }
+            } else {
+                // On and pre Jelly Bean the builder does not have the setOnDismissListener but the dialog has.
+                // https://stackoverflow.com/questions/16970866/why-does-android-nosuchmethodexception-occurs-at-alertdialog-builders-setondism
+                dialogBuilder.create().apply {
+                    setOnDismissListener { dismissed = true }
+                    show()
+                }
+            }
         }
     }
 }
