@@ -88,7 +88,7 @@ class EspViewTest : DefaultElementTest<EspView>() {
 
     @Test
     fun performNotAllowedOnInaccessibleViews() {
-        testView.visibility = View.INVISIBLE
+        runOnMainSync { testView.visibility = View.INVISIBLE }
 
         expectedException.expectCause(CauseMatcher(RuntimeException::class.java, "at least 90 percent of the view's area is displayed to the user"))
         EspView(this.testViewId).perform(ViewActions.click())
