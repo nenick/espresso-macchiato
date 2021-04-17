@@ -4,7 +4,7 @@ parameters:
 
 jobs:
   - job: AndroidTests${{ parameters.androidVersion }}
-    displayName: Android Tests (v${{ parameters.androidVersion }})
+    displayName: Android Tests (Emulator with Android v${{ parameters.androidVersion }})
     variables:
       ports:
       #ports: 5554 5556
