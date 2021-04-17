@@ -20,7 +20,15 @@ create() {
         APPEND="-$3"
     fi
 
-    echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n android-ci$APPEND -k "system-images;android-$ANDROID_VERSION;google_apis;$ANDROID_ABI" -c 512M --force
+    if [[ "16 17 18 19" == *"$ANDROID_VERSION"* ]]; then
+      # Seems like emulator for early android version need this setting at creation time instead of reading it from config.ini
+      # With android 30 it would disturb downloading test_data because it search on a path where test_data content never appears.
+      SD_CARD="-c 512M"
+    else
+      SD_CARD=
+    fi
+
+    echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager create avd -n android-ci$APPEND -k "system-images;android-$ANDROID_VERSION;google_apis;$ANDROID_ABI" $SD_CARD --force
 
     # https://stuff.mit.edu/afs/sipb/project/android/docs/tools/devices/managing-avds-cmdline.html
     # https://android.googlesource.com/platform/prebuilts/android-emulator/+/master/linux-x86_64/lib/hardware-properties.ini

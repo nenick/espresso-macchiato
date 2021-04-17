@@ -32,6 +32,7 @@ jobs:
           script: |
             ./azure/emulator-start-on-ci.sh $(ports)
             ./azure/emulator-wait.sh $(ports)
+            ./azure/emulator-fix-pull-permission-denied.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-wait-content-media-android-available.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-fix-ls-unknown-option.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-fix-content-media-query.sh ${{ parameters.androidVersion }} $(ports)
@@ -73,11 +74,8 @@ jobs:
             mkdir emulator-screenshots
             find */build -name screenshots.zip
             find */build -name screenshots.zip -exec unzip "{}" -d emulator-screenshots \;
-
-            #for PORT in $(ports); do
-            #    ls */build/outputs/connected_android_test_additional_output/debugAndroidTest/connected/android-ci-$PORT*/screenshots.zip
-            #    unzip "*/build/outputs/connected_android_test_additional_output/debugAndroidTest/connected/android-ci-$PORT*/screenshots.zip" -d emulator-screenshots/
-            #done
+            # Fail task if no screenshots exists
+            [ "$(find emulator-screenshots -name "*.png")" ] || (echo "No screenshots found" && return 1)
         condition: succeededOrFailed()
 
       - template: step-publish-emulator-artifacts.yml
