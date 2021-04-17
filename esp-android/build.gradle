@@ -1,6 +1,4 @@
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
     id 'kotlin-allopen'
     id 'org.jlleitschuh.gradle.ktlint'
 }
@@ -26,14 +24,8 @@ allOpen {
     annotation("de.nenick.espressomacchiato.internals.OpenForExtensions")
 }
 
-repositories {
-    google()
-}
-
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.21"
-
-    api "androidx.test.espresso:espresso-core:3.3.0"
+    api "androidx.test.espresso:espresso-core"
 
     androidTestImplementation project(":esp-internal-test-core")
 }

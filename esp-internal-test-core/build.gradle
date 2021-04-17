@@ -1,8 +1,3 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-}
-
 android {
     compileSdkVersion 30
     defaultConfig {
@@ -24,11 +19,9 @@ dependencies {
     implementation project(":esp-android")
     implementation project(":esp-screenshot")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.21"
+    api 'androidx.test:runner'
+    api 'androidx.test:rules'
+    api 'androidx.test.ext:junit-ktx'
 
-    api 'androidx.test:runner:1.3.0'
-    api 'androidx.test:rules:1.3.0'
-    api 'androidx.test.ext:junit-ktx:1.1.2'
-
-    androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect"
 }
