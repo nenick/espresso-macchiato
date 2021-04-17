@@ -2,6 +2,7 @@ package de.nenick.espressomacchiato.dialog
 
 import android.os.Build
 import androidx.test.espresso.matcher.RootMatchers
+import androidx.test.platform.app.InstrumentationRegistry
 import de.nenick.espressomacchiato.widget.EspButton
 
 @Suppress("UNCHECKED_CAST")
@@ -20,9 +21,10 @@ class EspAlertDialogButton(id: Int, interactions: EspAlertDialogButton.() -> Uni
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
             // Weird, but is enough to just give the dialog a short moment to recognize the
             // click properly. Perhaps the click listener isn't added yet, missing focusable?
-            // 20ms - still flaky on fast emulator
-            // 50ms - still flaky on slow emulator
-            Thread.sleep(100)
+            //  20ms - still flaky on fast emulator
+            //  50ms - still flaky on slow emulator
+            // 100ms - still flaky on slow emulator (more rarely)
+            Thread.sleep(200)
         }
     }
 }
