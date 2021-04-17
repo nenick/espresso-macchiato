@@ -32,28 +32,25 @@ internal class EspScreenshotToolPreJellyBeanMr2 {
     companion object {
         val windowDecorViews: ArrayList<View?>?
             get() {
-                val viewsField: Field
-                val instanceField: Field
-                return try {
-                    viewsField = windowManager.getDeclaredField("mViews")
-                    instanceField = windowManager.getDeclaredField(windowManagerString)
-                    viewsField.isAccessible = true
-                    instanceField.isAccessible = true
-                    val instance = instanceField[null]
-                    val viewArrayList: ArrayList<View?>
+                val viewsField: Field = windowManager.getDeclaredField("mViews")
+                val instanceField: Field = windowManager.getDeclaredField(windowManagerString)
+                viewsField.isAccessible = true
+                instanceField.isAccessible = true
+                val instance = instanceField[null]
+                val viewArrayList: ArrayList<View?>
+                val views = viewsField[instance]
+                        ?: throw IllegalStateException("No active view found. App already closed?")
+
+                // strange on local pc viewsField.get returns an array list
+                // on build agent it return just an array
+                viewArrayList = try {
+                    views as ArrayList<View?>
+                } catch (e: ClassCastException) {
                     // strange on local pc viewsField.get returns an array list
                     // on build agent it return just an array
-                    viewArrayList = try {
-                        viewsField[instance] as ArrayList<View?>
-                    } catch (e: ClassCastException) {
-                        // strange on local pc viewsField.get returns an array list
-                        // on build agent it return just an array
-                        arrayListOf(*(viewsField[instance] as Array<View?>))
-                    }
-                    viewArrayList
-                } catch (e: Exception) {
-                    throw IllegalStateException(e)
+                    arrayListOf(*(views as Array<View?>))
                 }
+                return viewArrayList
             }
 
         private val windowManager: Class<*>
