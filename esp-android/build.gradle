@@ -3,23 +3,6 @@ plugins {
     id 'org.jlleitschuh.gradle.ktlint'
 }
 
-android {
-    compileSdkVersion 30
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 30
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    testOptions {
-        animationsDisabled = true
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-
 allOpen {
     annotation("de.nenick.espressomacchiato.internals.OpenForExtensions")
 }
