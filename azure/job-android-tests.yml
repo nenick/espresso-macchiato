@@ -28,7 +28,7 @@ jobs:
           targetType: inline
           script: |
             ./azure/emulator-start-on-ci.sh $(ports)
-            ./azure/emulator-wait.sh $(ports)
+            ./gradlew waitForEmulator
             ./azure/emulator-fix-pull-permission-denied.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-wait-content-media-android-available.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-fix-ls-unknown-option.sh ${{ parameters.androidVersion }} $(ports)
