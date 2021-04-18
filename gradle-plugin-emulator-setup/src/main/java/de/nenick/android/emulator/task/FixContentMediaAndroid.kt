@@ -8,7 +8,7 @@ import de.nenick.android.emulator.tool.SimpleTimer
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-open class EmulatorFixContentMediaAndroid : DefaultTask(), AdbShell {
+open class FixContentMediaAndroid : DefaultTask(), AdbShell {
 
     @TaskAction
     fun fix() {

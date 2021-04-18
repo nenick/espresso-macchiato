@@ -5,7 +5,7 @@ import de.nenick.android.emulator.tool.AdbShell
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-open class EmulatorWaitForDevice : DefaultTask(), AdbShell {
+open class WaitForDevice : DefaultTask(), AdbShell {
 
     private val waitForBootCompleted = """
         while [[ -z $(getprop sys.boot_completed) ]]; do 

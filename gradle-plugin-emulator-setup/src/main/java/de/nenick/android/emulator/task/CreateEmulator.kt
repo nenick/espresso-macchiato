@@ -13,7 +13,7 @@ import org.gradle.api.tasks.options.Option
 import org.gradle.process.ExecSpec
 import java.io.File
 
-open class EmulatorCreate : DefaultTask() {
+open class CreateEmulator : DefaultTask() {
 
     @Internal
     @Option(option = "android", description = "Specify the android version for the emulator.")
