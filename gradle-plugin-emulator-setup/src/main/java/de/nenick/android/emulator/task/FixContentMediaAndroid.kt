@@ -25,22 +25,19 @@ open class FixContentMediaAndroid : DefaultTask(), AdbShell {
     }
 
     private fun printContentMedia(it: IDevice) {
-        execAdbShell(it, AdbShell.StdOutLogger, """content query --uri content://media/external/file --projection _data""")
+        execAdbShell(it, AdbShell.StdOutLogger, queryContentMedia)
     }
 
     private fun createContentMediaAndroid(device: IDevice) {
         val setup = AndroidSetup.search(device.version)
-        val command = """content insert --uri content://media/external/file --bind _data:s:${setup.androidAppDataPath()}"""
-        execAdbShell(device, AdbShell.StdOutLogger, command)
+        execAdbShell(device, AdbShell.StdOutLogger, "$insertContentMedia${setup.androidAppDataPath()}")
     }
 
     private fun hasContentMediaAndroid(device: IDevice): Boolean {
         val timer = SimpleTimer(timeoutSearchMilliseconds)
         while (true) {
             val receiver = CollectingOutputReceiver()
-            // Bash escaped variant to run it directly on command line:
-            // $ANDROID_HOME/platform-tools/adb $SELECT shell content query --uri content://media/external/file --projection _data --where "_data\ LIKE\ \'%Android\'"
-            execAdbShell(device, receiver, """content query --uri content://media/external/file --projection _data --where "_data LIKE '%Android'"""")
+            execAdbShell(device, receiver, queryContentMediaAndroid)
 
             if (receiver.output.contains(Regex(".*Android"))) {
                 return true
@@ -56,6 +53,10 @@ open class FixContentMediaAndroid : DefaultTask(), AdbShell {
     }
 
     companion object {
+        private const val contentMedia = """--uri content://media/external/file"""
+        private const val queryContentMedia = """content query $contentMedia --projection _data"""
+        private const val queryContentMediaAndroid = """$queryContentMedia --where "_data LIKE '%Android'""""
+        private const val insertContentMedia = """content insert $contentMedia --bind _data:s:"""
         private const val delayNextAttemptMilliseconds = 5 * 1000L
         private const val timeoutSearchMilliseconds = 30 * 1000L
     }
