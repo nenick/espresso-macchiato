@@ -38,42 +38,38 @@ interface AdbShell : Task {
 
     fun printCommandLineExecutable(device: IDevice, command: String) {
         val commandlinePrepared = command
-                .replace("'", "\\\"")
-                .replace("\n", "; ")
-                .replace(Regex("do *;"), "do")
+            .replace("'", "\\\"")
+            .replace("\n", "; ")
+            .replace(Regex("do *;"), "do")
         println("Run: \"${getAdbExecutablePath()}\" \"-s\" \"${device.serialNumber}\" \"shell\" '$commandlinePrepared'")
     }
 
     private fun findConnectedDevices(): Array<out IDevice> {
         val adbPath = getAdbExecutablePath()
 
+        // Sample to access devices is taken from:
         // https://stackoverflow.com/questions/34186108/how-to-query-all-connected-devices-in-build-gradle
         @Suppress("DEPRECATION" /* Only deprecated for non testing usage. */)
         AndroidDebugBridge.initIfNeeded(false)
 
         val bridge = AndroidDebugBridge.createBridge(adbPath, false, timeoutCreateAdbBridgeMinutes, TimeUnit.MINUTES)
-        var timeOut = timeoutFindDevicesMilliseconds
+        val timer = SimpleTimer(timeoutFindDevicesMilliseconds)
 
-        while (!bridge.hasInitialDeviceList() && timeOut > 0) {
+        while (!bridge.hasInitialDeviceList() && !timer.isTimeout()) {
+            println("No initial devices list, yet.")
             Thread.sleep(delayNextAttemptMilliseconds)
-            timeOut -= delayNextAttemptMilliseconds
         }
+        check(bridge.hasInitialDeviceList()) { "Timeout getting device list." }
 
-        while (bridge.devices.isEmpty() && timeOut > 0) {
+        while (bridge.devices.isEmpty() && !timer.isTimeout()) {
             println("No connected devices, yet.")
             // Pre android api 20 emulators need a moment before they are connected with adb.
             Thread.sleep(delayNextAttemptMilliseconds)
-            timeOut -= delayNextAttemptMilliseconds
-        }
-
-        if (timeOut <= 0 && !bridge.hasInitialDeviceList()) {
-            throw TimeoutException("Timeout getting device list.")
         }
 
         val devices = bridge.devices
-        if (devices.isEmpty()) {
-            throw IllegalStateException("No connected devices!")
-        }
+        check(devices.isNotEmpty()) { "No connected devices!" }
+
         return devices
     }
 
