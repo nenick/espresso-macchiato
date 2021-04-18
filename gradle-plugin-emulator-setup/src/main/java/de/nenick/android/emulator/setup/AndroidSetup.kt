@@ -13,7 +13,7 @@ sealed class AndroidSetup {
     abstract fun createAvdAdditionalArgs(): Array<out String>
 
     abstract fun avdSetting(): Array<String>
-    open fun androidAppDataPath(): String { throw NotImplementedError("For android api ${androidApi()} this wasn't expected.") }
+    open fun androidAppDataPath(): String { throw IllegalStateException("For android api ${androidApi()} this wasn't expected.") }
 
     companion object {
         fun search(androidVersion: AndroidVersion): AndroidSetup {
