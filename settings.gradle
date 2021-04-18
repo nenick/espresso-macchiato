@@ -11,6 +11,8 @@ include ':esp-internal-test-core'
 
 include ':sampleapp'
 
+includeBuild 'gradle-plugin-emulator-setup'
+
 //include ':esp-androidx-recyclerview'
 //include ':esp-system-dialogs'
 //include ':espresso-macchiato'

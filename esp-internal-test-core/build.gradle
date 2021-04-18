@@ -1,3 +1,10 @@
+// Fix for missing com.android.tools.build:gradle from custom android gradle plugin dependencies.
+buildscript { repositories.google() }
+
+plugins {
+    id("de.nenick.android.emulator-setup")
+}
+
 dependencies {
     implementation project(":esp-android")
     implementation project(":esp-screenshot")

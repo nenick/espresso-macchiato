@@ -19,11 +19,8 @@ jobs:
           tasks: 'assembleAndroidTest'
           gradleWrapperFile: 'gradlew'
 
-      - task: Bash@3
+      - script: ./gradlew createEmulator --android ${{ parameters.androidVersion }}
         displayName: Create Emulator
-        inputs:
-          targetType: inline
-          script: ./azure/emulator-create.sh ${{ parameters.androidVersion }} $(ports)
 
       - task: Bash@3
         displayName: Start Emulator
