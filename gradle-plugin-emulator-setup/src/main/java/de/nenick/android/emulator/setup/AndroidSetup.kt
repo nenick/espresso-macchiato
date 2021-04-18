@@ -1,5 +1,6 @@
 package de.nenick.android.emulator.setup
 
+import com.android.sdklib.AndroidVersion
 import java.lang.IllegalStateException
 import kotlin.reflect.KClass
 
@@ -12,8 +13,13 @@ sealed class AndroidSetup {
     abstract fun createAvdAdditionalArgs(): Array<out String>
 
     abstract fun avdSetting(): Array<String>
+    open fun androidAppDataPath(): String { throw NotImplementedError("For android api ${androidApi()} this wasn't expected.") }
 
     companion object {
+        fun search(androidVersion: AndroidVersion): AndroidSetup {
+            return search(androidVersion.apiLevel)
+        }
+
         fun search(androidVersion: Int): AndroidSetup {
             return collectAllSetups().find { it.androidApi() == androidVersion }
                     ?: throw IllegalStateException("No setup found for android api $androidVersion")
@@ -77,10 +83,15 @@ sealed class DefaultPreAndroid20Setup : DefaultAndroidSetup() {
 
 object Android16 : DefaultPreAndroid20Setup() {
     override fun androidApi() = 16
+    @Suppress("SdCardPath")
+    // Never appears until any app creates some content.
+    override fun androidAppDataPath() = "/mnt/sdcard/Android"
 }
 
 object Android18 : DefaultPreAndroid20Setup() {
     override fun androidApi() = 18
+    // Never appears until any app creates some content.
+    override fun androidAppDataPath() = "/storage/sdcard/Android"
 }
 
 object Android19 : DefaultPreAndroid20Setup() {
@@ -110,4 +121,6 @@ object Android29 : DefaultPostAndroid20Setup() {
 
 object Android30 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 30
+    // Would appear but takes too much time, so we shorten it a bit.
+    override fun androidAppDataPath() = "/storage/emulated/0/Android"
 }
