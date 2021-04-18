@@ -8,14 +8,14 @@ indent_style = space
 insert_final_newline = false
 max_line_length = 100
 tab_width = 4
-ij_continuation_indent_size = 8
+ij_continuation_indent_size = 4
 ij_formatter_off_tag = @formatter:off
 ij_formatter_on_tag = @formatter:on
 ij_formatter_tags_enabled = false
 ij_smart_tabs = false
 ij_wrap_on_typing = false
 
-[{*.gradle.kts,*.kt,*.kts,*.main.kts}]
+[{*.kt,*.kts}]
 ij_kotlin_align_in_columns_case_branch = false
 ij_kotlin_align_multiline_binary_operation = false
 ij_kotlin_align_multiline_extends_list = false
@@ -63,7 +63,7 @@ ij_kotlin_method_call_chain_wrap = off
 ij_kotlin_method_parameters_new_line_after_left_paren = false
 ij_kotlin_method_parameters_right_paren_on_new_line = false
 ij_kotlin_method_parameters_wrap = off
-ij_kotlin_name_count_to_use_star_import = 5
+ij_kotlin_name_count_to_use_star_import = 2147483647
 ij_kotlin_name_count_to_use_star_import_for_members = 3
 ij_kotlin_parameter_annotation_wrap = off
 ij_kotlin_space_after_comma = true

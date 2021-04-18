@@ -5,6 +5,7 @@ import com.android.ddmlib.AndroidDebugBridge
 import com.android.ddmlib.IDevice
 import com.android.ddmlib.IShellOutputReceiver
 import com.android.ddmlib.MultiLineReceiver
+import com.android.ddmlib.TimeoutException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -66,12 +67,12 @@ interface AdbShell : Task {
         }
 
         if (timeOut <= 0 && !bridge.hasInitialDeviceList()) {
-            throw RuntimeException("Timeout getting device list.")
+            throw TimeoutException("Timeout getting device list.")
         }
 
         val devices = bridge.devices
         if (devices.isEmpty()) {
-            throw RuntimeException("No connected devices!")
+            throw IllegalStateException("No connected devices!")
         }
         return devices
     }
