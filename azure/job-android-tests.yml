@@ -13,6 +13,10 @@ jobs:
 
       - template: step-cache-gradle-files.yml
 
+      # On ci environment it isn't necessary and only reports: Unable to watch the file system for changes
+      - script: echo "org.gradle.vfs.watch=false" >> gradle.properties
+        displayName: Disable File Watch
+
       - task: Gradle@2
         displayName: Build APKs
         inputs:
