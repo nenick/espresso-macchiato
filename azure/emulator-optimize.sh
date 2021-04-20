@@ -57,9 +57,21 @@ optimize() {
     # Kill wait could be killed, everything less gives more performance for us.
     # Too slow for the gain at the end.
     # $ANDROID_HOME/platform-tools/adb shell ps | grep -v PID | awk '{print $2}' | xargs $ANDROID_HOME/platform-tools/adb shell kill 2> /dev/null
-    
+
+    ################################################################################
+    # Sometimes media crashed and shows the system dialog for crash (saw it on android api 24
+    $ANDROID_HOME/platform-tools/adb shell ps | grep android.process.media | awk '{print $2}' | xargs $ANDROID_HOME/platform-tools/adb shell kill 2> /dev/null
+
+    ################################################################################
+    # Disable collecting espresso analytic data, reduce timeout when try to send report but no connection.
+    # https://developer.android.com/training/testing/espresso/setup#analytics
+    $ANDROID_HOME/platform-tools/adb $SELECT shell am instrument -e disableAnalytics true
+
     ################################################################################
     # Try to dismiss random "not responding" system dialog.
+    # focus property does not exist anymore after?
+    # - android api 29 possible alternate mAppToken=AppWindowToken
+    # - android api 30 possible alternate mActivityRecord
     CURRENT_FOCUS=`$ANDROID_HOME/platform-tools/adb $SELECT shell dumpsys window windows | grep -E 'mCurrentFocus|mFocusedApp'`
     echo "$CURRENT_FOCUS"
     FOCUSED_APP_PACKAGE=`echo "$CURRENT_FOCUS" | grep "mCurrentFocus" | cut -d" " -f5 | cut -d"/" -f1`
@@ -68,9 +80,9 @@ optimize() {
       echo "How can we kill or dismiss it?? See initial screenshot for more details."
       # $ANDROID_HOME/platform-tools/adb shell 'su root pm disable $FOCUSED_APP_PACKAGE
     
-      FOCUSED_APP_PID=`$ANDROID_HOME/platform-tools/adb $SELECT shell ps | grep -v PID | grep $FOCUSED_APP_PACKAGE | awk '{print $2}'`
-      $ANDROID_HOME/platform-tools/adb $SELECT shell su root kill $FOCUSED_APP_PID
-    fi  
+      #FOCUSED_APP_PID=`$ANDROID_HOME/platform-tools/adb $SELECT shell ps | grep -v PID | grep $FOCUSED_APP_PACKAGE | awk '{print $2}'`
+      #$ANDROID_HOME/platform-tools/adb $SELECT shell su root kill $FOCUSED_APP_PID
+    fi
 }
 
 source azure/function-parallel-command.sh
