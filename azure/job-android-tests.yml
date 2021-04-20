@@ -31,10 +31,11 @@ jobs:
         inputs:
           targetType: inline
           script: |
+            set -e
             set -o pipefail
             ./azure/emulator-start-on-ci.sh $(ports)
             ./gradlew waitForEmulator
-            ./azure/emulator-fix-pull-permission-denied.sh ${{ parameters.androidVersion }} $(ports)
+            ./gradlew fixPullPermissionDenied
             ./gradlew fixContentMediaAndroid
             ./azure/emulator-fix-ls-unknown-option.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-fix-content-media-query.sh ${{ parameters.androidVersion }} $(ports)
