@@ -58,6 +58,6 @@ open class FixContentMediaAndroid : DefaultTask(), AdbShell {
         private const val queryContentMediaAndroid = """$queryContentMedia --where "_data LIKE '%Android'""""
         private const val insertContentMedia = """content insert $contentMedia --bind _data:s:"""
         private const val delayNextAttemptMilliseconds = 5 * 1000L
-        private const val timeoutSearchMilliseconds = 30 * 1000L
+        private const val timeoutSearchMilliseconds = 90 * 1000L
     }
 }
