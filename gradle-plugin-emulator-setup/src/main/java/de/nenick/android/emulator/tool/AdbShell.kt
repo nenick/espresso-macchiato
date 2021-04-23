@@ -76,7 +76,7 @@ interface AdbShell : Task {
 
         val adbShellCommand = listOf(
             AdbCommand.executable(project),
-            AdbCommand.selectDevice(device),
+            *AdbCommand.selectDevice(device),
             "shell"
         )
         println("Exec: ${adbShellCommand.joinToString("\" \"", "\"", "\"")} '$deviceScriptPrintable'")
