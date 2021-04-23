@@ -13,8 +13,9 @@ sealed class AndroidSetup {
     abstract fun createAvdAdditionalArgs(): Array<out String>
 
     abstract fun avdSetting(): Array<String>
-    open fun androidAppDataPath(): String { throw IllegalStateException("For android api ${androidApi()} this wasn't expected.") }
+    open fun externalDirectory(): String { throw IllegalStateException("For android api ${androidApi()} this wasn't expected.") }
     open fun shouldRemountAsRoot() = false
+    open fun shortCutContentMediaAndroid() = false
 
     companion object {
         fun search(androidVersion: AndroidVersion): AndroidSetup {
@@ -86,13 +87,16 @@ object Android16 : DefaultPreAndroid20Setup() {
     override fun androidApi() = 16
     @Suppress("SdCardPath")
     // Never appears until any app creates some content.
-    override fun androidAppDataPath() = "/mnt/sdcard/Android"
+    override fun shortCutContentMediaAndroid() = true
+    override fun externalDirectory() = "/mnt/sdcard"
 }
 
 object Android18 : DefaultPreAndroid20Setup() {
     override fun androidApi() = 18
     // Never appears until any app creates some content.
-    override fun androidAppDataPath() = "/storage/sdcard/Android"
+    // But we can't immediately create it, or gradle get issues to find it.
+    override fun shortCutContentMediaAndroid() = false
+    override fun externalDirectory() = "/storage/sdcard"
 
 // SecurityException: Calling from not trusted UID!
 
@@ -179,12 +183,16 @@ object Android24 : DefaultPostAndroid20Setup() {
 
 object Android29 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 29
+    // Would appear but takes too much time, so we shorten it a bit.
+    override fun shortCutContentMediaAndroid() = true
+    override fun externalDirectory() = "/storage/emulated/0"
 }
 
 object Android30 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 30
     // Would appear but takes too much time, so we shorten it a bit.
-    override fun androidAppDataPath() = "/storage/emulated/0/Android"
+    override fun shortCutContentMediaAndroid() = true
+    override fun externalDirectory() = "/storage/emulated/0"
     // Otherwise gradle fails to pull test_data directory.
     override fun shouldRemountAsRoot() = true
 }

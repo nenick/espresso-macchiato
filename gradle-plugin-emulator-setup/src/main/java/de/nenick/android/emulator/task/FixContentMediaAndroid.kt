@@ -13,9 +13,16 @@ open class FixContentMediaAndroid : DefaultTask(), AdbShell {
     @TaskAction
     fun fix() {
         forEachConnectedDeviceParallel {
+            printContentMedia(it)
+
+            val setup = AndroidSetup.search(it.version)
+            if (setup.shortCutContentMediaAndroid()) {
+                createContentMediaAndroid(it, setup)
+            }
+
             if (!hasContentMediaAndroid(it)) {
                 println("Android data directory not found, try to create it explicitly")
-                createContentMediaAndroid(it)
+                createContentMediaAndroid(it, setup)
             }
 
             printContentMedia(it)
@@ -28,9 +35,8 @@ open class FixContentMediaAndroid : DefaultTask(), AdbShell {
         execAdbShell(it, AdbShell.StdOutLogger, queryContentMedia)
     }
 
-    private fun createContentMediaAndroid(device: IDevice) {
-        val setup = AndroidSetup.search(device.version)
-        execAdbShell(device, AdbShell.StdOutLogger, "$insertContentMedia${setup.androidAppDataPath()}")
+    private fun createContentMediaAndroid(device: IDevice, setup: AndroidSetup) {
+        execAdbShell(device, AdbShell.StdOutLogger, "$insertContentMedia${setup.externalDirectory()}/Android")
     }
 
     private fun hasContentMediaAndroid(device: IDevice): Boolean {
@@ -58,6 +64,6 @@ open class FixContentMediaAndroid : DefaultTask(), AdbShell {
         private const val queryContentMediaAndroid = """$queryContentMedia --where "_data LIKE '%Android'""""
         private const val insertContentMedia = """content insert $contentMedia --bind _data:s:"""
         private const val delayNextAttemptMilliseconds = 5 * 1000L
-        private const val timeoutSearchMilliseconds = 90 * 1000L
+        private const val timeoutSearchMilliseconds = 30 * 1000L
     }
 }
