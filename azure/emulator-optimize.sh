@@ -14,6 +14,8 @@ optimize() {
     $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.android.dialer"
     $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.google.android.apps.messaging"
     $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.android.phone"
+    # Sometimes crashing on android 18
+    $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.android.com.android.email"
     $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.google.android.talk"
     $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.google.android.configupdater"
     $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.google.android.googlequicksearchbox"
@@ -58,6 +60,7 @@ optimize() {
     # Too slow for the gain at the end.
     # $ANDROID_HOME/platform-tools/adb shell ps | grep -v PID | awk '{print $2}' | xargs $ANDROID_HOME/platform-tools/adb shell kill 2> /dev/null
 
+    ################################################################################
     ################################################################################
     # Sometimes media crashed and shows the system dialog for crash (saw it on android api 24
     $ANDROID_HOME/platform-tools/adb shell ps | grep android.process.media | awk '{print $2}' | xargs $ANDROID_HOME/platform-tools/adb shell kill 2> /dev/null
