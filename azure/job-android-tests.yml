@@ -40,6 +40,7 @@ jobs:
             ./azure/emulator-fix-ls-unknown-option.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-fix-content-media-query.sh ${{ parameters.androidVersion }} $(ports)
             ./azure/emulator-optimize.sh $(ports)
+            ./gradlew takeScreenshot --directory emulator-settings --name initial-state
             ./azure/emulator-collect-preconditions.sh $(ports)
             ./azure/emulator-collect-logcat.sh $(ports)
 
@@ -81,8 +82,8 @@ jobs:
             [ "$(find emulator-screenshots -name "*.png")" ] || (echo "No screenshots found" && exit 1)
         condition: succeededOrFailed()
 
-      - script: $ANDROID_HOME/platform-tools/adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > emulator-screenshots/final-state.png
-        displayName: take screenshot
+      - script: ./gradlew takeScreenshot --directory emulator-logs --name final-state
+        displayName: Screenshot Final State
         condition: succeededOrFailed()
 
       - template: step-publish-emulator-artifacts.yml

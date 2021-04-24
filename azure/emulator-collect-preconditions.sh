@@ -15,11 +15,6 @@ collect() {
     $ANDROID_HOME/platform-tools/adb $SELECT logcat -d > emulator-settings/$PORT/initial-logcat$APPEND.txt
     $ANDROID_HOME/platform-tools/adb $SELECT logcat -c
 
-    # Take a picture to get visual Feedback of the final state. The exec-out does not exist on pre android api 21.
-    # https://stackoverflow.com/questions/13578416/read-binary-stdout-data-from-adb-shell
-    # $ANDROID_HOME/platform-tools/adb $SELECT exec-out screencap -p > emulator-settings/$PORT/initial-state$APPEND.png
-    $ANDROID_HOME/platform-tools/adb $SELECT shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > emulator-settings/$PORT/initial-state$APPEND.png
-
     # Collect emulator setup details
     cp ~/.android/avd/android-ci$APPEND.ini emulator-settings/$PORT/emulator$APPEND.ini
     cp ~/.android/avd/android-ci$APPEND.avd/config.ini emulator-settings/$PORT/emulator-config$APPEND.ini

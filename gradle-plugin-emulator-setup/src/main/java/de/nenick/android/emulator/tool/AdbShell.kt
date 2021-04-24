@@ -45,7 +45,7 @@ interface AdbShell : Task {
         execAdbCommandline(device, "root", command)
     }
 
-    private object AdbCommand {
+    object AdbCommand {
         fun executable(project: Project): String {
             val androidExtension = project.extensions.findByType(BaseExtension::class.java)!!
             return androidExtension.adbExecutable.absolutePath
@@ -54,7 +54,7 @@ interface AdbShell : Task {
         fun selectDevice(device: IDevice) = arrayOf("-s", device.serialNumber)
     }
 
-    private fun execAdbCommandline(device: IDevice, vararg arguments: String) {
+    fun execAdbCommandline(device: IDevice, vararg arguments: String) {
         project.exec {
             executable = AdbCommand.executable(project)
             args = arrayOf(
