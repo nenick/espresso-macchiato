@@ -80,7 +80,7 @@ class EspViewTest : DefaultElementTest<EspView>() {
     @Test
     fun supportsCustomActionsConveniently() {
         var viewWasClicked = false
-        testView.setOnClickListener { viewWasClicked = true }
+        runOnMainSync { testView.setOnClickListener { viewWasClicked = true } }
 
         EspView(this.testViewId).perform(ViewActions.click())
         assertTrue(viewWasClicked)
