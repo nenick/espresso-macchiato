@@ -78,7 +78,11 @@ jobs:
             find */build -name screenshots.zip
             find */build -name screenshots.zip -exec unzip "{}" -d emulator-screenshots \;
             # Fail task if no screenshots exists
-            [ "$(find emulator-screenshots -name "*.png")" ] || (echo "No screenshots found" && return 1)
+            [ "$(find emulator-screenshots -name "*.png")" ] || (echo "No screenshots found" && exit 1)
+        condition: succeededOrFailed()
+
+      - script: $ANDROID_HOME/platform-tools/adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > emulator-screenshots/final-state.png
+        displayName: take screenshot
         condition: succeededOrFailed()
 
       - template: step-publish-emulator-artifacts.yml
