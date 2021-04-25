@@ -35,6 +35,14 @@ jobs:
             set -o pipefail
             ./azure/emulator-start-on-ci.sh $(ports)
             ./gradlew waitForEmulator
+
+      - task: Bash@3
+        displayName: Optimize Emulator
+        inputs:
+          targetType: inline
+          script: |
+            set -e
+            set -o pipefail
             ./gradlew takeScreenshot --directory emulator-settings --name initial-state
             ./gradlew fixPullPermissionDenied
             ./gradlew fixContentMediaAndroid
