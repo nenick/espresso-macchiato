@@ -45,7 +45,7 @@ open class FixPullPermissionDenied : DefaultTask(), AdbShell {
     }
 
     companion object {
-        private const val delayNextAttemptMilliseconds = 20L
-        private const val timeoutRepeatUserIdRequestMilliseconds = 2 * 1000L
+        private const val delayNextAttemptMilliseconds = 200L
+        private const val timeoutRepeatUserIdRequestMilliseconds = 5 * 1000L
     }
 }
