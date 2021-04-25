@@ -15,14 +15,14 @@ open class CloseSystemDialog : DefaultTask(), AdbShell {
                 val windows = collectWindowInfo(it)
                 when {
                     // You can force it by just throwing a simple exception. Not forcible since android api 28.
-                    isCrashDialogDisplayed(windows) -> dismissSystemDialog(it)
+                    contains(windows, crash) -> dismissSystemDialog(it)
                     // You can force ANR by adding following to your activity. Then start, click, press back,  wait ...
                     //     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
                     //        while (true) {
                     //        }
                     //        return super.dispatchTouchEvent(ev)
                     //    }
-                    isAnrDialogDisplayed(windows) -> dismissSystemDialog(it)
+                    contains(windows, anr) -> dismissSystemDialog(it)
                     else -> break
                 }
             }
@@ -44,6 +44,18 @@ open class CloseSystemDialog : DefaultTask(), AdbShell {
         return receiver.output
     }
 
-    private fun isAnrDialogDisplayed(output: String) = output.contains("Application Not Responding")
-    private fun isCrashDialogDisplayed(output: String) = output.contains("Application Error")
+    private fun contains(text: String, info: String): Boolean {
+        return text.contains(info).also {
+            if (it) {
+                val start = text.indexOf(info)
+                val end = text.indexOf("\n", start)
+                println(text.subSequence(start, end))
+            }
+        }
+    }
+
+    companion object {
+        private const val anr = "Application Not Responding"
+        private const val crash = "Application Error"
+    }
 }
