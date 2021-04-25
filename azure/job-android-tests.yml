@@ -42,6 +42,7 @@ jobs:
             ./azure/emulator-fix-content-media-query.sh ${{ parameters.androidVersion }} $(ports)
             ./gradlew takeScreenshot --directory emulator-settings --name optimized-before
             ./azure/emulator-optimize.sh $(ports)
+            ./gradlew closeSystemDialog
             ./azure/emulator-collect-preconditions.sh $(ports)
             ./azure/emulator-collect-logcat.sh $(ports)
             ./gradlew takeScreenshot --directory emulator-settings --name optimized-after

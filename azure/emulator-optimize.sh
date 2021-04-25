@@ -70,22 +70,8 @@ optimize() {
     # https://developer.android.com/training/testing/espresso/setup#analytics
     $ANDROID_HOME/platform-tools/adb $SELECT shell am instrument -e disableAnalytics true
 
-    ################################################################################
-    # Try to dismiss random "not responding" system dialog.
-    # focus property does not exist anymore after?
-    # - android api 29 possible alternate mAppToken=AppWindowToken
-    # - android api 30 possible alternate mActivityRecord
-    CURRENT_FOCUS=`$ANDROID_HOME/platform-tools/adb $SELECT shell dumpsys window windows | grep -E 'mCurrentFocus|mFocusedApp'`
-    echo "$CURRENT_FOCUS"
-    FOCUSED_APP_PACKAGE=`echo "$CURRENT_FOCUS" | grep "mCurrentFocus" | cut -d" " -f5 | cut -d"/" -f1`
-    echo $FOCUSED_APP_PACKAGE
-    if [[ $FOCUSED_APP_PACKAGE != *"launcher"* ]]; then
-      echo "How can we kill or dismiss it?? See initial screenshot for more details."
-      # $ANDROID_HOME/platform-tools/adb shell 'su root pm disable $FOCUSED_APP_PACKAGE
-    
-      #FOCUSED_APP_PID=`$ANDROID_HOME/platform-tools/adb $SELECT shell ps | grep -v PID | grep $FOCUSED_APP_PACKAGE | awk '{print $2}'`
-      #$ANDROID_HOME/platform-tools/adb $SELECT shell su root kill $FOCUSED_APP_PID
-    fi
+    # Disable Wifi
+    # $ANDROID_HOME/platform-tools/adb shell svc wifi disable
 }
 
 source azure/function-parallel-command.sh
