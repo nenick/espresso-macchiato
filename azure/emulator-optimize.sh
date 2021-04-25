@@ -7,18 +7,6 @@ optimize() {
     if [[ ! -z "$1" ]]; then
         SELECT="-s emulator-$1"
     fi
-  
-    ################################################################################
-    # Stops annoying messages in logcat from useless packages
-    # $ANDROID_HOME/platform-tools/adb shell "su root pm list packages"
-    $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.android.dialer"
-    $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.google.android.apps.messaging"
-    $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.android.phone"
-    # Sometimes crashing on android 18
-    $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.android.com.android.email"
-    $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.google.android.talk"
-    $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.google.android.configupdater"
-    $ANDROID_HOME/platform-tools/adb $SELECT shell "su root pm disable com.google.android.googlequicksearchbox"
 
     ################################################################################
     # Remove annoying stuff still active after disabling/killing.

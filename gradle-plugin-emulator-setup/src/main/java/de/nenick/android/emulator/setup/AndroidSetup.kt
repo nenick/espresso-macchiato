@@ -1,21 +1,26 @@
 package de.nenick.android.emulator.setup
 
 import com.android.sdklib.AndroidVersion
-import java.lang.IllegalStateException
 import kotlin.reflect.KClass
 
 sealed class AndroidSetup {
 
-    protected abstract fun androidApi(): Int
-    protected abstract fun systemImageAbi(): String
-    fun systemImage() = "system-images;android-${androidApi()};google_apis;${systemImageAbi()}"
-
+    abstract fun androidApi(): Int
+    abstract fun systemImageAbi(): String
     abstract fun createAvdAdditionalArgs(): Array<out String>
-
     abstract fun avdSetting(): Array<String>
-    open fun externalDirectory(): String { throw IllegalStateException("For android api ${androidApi()} this wasn't expected.") }
+
+    open fun externalDirectory(): String {
+        throw IllegalStateException("For android api ${androidApi()} this wasn't expected.")
+    }
+
     open fun shouldRemountAsRoot() = false
     open fun shortCutContentMediaAndroid() = false
+
+    // $ANDROID_HOME/platform-tools/adb shell "su root pm list packages"
+    open fun disablePackages() = emptyList<String>()
+
+    fun systemImage() = "system-images;android-${androidApi()};google_apis;${systemImageAbi()}"
 
     companion object {
         fun search(androidVersion: AndroidVersion): AndroidSetup {
@@ -24,12 +29,12 @@ sealed class AndroidSetup {
 
         fun search(androidVersion: Int): AndroidSetup {
             return collectAllSetups().find { it.androidApi() == androidVersion }
-                    ?: throw IllegalStateException("No setup found for android api $androidVersion")
+                ?: throw IllegalStateException("No setup found for android api $androidVersion")
         }
 
         private fun collectAllSetups() = AndroidSetup::class.sealedSubclasses
-                .flatMap { collectRecursive(it) }
-                .mapNotNull { it.objectInstance }
+            .flatMap { collectRecursive(it) }
+            .mapNotNull { it.objectInstance }
 
         private fun collectRecursive(current: KClass<out AndroidSetup>): List<KClass<out AndroidSetup>> {
             // Generates a plain list of all sub ... sub classes.
@@ -51,21 +56,21 @@ sealed class AndroidSetup {
 
 sealed class DefaultAndroidSetup : AndroidSetup() {
     override fun avdSetting() = arrayOf(
-            // First we disable all what could be disabled for more performance.
-            "s/=yes/=no/g",
+        // First we disable all what could be disabled for more performance.
+        "s/=yes/=no/g",
 
-            // GPU should still be enabled for performance.
-            "s/hw.gpu.enabled=.*/hw.gpu.enabled=yes/g",
+        // GPU should still be enabled for performance.
+        "s/hw.gpu.enabled=.*/hw.gpu.enabled=yes/g",
 
-            // Avoid showing soft keyboard for more performance and less flakiness.
-            "s/hw.keyboard=.*/hw.keyboard=yes/g",
+        // Avoid showing soft keyboard for more performance and less flakiness.
+        "s/hw.keyboard=.*/hw.keyboard=yes/g",
 
-            // Sdcard is useful for to provide additional test_data.
-            // So "content query --uri content://media/external/file" will return something useful.
-            "s/hw.sdCard=.*/hw.sdCard=yes/g"
+        // Sdcard is useful for to provide additional test_data.
+        // So "content query --uri content://media/external/file" will return something useful.
+        "s/hw.sdCard=.*/hw.sdCard=yes/g"
 
-            // For tests it should be possible to run completely offline. Otherwise enable it again.
-            // updateConfigIni(avdName, "s/hw.gsmModem=.*/hw.gsmModem=yes/g")
+        // For tests it should be possible to run completely offline. Otherwise enable it again.
+        // updateConfigIni(avdName, "s/hw.gsmModem=.*/hw.gsmModem=yes/g")
     )
 }
 
@@ -75,16 +80,17 @@ sealed class DefaultPreAndroid20Setup : DefaultAndroidSetup() {
     override fun systemImageAbi() = "x86"
 
     override fun createAvdAdditionalArgs() = arrayOf(
-            // Seems like emulator for early android versions need sdcard setting at creation time
-            // instead of reading it from config.ini file. Starting with android api 30 this
-            // argument would block downloading test_data because it start searching on a path
-            // where test_data content never appears.
-            "--sdcard", "512M"
+        // Seems like emulator for early android versions need sdcard setting at creation time
+        // instead of reading it from config.ini file. Starting with android api 30 this
+        // argument would block downloading test_data because it start searching on a path
+        // where test_data content never appears.
+        "--sdcard", "512M"
     )
 }
 
 object Android16 : DefaultPreAndroid20Setup() {
     override fun androidApi() = 16
+
     @Suppress("SdCardPath")
     // Never appears until any app creates some content.
     override fun shortCutContentMediaAndroid() = true
@@ -93,71 +99,15 @@ object Android16 : DefaultPreAndroid20Setup() {
 
 object Android18 : DefaultPreAndroid20Setup() {
     override fun androidApi() = 18
+
     // Never appears until any app creates some content.
     // But we can't immediately create it, or gradle get issues to find it.
     override fun shortCutContentMediaAndroid() = false
     override fun externalDirectory() = "/storage/sdcard"
-
-// SecurityException: Calling from not trusted UID!
-
-    // TODO try take screenshot with adb after crash
-    // adb shell screencap -p /sdcard/screencap.png
-    // adb pull /sdcard/screencap.png
-    // exec-out does not exist on pre android api 20, nothing new ..
-
-    // https://stackoverflow.com/questions/13578416/read-binary-stdout-data-from-adb-shell
-    // adb shell screencap -p | sed 's|\r$||' > screenshot.png
-
-    // screencap, there is another command screenshot, I don't know why screenshot was removed from Android 5.0, but it's avaiable below Android 4.4
-
-//
-// https://www.google.com/search?q=IllegalStateException%3A+UiAutomation+not+connected!&oq=IllegalStateException%3A+UiAutomation+not+connected!&aqs=chrome..69i57j69i58.763j0j4&sourceid=chrome&ie=UTF-8
-// https://stackoverflow.com/questions/47854705/google-fabric-uiautomation-not-connected
-//
-// https://stackoverflow.com/questions/47498262/securityexception-calling-from-not-trusted-uid
-//
-//    I/TestRunner( 2824): run finished: 1 tests, 0 failed, 0 ignored
-//    I/MonitoringInstr( 2824): waitForActivitiesToComplete() took: 0ms
-//    W/dalvikvm( 2824): threadid=12: thread exiting with uncaught exception (group=0xacf84678)
-//    D/dalvikvm( 2824): GC_CONCURRENT freed 352K, 16% free 4310K/5112K, paused 0ms+0ms, total 3ms
-//    E/AndroidRuntime( 2824): FATAL EXCEPTION: Instr: androidx.test.runner.AndroidJUnitRunner
-//    E/AndroidRuntime( 2824): java.lang.SecurityException: Calling from not trusted UID!
-//    E/AndroidRuntime( 2824): 	at android.os.Parcel.readException(Parcel.java:1431)
-//    E/AndroidRuntime( 2824): 	at android.os.Parcel.readException(Parcel.java:1385)
-//    E/AndroidRuntime( 2824): 	at android.app.ActivityManagerProxy.finishInstrumentation(ActivityManagerNative.java:2954)
-//    E/AndroidRuntime( 2824): 	at android.app.ActivityThread.finishInstrumentation(ActivityThread.java:4466)
-//    E/AndroidRuntime( 2824): 	at android.app.Instrumentation.finish(Instrumentation.java:196)
-//    E/AndroidRuntime( 2824): 	at androidx.test.runner.MonitoringInstrumentation.finish(MonitoringInstrumentation.java:367)
-//    E/AndroidRuntime( 2824): 	at androidx.test.runner.AndroidJUnitRunner.finish(AndroidJUnitRunner.java:415)
-//    E/AndroidRuntime( 2824): 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:404)
-//    E/AndroidRuntime( 2824): 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:1701)
-//    W/ActivityManager( 1445): Error in app de.nenick.espressomacchiato.android.material.test running instrumentation ComponentInfo{de.nenick.espressomacchiato.android.material.test/androidx.test.runner.AndroidJUnitRunner}:
-//    W/ActivityManager( 1445):   java.lang.SecurityException
-//    W/ActivityManager( 1445):   java.lang.SecurityException: Calling from not trusted UID!
-//    I/Process ( 2824): Sending signal. PID: 2824 SIG: 9
-//    E/AndroidRuntime( 2824): Error reporting crash
-//    E/AndroidRuntime( 2824): java.lang.SecurityException: Calling from not trusted UID!
-//    E/AndroidRuntime( 2824): 	at android.os.Parcel.readException(Parcel.java:1431)
-//    E/AndroidRuntime( 2824): 	at android.os.Parcel.readException(Parcel.java:1385)
-//    E/AndroidRuntime( 2824): 	at android.app.ActivityManagerProxy.handleApplicationCrash(ActivityManagerNative.java:3410)
-//    E/AndroidRuntime( 2824): 	at com.android.internal.os.RuntimeInit$UncaughtHandler.uncaughtException(RuntimeInit.java:76)
-//    E/AndroidRuntime( 2824): 	at androidx.appcompat.app.AppCompatDelegateImpl$1.uncaughtException(AppCompatDelegateImpl.java:177)
-//    E/AndroidRuntime( 2824): 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:693)
-//    E/AndroidRuntime( 2824): 	at java.lang.ThreadGroup.uncaughtException(ThreadGroup.java:690)
-//    W/BinderNative( 1445): Uncaught exception from death notification
-//    W/BinderNative( 1445): java.lang.SecurityException: Calling from not trusted UID!
-//    W/BinderNative( 1445): 	at android.os.Parcel.readException(Parcel.java:1431)
-//    W/BinderNative( 1445): 	at android.os.Parcel.readException(Parcel.java:1385)
-//    W/BinderNative( 1445): 	at android.app.IUiAutomationConnection$Stub$Proxy.shutdown(IUiAutomationConnection.java:243)
-//    W/BinderNative( 1445): 	at com.android.server.am.ActivityManagerService.finishInstrumentationLocked(ActivityManagerService.java:12504)
-//    W/BinderNative( 1445): 	at com.android.server.am.ActivityManagerService.handleAppDiedLocked(ActivityManagerService.java:3024)
-//    W/BinderNative( 1445): 	at com.android.server.am.ActivityManagerService.appDiedLocked(ActivityManagerService.java:3085)
-//    W/BinderNative( 1445): 	at com.android.server.am.ActivityManagerService$AppDeathRecipient.binderDied(ActivityManagerService.java:897)
-//    W/BinderNative( 1445): 	at android.os.BinderProxy.sendDeathNotice(Binder.java:470)
-//    W/BinderNative( 1445): 	at dalvik.system.NativeStart.run(Native Method)
-//    I/ActivityManager( 1445): Process de.nenick.espressomacchiato.android.material.test (pid 2824) has died.
-//    W/ActivityManager( 1445): Crash of app de.nenick.espressomacchiato.android.material.test running instrumentation ComponentInfo{de.nenick.espressomacchiato.android.material.test/androidx.test.runner.AndroidJUnitRunner}
-//    D/AndroidRuntime( 2813): Shutting down VM
+    override fun disablePackages() = listOf(
+        // Has crashed sometimes.
+        "com.android.com.android.email"
+    )
 }
 
 object Android19 : DefaultPreAndroid20Setup() {
@@ -179,10 +129,25 @@ sealed class DefaultPostAndroid20Setup : DefaultAndroidSetup() {
 
 object Android24 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 24
+    override fun disablePackages() = listOf(
+        // Spams the log.
+        //"com.android.dialer",
+        // Spams the log.
+        //"com.google.android.apps.messaging",
+        // Spams the log.
+        //"com.android.phone",
+        // Spams the log with exceptions.
+        "com.google.android.talk",
+        // Spams the log.
+        //"com.google.android.googlequicksearchbox",
+        // Spams the log.
+        //"com.google.android.configupdater"
+    )
 }
 
 object Android29 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 29
+
     // Would appear but takes too much time, so we shorten it a bit.
     override fun shortCutContentMediaAndroid() = true
     override fun externalDirectory() = "/storage/emulated/0"
@@ -190,9 +155,16 @@ object Android29 : DefaultPostAndroid20Setup() {
 
 object Android30 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 30
+
     // Would appear but takes too much time, so we shorten it a bit.
     override fun shortCutContentMediaAndroid() = true
     override fun externalDirectory() = "/storage/emulated/0"
+
     // Otherwise gradle fails to pull test_data directory.
     override fun shouldRemountAsRoot() = true
+
+    override fun disablePackages() = listOf(
+        // Has crashed in the middle of the test run sometimes.
+        "com.google.android.apps.maps"
+    )
 }
