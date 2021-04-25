@@ -11,21 +11,20 @@ open class CloseSystemDialog : DefaultTask(), AdbShell {
     @TaskAction
     fun close() {
         forEachConnectedDeviceParallel {
-            val windows = collectWindowInfo(it)
-
-            if (isCrashDialogDisplayed(windows)) {
-                // You can force it by just throwing a simple exception. Not forcible since android api 28.
-                dismissSystemDialog(it)
-            }
-
-            if (isAnrDialogDisplayed(windows)) {
-                // You can force ANR by adding following to your activity. Then start, click, press back,  wait ...
-                //     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-                //        while (true) {
-                //        }
-                //        return super.dispatchTouchEvent(ev)
-                //    }
-                dismissSystemDialog(it)
+            while (true) {
+                val windows = collectWindowInfo(it)
+                when {
+                    // You can force it by just throwing a simple exception. Not forcible since android api 28.
+                    isCrashDialogDisplayed(windows) -> dismissSystemDialog(it)
+                    // You can force ANR by adding following to your activity. Then start, click, press back,  wait ...
+                    //     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+                    //        while (true) {
+                    //        }
+                    //        return super.dispatchTouchEvent(ev)
+                    //    }
+                    isAnrDialogDisplayed(windows) -> dismissSystemDialog(it)
+                    else -> break
+                }
             }
         }
     }
