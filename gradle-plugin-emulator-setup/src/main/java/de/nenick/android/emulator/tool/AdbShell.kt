@@ -6,6 +6,7 @@ import com.android.ddmlib.IDevice
 import com.android.ddmlib.IShellOutputReceiver
 import com.android.ddmlib.MultiLineReceiver
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -26,6 +27,23 @@ interface AdbShell : Task {
             withContext(Dispatchers.Default) {
                 devices.forEach {
                     launch { block(it) }
+                }
+            }
+        }
+    }
+
+    // Makes the loop cancelable e.g. CTRL-C
+    fun forEachConnectedDeviceParallelRepeated(block: (IDevice) -> Boolean) {
+        val devices = findConnectedDevices()
+        runBlocking {
+            withContext(Dispatchers.Default) {
+                devices.forEach {
+                    launch {
+                        var repeat = true
+                        while (isActive && repeat) {
+                            repeat = block(it)
+                        }
+                    }
                 }
             }
         }

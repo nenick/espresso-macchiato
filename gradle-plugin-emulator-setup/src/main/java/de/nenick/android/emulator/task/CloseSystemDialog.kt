@@ -2,6 +2,7 @@ package de.nenick.android.emulator.task
 
 import com.android.ddmlib.CollectingOutputReceiver
 import com.android.ddmlib.IDevice
+import com.android.sdklib.AndroidVersion
 import de.nenick.android.emulator.tool.AdbShell
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
@@ -10,22 +11,25 @@ open class CloseSystemDialog : DefaultTask(), AdbShell {
 
     @TaskAction
     fun close() {
-        forEachConnectedDeviceParallel {
-            while (true) {
-                val windows = collectWindowInfo(it)
-                when {
-                    // You can force it by just throwing a simple exception. Not forcible since android api 28.
-                    contains(windows, crash) -> dismissSystemDialog(it)
-                    // You can force ANR by adding following to your activity. Then start, click, press back,  wait ...
-                    //     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-                    //        while (true) {
-                    //        }
-                    //        return super.dispatchTouchEvent(ev)
-                    //    }
-                    contains(windows, anr) -> dismissSystemDialog(it)
-                    else -> break
+        forEachConnectedDeviceParallelRepeated {
+            val windows = collectWindowInfo(it)
+            var repeatAfterFoundSystemDialog = false
+
+            if (it.version.apiLevel == AndroidVersion.VersionCodes.JELLY_BEAN) {
+                // Window dump on this android version does not contain the reason message.
+                // But we can check that the launcher is focused.
+                if (!windows.contains(Regex(".*mCurrentFocus=Window.* com.android.launcher.*"))) {
+                    dismissSystemDialog(it)
+                    repeatAfterFoundSystemDialog = true
+                }
+            } else {
+                if(contains(windows, crash) || contains(windows, anr)) {
+                    dismissSystemDialog(it)
+                    repeatAfterFoundSystemDialog = true
                 }
             }
+
+            repeatAfterFoundSystemDialog
         }
     }
 
