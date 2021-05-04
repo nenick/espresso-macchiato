@@ -179,6 +179,8 @@ object Android30 : DefaultPostAndroid20Setup() {
 
     override fun disablePackages() = listOf(
         // Has crashed in the middle of the test run sometimes.
-        "com.google.android.apps.maps"
+        "com.google.android.apps.maps",
+        // Has crashed in the middle of the test run sometimes. Perhaps pre installed since android api 28.
+        "com.google.android.apps.wellbeing"
     )
 }
