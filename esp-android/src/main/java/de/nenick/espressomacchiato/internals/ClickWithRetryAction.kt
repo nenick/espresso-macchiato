@@ -50,7 +50,7 @@ class ClickWithRetryAction : ViewAction {
             // Sometimes a click is failing because of ...
             // androidx.test.espresso.PerformException:
             //     Error performing 'single click - At Coordinates: .. and precision: ..' on view '..'
-            // Ignore yet and let us retry.
+            // Ignore yet and let us retry. Usually after a short delay it starts working.
         }
 
         while (!clickPerformed) {
@@ -83,7 +83,7 @@ class ClickWithRetryAction : ViewAction {
     private fun isTimeout() = System.currentTimeMillis() - startTime > timeoutMilliseconds
 
     companion object {
-        private const val delayNextAttemptMilliseconds = 20L
+        private const val delayNextAttemptMilliseconds = 50L
         private const val timeoutMilliseconds = 2 * 1000L
     }
 }
