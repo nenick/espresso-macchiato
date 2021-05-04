@@ -94,6 +94,10 @@ jobs:
             [ "$(find emulator-screenshots -name "*.png")" ] || (echo "No screenshots found" && exit 1)
         condition: succeededOrFailed()
 
+      - script: $ANDROID_HOME/platform-tools/adb logcat --statistics > emulator-logs/logcat-statistics.log
+        displayName: Collect Logcat Statistics
+        condition: succeededOrFailed()
+
       - script: ./gradlew takeScreenshot --directory emulator-logs --name final-state
         displayName: Screenshot Final State
         condition: succeededOrFailed()
