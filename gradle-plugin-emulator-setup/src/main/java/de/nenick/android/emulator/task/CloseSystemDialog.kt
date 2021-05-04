@@ -18,7 +18,7 @@ open class CloseSystemDialog : DefaultTask(), AdbShell {
             if (it.version.apiLevel == AndroidVersion.VersionCodes.JELLY_BEAN) {
                 // Window dump on this android version does not contain the reason message.
                 // But we can check that the launcher is focused.
-                if (!windows.contains(Regex(".*mCurrentFocus=Window.* com.android.launcher.*"))) {
+                if (!isLauncherFocused(windows)) {
                     dismissSystemDialog(it)
                     repeatAfterFoundSystemDialog = true
                 }
@@ -32,6 +32,13 @@ open class CloseSystemDialog : DefaultTask(), AdbShell {
             repeatAfterFoundSystemDialog
         }
     }
+
+    private fun isLauncherFocused(windows: String) =
+        windows.contains(Regex(".*mCurrentFocus=Window.* com.android.launcher.*")).also {
+            if(!it) {
+                println(windows)
+            }
+        }
 
     private fun dismissSystemDialog(device: IDevice) {
         // Sometimes dialog has one and sometimes has two buttons. But in every case we want to click the "last"
