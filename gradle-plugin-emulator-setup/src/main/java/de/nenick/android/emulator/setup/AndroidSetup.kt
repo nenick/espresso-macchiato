@@ -21,6 +21,9 @@ sealed class AndroidSetup {
     // $ANDROID_HOME/platform-tools/adb shell "su root pm list packages"
     open fun disablePackages() = emptyList<String>()
 
+    // $ANDROID_HOME/platform-tools/adb shell dumpsys activity services
+    open fun disableServices() = emptyList<String>()
+
     fun adjustSettings() = listOf(
         // Disable animations for more speed and less flakiness on emulators.
         "global window_animation_scale 0",
@@ -165,6 +168,20 @@ object Android29 : DefaultPostAndroid20Setup() {
     // Would appear but takes too much time, so we shorten it a bit.
     override fun shortCutContentMediaAndroid() = true
     override fun externalDirectory() = "/storage/emulated/0"
+
+    override fun disablePackages() = listOf(
+        // Spams the log.
+        "com.google.android.googlequicksearchbox",
+        // Spams the log.
+        "com.android.phone", // has an effect??
+        // Spams the log.
+        "com.google.android.apps.messaging"
+    )
+
+    override fun disableServices() = listOf(
+        // Spams the log.
+        "com.google.android.gms/.chimera.PersistentApiService" // has an effect??
+    )
 }
 
 object Android30 : DefaultPostAndroid20Setup() {
@@ -178,9 +195,28 @@ object Android30 : DefaultPostAndroid20Setup() {
     override fun shouldRemountAsRoot() = true
 
     override fun disablePackages() = listOf(
-        // Has crashed in the middle of the test run sometimes.
+        // Crashed in the middle of the test run.
         "com.google.android.apps.maps",
-        // Has crashed in the middle of the test run sometimes. Perhaps pre installed since android api 28.
-        "com.google.android.apps.wellbeing"
+        // Crashed in the middle of the test run. Perhaps pre installed since android api 28.
+        "com.google.android.apps.wellbeing",
+        // Spams the log.
+        "com.google.android.googlequicksearchbox",
+        // Spams the log.
+        "com.android.phone", // has an effect??
+        // Spams the log.
+        "com.google.android.apps.messaging",
+        // Spams the log.
+        "com.android.bluetooth"
+    )
+
+    override fun disableServices() = listOf(
+        // Spams the log.
+        "com.google.android.gms/.chimera.PersistentApiService", // has an effect??
+        // ANR in the middle of the test run.
+        "com.google.android.gms/com.google.android.location.internal.server.HardwareArProviderService",
+        // Spams the Log. Usually we don't need to connect nearby devices.
+        "com.google.android.gms/com.google.location.nearby.direct.service.NearbyDirectService", // has an effect??
+        "com.google.android.gms/.nearby.discovery.service.DiscoveryService", // has an effect??
+        "com.google.android.gms/.nearby.messages.service.NearbyMessagesService"
     )
 }
