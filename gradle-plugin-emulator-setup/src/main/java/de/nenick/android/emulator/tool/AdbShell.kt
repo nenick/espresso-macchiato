@@ -6,6 +6,7 @@ import com.android.ddmlib.IDevice
 import com.android.ddmlib.IShellOutputReceiver
 import com.android.ddmlib.MultiLineReceiver
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -42,6 +43,7 @@ interface AdbShell : Task {
                         var repeat = true
                         while (isActive && repeat) {
                             repeat = block(it)
+                            delay(delayNextAttemptMilliseconds)
                         }
                     }
                 }
