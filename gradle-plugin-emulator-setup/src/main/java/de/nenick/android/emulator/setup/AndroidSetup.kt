@@ -5,13 +5,14 @@ import kotlin.reflect.KClass
 
 sealed class AndroidSetup {
 
-    abstract fun androidApi(): Int
-    abstract fun systemImageAbi(): String
+    protected abstract fun androidApi(): Int
+    protected abstract fun systemImageAbi(): String
+
     abstract fun createAvdAdditionalArgs(): Array<out String>
     abstract fun avdSetting(): Array<String>
 
     open fun externalDirectory(): String {
-        throw IllegalStateException("For android api ${androidApi()} this wasn't expected.")
+        error("For android api ${androidApi()} this wasn't expected.")
     }
 
     open fun shouldRemountAsRoot() = false
@@ -19,6 +20,19 @@ sealed class AndroidSetup {
 
     // $ANDROID_HOME/platform-tools/adb shell "su root pm list packages"
     open fun disablePackages() = emptyList<String>()
+
+    fun adjustSettings() = listOf(
+        // Disable animations for more speed and less flakiness on emulators.
+        "global window_animation_scale 0",
+        "global transition_animation_scale 0",
+        "global animator_duration_scale 0",
+        // Disable keyguard completely to avoid issue logs.
+        "secure lockscreen.disabled 1",
+        // Disable soft keyboard to avoid overhead of hiding it after text input.
+        "secure show_ime_with_hard_keyboard 0",
+        // Disable all sound. Otherwise logcat get polluted by audio_hw_generic: Hardware backing HAL too slow
+        "system sound_effects_enabled 0"
+    )
 
     fun systemImage() = "system-images;android-${androidApi()};google_apis;${systemImageAbi()}"
 
@@ -131,17 +145,17 @@ object Android24 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 24
     override fun disablePackages() = listOf(
         // Spams the log.
-        //"com.android.dialer",
+        // "com.android.dialer",
         // Spams the log.
-        //"com.google.android.apps.messaging",
+        // "com.google.android.apps.messaging",
         // Spams the log.
-        //"com.android.phone",
+        // "com.android.phone",
         // Spams the log with exceptions.
         "com.google.android.talk",
         // Spams the log.
-        //"com.google.android.googlequicksearchbox",
+        // "com.google.android.googlequicksearchbox",
         // Spams the log.
-        //"com.google.android.configupdater"
+        // "com.google.android.configupdater"
     )
 }
 

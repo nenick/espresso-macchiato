@@ -19,6 +19,10 @@ open class DisableStuff : DefaultTask(), AdbShell {
             setup.disablePackages().forEach {
                 execAdbShell(device, AdbShell.StdOutLogger, "su root pm disable $it")
             }
+
+            setup.adjustSettings().forEach {
+                execAdbShell(device, AdbShell.StdOutLogger, "settings put $it")
+            }
         }
     }
 }

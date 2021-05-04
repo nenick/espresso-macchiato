@@ -15,24 +15,6 @@ optimize() {
     # For tests it should be possible to run completely offline but there is something hanging up ...
     #$ANDROID_HOME/platform-tools/adb shell 'svc wifi disable'
     
-    # Disable keyguard completely to avoid issue logs.
-    $ANDROID_HOME/platform-tools/adb $SELECT shell settings put secure lockscreen.disabled 1
-    
-    ################################################################################
-    # Disable soft keyboard to avoid overhead of hiding it after text input.
-    # https://testyour.app/blog/emulator
-    $ANDROID_HOME/platform-tools/adb $SELECT shell settings put secure show_ime_with_hard_keyboard 0
-
-    ################################################################################
-    # Disable all sound. Otherwise logcat get polluted by audio_hw_generic: Hardware backing HAL too slow
-    $ANDROID_HOME/platform-tools/adb $SELECT shell settings put system sound_effects_enabled 0
-
-    ################################################################################
-    # Disable animations for more speed and less flakiness on emulators.
-    $ANDROID_HOME/platform-tools/adb $SELECT shell settings put global window_animation_scale 0
-    $ANDROID_HOME/platform-tools/adb $SELECT shell settings put global transition_animation_scale 0
-    $ANDROID_HOME/platform-tools/adb $SELECT shell settings put global animator_duration_scale 0
-    
     ################################################################################
     # Removed what could be removed, everything less gives more performance for us.
     # Too slow for the gain at the end.
