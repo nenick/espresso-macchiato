@@ -24,6 +24,7 @@ sealed class AndroidSetup {
     // $ANDROID_HOME/platform-tools/adb shell dumpsys activity services
     open fun disableServices() = emptyList<String>()
 
+    // https://developer.android.com/reference/android/provider/Settings
     fun adjustSettings() = listOf(
         // Disable animations for more speed and less flakiness on emulators.
         "global window_animation_scale 0",
@@ -206,7 +207,19 @@ object Android30 : DefaultPostAndroid20Setup() {
         // Spams the log.
         "com.google.android.apps.messaging",
         // Spams the log.
-        "com.android.bluetooth"
+        "com.android.bluetooth",
+        // Spams the log.
+        "com.android.carrierconfig",
+        "com.android.carrierdefaultapp",
+
+        // Spam
+        "com.android.providers.telephony",
+
+        "com.android.providers.calendar",
+        "com.google.android.calendar",
+
+        "com.google.android.youtube",
+        "com.google.android.apps.youtube.music"
     )
 
     override fun disableServices() = listOf(
@@ -217,6 +230,11 @@ object Android30 : DefaultPostAndroid20Setup() {
         // Spams the Log. Usually we don't need to connect nearby devices.
         "com.google.android.gms/com.google.location.nearby.direct.service.NearbyDirectService", // has an effect??
         "com.google.android.gms/.nearby.discovery.service.DiscoveryService", // has an effect??
-        "com.google.android.gms/.nearby.messages.service.NearbyMessagesService"
+        "com.google.android.gms/.nearby.messages.service.NearbyMessagesService",
+
+        // ANR
+        "com.google.android.gms/.chimera.GmsApiService", // has an effect??
+        // Spam
+        "com.google.android.gms/com.google.android.location.geofencer.service.GeofenceProviderService" // has an effect??
     )
 }
