@@ -34,7 +34,7 @@ open class CloseSystemDialog : DefaultTask(), AdbShell {
     }
 
     private fun isLauncherFocused(windows: String) =
-        windows.contains(Regex(".*mCurrentFocus=Window.* com.android.launcher.*")).also {
+        windows.contains(Regex(".*mCurrentFocus=Window.*com.android.launcher.*")).also {
             if(!it) {
                 println(windows)
             }
