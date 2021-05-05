@@ -85,10 +85,10 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
 
         // Sdcard is useful for to provide additional test_data.
         // So "content query --uri content://media/external/file" will return something useful.
-        "s/hw.sdCard=.*/hw.sdCard=yes/g"
+        "s/hw.sdCard=.*/hw.sdCard=yes/g",
 
-        // For tests it should be possible to run completely offline. Otherwise enable it again.
-        // updateConfigIni(avdName, "s/hw.gsmModem=.*/hw.gsmModem=yes/g")
+        // Don't be stingy.
+        "s/hw.ramSize=.*/hw.ramSize=2048/g"
     )
 }
 
