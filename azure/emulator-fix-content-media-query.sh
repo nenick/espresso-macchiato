@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Sometimes it doesn't find anything, but it there and next calls will return it ...
+# Sometimes it doesn't find anything, but it is there and next calls will return it ...
 
 fixContentMediaAndroid() {
     if [[ ! -z "$1" ]]; then
@@ -34,6 +34,7 @@ ANDROID_VERSION=$1
 shift
 
 echo "Check if fixes for content are necessary ..."
+# Android 16 don't has grep command
 if [[ "19" == *"$ANDROID_VERSION"* ]]; then
     echo "Apply fix for content media no Android found"
 else
