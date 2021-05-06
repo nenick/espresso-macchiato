@@ -8,6 +8,7 @@ import androidx.annotation.IdRes
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import de.nenick.espressomacchiato.screenshot.EspScreenshotRule
+import de.nenick.espressomacchiato.tools.EspSecurityExceptionFix
 import org.junit.After
 import org.junit.Rule
 import org.junit.rules.RuleChain
@@ -27,10 +28,10 @@ abstract class BaseActivityTest<TEST_ACTIVITY : Activity> {
     val context = InstrumentationRegistry.getInstrumentation().targetContext!!
 
     @After
-    fun baseTearDown() {
+    fun fixRandomSecurityException() {
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2) {
             // Would otherwise randomly crash the instrumentation test run.
-            SecurityExceptionFix.apply()
+            EspSecurityExceptionFix.apply()
         }
     }
 

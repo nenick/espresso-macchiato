@@ -1,8 +1,8 @@
-package de.nenick.espressomacchiato.test.core
+package de.nenick.espressomacchiato.tools
 
 import android.util.Log
 
-object SecurityExceptionFix {
+object EspSecurityExceptionFix {
 
     private lateinit var originExceptionHandler: Thread.UncaughtExceptionHandler
     private val ignoringSecurityExceptionHandler = Thread.UncaughtExceptionHandler { t, e ->

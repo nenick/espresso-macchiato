@@ -1,5 +1,6 @@
 package de.nenick.espressomacchiato.sampleapp.test
 
+import android.os.Build
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -8,18 +9,18 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.activityScenarioRule
-import androidx.test.runner.AndroidJUnitRunner
 import de.nenick.espressomacchiato.dialog.EspAlertDialog
 import de.nenick.espressomacchiato.sampleapp.LoginActivity
 import de.nenick.espressomacchiato.sampleapp.R
 import de.nenick.espressomacchiato.screenshot.EspScreenshotRule
+import de.nenick.espressomacchiato.tools.EspSecurityExceptionFix
 import de.nenick.espressomacchiato.viewinteraction.EnabledAssertions
 import de.nenick.espressomacchiato.widget.EspButton
 import de.nenick.espressomacchiato.widget.EspEditText
 import org.hamcrest.Matchers.not
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
 class LoginTest {
 
@@ -28,6 +29,14 @@ class LoginTest {
 
     @get:Rule
     val screenshotRule = EspScreenshotRule()
+
+    @After
+    fun fixRandomSecurityException() {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            // Would otherwise randomly crash the instrumentation test run.
+            EspSecurityExceptionFix.apply()
+        }
+    }
 
     @Test
     fun espressoPure() {
