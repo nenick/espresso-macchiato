@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="de.nenick.espressomacchiato.androidx.appcompat.test">
+    package="de.nenick.espressomacchiato.androidx.appcompat">
 
     <application>
         <activity
