@@ -162,6 +162,8 @@ object Android24 : DefaultPostAndroid20Setup() {
         // "com.google.android.googlequicksearchbox",
         // Spams the log.
         // "com.google.android.configupdater"
+        // Crash in the middle of test run. (android 24)
+        "com.android.providers.media"
     )
 }
 
@@ -198,9 +200,9 @@ object Android30 : DefaultPostAndroid20Setup() {
     override fun shouldRemountAsRoot() = true
 
     override fun disablePackages() = listOf(
-        // Crashed in the middle of the test run.
+        // Crashed in the middle of the test run. (android 30)
         "com.google.android.apps.maps",
-        // Crashed in the middle of the test run. Perhaps pre installed since android api 28.
+        // Crashed in the middle of the test run. (android 30) (Perhaps pre installed since android api 28.)
         "com.google.android.apps.wellbeing",
         // Spams the log.
         "com.google.android.googlequicksearchbox",
