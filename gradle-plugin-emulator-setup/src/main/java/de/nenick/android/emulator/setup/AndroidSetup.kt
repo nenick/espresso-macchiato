@@ -89,7 +89,8 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
         "s/hw.sdCard=.*/hw.sdCard=yes/g",
 
         // Don't be stingy.
-        "s/hw.ramSize=.*/hw.ramSize=2048/g"
+        "s/hw.ramSize=.*/hw.ramSize=2048/g",
+        "s/vm.heapSize=.*/vm.heapSize=256/g"
     )
 }
 
