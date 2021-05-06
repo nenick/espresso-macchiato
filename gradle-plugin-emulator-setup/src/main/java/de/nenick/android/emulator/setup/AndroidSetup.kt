@@ -92,6 +92,31 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
         "s/hw.ramSize=.*/hw.ramSize=2048/g",
         "s/vm.heapSize=.*/vm.heapSize=256/g"
     )
+
+    override fun disablePackages() = listOf(
+        // Crashed sometimes in the middle of the test run.
+        // android 18
+        "com.android.com.android.email",
+        // android 30
+        "com.google.android.apps.maps",
+        "com.google.android.apps.wellbeing",
+
+        // Reduce log spam.
+        "com.android.dialer",
+        "com.google.android.apps.messaging",
+        "com.android.phone", // Has no reducing effect ??
+        "com.google.android.talk",
+        "com.google.android.googlequicksearchbox",
+        "com.google.android.configupdater",
+        "com.android.bluetooth",
+        "com.android.carrierconfig",
+        "com.android.carrierdefaultapp",
+        "com.android.providers.telephony",
+        "com.android.providers.calendar",
+        "com.google.android.calendar",
+        "com.google.android.youtube",
+        "com.google.android.apps.youtube.music"
+    )
 }
 
 sealed class DefaultPreAndroid20Setup : DefaultAndroidSetup() {
@@ -124,10 +149,6 @@ object Android18 : DefaultPreAndroid20Setup() {
     // But we can't immediately create it, or gradle get issues to find it.
     override fun shortCutContentMediaAndroid() = false
     override fun externalDirectory() = "/storage/sdcard"
-    override fun disablePackages() = listOf(
-        // Has crashed sometimes.
-        "com.android.com.android.email"
-    )
 }
 
 object Android19 : DefaultPreAndroid20Setup() {
@@ -149,22 +170,6 @@ sealed class DefaultPostAndroid20Setup : DefaultAndroidSetup() {
 
 object Android24 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 24
-    override fun disablePackages() = listOf(
-        // Spams the log.
-        // "com.android.dialer",
-        // Spams the log.
-        // "com.google.android.apps.messaging",
-        // Spams the log.
-        // "com.android.phone",
-        // Spams the log with exceptions.
-        "com.google.android.talk",
-        // Spams the log.
-        // "com.google.android.googlequicksearchbox",
-        // Spams the log.
-        // "com.google.android.configupdater"
-        // Crash in the middle of test run. (android 24)
-        "com.android.providers.media"
-    )
 }
 
 object Android29 : DefaultPostAndroid20Setup() {
@@ -173,15 +178,6 @@ object Android29 : DefaultPostAndroid20Setup() {
     // Would appear but takes too much time, so we shorten it a bit.
     override fun shortCutContentMediaAndroid() = true
     override fun externalDirectory() = "/storage/emulated/0"
-
-    override fun disablePackages() = listOf(
-        // Spams the log.
-        "com.google.android.googlequicksearchbox",
-        // Spams the log.
-        "com.android.phone", // has an effect??
-        // Spams the log.
-        "com.google.android.apps.messaging"
-    )
 
     override fun disableServices() = listOf(
         // Spams the log.
@@ -198,33 +194,6 @@ object Android30 : DefaultPostAndroid20Setup() {
 
     // Otherwise gradle fails to pull test_data directory.
     override fun shouldRemountAsRoot() = true
-
-    override fun disablePackages() = listOf(
-        // Crashed in the middle of the test run. (android 30)
-        "com.google.android.apps.maps",
-        // Crashed in the middle of the test run. (android 30) (Perhaps pre installed since android api 28.)
-        "com.google.android.apps.wellbeing",
-        // Spams the log.
-        "com.google.android.googlequicksearchbox",
-        // Spams the log.
-        "com.android.phone", // has an effect??
-        // Spams the log.
-        "com.google.android.apps.messaging",
-        // Spams the log.
-        "com.android.bluetooth",
-        // Spams the log.
-        "com.android.carrierconfig",
-        "com.android.carrierdefaultapp",
-
-        // Spam
-        "com.android.providers.telephony",
-
-        "com.android.providers.calendar",
-        "com.google.android.calendar",
-
-        "com.google.android.youtube",
-        "com.google.android.apps.youtube.music"
-    )
 
     override fun disableServices() = listOf(
         // Spams the log.
