@@ -22,6 +22,7 @@ sealed class AndroidSetup {
     open fun disablePackages() = emptyList<String>()
 
     // $ANDROID_HOME/platform-tools/adb shell dumpsys activity services
+    //https://forum.xda-developers.com/t/script-guide-reduce-google-play-services-battery-drain-8-3-0-0.3139032/page-13#post-66741288
     open fun disableServices() = emptyList<String>()
 
     // https://developer.android.com/reference/android/provider/Settings
@@ -235,6 +236,36 @@ object Android30 : DefaultPostAndroid20Setup() {
         // ANR
         "com.google.android.gms/.chimera.GmsApiService", // has an effect??
         // Spam
-        "com.google.android.gms/com.google.android.location.geofencer.service.GeofenceProviderService" // has an effect??
+        "com.google.android.gms/com.google.android.location.geofencer.service.GeofenceProviderService", // has an effect??
+        "android/.hardware.location.GeofenceHardwareService",
+
+        // telephony services couldn't be disabled
+        // "com.android.phone/com.android.internal.telephony.CellularNetworkService",
+        // "com.android.server.telecom/.components.BluetoothPhoneService",
+        // "com.android.phone/com.android.internal.telephony.dataconnection.CellularDataService",
+        // "com.android.phone/com.android.services.telephony.sip.components.TelephonySipService",
+        // "com.android.server.telecom/.components.TelecomService",
+
+        // Try disable all gms services
+        "com.google.android.gms/.deviceconnection.service.DeviceConnectionWatcherService",
+        "com.google.android.gms/com.google.android.location.internal.GoogleLocationManagerService",
+        "com.google.android.gms/com.google.android.location.network.NetworkLocationService",
+        "com.google.android.gms/.common.stats.GmsCoreStatsService",
+        "com.google.android.gms/com.google.android.contextmanager.service.ContextManagerService",
+        "com.google.android.gms/.chimera.PersistentDirectBootAwareApiService",
+        "com.google.android.gms/.thunderbird.EmergencyPersistentService",
+        "com.google.android.gms/.gcm.nts.SchedulerService",
+        "com.google.android.gms/com.google.android.location.fused.FusedLocationService",
+        "com.google.android.gms/.fido.fido2.pollux.CableAuthenticatorService",
+        "com.google.android.gms/.chimera.PersistentBoundBrokerService",
+        "com.google.android.gms/.clearcut.debug.ClearcutDebugDumpService",
+        "com.google.android.gms/.gcm.GcmService",
+        "com.google.android.gms/com.google.android.location.geocode.GeocodeService",
+        "com.google.android.gms/.location.persistent.LocationPersistentService",
+        "com.google.android.gms/com.google.android.location.internal.server.GoogleLocationService",
+        "com.google.android.gms/.location.persistent.LocationPersistentService",
+        "com.google.android.gms/.auth.setup.devicesignals.LockScreenService",
+        "com.google.android.gms/.chimera.GmsIntentOperationService",
+        "com.google.android.gms/.auth.account.authenticator.GoogleAccountAuthenticatorService",
     )
 }
