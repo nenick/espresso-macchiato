@@ -168,59 +168,27 @@ object Android20 : AndroidSetup() {
 sealed class DefaultPostAndroid20Setup : DefaultAndroidSetup() {
     override fun systemImageAbi() = "x86_64"
     override fun createAvdAdditionalArgs() = emptyArray<String>()
-}
-
-object Android24 : DefaultPostAndroid20Setup() {
-    override fun androidApi() = 24
-}
-
-object Android29 : DefaultPostAndroid20Setup() {
-    override fun androidApi() = 29
-
-    // Would appear but takes too much time, so we shorten it a bit.
-    override fun shortCutContentMediaAndroid() = true
-    override fun externalDirectory() = "/storage/emulated/0"
 
     override fun disableServices() = listOf(
-        // Spams the log.
-        "com.google.android.gms/.chimera.PersistentApiService" // has an effect??
-    )
-}
-
-object Android30 : DefaultPostAndroid20Setup() {
-    override fun androidApi() = 30
-
-    // Would appear but takes too much time, so we shorten it a bit.
-    override fun shortCutContentMediaAndroid() = true
-    override fun externalDirectory() = "/storage/emulated/0"
-
-    // Otherwise gradle fails to pull test_data directory.
-    override fun shouldRemountAsRoot() = true
-
-    override fun disableServices() = listOf(
-        // Spams the log.
-        "com.google.android.gms/.chimera.PersistentApiService", // has an effect??
-        // ANR in the middle of the test run.
-        "com.google.android.gms/com.google.android.location.internal.server.HardwareArProviderService",
-        // Spams the Log. Usually we don't need to connect nearby devices.
-        "com.google.android.gms/com.google.location.nearby.direct.service.NearbyDirectService", // has an effect??
-        "com.google.android.gms/.nearby.discovery.service.DiscoveryService", // has an effect??
-        "com.google.android.gms/.nearby.messages.service.NearbyMessagesService",
-
-        // ANR
-        "com.google.android.gms/.chimera.GmsApiService", // has an effect??
-        // Spam
-        "com.google.android.gms/com.google.android.location.geofencer.service.GeofenceProviderService", // has an effect??
+        "com.google.android.gms/com.google.android.location.geofencer.service.GeofenceProviderService",
         "android/.hardware.location.GeofenceHardwareService",
 
-        // telephony services couldn't be disabled
+        // Disabling telephony services didn't work.
         // "com.android.phone/com.android.internal.telephony.CellularNetworkService",
-        // "com.android.server.telecom/.components.BluetoothPhoneService",
         // "com.android.phone/com.android.internal.telephony.dataconnection.CellularDataService",
         // "com.android.phone/com.android.services.telephony.sip.components.TelephonySipService",
+
+        // Disabling telecom services didn't work.
+        // "com.android.server.telecom/.components.BluetoothPhoneService",
         // "com.android.server.telecom/.components.TelecomService",
 
-        // Try disable all gms services
+        // on android 16 and 18 this force random crashing gsm
+        "com.google.android.gms/.chimera.GmsApiService",
+        "com.google.android.gms/.chimera.PersistentApiService",
+        "com.google.android.gms/com.google.android.location.internal.server.HardwareArProviderService",
+        "com.google.android.gms/com.google.location.nearby.direct.service.NearbyDirectService",
+        "com.google.android.gms/.nearby.discovery.service.DiscoveryService",
+        "com.google.android.gms/.nearby.messages.service.NearbyMessagesService",
         "com.google.android.gms/.deviceconnection.service.DeviceConnectionWatcherService",
         "com.google.android.gms/com.google.android.location.internal.GoogleLocationManagerService",
         "com.google.android.gms/com.google.android.location.network.NetworkLocationService",
@@ -242,4 +210,27 @@ object Android30 : DefaultPostAndroid20Setup() {
         "com.google.android.gms/.chimera.GmsIntentOperationService",
         "com.google.android.gms/.auth.account.authenticator.GoogleAccountAuthenticatorService",
     )
+}
+
+object Android24 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 24
+}
+
+object Android29 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 29
+
+    // Would appear but takes too much time, so we shorten it a bit.
+    override fun shortCutContentMediaAndroid() = true
+    override fun externalDirectory() = "/storage/emulated/0"
+}
+
+object Android30 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 30
+
+    // Would appear but takes too much time, so we shorten it a bit.
+    override fun shortCutContentMediaAndroid() = true
+    override fun externalDirectory() = "/storage/emulated/0"
+
+    // Otherwise gradle fails to pull test_data directory.
+    override fun shouldRemountAsRoot() = true
 }
