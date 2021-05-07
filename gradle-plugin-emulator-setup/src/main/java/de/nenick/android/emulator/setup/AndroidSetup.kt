@@ -138,7 +138,14 @@ sealed class DefaultPreAndroid20Setup : DefaultAndroidSetup() {
 object Android16 : DefaultPreAndroid20Setup() {
     override fun androidApi() = 16
 
-    @Suppress("SdCardPath")
+    // Never appears until any app creates some content.
+    override fun shortCutContentMediaAndroid() = true
+    override fun externalDirectory() = "/mnt/sdcard"
+}
+
+object Android17 : DefaultPreAndroid20Setup() {
+    override fun androidApi() = 17
+
     // Never appears until any app creates some content.
     override fun shortCutContentMediaAndroid() = true
     override fun externalDirectory() = "/mnt/sdcard"
