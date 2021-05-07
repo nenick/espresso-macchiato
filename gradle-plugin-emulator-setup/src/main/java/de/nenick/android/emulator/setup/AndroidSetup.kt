@@ -97,6 +97,8 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
         // Crashed sometimes in the middle of the test run.
         // android 18
         "com.android.com.android.email",
+        // android 24
+        "com.google.android.partnersetup",
         // android 30
         "com.google.android.apps.maps",
         "com.google.android.apps.wellbeing",
