@@ -9,27 +9,8 @@ jobs:
 
   - template: job-android-tests.yml
     parameters:
-      # earliest supported android version by espresso macchiato
-      # earliest android version with additional test data download support
-      androidVersion: '16'
-
-  - template: job-android-tests.yml
-    parameters:
-      androidVersion: '17'
-
-  - template: job-android-tests.yml
-    parameters:
-      # earliest supported android version by ui automator (e.g. take screenshots)
-      androidVersion: '18'
-
-  - template: job-android-tests.yml
-    parameters:
-      # issue up to this version ls: Unknown option '-1'
-      androidVersion: '19'
-
-  - template: job-android-tests.yml
-    parameters:
-      androidVersion: '24'
+      # changes external storage behaviour when downloading additional test data
+      androidVersion: '30'
 
   - template: job-android-tests.yml
     parameters:
@@ -39,5 +20,54 @@ jobs:
 
   - template: job-android-tests.yml
     parameters:
-      # changes external storage behaviour when downloading additional test data
-      androidVersion: '30'
+      androidVersion: '28'
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '27'
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '26'
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '25'
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '24'
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '23'
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '22'
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '21'
+
+# androidVersion: '20' does not have a x86 image, arm is to slow, so we skip it.
+
+  - template: job-android-tests.yml
+    parameters:
+      # issue up to this version ls: Unknown option '-1'
+      androidVersion: '19'
+
+  - template: job-android-tests.yml
+    parameters:
+      # earliest supported android version by ui automator (e.g. take screenshots)
+      androidVersion: '18'
+
+  - template: job-android-tests.yml
+    parameters:
+      androidVersion: '17'
+
+  - template: job-android-tests.yml
+    parameters:
+      # earliest supported android version by espresso macchiato
+      # earliest android version with additional test data download support
+      androidVersion: '16'

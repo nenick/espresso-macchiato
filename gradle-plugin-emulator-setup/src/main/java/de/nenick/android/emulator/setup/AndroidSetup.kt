@@ -219,8 +219,39 @@ sealed class DefaultPostAndroid20Setup : DefaultAndroidSetup() {
     )
 }
 
+object Android21 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 21
+}
+
+object Android22 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 22
+}
+
+object Android23 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 23
+}
+
 object Android24 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 24
+}
+
+object Android25 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 25
+}
+
+object Android26 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 26
+}
+
+object Android27 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 27
+
+    // This version has no 64 variant.
+    override fun systemImageAbi() = "x86"
+}
+
+object Android28 : DefaultPostAndroid20Setup() {
+    override fun androidApi() = 28
 }
 
 object Android29 : DefaultPostAndroid20Setup() {
