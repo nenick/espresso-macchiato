@@ -221,10 +221,24 @@ sealed class DefaultPostAndroid20Setup : DefaultAndroidSetup() {
 
 object Android21 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 21
+    override fun createAvdAdditionalArgs() = arrayOf(
+        // Seems like emulator for early android versions need sdcard setting at creation time
+        // instead of reading it from config.ini file. Starting with android api 30 this
+        // argument would block downloading test_data because it start searching on a path
+        // where test_data content never appears.
+        "--sdcard", "512M"
+    )
 }
 
 object Android22 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 22
+    override fun createAvdAdditionalArgs() = arrayOf(
+        // Seems like emulator for early android versions need sdcard setting at creation time
+        // instead of reading it from config.ini file. Starting with android api 30 this
+        // argument would block downloading test_data because it start searching on a path
+        // where test_data content never appears.
+        "--sdcard", "512M"
+    )
 }
 
 object Android23 : DefaultPostAndroid20Setup() {
