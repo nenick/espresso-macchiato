@@ -2,8 +2,11 @@ package de.nenick.espressomacchiato.screenshot.internal
 
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert
-import java.io.*
-import java.lang.IllegalStateException
+import java.io.BufferedInputStream
+import java.io.BufferedOutputStream
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
@@ -11,9 +14,8 @@ import java.util.zip.ZipOutputStream
 internal object AdditionalTestDataZipper {
 
     private const val screenshotDirName = "screenshots"
-    private val context = InstrumentationRegistry.getInstrumentation().targetContext
-    private val externalFilesDir = context.getExternalFilesDir(null)
-            ?: throw IllegalStateException("No external storage found? Be sure to have sdcard activated and write permission for external storage.")
+    private val externalFilesDir = InstrumentationRegistry.getInstrumentation().targetContext.getExternalFilesDir(null)
+        ?: throw IllegalStateException("No external storage found? Be sure to have sdcard activated and write permission for external storage.")
 
     val screenshotDirectory = File(externalFilesDir, screenshotDirName).also {
         it.deleteRecursively()
@@ -61,15 +63,14 @@ internal object AdditionalTestDataZipper {
     }
 
     private fun addExistingFiles(zipFileTempStream: ZipOutputStream) {
-        if (zipFile.exists()) {
-            val zip = ZipFile(zipFile)
-            val zipEntries = zip.entries()
+        val zip = ZipFile(zipFile)
+        val zipEntries = zip.entries()
 
-            while (zipEntries.hasMoreElements()) {
-                val zipEntry: ZipEntry = zipEntries.nextElement()
-                zipFileTempStream.putNextEntry(zipEntry)
-                zip.getInputStream(zipEntry).copyTo(zipFileTempStream, 1024)
-            }
+        while (zipEntries.hasMoreElements()) {
+            val zipEntry: ZipEntry = zipEntries.nextElement()
+            val zipEntryStream = zip.getInputStream(zipEntry)
+            zipFileTempStream.putNextEntry(zipEntry)
+            zipEntryStream.copyTo(zipFileTempStream, 1024)
         }
     }
 
