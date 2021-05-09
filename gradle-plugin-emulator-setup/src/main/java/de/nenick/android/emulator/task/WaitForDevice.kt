@@ -6,7 +6,7 @@ import de.nenick.android.emulator.tool.AdbShell
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-open class WaitForDevice : DefaultTask(), AdbShell {
+open class WaitForDevice : DefaultTask() {
 
     private val waitForBootCompleted = """
         while [[ -z $(getprop sys.boot_completed) ]]; do 
@@ -16,9 +16,11 @@ open class WaitForDevice : DefaultTask(), AdbShell {
         input keyevent 82
     """.trimIndent()
 
+    private val adbShell = AdbShell(project)
+
     @TaskAction
     fun waitForDevice() {
-        forEachConnectedDeviceParallel {
+        adbShell.forEachConnectedDeviceParallel {
             waitForDevice(it)
             waitForBootCompleted(it)
             waitForLauncher(it)
@@ -34,7 +36,7 @@ open class WaitForDevice : DefaultTask(), AdbShell {
     }
 
     private fun waitForBootCompleted(it: IDevice) {
-        execAdbShell(it, AdbShell.StdOutLogger, waitForBootCompleted.replace("emulator", it.serialNumber))
+        adbShell.execAdbShell(it, AdbShell.StdOutLogger, waitForBootCompleted.replace("emulator", it.serialNumber))
     }
 
     private fun waitForLauncher(it: IDevice) {
@@ -50,7 +52,7 @@ open class WaitForDevice : DefaultTask(), AdbShell {
 
     private fun collectWindowInfo(device: IDevice): String {
         val receiver = CollectingOutputReceiver()
-        execAdbShell(device, receiver, "dumpsys window windows")
+        adbShell.execAdbShell(device, receiver, "dumpsys window windows")
         return receiver.output
     }
 

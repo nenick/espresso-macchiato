@@ -8,7 +8,7 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import java.io.File
 
-open class TakeScreenshot : DefaultTask(), AdbShell {
+open class TakeScreenshot : DefaultTask() {
 
     @Input
     @Option(option = "directory", description = "Location to save the screenshot.")
@@ -18,9 +18,11 @@ open class TakeScreenshot : DefaultTask(), AdbShell {
     @Option(option = "name", description = "Base name to save screenshot.")
     lateinit var fileName: String
 
+    private val adbShell = AdbShell(project)
+
     @TaskAction
     fun take() {
-        forEachConnectedDeviceParallel {
+        adbShell.forEachConnectedDeviceParallel {
             val screenshotFile = File("$directory/${it.serialNumber}", "$fileName-${it.serialNumber}.png")
             screenshotFile.parentFile.mkdirs()
 

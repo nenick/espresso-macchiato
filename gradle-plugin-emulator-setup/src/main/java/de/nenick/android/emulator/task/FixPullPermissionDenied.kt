@@ -8,14 +8,16 @@ import de.nenick.android.emulator.tool.SimpleTimer
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-open class FixPullPermissionDenied : DefaultTask(), AdbShell {
+open class FixPullPermissionDenied : DefaultTask() {
+
+    private val adbShell = AdbShell(project)
 
     @TaskAction
     fun fix() {
-        forEachConnectedDeviceParallel {
+        adbShell.forEachConnectedDeviceParallel {
             if (AndroidSetup.search(it.version).shouldRemountAsRoot()) {
                 printAdbUserId(it)
-                execAdbRoot(it, "remount")
+                adbShell.execAdbRoot(it, "remount")
                 printAdbUserId(it)
                 check(it.isRoot) { "Adb failed to get root rights." }
             }
@@ -24,7 +26,7 @@ open class FixPullPermissionDenied : DefaultTask(), AdbShell {
 
     private fun printAdbUserId(device: IDevice) {
         repeatUntilSuccess {
-            execAdbShell(device, AdbShell.StdOutLogger, "echo \"userId is \$USER_ID (0 = root rights)\"")
+            adbShell.execAdbShell(device, AdbShell.StdOutLogger, "echo \"userId is \$USER_ID (0 = root rights)\"")
         }
     }
 

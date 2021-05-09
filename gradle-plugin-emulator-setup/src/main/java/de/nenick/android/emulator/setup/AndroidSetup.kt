@@ -6,10 +6,6 @@ import kotlin.reflect.KClass
 sealed class AndroidSetup {
 
     protected abstract fun androidApi(): Int
-    protected abstract fun systemImageAbi(): String
-
-    abstract fun createAvdAdditionalArgs(): Array<out String>
-    abstract fun avdSetting(): Array<String>
 
     open fun externalDirectory(): String {
         error("For android api ${androidApi()} this wasn't expected.")
@@ -33,20 +29,16 @@ sealed class AndroidSetup {
         "global animator_duration_scale 0",
         // Disable keyguard completely to avoid issue logs.
         "secure lockscreen.disabled 1",
-        // Disable soft keyboard to avoid overhead of hiding it after text input.
-        "secure show_ime_with_hard_keyboard 0",
         // Disable all sound. Otherwise logcat get polluted by audio_hw_generic: Hardware backing HAL too slow
         "system sound_effects_enabled 0"
     )
-
-    fun systemImage() = "system-images;android-${androidApi()};google_apis;${systemImageAbi()}"
 
     companion object {
         fun search(androidVersion: AndroidVersion): AndroidSetup {
             return search(androidVersion.apiLevel)
         }
 
-        fun search(androidVersion: Int): AndroidSetup {
+        private fun search(androidVersion: Int): AndroidSetup {
             return collectAllSetups().find { it.androidApi() == androidVersion }
                 ?: throw IllegalStateException("No setup found for android api $androidVersion")
         }
@@ -74,29 +66,13 @@ sealed class AndroidSetup {
 //      Gradle 7.X still use kotlin 1.4.xx we have to wait for gradle 8?
 
 sealed class DefaultAndroidSetup : AndroidSetup() {
-    override fun avdSetting() = arrayOf(
-        // First we disable all what could be disabled for more performance.
-        "s/=yes/=no/g",
-
-        // GPU should still be enabled for performance.
-        "s/hw.gpu.enabled=.*/hw.gpu.enabled=yes/g",
-
-        // Avoid showing soft keyboard for more performance and less flakiness.
-        "s/hw.keyboard=.*/hw.keyboard=yes/g",
-
-        // Sdcard is useful for to provide additional test_data.
-        // So "content query --uri content://media/external/file" will return something useful.
-        "s/hw.sdCard=.*/hw.sdCard=yes/g",
-
-        // Don't be stingy.
-        "s/hw.ramSize=.*/hw.ramSize=2048/g",
-        "s/vm.heapSize=.*/vm.heapSize=256/g"
-    )
 
     override fun disablePackages() = listOf(
         // Crashed sometimes in the middle of the test run.
         // android 18
         "com.android.com.android.email",
+        // android 19
+        "com.google.android.calendar",
         // android 24
         "com.google.android.partnersetup",
         // android 30
@@ -123,16 +99,6 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
 
 sealed class DefaultPreAndroid20Setup : DefaultAndroidSetup() {
 
-    // There all haven't x86_64 system image.
-    override fun systemImageAbi() = "x86"
-
-    override fun createAvdAdditionalArgs() = arrayOf(
-        // Seems like emulator for early android versions need sdcard setting at creation time
-        // instead of reading it from config.ini file. Starting with android api 30 this
-        // argument would block downloading test_data because it start searching on a path
-        // where test_data content never appears.
-        "--sdcard", "512M"
-    )
 }
 
 object Android16 : DefaultPreAndroid20Setup() {
@@ -167,15 +133,9 @@ object Android19 : DefaultPreAndroid20Setup() {
 object Android20 : AndroidSetup() {
     private val error = UnsupportedOperationException("Google doesn't provide x86 image for android ${androidApi()}")
     override fun androidApi() = 20
-    override fun systemImageAbi() = throw error
-    override fun createAvdAdditionalArgs() = throw error
-    override fun avdSetting() = throw error
 }
 
 sealed class DefaultPostAndroid20Setup : DefaultAndroidSetup() {
-    override fun systemImageAbi() = "x86_64"
-    override fun createAvdAdditionalArgs() = emptyArray<String>()
-
     override fun disableServices() = listOf(
         "com.google.android.gms/com.google.android.location.geofencer.service.GeofenceProviderService",
         "android/.hardware.location.GeofenceHardwareService",
@@ -221,24 +181,10 @@ sealed class DefaultPostAndroid20Setup : DefaultAndroidSetup() {
 
 object Android21 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 21
-    override fun createAvdAdditionalArgs() = arrayOf(
-        // Seems like emulator for early android versions need sdcard setting at creation time
-        // instead of reading it from config.ini file. Starting with android api 30 this
-        // argument would block downloading test_data because it start searching on a path
-        // where test_data content never appears.
-        "--sdcard", "512M"
-    )
 }
 
 object Android22 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 22
-    override fun createAvdAdditionalArgs() = arrayOf(
-        // Seems like emulator for early android versions need sdcard setting at creation time
-        // instead of reading it from config.ini file. Starting with android api 30 this
-        // argument would block downloading test_data because it start searching on a path
-        // where test_data content never appears.
-        "--sdcard", "512M"
-    )
 }
 
 object Android23 : DefaultPostAndroid20Setup() {
@@ -259,9 +205,6 @@ object Android26 : DefaultPostAndroid20Setup() {
 
 object Android27 : DefaultPostAndroid20Setup() {
     override fun androidApi() = 27
-
-    // This version has no 64 variant.
-    override fun systemImageAbi() = "x86"
 }
 
 object Android28 : DefaultPostAndroid20Setup() {

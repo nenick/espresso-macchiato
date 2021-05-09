@@ -8,11 +8,13 @@ import de.nenick.android.emulator.tool.SimpleTimer
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-open class FixContentMediaAndroid : DefaultTask(), AdbShell {
+open class FixContentMediaAndroid : DefaultTask() {
+
+    private val adbShell = AdbShell(project)
 
     @TaskAction
     fun fix() {
-        forEachConnectedDeviceParallel {
+        adbShell.forEachConnectedDeviceParallel {
             printContentMedia(it)
 
             val setup = AndroidSetup.search(it.version)
@@ -32,18 +34,18 @@ open class FixContentMediaAndroid : DefaultTask(), AdbShell {
     }
 
     private fun printContentMedia(it: IDevice) {
-        execAdbShell(it, AdbShell.StdOutLogger, queryContentMedia)
+        adbShell.execAdbShell(it, AdbShell.StdOutLogger, queryContentMedia)
     }
 
     private fun createContentMediaAndroid(device: IDevice, setup: AndroidSetup) {
-        execAdbShell(device, AdbShell.StdOutLogger, "$insertContentMedia${setup.externalDirectory()}/Android")
+        adbShell.execAdbShell(device, AdbShell.StdOutLogger, "$insertContentMedia${setup.externalDirectory()}/Android")
     }
 
     private fun hasContentMediaAndroid(device: IDevice): Boolean {
         val timer = SimpleTimer(timeoutSearchMilliseconds)
         while (true) {
             val receiver = CollectingOutputReceiver()
-            execAdbShell(device, receiver, queryContentMediaAndroid)
+            adbShell.execAdbShell(device, receiver, queryContentMediaAndroid)
 
             if (receiver.output.contains(Regex(".*Android"))) {
                 return true

@@ -12,10 +12,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.gradle.api.Project
-import org.gradle.api.Task
 import java.util.concurrent.TimeUnit
 
-interface AdbShell : Task {
+class AdbShell(private val project: Project) {
 
     object StdOutLogger : MultiLineReceiver() {
         override fun isCancelled() = false
