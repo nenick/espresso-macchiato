@@ -17,10 +17,6 @@ sealed class AndroidSetup {
     // $ANDROID_HOME/platform-tools/adb shell "su root pm list packages"
     open fun disablePackages() = emptyList<String>()
 
-    // $ANDROID_HOME/platform-tools/adb shell dumpsys activity services
-    //https://forum.xda-developers.com/t/script-guide-reduce-google-play-services-battery-drain-8-3-0-0.3139032/page-13#post-66741288
-    open fun disableServices() = emptyList<String>()
-
     // https://developer.android.com/reference/android/provider/Settings
     fun adjustSettings() = listOf(
         // Disable animations for more speed and less flakiness on emulators.
@@ -71,7 +67,8 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
         // Crashed sometimes in the middle of the test run.
         // android 18
         "com.android.com.android.email",
-        // android 19
+        // android 22 - CalendarStorage is still crashing, how to avoid it??
+        "com.android.providers.calendar",
         "com.google.android.calendar",
         // android 24
         "com.google.android.partnersetup",
@@ -90,8 +87,6 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
         "com.android.carrierconfig",
         "com.android.carrierdefaultapp",
         "com.android.providers.telephony",
-        "com.android.providers.calendar",
-        "com.google.android.calendar",
         "com.google.android.youtube",
         "com.google.android.apps.youtube.music"
     )
@@ -136,47 +131,7 @@ object Android20 : AndroidSetup() {
 }
 
 sealed class DefaultPostAndroid20Setup : DefaultAndroidSetup() {
-    override fun disableServices() = listOf(
-        "com.google.android.gms/com.google.android.location.geofencer.service.GeofenceProviderService",
-        "android/.hardware.location.GeofenceHardwareService",
 
-        // Disabling telephony services didn't work.
-        // "com.android.phone/com.android.internal.telephony.CellularNetworkService",
-        // "com.android.phone/com.android.internal.telephony.dataconnection.CellularDataService",
-        // "com.android.phone/com.android.services.telephony.sip.components.TelephonySipService",
-
-        // Disabling telecom services didn't work.
-        // "com.android.server.telecom/.components.BluetoothPhoneService",
-        // "com.android.server.telecom/.components.TelecomService",
-
-        // on android 16 and 18 this force random crashing gsm
-        "com.google.android.gms/.chimera.GmsApiService",
-        "com.google.android.gms/.chimera.PersistentApiService",
-        "com.google.android.gms/com.google.android.location.internal.server.HardwareArProviderService",
-        "com.google.android.gms/com.google.location.nearby.direct.service.NearbyDirectService",
-        "com.google.android.gms/.nearby.discovery.service.DiscoveryService",
-        "com.google.android.gms/.nearby.messages.service.NearbyMessagesService",
-        "com.google.android.gms/.deviceconnection.service.DeviceConnectionWatcherService",
-        "com.google.android.gms/com.google.android.location.internal.GoogleLocationManagerService",
-        "com.google.android.gms/com.google.android.location.network.NetworkLocationService",
-        "com.google.android.gms/.common.stats.GmsCoreStatsService",
-        "com.google.android.gms/com.google.android.contextmanager.service.ContextManagerService",
-        "com.google.android.gms/.chimera.PersistentDirectBootAwareApiService",
-        "com.google.android.gms/.thunderbird.EmergencyPersistentService",
-        "com.google.android.gms/.gcm.nts.SchedulerService",
-        "com.google.android.gms/com.google.android.location.fused.FusedLocationService",
-        "com.google.android.gms/.fido.fido2.pollux.CableAuthenticatorService",
-        "com.google.android.gms/.chimera.PersistentBoundBrokerService",
-        "com.google.android.gms/.clearcut.debug.ClearcutDebugDumpService",
-        "com.google.android.gms/.gcm.GcmService",
-        "com.google.android.gms/com.google.android.location.geocode.GeocodeService",
-        "com.google.android.gms/.location.persistent.LocationPersistentService",
-        "com.google.android.gms/com.google.android.location.internal.server.GoogleLocationService",
-        "com.google.android.gms/.location.persistent.LocationPersistentService",
-        "com.google.android.gms/.auth.setup.devicesignals.LockScreenService",
-        "com.google.android.gms/.chimera.GmsIntentOperationService",
-        "com.google.android.gms/.auth.account.authenticator.GoogleAccountAuthenticatorService",
-    )
 }
 
 object Android21 : DefaultPostAndroid20Setup() {

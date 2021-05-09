@@ -1,6 +1,7 @@
 package de.nenick.android.emulator.task
 
 import de.nenick.android.emulator.settings.InputMethod
+import de.nenick.android.emulator.settings.ObsoletePackages
 import de.nenick.android.emulator.setup.AndroidSetup
 import de.nenick.android.emulator.tool.AdbShell
 import de.nenick.android.emulator.tool.EmulatorInstance
@@ -29,9 +30,7 @@ open class DisableStuff : DefaultTask() {
                 adbShell.execAdbShell(device, AdbShell.StdOutLogger, "su root pm disable $it")
             }
 
-            setup.disableServices().forEach {
-                adbShell.execAdbShell(device, AdbShell.StdOutLogger, "su root pm disable $it")
-            }
+            ObsoletePackages.configure(instance)
 
             setup.adjustSettings().forEach {
                 adbShell.execAdbShell(device, AdbShell.StdOutLogger, "settings put $it")

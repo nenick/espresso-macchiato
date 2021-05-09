@@ -18,9 +18,9 @@ object InputMethod {
     fun disableInputRelatedStuff(instance: EmulatorInstance) {
         // There is still some input related stuff running and possibly taking performance from our test runs.
         // But some android versions would produce continuously appearing system crash dialogs after disabling them.
-        if (instance.isAndroidVersion(KITKAT)) return
+        if (instance.version == KITKAT) return
 
-        instance.disablePackage(
+        instance.disableApp(
             // Crashed on android 27
             "com.google.android.inputmethod.latin"
         )

@@ -3,17 +3,19 @@ package de.nenick.android.emulator.tool
 import com.android.ddmlib.IDevice
 import org.gradle.api.Project
 
-class EmulatorInstance(private val project: Project, private val device: IDevice) {
+class EmulatorInstance(project: Project, private val device: IDevice) {
 
     private val adbShell = AdbShell(project)
 
-    fun isAndroidVersion(vararg versions: Int) = versions.contains(device.version.apiLevel)
+    val version = device.version.apiLevel
 
+    // $ANDROID_HOME/platform-tools/adb shell dumpsys activity services
     fun disableService(vararg services: String) {
         services.forEach { adbShell.execAdbShell(device, AdbShell.StdOutLogger, "su root pm disable $it") }
     }
 
-    fun disablePackage(vararg packages: String) {
+    // $ANDROID_HOME/platform-tools/adb shell su root pm list packages
+    fun disableApp(vararg packages: String) {
         packages.forEach { adbShell.execAdbShell(device, AdbShell.StdOutLogger, "su root pm disable $it") }
     }
 
