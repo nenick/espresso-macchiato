@@ -35,11 +35,14 @@ object ObsoletePackages {
             "com.google.android.gms/.auth.setup.devicesignals.LockScreenService",
             "com.google.android.gms/.auth.account.authenticator.GoogleAccountAuthenticatorService",
 
-            "com.google.android.gms/.chimera.GmsApiService",
+            // This single service has a huge performance impact on some android versions
             "com.google.android.gms/.chimera.GmsIntentOperationService",
+
+            "com.google.android.gms/.chimera.GmsApiService",
             "com.google.android.gms/.chimera.PersistentApiService",
             "com.google.android.gms/.chimera.PersistentBoundBrokerService",
             "com.google.android.gms/.chimera.PersistentDirectBootAwareApiService",
+            "com.google.android.gms/.chimera.PersistentIntentOperationService",
 
             "com.google.android.gms/.clearcut.debug.ClearcutDebugDumpService",
             "com.google.android.gms/.common.stats.GmsCoreStatsService",
@@ -49,10 +52,13 @@ object ObsoletePackages {
             "com.google.android.gms/.gcm.GcmService",
             "com.google.android.gms/.gcm.nts.SchedulerService",
 
-            "com.google.android.gms/.thunderbird.EmergencyPersistentService",
-
-            "com.google.android.gms/com.google.android.contextmanager.service.ContextManagerService"
+            "com.google.android.gms/.thunderbird.EmergencyPersistentService"
         )
+
+        // Disabling this stuff results sometimes in ShellCommandUnresponsiveException on some android versions
+        if (instance.version >= AndroidVersion.VersionCodes.KITKAT) {
+            instance.disableService("com.google.android.gms/com.google.android.contextmanager.service.ContextManagerService")
+        }
     }
 
     private fun disableLocation(instance: EmulatorInstance) {
@@ -62,7 +68,7 @@ object ObsoletePackages {
             "com.google.android.gms/com.google.android.location.fused.FusedLocationService",
             "com.google.android.gms/com.google.android.location.geocode.GeocodeService",
             "com.google.android.gms/com.google.android.location.internal.server.GoogleLocationService",
-            "com.google.android.gms/com.google.android.location.internal.server.HardwareArProviderService",
+            "com.google.android.gms/com.google.android.loca¬tion.internal.server.HardwareArProviderService",
             "com.google.android.gms/com.google.android.location.network.NetworkLocationService",
         )
 

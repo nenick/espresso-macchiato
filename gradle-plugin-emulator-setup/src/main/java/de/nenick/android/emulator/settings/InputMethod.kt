@@ -22,7 +22,8 @@ object InputMethod {
 
         instance.disableApp(
             // Crashed on android 27
-            "com.google.android.inputmethod.latin"
+            // TODO Available since?? not on android 22
+            "com.google.android.inputmethod.latin" // aka GBoard App
         )
 
         instance.disableService(

@@ -35,6 +35,11 @@ open class DisableStuff : DefaultTask() {
             setup.adjustSettings().forEach {
                 adbShell.execAdbShell(device, AdbShell.StdOutLogger, "settings put $it")
             }
+
+            // TODO find fix for 'Failed to create EGLSurface for window 0x706b46282010, eglErr = EGL_BAD_ALLOC'
+            //      appeared on android 26
+            //      https://issuetracker.google.com/issues/70259031
+            //      https://github.com/flutter/flutter/issues/31580#issuecomment-489636521
         }
     }
 }

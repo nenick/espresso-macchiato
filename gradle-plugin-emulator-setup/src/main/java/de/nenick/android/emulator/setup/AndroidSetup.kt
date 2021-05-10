@@ -26,7 +26,9 @@ sealed class AndroidSetup {
         // Disable keyguard completely to avoid issue logs.
         "secure lockscreen.disabled 1",
         // Disable all sound. Otherwise logcat get polluted by audio_hw_generic: Hardware backing HAL too slow
-        "system sound_effects_enabled 0"
+        "system sound_effects_enabled 0",
+        // Stop notifications from disturbing view interactions from espresso.
+        "global heads_up_notifications_enabled 0"
     )
 
     companion object {
@@ -67,6 +69,8 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
         // Crashed sometimes in the middle of the test run.
         // android 18
         "com.android.com.android.email",
+        // android 19
+        "android.process.acore",
         // android 22 - CalendarStorage is still crashing, how to avoid it??
         "com.android.providers.calendar",
         "com.google.android.calendar",
@@ -76,8 +80,18 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
         "com.google.android.apps.maps",
         "com.google.android.apps.wellbeing",
 
-        // Reduce log spam.
+        // Would complain about disabled GMS services.
+        "com.google.android.apps.docs", // aka Google Drive App,
+        "com.google.android.im",
+        "com.google.android.dialer",
         "com.android.dialer",
+        "com.google.android.videos",
+        "com.google.android.apps.wallpaper",
+
+        // Would be too easy, it would make common test scenarios (e.g. use google maps) Impossible.
+        // "com.google.android.gms", // aka Google Mobile Services
+
+        // Reduce log spam.
         "com.google.android.apps.messaging",
         "com.android.phone", // Has no reducing effect ??
         "com.google.android.talk",
