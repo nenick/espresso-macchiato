@@ -10,6 +10,7 @@ object ObsoletePackages {
         disableNearby(instance)
         disableGmsStuff(instance)
         disableLocation(instance)
+        disableGoogleQuickSearch(instance)
 
         // Disabling "com.android.phone/..telephony.." services didn't work.
         // Disabling "com.android.server.telecom/.." services didn't work.
@@ -75,6 +76,15 @@ object ObsoletePackages {
         // Disabling this stuff force continuously appearing system crash dialog on some android versions.
         if (instance.version >= AndroidVersion.VersionCodes.KITKAT_WATCH) {
             instance.disableService("com.google.android.gms/com.google.android.location.internal.GoogleLocationManagerService")
+        }
+    }
+
+
+    private fun disableGoogleQuickSearch(instance: EmulatorInstance) {
+        // On some android versions the first test set will run fine, but all following test sets will
+        // be slow and start spamming I/MonitoringInstr: Unstopped activity count: 2
+        if (instance.version != AndroidVersion.VersionCodes.LOLLIPOP_MR1) {
+            instance.disableApp("com.google.android.googlequicksearchbox")
         }
     }
 }

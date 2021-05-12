@@ -92,10 +92,10 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
         // "com.google.android.gms", // aka Google Mobile Services
 
         // Reduce log spam.
+        // TODO Exist since?? ano on android 22
         "com.google.android.apps.messaging",
         "com.android.phone", // Has no reducing effect ??
         "com.google.android.talk",
-        "com.google.android.googlequicksearchbox",
         "com.google.android.configupdater",
         "com.android.bluetooth",
         "com.android.carrierconfig",
