@@ -5,11 +5,13 @@ import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.test.core.app.EspSkipEmptyActivity
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import de.nenick.espressomacchiato.screenshot.EspScreenshotRule
 import de.nenick.espressomacchiato.tools.EspSecurityExceptionFix
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.RuleChain
 
@@ -26,6 +28,11 @@ abstract class BaseActivityTest<TEST_ACTIVITY : Activity> {
     }
 
     val context = InstrumentationRegistry.getInstrumentation().targetContext!!
+
+    @Before
+    fun skipEmptyActivity() {
+        EspSkipEmptyActivity.apply(activityScenarioRule)
+    }
 
     @After
     fun fixRandomSecurityException() {
