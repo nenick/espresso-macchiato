@@ -71,9 +71,6 @@ sealed class DefaultAndroidSetup : AndroidSetup() {
         "com.android.com.android.email",
         // android 19
         "android.process.acore",
-        // android 22 - CalendarStorage is still crashing, how to avoid it??
-        "com.android.providers.calendar",
-        "com.google.android.calendar",
         // android 24
         "com.google.android.partnersetup",
         // android 30

@@ -11,6 +11,7 @@ object ObsoletePackages {
         disableGmsStuff(instance)
         disableLocation(instance)
         disableGoogleQuickSearch(instance)
+        disableCalendar(instance)
 
         // Disabling "com.android.phone/..telephony.." services didn't work.
         // Disabling "com.android.server.telecom/.." services didn't work.
@@ -79,12 +80,21 @@ object ObsoletePackages {
         }
     }
 
-
     private fun disableGoogleQuickSearch(instance: EmulatorInstance) {
         // On some android versions the first test set will run fine, but all following test sets will
         // be slow and start spamming I/MonitoringInstr: Unstopped activity count: 2
         if (instance.version != AndroidVersion.VersionCodes.LOLLIPOP_MR1) {
             instance.disableApp("com.google.android.googlequicksearchbox")
+        }
+    }
+
+    private fun disableCalendar(instance: EmulatorInstance) {
+        instance.disableApp("com.google.android.calendar")
+
+        // On some android version the CalendarStorage does crash when disabled.
+        if (instance.version != AndroidVersion.VersionCodes.LOLLIPOP
+            && instance.version != AndroidVersion.VersionCodes.LOLLIPOP_MR1) {
+            instance.disableApp("com.android.providers.calendar") // CalendarStorage
         }
     }
 }
