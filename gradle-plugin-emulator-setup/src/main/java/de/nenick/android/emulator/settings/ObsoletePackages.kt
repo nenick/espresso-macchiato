@@ -44,6 +44,7 @@ object ObsoletePackages {
             "com.google.android.gms/.chimera.PersistentApiService",
             "com.google.android.gms/.chimera.PersistentBoundBrokerService",
             "com.google.android.gms/.chimera.PersistentDirectBootAwareApiService",
+            // Does disabling this force the issues on android 28 ??
             "com.google.android.gms/.chimera.PersistentIntentOperationService",
 
             "com.google.android.gms/.clearcut.debug.ClearcutDebugDumpService",
