@@ -60,7 +60,7 @@ object ObsoletePackages {
         )
 
         // Disabling this stuff results sometimes in ShellCommandUnresponsiveException on some android versions
-        if (instance.version >= AndroidVersion.VersionCodes.KITKAT) {
+        if (instance.version >= AndroidVersion.VersionCodes.KITKAT_WATCH) {
             instance.disableService("com.google.android.gms/com.google.android.contextmanager.service.ContextManagerService")
         }
     }
