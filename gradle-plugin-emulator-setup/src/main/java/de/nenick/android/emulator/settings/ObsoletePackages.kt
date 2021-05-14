@@ -39,14 +39,15 @@ object ObsoletePackages {
 
             // This single service has a huge performance impact on some android versions
             "com.google.android.gms/.chimera.GmsIntentOperationService",
-
             "com.google.android.gms/.chimera.GmsApiService",
             "com.google.android.gms/.chimera.PersistentApiService",
             "com.google.android.gms/.chimera.PersistentBoundBrokerService",
-            "com.google.android.gms/.chimera.PersistentDirectBootAwareApiService",
-            // Does disabling this force the issues on android 28 ??
-            "com.google.android.gms/.chimera.PersistentIntentOperationService",
 
+            // Disabling would spam on android 28:
+            // Unable to start service Intent { act=com.google.android.gms.clearcut.service.START pkg=com.google.android.gms } U=0: not found
+            // "com.google.android.gms/.chimera.PersistentDirectBootAwareApiService",
+
+            "com.google.android.gms/.chimera.PersistentIntentOperationService",
             "com.google.android.gms/.clearcut.debug.ClearcutDebugDumpService",
             "com.google.android.gms/.common.stats.GmsCoreStatsService",
             "com.google.android.gms/.deviceconnection.service.DeviceConnectionWatcherService",
