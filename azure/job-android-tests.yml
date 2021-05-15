@@ -47,6 +47,7 @@ jobs:
             ./gradlew fixPullPermissionDenied
             ./azure/emulator-fix-ls-unknown-option.sh 28 $(ports)
             ./gradlew disableStuff
+            ./azure/emulator-optimize.sh
             ./gradlew closeSystemDialog
             ./gradlew fixContentMediaAndroid
             ./azure/emulator-fix-content-media-query.sh 28 $(ports)

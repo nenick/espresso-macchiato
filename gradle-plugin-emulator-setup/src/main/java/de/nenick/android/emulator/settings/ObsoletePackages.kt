@@ -40,7 +40,7 @@ object ObsoletePackages {
             // This single service has a huge performance impact on some android versions
             "com.google.android.gms/.chimera.GmsIntentOperationService",
             "com.google.android.gms/.chimera.GmsApiService",
-            "com.google.android.gms/.chimera.PersistentApiService",
+            //"com.google.android.gms/.chimera.PersistentApiService",
             "com.google.android.gms/.chimera.PersistentBoundBrokerService",
 
             // Disabling would spam on android 28:
@@ -78,7 +78,7 @@ object ObsoletePackages {
 
         // Disabling this stuff force continuously appearing system crash dialog on some android versions.
         if (instance.version >= AndroidVersion.VersionCodes.KITKAT_WATCH) {
-            instance.disableService("com.google.android.gms/com.google.android.location.internal.GoogleLocationManagerService")
+            //instance.disableService("com.google.android.gms/com.google.android.location.internal.GoogleLocationManagerService")
         }
     }
 
