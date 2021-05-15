@@ -23,7 +23,7 @@ jobs:
           tasks: 'assembleAndroidTest'
           gradleWrapperFile: 'gradlew'
 
-      - script: ./gradlew createEmulator --android ${{ parameters.androidVersion }}
+      - script: ./gradlew createEmulator --android 28
         displayName: Create Emulator
 
       - task: Bash@3
@@ -45,11 +45,11 @@ jobs:
             set -o pipefail
             ./gradlew takeScreenshot --directory emulator-settings --name initial-state
             ./gradlew fixPullPermissionDenied
-            ./azure/emulator-fix-ls-unknown-option.sh ${{ parameters.androidVersion }} $(ports)
+            ./azure/emulator-fix-ls-unknown-option.sh 28 $(ports)
             ./gradlew disableStuff
             ./gradlew closeSystemDialog
             ./gradlew fixContentMediaAndroid
-            ./azure/emulator-fix-content-media-query.sh ${{ parameters.androidVersion }} $(ports)
+            ./azure/emulator-fix-content-media-query.sh 28 $(ports)
             ./azure/emulator-collect-preconditions.sh $(ports)
             ./azure/emulator-collect-logcat.sh $(ports)
             ./gradlew takeScreenshot --directory emulator-settings --name optimized-state
